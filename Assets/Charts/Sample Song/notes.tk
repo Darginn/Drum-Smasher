@@ -1,0 +1,42 @@
+﻿[Song]
+{
+  Name = "Metronome"
+  Artist = "Dargin"
+  Charter = "Dargin"
+  Album = ""
+  Year = "2019"
+  Offset = 0
+  Difficulty = 0
+  PreviewStart = 0
+  PreviewEnd = 0
+  Genre = "it's a fucking metronome"
+  MusicStream = "song.mp3"
+}
+[SyncTrack]
+{
+
+}
+[Events]
+{
+
+}
+[InnerOniP1]
+{
+  
+}
+[OniP1]
+{
+  
+}
+[MuzukashiiP1]
+{
+
+}
+[FutsuuP1]
+{
+  
+}
+[KantanP1]
+{
+  
+}
