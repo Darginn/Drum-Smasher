@@ -21,6 +21,31 @@ public class NoteObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Activator")
+        {
+            canBeHit = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.tag == "Activator")
+        {
+            GameManager.instance.NoteMissed();
+            Instantiate(missEffect, new Vector3(0, 2.468484f, 0), missEffect.transform.rotation);
+            canBeHit = false;
+        }
+    }
+}
+class Note : NoteObject
+{
+    public void Update()
+    {
         if (Input.GetKeyDown(keyToPress))
         {
             if (canBeHit)
@@ -54,22 +79,59 @@ public class NoteObject : MonoBehaviour
             }
         }
     }
+}
 
-    private void OnTriggerEnter2D(Collider2D other)
+class BigNote : NoteObject
+{
+    public void Update()
     {
-        if (other.tag == "Activator")
+        if (Input.GetKeyDown(keyToPress) & Input.GetKeyDown(keyToPress2))
         {
-            canBeHit = true;
+            if (canBeHit)
+            {
+                gameObject.SetActive(false);
+
+                GameManager.instance.NoteHit();
+
+                /*if (Mathf.Abs(transform.position.x) > 1)
+                {
+                    Debug.Log("Good Hit");
+                    GameManager.instance.NormalHit();
+                    Instantiate(goodEffect, new Vector3(0, 2.468484f, 0), goodEffect.transform.rotation);
+                } */
+            }
         }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.tag == "Activator")
+        else if (Input.GetKeyDown(keyToPress))
         {
-            GameManager.instance.NoteMissed();
-            Instantiate(missEffect, new Vector3(0, 2.468484f, 0), missEffect.transform.rotation);
-            canBeHit = false;
+            if (canBeHit)
+            {
+                gameObject.SetActive(false);
+
+                GameManager.instance.NoteHit();
+
+                /*if (Mathf.Abs(transform.position.x) > 1)
+                {
+                    Debug.Log("Good Hit");
+                    GameManager.instance.NormalHit();
+                    Instantiate(goodEffect, new Vector3(0, 2.468484f, 0), goodEffect.transform.rotation);
+                }*/
+            }
+        }
+        else if (Input.GetKeyDown(keyToPress2))
+        {
+            if (canBeHit)
+            {
+                gameObject.SetActive(false);
+
+                GameManager.instance.NoteHit();
+
+                /*if (Mathf.Abs(transform.position.x) > 0.3)
+                {
+                    Debug.Log("Good Hit");
+                    GameManager.instance.NormalHit();
+                    Instantiate(goodEffect, new Vector3(0, 2.468484f, 0), goodEffect.transform.rotation);
+                } */
+            }
         }
     }
 }

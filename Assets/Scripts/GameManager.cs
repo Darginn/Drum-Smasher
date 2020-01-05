@@ -39,7 +39,6 @@ public class GameManager : MonoBehaviour
         currentMultiplier = 1;
 
         totalNotes = FindObjectsOfType<NoteObject>().Length;
-        totalNotes += FindObjectsOfType<BigNoteObject>().Length;
     }
 
     // Update is called once per frame
