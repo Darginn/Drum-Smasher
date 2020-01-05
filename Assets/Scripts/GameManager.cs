@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-
+    //Placeholder boolean
     public bool startPlaying;
 
     public NoteScroll theBS;
@@ -13,9 +13,9 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public int currentScore;
-    public int SCORE_VALUE = 300;
+    public const int SCORE_VALUE = 300;
 
-    public int currentMultiplier;
+    public int multiplierValue;
     public int multiplierTracker;
     public int[] multiplierThresholds;
     public int combo;
@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     public Text comboText;
 
     public float totalNotes;
-    public float goodHits;
+    //public float goodHits;
     public float missHits;
 
     // Start is called before the first frame update
@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
         scoreText.text = "0";
         combo = 0;
         comboText.text = "";
-        currentMultiplier = 1;
+        multiplierValue = 1;
 
         totalNotes = FindObjectsOfType<NoteObject>().Length;
     }
@@ -59,24 +59,24 @@ public class GameManager : MonoBehaviour
         totalNotes++;
         comboText.text = "" + combo;
 
-        if (currentMultiplier - 1 < multiplierThresholds.Length)
+        if (multiplierValue - 1 < multiplierThresholds.Length)
         {
             multiplierTracker++;
 
-            if (multiplierThresholds[currentMultiplier - 1] <= multiplierTracker)
+            if (multiplierThresholds[multiplierValue - 1] <= multiplierTracker)
             {
                 multiplierTracker = 0;
-                currentMultiplier++;
+                multiplierValue++;
             }
         }
 
-        currentScore += (SCORE_VALUE + (96 * (currentMultiplier - 1)));
+        currentScore += (SCORE_VALUE + (96 * (multiplierValue - 1)));
         scoreText.text = "" + currentScore;
     }
 
     /*public void NormalHit()
     {
-        currentScore += (SCORE_VALUE + (96 * (currentMultiplier - 1)));
+        currentScore += (SCORE_VALUE + (96 * (multiplierValue - 1)));
         NoteHit();
         goodHits++;
     }*/
@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Miss");
 
         combo = 0;
-        currentMultiplier = 1;
+        multiplierValue = 1;
         comboText.text = "";
 
         missHits++;

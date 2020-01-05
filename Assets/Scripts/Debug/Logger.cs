@@ -5,8 +5,9 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
 using UnityEngine;
+using UnityEngine.UI;
 
-namespace ChangeThis
+namespace Log
 {
     public static class Logger
     {
@@ -23,7 +24,7 @@ namespace ChangeThis
 
                 File.Move(logFile, logFile + 1);
             }
-
+            
             _logStream = new StreamWriter(logFile);
             _queue = new ConcurrentQueue<(string, LogLevel)>();
         }
@@ -36,7 +37,7 @@ namespace ChangeThis
 
             System.Threading.ThreadPool.QueueUserWorkItem(new System.Threading.WaitCallback(obj =>
             {
-                lock (_logLock)
+                lock(_logLock)
                 {
                     if (!_queue.TryDequeue(out (string, LogLevel) p))
                         return;
