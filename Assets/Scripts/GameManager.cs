@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public int currentScore;
-    public int scorePerNote = 300;
+    public int SCORE_VALUE = 300;
 
     public int currentMultiplier;
     public int multiplierTracker;
@@ -71,13 +71,13 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        currentScore += (scorePerNote + (96 * (currentMultiplier - 1)));
+        currentScore += (SCORE_VALUE + (96 * (currentMultiplier - 1)));
         scoreText.text = "" + currentScore;
     }
 
     /*public void NormalHit()
     {
-        currentScore += (scorePerNote + (96 * (currentMultiplier - 1)));
+        currentScore += (SCORE_VALUE + (96 * (currentMultiplier - 1)));
         NoteHit();
         goodHits++;
     }*/
