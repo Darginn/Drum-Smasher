@@ -45,10 +45,10 @@ namespace DrumSmasher.Note
                 Destroy(this);
                 return;
             }
-            
+
             Vector3 fixedLoc = StartPos - new Vector3(NoteSpeed * (float)DateTime.Now.Subtract(StartTime).TotalSeconds * 3f, 0f);
             transform.position = fixedLoc;
-            
+
             if (CanBeHit)
             {
                 bool key1 = Input.GetKeyDown(KeyToPress);

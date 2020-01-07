@@ -80,7 +80,10 @@ namespace DrumSmasher
             note.BigNote = n.BigNote;
             note.DefaultNote = false;
             note.NoteSpeed = _noteSpeed;
-            note.StartPos = note.transform.position;
+
+            //speed * time * 3 * end
+            float start = (_noteSpeed * 4f * 2f) + 0f;
+            note.StartPos = new Vector3(start, origNote.transform.position.y);
             _spawnedNotes.Add(note);
             _noteIndex++;
 
