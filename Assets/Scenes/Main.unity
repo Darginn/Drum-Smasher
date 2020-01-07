@@ -530,7 +530,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.9, y: 4, z: -10}
+  m_LocalPosition: {x: 10.9, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -994,8 +994,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 336, y: 248}
-  m_SizeDelta: {x: 650.3, y: 121.9}
+  m_AnchoredPosition: {x: 280.8, y: 194.3}
+  m_SizeDelta: {x: 191.1, y: 36}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &849566418
 MonoBehaviour:
@@ -1017,7 +1017,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 63
+    m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -1311,7 +1311,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.4974792, y: 0.50462955}
   m_AnchorMax: {x: 0.4974792, y: 0.50462955}
-  m_AnchoredPosition: {x: -573, y: 253}
+  m_AnchoredPosition: {x: -289.4, y: 187.91}
   m_SizeDelta: {x: 172.7, y: 44.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1051084410
@@ -1334,7 +1334,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 32
+    m_FontSize: 24
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -1345,7 +1345,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0 fps
+  m_Text: 
 --- !u!222 &1051084411
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1484,8 +1484,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -629, y: -405.7}
-  m_SizeDelta: {x: 1836.1, y: 344.2}
+  m_AnchoredPosition: {x: -329.9, y: 53.3}
+  m_SizeDelta: {x: 181.6, y: 34.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1212773774
 MonoBehaviour:
@@ -1507,10 +1507,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 67
+    m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 3
     m_MaxSize: 83
     m_Alignment: 1
     m_AlignByGeometry: 0
@@ -1518,7 +1518,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0x
+  m_Text: 
 --- !u!222 &1212773775
 CanvasRenderer:
   m_ObjectHideFlags: 0
