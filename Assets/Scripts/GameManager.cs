@@ -1,4 +1,5 @@
 ﻿using DrumSmasher.Note;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +17,6 @@ namespace DrumSmasher
         public bool StartPlaying;
 
         public NoteScroll NoteScroller;
-        
         public int MultiplierValue;
         public int MultiplierTracker;
         public int[] MultiplierThresholds;
@@ -43,16 +43,32 @@ namespace DrumSmasher
             MultiplierValue = 1;
 
             TotalNotes = FindObjectsOfType<NoteObject>().Length;
+            NoteScroller.OnChartEnd += new EventHandler(OnCurrentChartEnd);
+            StartPlaying = true;
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (!StartPlaying)
+            if (StartPlaying)
             {
-                StartPlaying = true;
+                Charts.Chart ch = Charts.ChartFile.Load(@"Assets\Charts\Sample Song\Test.Chart");
+
+                if (ch == null)
+                {
+                    Logger.Log("Chart is null", LogLevel.ERROR);
+                    return;
+                }
+
+                NoteScroller.Load(ch);
                 NoteScroller.GameStart = true;
+                StartPlaying = false;
             }
+        }
+
+        private void OnCurrentChartEnd(object sender, EventArgs e)
+        {
+
         }
 
         void OnApplicationQuit()
@@ -89,9 +105,7 @@ namespace DrumSmasher
             NoteHit();
             goodHits++;
         }*/
-
         
-
         public void NoteMissed()
         {
             Logger.Log("Miss");

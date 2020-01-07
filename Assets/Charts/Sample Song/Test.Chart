@@ -1,0 +1,23 @@
+[settings]
+ID=1
+Artist=Dargin
+Title=Metronome
+Album=testAlbum
+Year=2019
+Creator=Dargin
+Tags=test, tags, a
+Offset=-5
+PreviewStart=5
+PreviewEnd=10
+Genre=1
+BPM=60
+SoundFile=song.mp3
+[/\]
+[notes]
+1=00:00:01=1
+0=00:00:02=1
+0=00:00:03=1
+0=00:00:04=0
+0=00:00:05=1
+0=00:00:06=0
+[/\]
