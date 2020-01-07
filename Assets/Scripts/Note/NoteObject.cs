@@ -1,137 +1,141 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DrumSmasher;
 
-public class NoteObject : MonoBehaviour
+namespace DrumSmasher.Note
 {
-    public bool canBeHit;
-
-    public KeyCode keyToPress;
-    public KeyCode keyToPress2;
-
-    public GameObject goodEffect, missEffect;
-
-
-    // Start is called before the first frame update
-    void Start()
+    public class NoteObject : MonoBehaviour
     {
-        
-    }
+        public bool canBeHit;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+        public KeyCode keyToPress;
+        public KeyCode keyToPress2;
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.tag == "Activator")
+        public GameObject goodEffect, missEffect;
+
+
+        // Start is called before the first frame update
+        void Start()
         {
-            canBeHit = true;
+
         }
-    }
 
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.tag == "Activator")
+        // Update is called once per frame
+        void Update()
         {
-            GameManager.instance.NoteMissed();
-            Instantiate(missEffect, new Vector3(0, 2.468484f, 0), missEffect.transform.rotation);
-            canBeHit = false;
+
         }
-    }
-}
-class Note : NoteObject
-{
-    public void Update()
-    {
-        if (Input.GetKeyDown(keyToPress))
+
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            if (canBeHit)
+            if (other.tag == "Activator")
             {
-                gameObject.SetActive(false);
-
-                //GameManager.instance.NoteHit();
-
-                /*if (Mathf.Abs(transform.position.x) > 1)
-                {
-                    Debug.Log("Good Hit");
-                    GameManager.instance.NormalHit();
-                    Instantiate(goodEffect, new Vector3(0, 2.468484f, 0), goodEffect.transform.rotation);
-                }*/
+                canBeHit = true;
             }
         }
-        else if (Input.GetKeyDown(keyToPress2))
+
+        private void OnTriggerExit2D(Collider2D other)
         {
-            if (canBeHit)
+            if (other.tag == "Activator")
             {
-                gameObject.SetActive(false);
-
-                //GameManager.instance.NoteHit();
-
-                /*if (Mathf.Abs(transform.position.x) > 1)
-                {
-                    Debug.Log("Good Hit");
-                    GameManager.instance.NormalHit();
-                    Instantiate(goodEffect, new Vector3(0, 2.468484f, 0), goodEffect.transform.rotation);
-                }*/
+                GameManager.Instance.NoteMissed();
+                Instantiate(missEffect, new Vector3(0, 2.468484f, 0), missEffect.transform.rotation);
+                canBeHit = false;
             }
         }
     }
 }
+//class Note : NoteObject
+//{
+//    public void Update()
+//    {
+//        if (Input.GetKeyDown(keyToPress))
+//        {
+//            if (canBeHit)
+//            {
+//                gameObject.SetActive(false);
 
-class BigNote : NoteObject
-{
-    public void Update()
-    {
-        if (Input.GetKeyDown(keyToPress) & Input.GetKeyDown(keyToPress2))
-        {
-            if (canBeHit)
-            {
-                gameObject.SetActive(false);
+//                //GameManager.instance.NoteHit();
 
-                GameManager.instance.NoteHit();
+//                /*if (Mathf.Abs(transform.position.x) > 1)
+//                {
+//                    Logger.Log("Good Hit");
+//                    GameManager.instance.NormalHit();
+//                    Instantiate(goodEffect, new Vector3(0, 2.468484f, 0), goodEffect.transform.rotation);
+//                }*/
+//            }
+//        }
+//        else if (Input.GetKeyDown(keyToPress2))
+//        {
+//            if (canBeHit)
+//            {
+//                gameObject.SetActive(false);
 
-                /*if (Mathf.Abs(transform.position.x) > 1)
-                {
-                    Debug.Log("Good Hit");
-                    GameManager.instance.NormalHit();
-                    Instantiate(goodEffect, new Vector3(0, 2.468484f, 0), goodEffect.transform.rotation);
-                } */
-            }
-        }
-        else if (Input.GetKeyDown(keyToPress))
-        {
-            if (canBeHit)
-            {
-                gameObject.SetActive(false);
+//                //GameManager.instance.NoteHit();
 
-                GameManager.instance.NoteHit();
+//                /*if (Mathf.Abs(transform.position.x) > 1)
+//                {
+//                    Logger.Log("Good Hit");
+//                    GameManager.instance.NormalHit();
+//                    Instantiate(goodEffect, new Vector3(0, 2.468484f, 0), goodEffect.transform.rotation);
+//                }*/
+//            }
+//        }
+//    }
+//}
 
-                /*if (Mathf.Abs(transform.position.x) > 1)
-                {
-                    Debug.Log("Good Hit");
-                    GameManager.instance.NormalHit();
-                    Instantiate(goodEffect, new Vector3(0, 2.468484f, 0), goodEffect.transform.rotation);
-                }*/
-            }
-        }
-        else if (Input.GetKeyDown(keyToPress2))
-        {
-            if (canBeHit)
-            {
-                gameObject.SetActive(false);
+//class BigNote : NoteObject
+//{
+//    public void Update()
+//    {
+//        if (Input.GetKeyDown(keyToPress) & Input.GetKeyDown(keyToPress2))
+//        {
+//            if (canBeHit)
+//            {
+//                gameObject.SetActive(false);
 
-                GameManager.instance.NoteHit();
+//                GameManager.Instance.NoteHit();
 
-                /*if (Mathf.Abs(transform.position.x) > 0.3)
-                {
-                    Debug.Log("Good Hit");
-                    GameManager.instance.NormalHit();
-                    Instantiate(goodEffect, new Vector3(0, 2.468484f, 0), goodEffect.transform.rotation);
-                } */
-            }
-        }
-    }
-}
+//                /*if (Mathf.Abs(transform.position.x) > 1)
+//                {
+//                    Logger.Log("Good Hit");
+//                    GameManager.instance.NormalHit();
+//                    Instantiate(goodEffect, new Vector3(0, 2.468484f, 0), goodEffect.transform.rotation);
+//                } */
+//            }
+//        }
+//        else if (Input.GetKeyDown(keyToPress))
+//        {
+//            if (canBeHit)
+//            {
+//                gameObject.SetActive(false);
+
+//                GameManager.Instance.NoteHit();
+
+//                /*if (Mathf.Abs(transform.position.x) > 1)
+//                {
+//                    Logger.Log("Good Hit");
+//                    GameManager.instance.NormalHit();
+//                    Instantiate(goodEffect, new Vector3(0, 2.468484f, 0), goodEffect.transform.rotation);
+//                }*/
+//            }
+//        }
+//        else if (Input.GetKeyDown(keyToPress2))
+//        {
+//            if (canBeHit)
+//            {
+//                gameObject.SetActive(false);
+
+//                GameManager.Instance.NoteHit();
+
+//                /*if (Mathf.Abs(transform.position.x) > 0.3)
+//                {
+//                    Logger.Log("Good Hit");
+//                    GameManager.instance.NormalHit();
+//                    Instantiate(goodEffect, new Vector3(0, 2.468484f, 0), goodEffect.transform.rotation);
+//                } */
+//            }
+//        }
+//    }
+//}

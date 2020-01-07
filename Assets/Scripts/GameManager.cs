@@ -1,96 +1,106 @@
-﻿using System.Collections;
+﻿using DrumSmasher.Note;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+namespace DrumSmasher
 {
-    //Placeholder boolean
-    public bool startPlaying;
-
-    public NoteScroll theBS;
-
-    public static GameManager instance;
-
-    public int currentScore;
-    public const int SCORE_VALUE = 300;
-
-    public int multiplierValue;
-    public int multiplierTracker;
-    public int[] multiplierThresholds;
-    public int combo;
-
-    public Text scoreText;
-    public Text multiText;
-    public Text comboText;
-
-    public float totalNotes;
-    //public float goodHits;
-    public float missHits;
-
-    // Start is called before the first frame update
-    void Start()
+    public class GameManager : MonoBehaviour
     {
-        instance = this;
+        public static GameManager Instance;
 
-        scoreText.text = "0";
-        combo = 0;
-        comboText.text = "";
-        multiplierValue = 1;
+        public const int SCORE_VALUE = 300;
 
-        totalNotes = FindObjectsOfType<NoteObject>().Length;
-    }
+        //Placeholder boolean
+        public bool StartPlaying;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(!startPlaying)
+        public NoteScroll NoteScroller;
+        
+        public int MultiplierValue;
+        public int MultiplierTracker;
+        public int[] MultiplierThresholds;
+        public int Combo;
+        public int CurrentScore;
+
+        public Text ScoreText;
+        public Text MultiText;
+        public Text ComboText;
+
+        public float TotalNotes;
+        //public float goodHits;
+        public float MissHits;
+
+        // Start is called before the first frame update
+        void Start()
         {
-            startPlaying = true;
-            theBS.gameStart = true;
+            Instance = this;
+            Logger.Initialize("log.txt");
+
+            ScoreText.text = "0";
+            Combo = 0;
+            ComboText.text = "";
+            MultiplierValue = 1;
+
+            TotalNotes = FindObjectsOfType<NoteObject>().Length;
         }
-    }
 
-    public void NoteHit()
-    {
-        //Debug.Log("Hit");
-
-        combo++;
-        totalNotes++;
-        comboText.text = "" + combo;
-
-        if (multiplierValue - 1 < multiplierThresholds.Length)
+        // Update is called once per frame
+        void Update()
         {
-            multiplierTracker++;
-
-            if (multiplierThresholds[multiplierValue - 1] <= multiplierTracker)
+            if (!StartPlaying)
             {
-                multiplierTracker = 0;
-                multiplierValue++;
+                StartPlaying = true;
+                NoteScroller.GameStart = true;
             }
         }
 
-        currentScore += (SCORE_VALUE + (96 * (multiplierValue - 1)));
-        scoreText.text = "" + currentScore;
-    }
+        void OnApplicationQuit()
+        {
+            Logger.Dispose();
+        }
 
-    /*public void NormalHit()
-    {
-        currentScore += (SCORE_VALUE + (96 * (multiplierValue - 1)));
-        NoteHit();
-        goodHits++;
-    }*/
+        public void NoteHit()
+        {
+            //Logger.Log("Hit");
 
+            Combo++;
+            TotalNotes++;
+            ComboText.text = Combo.ToString();
 
-    public void NoteMissed()
-    {
-        Debug.Log("Miss");
+            if (MultiplierValue - 1 < MultiplierThresholds.Length)
+            {
+                MultiplierTracker++;
 
-        combo = 0;
-        multiplierValue = 1;
-        comboText.text = "";
+                if (MultiplierThresholds[MultiplierValue - 1] <= MultiplierTracker)
+                {
+                    MultiplierTracker = 0;
+                    MultiplierValue++;
+                }
+            }
 
-        missHits++;
+            CurrentScore += (SCORE_VALUE + (96 * (MultiplierValue - 1)));
+            ScoreText.text = "" + CurrentScore;
+        }
 
+        /*public void NormalHit()
+        {
+            currentScore += (SCORE_VALUE + (96 * (multiplierValue - 1)));
+            NoteHit();
+            goodHits++;
+        }*/
+
+        
+
+        public void NoteMissed()
+        {
+            Logger.Log("Miss");
+
+            Combo = 0;
+            MultiplierValue = 1;
+            ComboText.text = "";
+
+            MissHits++;
+        }
     }
 }

@@ -2,16 +2,19 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class FPSCounter : MonoBehaviour
+namespace DrumSmasher.Debug
 {
-    public int avgFrameRate;
-    public Text display_Text;
-
-    public void Update()
+    public class FPSCounter : MonoBehaviour
     {
-        float current = 0;
-        current = (int)(1f / Time.unscaledDeltaTime);
-        avgFrameRate = (int)current;
-        display_Text.text = avgFrameRate.ToString() + " FPS";
+        public int AvgFrameRate;
+        public Text DisplayText;
+
+        public void Update()
+        {
+            float current = 0;
+            current = (int)(1f / Time.unscaledDeltaTime);
+            AvgFrameRate = (int)current;
+            DisplayText.text = AvgFrameRate.ToString() + " FPS";
+        }
     }
 }

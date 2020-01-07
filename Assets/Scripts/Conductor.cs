@@ -2,34 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Conductor : MonoBehaviour
+namespace DrumSmasher
 {
-
-    public float songBpm;
-    public float secPerBeat;
-    public float songPosition;
-    public float songPositionInBeats;
-    public float dspSongTime;
-    public AudioSource musicSource;
-    public float offset;
-
-    // Start is called before the first frame update
-    void Start()
+    public class Conductor : MonoBehaviour
     {
-        musicSource = GetComponent<AudioSource>();
+        public float SongBpm;
+        public float SecPerBeat;
+        public float SongPosition;
+        public float SongPositionInBeats;
+        public float DspSongTime;
+        public AudioSource MusicSource;
+        public float Offset;
 
-        secPerBeat = 60f / songBpm;
+        // Start is called before the first frame update
+        void Start()
+        {
+            MusicSource = GetComponent<AudioSource>();
 
-        dspSongTime = (float)AudioSettings.dspTime;
+            SecPerBeat = 60f / SongBpm;
 
-        musicSource.Play();
-    }
+            DspSongTime = (float)AudioSettings.dspTime;
 
-    // Update is called once per frame
-    void Update()
-    {
-        songPosition = (float)(AudioSettings.dspTime - dspSongTime - offset);
+            MusicSource.Play();
+        }
 
-        songPositionInBeats = songPosition / secPerBeat;
+        // Update is called once per frame
+        void Update()
+        {
+            SongPosition = (float)(AudioSettings.dspTime - DspSongTime - Offset);
+
+            SongPositionInBeats = SongPosition / SecPerBeat;
+        }
     }
 }

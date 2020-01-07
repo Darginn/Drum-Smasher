@@ -4,10 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
-using UnityEngine;
-using UnityEngine.UI;
 
-namespace Log
+namespace DrumSmasher
 {
     public static class Logger
     {
@@ -47,11 +45,17 @@ namespace Log
 
 #if DEBUG
                     if (console)
-                        Debug.Log(toLog);
+                        UnityEngine.Debug.Log(toLog);
 #endif
                 }
             }));
 
+        }
+
+        public static void Dispose()
+        {
+            if (_logStream != null)
+                _logStream.Dispose();
         }
 
     }

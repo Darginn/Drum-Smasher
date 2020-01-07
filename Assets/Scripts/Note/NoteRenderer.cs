@@ -2,17 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NoteRenderer : MonoBehaviour
+namespace DrumSmasher.Note
 {
-    public SpriteData spriteData;
+    public class NoteRenderer : MonoBehaviour
+    {
+        public SpriteData SpriteData;
+    }
+    
     [System.Serializable]
     public class SpriteData
     {
-        public NoteSpriteData[] notes;
+        public NoteSpriteData[] Notes;
     }
+
     [System.Serializable]
     public class NoteSpriteData
     {
-        public Sprite normal, finisher;
+        public Sprite Normal;
+        public Sprite Finisher;
     }
 }

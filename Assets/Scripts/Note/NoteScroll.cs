@@ -2,30 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NoteScroll : MonoBehaviour
+namespace DrumSmasher
 {
-    public float noteTempo;
-
-    public bool gameStart;
-    // Start is called before the first frame update
-    void Start()
+    public class NoteScroll : MonoBehaviour
     {
-        noteTempo = noteTempo / 60f;
-    }
+        public float NoteTempo;
+        public bool GameStart;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (!gameStart)
+        // Start is called before the first frame update
+        void Start()
         {
-            /* if (Input.anyKeyDown)
-            {
-                gameStart = true;
-            }  */
+            NoteTempo = NoteTempo / 60f;
         }
-        else
+
+        // Update is called once per frame
+        void Update()
         {
-            transform.position -= new Vector3((noteTempo * Time.deltaTime) * 3, 0f, 0f);
+            if (!GameStart)
+            {
+                /* if (Input.anyKeyDown)
+                {
+                    gameStart = true;
+                }  */
+            }
+            else
+            {
+                transform.position -= new Vector3((NoteTempo * Time.deltaTime) * 3, 0f, 0f);
+            }
         }
     }
 }
