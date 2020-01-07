@@ -28,6 +28,9 @@ namespace DrumSmasher.Note
         public bool DefaultNote;
         public bool ShouldStart;
 
+        public event EventHandler OnNoteMiss;
+        public event EventHandler<bool> OnNoteHit;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -38,16 +41,6 @@ namespace DrumSmasher.Note
         {
             if (ReachedEnd || ShouldStart || DefaultNote)
                 return;
-
-            if (transform.position.x < EndLine.transform.position.x)
-            {
-                ReachedEnd = true;
-                Destroy(this);
-                return;
-            }
-
-            Vector3 fixedLoc = StartPos - new Vector3(NoteSpeed * (float)DateTime.Now.Subtract(StartTime).TotalSeconds * 3f, 0f);
-            transform.position = fixedLoc;
 
             if (CanBeHit)
             {
@@ -64,6 +57,16 @@ namespace DrumSmasher.Note
                 else if (key1 || key2)
                     OnHit();
             }
+
+            if (transform.position.x < EndLine.transform.position.x)
+            {
+                ReachedEnd = true;
+                Destroy(this);
+                return;
+            }
+
+            Vector3 fixedLoc = StartPos - new Vector3(NoteSpeed * (float)DateTime.Now.Subtract(StartTime).TotalSeconds * 3f, 0f);
+            transform.position = fixedLoc;
         }
 
         private void OnHit(bool fullyCorrect = true)
@@ -78,6 +81,9 @@ namespace DrumSmasher.Note
             mr.enabled = false;
 
             ReachedEnd = true;
+
+            OnNoteHit?.Invoke(this, true);
+            Destroy(this);
         }
 
         void OnTriggerEnter2D(Collider2D other)
@@ -92,10 +98,9 @@ namespace DrumSmasher.Note
             {
                 if (!Hit)
                 {
-                    GameManager.Instance.NoteMissed();
+                    OnNoteMiss?.Invoke(this, null);
+                    Destroy(this);
                 }
-                else
-                    GameManager.Instance.NoteHit();
 
                 CanBeHit = false;
             }

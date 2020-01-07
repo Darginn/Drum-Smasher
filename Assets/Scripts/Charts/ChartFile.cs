@@ -74,7 +74,7 @@ namespace DrumSmasher.Charts
                 swriter.WriteLine(SECTION_NOTES);
                 foreach(ChartNote note in chart.Notes)
                 {
-                    line = ToString(note.BigNote) + "=" + note.Time.ToString() + "=" + note.Color.ToString();
+                    line = ToString(note.BigNote) + "=" + note.Time.TotalMilliseconds.ToString() + "=" + note.Color.ToString();
                     swriter.WriteLine(line);
                 }
                 swriter.Flush();
@@ -184,9 +184,9 @@ namespace DrumSmasher.Charts
                             if (lineSplit == null || lineSplit.Length <= 2)
                                 continue;
 
-                            if (TimeSpan.TryParse(lineSplit[1], out TimeSpan time) && short.TryParse(lineSplit[2], out short color))
+                            if (long.TryParse(lineSplit[1], out long ms) && short.TryParse(lineSplit[2], out short color))
                             {
-                                cn = new ChartNote(time, ToBool(lineSplit[0]), color);
+                                cn = new ChartNote(TimeSpan.FromMilliseconds(ms), ToBool(lineSplit[0]), color);
                                 c.Notes.Add(cn);
                             }
                             else

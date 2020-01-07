@@ -7,6 +7,7 @@ using System.Timers;
 using DrumSmasher.Note;
 using System.Diagnostics;
 using System.Linq;
+using UnityEngine.UI;
 
 namespace DrumSmasher
 {
@@ -20,6 +21,13 @@ namespace DrumSmasher
         public Chart LastChart;
         public event EventHandler OnChartEnd;
         public Stopwatch GameTime;
+
+        public Text ComboText;
+        public int Combo;
+        public Text ScoreText;
+        public long Score;
+
+        public float MultiplierValue;
 
         public NoteObject BlueNote;
         public NoteObject RedNote;
@@ -80,6 +88,8 @@ namespace DrumSmasher
             note.BigNote = n.BigNote;
             note.DefaultNote = false;
             note.NoteSpeed = _noteSpeed;
+            note.OnNoteHit += new EventHandler<bool>(OnNoteHit);
+            note.OnNoteMiss += new EventHandler(OnNoteMiss);
 
             //speed * time * 3 * end
             float start = (_noteSpeed * 4f * 2f) + 0f;
@@ -100,6 +110,8 @@ namespace DrumSmasher
 
             GameStart = false;
             Started = true;
+
+            MultiplierValue = 1;
 
             List<ChartNote> notes = CurrentChart.Notes.OrderBy(p => p.Time).ToList();
             for (int i = 0; i < notes.Count(); i++)
@@ -135,6 +147,31 @@ namespace DrumSmasher
             List<ChartNote> notes = ch.Notes.OrderBy(n => n.Time).ToList();
             for (int i = 0; i < notes.Count; i++)
                 _notesToSpawn.Enqueue(notes[i]);
+        }
+
+        private void OnNoteHit(object sender, bool goodHit)
+        {
+            Combo++;
+            ComboText.text = Combo.ToString() + "x";
+
+            //Score = {ScoreValue + [min(RoundDown(Combo / 10), 10) * RoundDown(taiko score multiplier * raw mod multiplier)]}
+
+            if (Combo < 10)
+                Score += 300;
+            else
+                Score = Score + (long)(Math.Min((float)Math.Round(Combo / 10.0, MidpointRounding.AwayFromZero), 10f) * Math.Round(Score * MultiplierValue, MidpointRounding.AwayFromZero));
+
+            ScoreText.text = Score.ToString();
+
+            Logger.Log($"Note Hit! Combo: {Combo}, Score {Score}", LogLevel.Trace);
+        }
+
+        private void OnNoteMiss(object sender, EventArgs e)
+        {
+            Combo = 0;
+            ComboText.text = "";
+
+            Logger.Log($"Note Miss!", LogLevel.Trace);
         }
 
         private void OnReachedChartEnd()
