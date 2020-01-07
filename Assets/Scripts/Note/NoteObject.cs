@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DrumSmasher;
+using System;
 
 namespace DrumSmasher.Note
 {
@@ -19,9 +20,13 @@ namespace DrumSmasher.Note
         public GameObject MissEffect;
         public GameObject EndLine;
 
+        public Vector3 StartPos;
+        public DateTime StartTime;
+
         public float NoteSpeed;
 
         public bool DefaultNote;
+        public bool ShouldStart;
 
         // Start is called before the first frame update
         void Start()
@@ -31,17 +36,18 @@ namespace DrumSmasher.Note
         // Update is called once per frame
         void Update()
         {
-            if (ReachedEnd)
+            if (ReachedEnd || ShouldStart || DefaultNote)
                 return;
 
             if (transform.position.x < EndLine.transform.position.x)
             {
                 ReachedEnd = true;
+                Destroy(this);
                 return;
             }
-
-            if (!DefaultNote)
-                transform.position -= new Vector3((NoteSpeed * Time.deltaTime) * 3, 0f, 0f);
+            
+            Vector3 fixedLoc = StartPos - new Vector3(NoteSpeed * (float)DateTime.Now.Subtract(StartTime).TotalSeconds * 3f, 0f);
+            transform.position = fixedLoc;
             
             if (CanBeHit)
             {
@@ -77,10 +83,7 @@ namespace DrumSmasher.Note
         void OnTriggerEnter2D(Collider2D other)
         {
             if (other.tag.Equals("Activator"))
-            {
-                Logger.Log("Can be hit!");
                 CanBeHit = true;
-            }
         }
 
         void OnTriggerExit2D(Collider2D other)

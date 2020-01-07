@@ -34,7 +34,6 @@ namespace DrumSmasher
         private int _noteIndex;
 
         private List<NoteObject> _spawnedNotes;
-        private List<NoteObject> _endNotes;
         private Queue<ChartNote> _notesToSpawn;
 
         // Start is called before the first frame update
@@ -53,17 +52,8 @@ namespace DrumSmasher
                 StartGame();
                 return;
             }
-            else if (!GameStart && !Started)
+            else if ((!GameStart && !Started) || ReachedEnd)
                 return;
-
-            for (int i = 0; i < _spawnedNotes.Count; i++)
-            {
-                if (_spawnedNotes[i].ReachedEnd)
-                {
-                    _endNotes.Add(_spawnedNotes[i]);
-                    _spawnedNotes.RemoveAt(i);
-                }
-            }
 
             //Reached end of chart, stop playing
             if (_noteIndex > CurrentChart.Notes.Count - 1)
@@ -82,24 +72,17 @@ namespace DrumSmasher
 
             Logger.Log("Spawning note");
             
-            try
-            {
+            ChartNote n = _notesToSpawn.Dequeue();
+            NoteObject origNote = n.Color == 0 ? BlueNote : RedNote;
+            NoteObject note = Instantiate(origNote, new Vector3(41.58999f, 2.468484f, 0f), new Quaternion());
+            note.StartTime = DateTime.Now;
 
-                ChartNote n = _notesToSpawn.Dequeue();
-                NoteObject origNote = n.Color == 0 ? BlueNote : RedNote;
-                NoteObject note = Instantiate(origNote, new Vector3(41.58999f, 2.468484f, 0f), new Quaternion());
-                //ToDo add time fix incase we spawn late
-                note.BigNote = n.BigNote;
-                note.DefaultNote = false;
-                note.NoteSpeed = _noteSpeed;
-                _spawnedNotes.Add(note);
-                _noteIndex++;
-            }
-            catch (Exception ex)
-            {
-                Logger.Log("Failed to spawn note: " + ex.ToString(), LogLevel.ERROR);
-                return;
-            }
+            note.BigNote = n.BigNote;
+            note.DefaultNote = false;
+            note.NoteSpeed = _noteSpeed;
+            note.StartPos = note.transform.position;
+            _spawnedNotes.Add(note);
+            _noteIndex++;
 
             Logger.Log("Spawned note");
         }
