@@ -8,6 +8,7 @@ using DrumSmasher.Note;
 using System.Diagnostics;
 using System.Linq;
 using UnityEngine.UI;
+using System.Threading.Tasks;
 
 namespace DrumSmasher
 {
@@ -31,6 +32,12 @@ namespace DrumSmasher
 
         public NoteObject BlueNote;
         public NoteObject RedNote;
+
+        public Conductor Conductor;
+
+        public bool AutoPlay;
+
+        private long _startTime;
         
         private float _noteSpeed
         {
@@ -57,11 +64,19 @@ namespace DrumSmasher
         {
             if (GameStart)
             {
+                if (_startTime == 0)
+                {
+                    _startTime = DateTime.Now.AddMilliseconds(CurrentChart.Offset + 20 * 1000).Ticks;
+                    Logger.Log("Start time set to " + _startTime.ToString());
+                }
+
+                Logger.Log("Offset: " + CurrentChart.Offset);
                 StartGame();
                 return;
             }
             else if ((!GameStart && !Started) || ReachedEnd)
                 return;
+            
 
             //Reached end of chart, stop playing
             if (_noteIndex > CurrentChart.Notes.Count - 1)
@@ -75,7 +90,7 @@ namespace DrumSmasher
                 return;
             }
 
-            if (_notesToSpawn.ElementAt(0).Time.Ticks >= GameTime.ElapsedTicks)
+            if (_notesToSpawn.ElementAt(0).Time.Ticks > GameTime.ElapsedTicks)
                 return;
 
             Logger.Log("Spawning note");
@@ -90,6 +105,7 @@ namespace DrumSmasher
             note.NoteSpeed = _noteSpeed;
             note.OnNoteHit += new EventHandler<bool>(OnNoteHit);
             note.OnNoteMiss += new EventHandler(OnNoteMiss);
+            note.AutoPlay = AutoPlay;
 
             //speed * time * 3 * end
             float start = (_noteSpeed * 4f * 2f) + 0f;
@@ -98,16 +114,28 @@ namespace DrumSmasher
             _noteIndex++;
 
             Logger.Log("Spawned note");
+
+            if (_startTime <= DateTime.Now.Ticks)
+            {
+                Logger.Log("Starting music", LogLevel.Trace);
+                _startTime = long.MaxValue;
+
+                if (Conductor.MusicSource.isPlaying)
+                    Conductor.MusicSource.Stop();
+
+                Conductor.MusicSource.Play();
+            }
         }
 
         private void StartGame()
         {
             Logger.Log("Starting game");
             Logger.Log("Notes to spawn: " + _notesToSpawn.Count, LogLevel.Trace);
-
+            
             if (_notesToSpawn.Count == 0)
                 return;
 
+            _startTime = 0;
             GameStart = false;
             Started = true;
 
@@ -116,7 +144,9 @@ namespace DrumSmasher
             List<ChartNote> notes = CurrentChart.Notes.OrderBy(p => p.Time).ToList();
             for (int i = 0; i < notes.Count(); i++)
                 _notesToSpawn.Enqueue(notes[i]);
-            
+
+            if (GameTime.IsRunning)
+                GameTime.Stop();
             GameTime.Reset();
             GameTime.Start();
 
@@ -147,19 +177,20 @@ namespace DrumSmasher
             List<ChartNote> notes = ch.Notes.OrderBy(n => n.Time).ToList();
             for (int i = 0; i < notes.Count; i++)
                 _notesToSpawn.Enqueue(notes[i]);
+
+            _startTime = 0;
         }
 
         private void OnNoteHit(object sender, bool goodHit)
         {
+            Conductor.HitSource.Play();
             Combo++;
             ComboText.text = Combo.ToString() + "x";
-
-            //Score = {ScoreValue + [min(RoundDown(Combo / 10), 10) * RoundDown(taiko score multiplier * raw mod multiplier)]}
-
+            
             if (Combo < 10)
                 Score += 300;
             else
-                Score = Score + (long)(Math.Min((float)Math.Round(Combo / 10.0, MidpointRounding.AwayFromZero), 10f) * Math.Round(Score * MultiplierValue, MidpointRounding.AwayFromZero));
+                Score += (long)(Math.Min((float)Math.Round(Combo / 10.0, MidpointRounding.AwayFromZero), 10f) * Math.Round(MultiplierValue, MidpointRounding.AwayFromZero));
 
             ScoreText.text = Score.ToString();
 

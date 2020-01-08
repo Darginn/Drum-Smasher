@@ -12,6 +12,7 @@ namespace DrumSmasher
         public float SongPositionInBeats;
         public float DspSongTime;
         public AudioSource MusicSource;
+        public AudioSource HitSource;
         public float Offset;
 
         // Start is called before the first frame update
@@ -22,8 +23,6 @@ namespace DrumSmasher
             SecPerBeat = 60f / SongBpm;
 
             DspSongTime = (float)AudioSettings.dspTime;
-
-            MusicSource.Play();
         }
 
         // Update is called once per frame

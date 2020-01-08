@@ -1,33 +1,17 @@
-[settings]
+﻿[settings]
 ID=1
-Artist=Dargin
-Title=Metronome
-Album=testAlbum
+Artist=t+pazolite
+Title=Night of Knights (tpz Overheat Remix)
+Album=東方花映塚　～ Phantasmagoria of Flower View.
 Year=2019
-Creator=Dargin
-Tags=test, tags, a
-Offset=-5
-PreviewStart=5
-PreviewEnd=10
-Genre=1
-BPM=60
-SoundFile=song.mp3
+Creator=eiri-
+Tags=Ayyri 東方Project ZUN Team Shanghai Alice Touhou Izayoi Sakuya Brain Power Max Burning MAD COOL&CREATE beatMARIO CCC CHS C.H.S CCCD-0050 十六夜 咲夜 PoFV TH09 TH 9 Flower Reflecting Mound Kaeizuka
+Offset=2400
+PreviewStart=20968
+PreviewEnd=0
+BPM=200
+SoundFile=audio.mp3
 [/\]
 [notes]
-1=1000=1
-0=1500=1
-0=2000=1
-0=2500=1
-0=3000=1
-1=3500=1
-0=4000=1
-0=4500=1
-0=5000=1
-0=5500=1
-1=6000=1
-0=6500=1
-0=7000=1
-0=7500=1
-0=8000=1
-0=8500=1
+1=2968=0
 [/\]

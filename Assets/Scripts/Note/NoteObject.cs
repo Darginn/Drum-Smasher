@@ -24,23 +24,34 @@ namespace DrumSmasher.Note
         public DateTime StartTime;
 
         public float NoteSpeed;
+        public bool AutoPlay;
 
         public bool DefaultNote;
-        public bool ShouldStart;
 
         public event EventHandler OnNoteMiss;
         public event EventHandler<bool> OnNoteHit;
 
+        private SpriteRenderer _spriteThis;
+        private SpriteRenderer _spriteOverlay;
+
         // Start is called before the first frame update
         void Start()
         {
+            _spriteThis = GetComponent<SpriteRenderer>();
+            _spriteOverlay = transform.Find("taiko-noteoverlay").GetComponent<SpriteRenderer>();
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (ReachedEnd || ShouldStart || DefaultNote)
+            if (ReachedEnd || DefaultNote)
                 return;
+            
+            if (AutoPlay && transform.position.x < 0.8f && transform.position.x > -0.8f)
+            {
+                OnHit();
+                return;
+            }
 
             if (CanBeHit)
             {
@@ -50,40 +61,56 @@ namespace DrumSmasher.Note
                 if (BigNote)
                 {
                     if (key1 && key2)
+                    {
                         OnHit();
+                        return;
+                    }
                     else if (key1 || key2)
+                    {
                         OnHit(false);
+                        return;
+                    }
                 }
                 else if (key1 || key2)
+                {
                     OnHit();
+                    return;
+                }
             }
+
 
             if (transform.position.x < EndLine.transform.position.x)
             {
                 ReachedEnd = true;
-                Destroy(this);
+                Destroy(gameObject);
                 return;
             }
-
-            Vector3 fixedLoc = StartPos - new Vector3(NoteSpeed * (float)DateTime.Now.Subtract(StartTime).TotalSeconds * 3f, 0f);
-            transform.position = fixedLoc;
+            
+            transform.position -= new Vector3(NoteSpeed * (float)DateTime.Now.Subtract(StartTime).TotalSeconds * 3f, 0f);
         }
 
         private void OnHit(bool fullyCorrect = true)
         {
-            Logger.Log("Hit");
-            CanBeHit = false;
-            SpriteRenderer mr = GetComponent<SpriteRenderer>();
-            mr.enabled = false;
+            bool goodHit = fullyCorrect;
 
-            Transform overlay = transform.Find("taiko-noteoverlay");
-            mr = overlay.GetComponent<SpriteRenderer>();
-            mr.enabled = false;
+            if (!BigNote && (transform.position.x >= 1.1f || transform.position.x <= -1.1f))
+                goodHit = false;
+
+            Hit = true;
+            CanBeHit = false;
+
+            _spriteThis.enabled = false;
+            _spriteOverlay.enabled = false;
 
             ReachedEnd = true;
 
-            OnNoteHit?.Invoke(this, true);
-            Destroy(this);
+            OnNoteHit?.Invoke(this, goodHit);
+            Destroy(gameObject);
+        }
+
+        private void OnMiss()
+        {
+            OnNoteMiss?.Invoke(this, null);
         }
 
         void OnTriggerEnter2D(Collider2D other)
@@ -97,10 +124,7 @@ namespace DrumSmasher.Note
             if (other.tag.Equals("Activator"))
             {
                 if (!Hit)
-                {
-                    OnNoteMiss?.Invoke(this, null);
-                    Destroy(this);
-                }
+                    OnMiss();
 
                 CanBeHit = false;
             }
