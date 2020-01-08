@@ -64,14 +64,16 @@ namespace DrumSmasher
         {
             if (GameStart)
             {
+                StartGame();
+
                 if (_startTime == 0)
                 {
-                    _startTime = DateTime.Now.AddMilliseconds(CurrentChart.Offset + 20 * 1000).Ticks;
-                    Logger.Log("Start time set to " + _startTime.ToString());
+                    ChartNote cn = _notesToSpawn.ElementAt(0);
+                    DateTime st = DateTime.Now.AddMilliseconds(CurrentChart.Offset);
+                    _startTime = st.Ticks;
+                    Logger.Log("Start time set to " + st.ToString());
                 }
 
-                Logger.Log("Offset: " + CurrentChart.Offset);
-                StartGame();
                 return;
             }
             else if ((!GameStart && !Started) || ReachedEnd)
@@ -81,7 +83,6 @@ namespace DrumSmasher
             //Reached end of chart, stop playing
             if (_noteIndex > CurrentChart.Notes.Count - 1)
             {
-                Logger.Log("Checking for chart end");
                 foreach (NoteObject no in _spawnedNotes)
                     if (no.CanBeHit)
                         return;
@@ -92,8 +93,6 @@ namespace DrumSmasher
 
             if (_notesToSpawn.ElementAt(0).Time.Ticks > GameTime.ElapsedTicks)
                 return;
-
-            Logger.Log("Spawning note");
             
             ChartNote n = _notesToSpawn.Dequeue();
             NoteObject origNote = n.Color == 0 ? BlueNote : RedNote;
@@ -112,8 +111,6 @@ namespace DrumSmasher
             note.StartPos = new Vector3(start, origNote.transform.position.y);
             _spawnedNotes.Add(note);
             _noteIndex++;
-
-            Logger.Log("Spawned note");
 
             if (_startTime <= DateTime.Now.Ticks)
             {

@@ -86,7 +86,7 @@ namespace DrumSmasher.Note
                 return;
             }
             
-            transform.position -= new Vector3(NoteSpeed * (float)DateTime.Now.Subtract(StartTime).TotalSeconds * 3f, 0f);
+            transform.position = StartPos - new Vector3(NoteSpeed * (float)DateTime.Now.Subtract(StartTime).TotalSeconds * 3f, 0f);
         }
 
         private void OnHit(bool fullyCorrect = true)
