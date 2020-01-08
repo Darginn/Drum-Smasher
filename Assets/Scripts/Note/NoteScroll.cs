@@ -64,8 +64,6 @@ namespace DrumSmasher
         {
             if (GameStart)
             {
-                StartGame();
-
                 if (_startTime == 0)
                 {
                     ChartNote cn = _notesToSpawn.ElementAt(0);
@@ -74,6 +72,7 @@ namespace DrumSmasher
                     Logger.Log("Start time set to " + st.ToString());
                 }
 
+                StartGame();
                 return;
             }
             else if ((!GameStart && !Started) || ReachedEnd)
