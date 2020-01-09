@@ -36,6 +36,8 @@ namespace DrumSmasher.Notes
         public GameInput.ButtonController Key3;
         public GameInput.ButtonController Key4;
 
+        public Text SoundOffsetText;
+
         public int Key1Hits;
         public int Key2Hits;
         public int Key3Hits;
@@ -92,6 +94,8 @@ namespace DrumSmasher.Notes
 
         void Update()
         {
+            SoundOffsetText.text = "Offset: " + _playTime.ElapsedMilliseconds;
+
             if (!Play || ReachedEnd)
                 return;
 
@@ -111,12 +115,14 @@ namespace DrumSmasher.Notes
 
                     Paused = false;
                     UnPauseMusic();
+                    _playTime.Start();
                 }
                 else
                 {
                     Paused = true;
                     _pausedAt = DateTime.Now;
                     PauseMusic();
+                    _playTime.Stop();
                 }
 
                 _nextPause = DateTime.Now.AddMilliseconds(PauseKeyDelayMS);
