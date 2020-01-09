@@ -353,6 +353,7 @@ MonoBehaviour:
   ReachedEnd: 0
   NoteSpeed: 6
   PauseKeyDelayMS: 100
+  Offset: 0
 --- !u!1 &281059631
 GameObject:
   m_ObjectHideFlags: 0
@@ -1040,7 +1041,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: b41de52ed09fd8041ae45da75245f995, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 301f1424361b1614daea3e27371eb526, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
