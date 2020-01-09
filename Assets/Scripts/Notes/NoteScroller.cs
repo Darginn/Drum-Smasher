@@ -69,14 +69,14 @@ namespace DrumSmasher.Notes
             {
                 if (Paused)
                 {
-                    long diffrence;
+                    long difference;
                     foreach(Note n in _spawnedNotes)
                     {
                         if (n == null)
                             continue;
 
-                        diffrence = _pausedAt.Subtract(n.StartTime).Ticks;
-                        n.StartTime = new DateTime(DateTime.Now.Ticks - diffrence);
+                        difference = _pausedAt.Subtract(n.StartTime).Ticks;
+                        n.StartTime = new DateTime(DateTime.Now.Ticks - difference);
                     }
 
                     Paused = false;
