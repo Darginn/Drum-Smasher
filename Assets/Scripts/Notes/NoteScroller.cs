@@ -40,6 +40,7 @@ namespace DrumSmasher.Notes
         private DateTime _songStart;
         private DateTime _nextPause;
         private DateTime _pausedAt;
+        private float _noteLayer;
 
         public NoteScroller() : base()
         {
@@ -161,10 +162,11 @@ namespace DrumSmasher.Notes
                 origNote = cn.Color == 0 ? OrigNoteBlue : OrigNoteRed;
 
             Note n = Instantiate<Note>(origNote);
-            n.StartPosition = new Vector3(start, origNote.transform.position.y);
+            n.StartPosition = new Vector3(start, origNote.transform.position.y, origNote.transform.position.z - _noteLayer);
             n.StartTime = DateTime.Now;
             n.DefaultNote = false;
             _spawnedNotes.Add(n);
+            _noteLayer -= 0.02f;
         }
 
         public void Load(Chart ch)
@@ -191,6 +193,7 @@ namespace DrumSmasher.Notes
             List<ChartNote> notes = ch.Notes.OrderBy(n => n.Time).ToList();
             for (int i = 0; i < notes.Count; i++)
                 _notesToSpawn.Enqueue(notes[i]);
+            _noteLayer = 0f;
         }
 
         public void StartPlaying()
