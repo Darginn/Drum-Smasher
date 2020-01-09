@@ -51,7 +51,7 @@ namespace DrumSmasher.Notes
             else
                 Score += (long)(Math.Min((float)Math.Round(Combo / 10.0, MidpointRounding.AwayFromZero), 10f) * Math.Round(MultiplierValue, MidpointRounding.AwayFromZero));
 
-            ComboText.text = Combo + "x";
+            ComboText.text = "Combo: " + Combo.ToString();
             ScoreText.text = Score.ToString();
         }
 
@@ -61,7 +61,7 @@ namespace DrumSmasher.Notes
 
             Combo = 0;
 
-            ComboText.text = "";
+            ComboText.text = "Combo: 0";
         }
 
         public void Reset()
@@ -69,7 +69,6 @@ namespace DrumSmasher.Notes
             ScoreText.text = "0";
             Combo = 0;
             ComboText.text = "";
-            MultiplierValue = 1;
         }
     }
 }
