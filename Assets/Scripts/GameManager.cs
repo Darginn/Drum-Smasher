@@ -27,12 +27,17 @@ namespace DrumSmasher
         public NoteScroller NoteScroller;
         public int MultiplierValue;
 
+        public int TargetFPS = 0; // Placeholder variable (0 = unlimited)
+
         // Start is called before the first frame update
         void Start()
         {
             Instance = this;
             Logger.Initialize("log.txt");
             StartPlaying = true;
+
+            QualitySettings.vSyncCount = 0;
+            Application.targetFrameRate = TargetFPS;
         }
 
         // Update is called once per frame
