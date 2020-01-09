@@ -610,7 +610,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 9.885231
+  orthographic size: 9.8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2314,6 +2314,7 @@ MonoBehaviour:
   StartPlaying: 1
   NoteScroller: {fileID: 275989790}
   MultiplierValue: 80
+  TargetFPS: 0
 --- !u!4 &1710752815
 Transform:
   m_ObjectHideFlags: 0
