@@ -29,7 +29,8 @@ namespace DrumSmasher
             if (StartPlaying)
             {
                 StartPlaying = false;
-                Charts.Chart ch = Charts.ChartFile.Load(@"Assets\Charts\Sample Song\Test.Chart");
+                const string testChartFolder = @"Assets\Charts\Sample Song\";
+                Charts.Chart ch = Charts.ChartFile.Load(testChartFolder + "Test.Chart");
 
                 if (ch == null)
                 {

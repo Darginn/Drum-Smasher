@@ -353,6 +353,7 @@ MonoBehaviour:
   ReachedEnd: 0
   NoteSpeed: 6
   PauseKeyDelayMS: 100
+  Offset: 0
 --- !u!1 &281059631
 GameObject:
   m_ObjectHideFlags: 0

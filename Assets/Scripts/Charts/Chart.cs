@@ -11,9 +11,11 @@ namespace DrumSmasher.Charts
         public string Title { get; set; }
         public string Album { get; set; }
         public short Year { get; set; }
+        public string Difficulty { get; set; }
         public string Creator { get; set; }
         public string Tags { get; set; }
         public short Genre { get; set; }
+        public string Source { get; set; }
 
         public long Offset { get; set; }
         public long PreviewStart { get; set; }
