@@ -36,6 +36,8 @@ namespace DrumSmasher.Notes
         public int Key3Hits { get; set; }
         public int Key4Hits { get; set; }
 
+        public long FirstOffsetNoteHit;
+
         public KeyCode Key1;
         public KeyCode Key2;
         public KeyCode Key3;
@@ -51,6 +53,8 @@ namespace DrumSmasher.Notes
         public Text Key4Text;
 
         public NoteScroller Scroller;
+
+        private bool _offsetCheck;
 
         public NoteTracker()
         {
@@ -83,7 +87,12 @@ namespace DrumSmasher.Notes
         
         public void Hit(bool goodHit, bool bigNote)
         {
-            Logger.Log("Note hit", LogLevel.Trace);
+            if (Scroller.AutoPlay && !_offsetCheck)
+            {
+                _offsetCheck = true;
+
+                Logger.Log($"First offset MS: {Scroller.GameTime.ElapsedMilliseconds}, Offset song S: {Scroller.Sound.MusicSource.time}");
+            }
 
             Combo++;
 
@@ -98,8 +107,6 @@ namespace DrumSmasher.Notes
 
         public void Miss()
         {
-            Logger.Log("Note miss", LogLevel.Trace);
-
             Combo = 0;
 
             ComboText.text = "Combo: 0";

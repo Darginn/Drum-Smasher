@@ -12,6 +12,7 @@ namespace DrumSmasher.Notes
 {
     public class NoteScroller : MonoBehaviour
     {
+        public Stopwatch GameTime { get { return _playTime; } }
         public Conductor Sound;
         public NoteTracker Tracker;
 
@@ -51,6 +52,9 @@ namespace DrumSmasher.Notes
         public int PauseKeyDelayMS;
         public long Offset;
         public double AutoPlayDelayMS;
+
+        public float BPM;
+        public float CurrentBeat;
         
         private Queue<ChartNote> _notesToSpawn;
         private List<Note> _spawnedNotes;
@@ -60,6 +64,7 @@ namespace DrumSmasher.Notes
         private DateTime _nextPause;
         private DateTime _pausedAt;
         private float _noteLayer;
+        private bool _firstOffsetCheck;
 
         public NoteScroller() : base()
         {
@@ -73,6 +78,7 @@ namespace DrumSmasher.Notes
             _notesToSpawn = new Queue<ChartNote>();
             Tracker = new NoteTracker()
             {
+                Scroller = this,
                 ComboText = ComboText,
                 ScoreText = ScoreText,
                 Key1Text = Key1Text,
@@ -94,11 +100,25 @@ namespace DrumSmasher.Notes
 
         void Update()
         {
-            SoundOffsetText.text = "Offset: " + _playTime.ElapsedMilliseconds;
-
             if (!Play || ReachedEnd)
                 return;
 
+            SoundOffsetText.text = "Offset: " + _playTime.ElapsedMilliseconds;
+
+            //120 bpm
+            //2 beats / s
+            // 120 / 60 = 2 beats per second
+            //1 / 2 = 0.5 s â beat
+
+            if (BPM > 0 && Sound.MusicSource.isPlaying)
+            {
+                float beatsPerSec = BPM / 60f;
+                float secPerBeat = 1 / beatsPerSec;
+
+                float beatPos = (Sound.MusicSource.time / secPerBeat) - (Offset / 1000f / secPerBeat);
+                CurrentBeat = beatPos;
+            }
+            
             if (_nextPause < DateTime.Now && Input.GetKeyDown(KeyCode.Space))
             {
                 if (Paused)
@@ -233,6 +253,7 @@ namespace DrumSmasher.Notes
             Offset = ch.Offset;
 
             _noteLayer = 0f;
+            BPM = ch.BPM;
         }
 
         public void StartPlaying()

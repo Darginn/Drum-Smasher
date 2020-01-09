@@ -18,25 +18,14 @@ namespace DrumSmasher
         public float Offset;
         public bool ReachedEnd;
         public Text MusicPositionText;
+
+        private DateTime _nextTimeJump;
+
         private AudioClip _musicClip
         {
             get
             {
                 return MusicSource.clip;
-            }
-        }
-        private TimeSpan _musicPosition
-        {
-            get
-            {
-                return TimeSpan.FromSeconds(MusicSource.time);
-            }
-        }
-        private TimeSpan _musicLength
-        {
-            get
-            {
-                return TimeSpan.FromSeconds(_musicClip.length);
             }
         }
         // Start is called before the first frame update
@@ -58,8 +47,8 @@ namespace DrumSmasher
             
             if (MusicSource.time <= _musicClip.length)
             {
-                TimeSpan pos = _musicPosition;
-                TimeSpan length = _musicLength;
+                TimeSpan pos = TimeSpan.FromSeconds(MusicSource.time);
+                TimeSpan length = TimeSpan.FromSeconds(_musicClip.length);
                 MusicPositionText.text = $"{pos.Hours}:{pos.Seconds}:{pos.Milliseconds}/{length.Hours}:{length.Seconds}:{length.Milliseconds}";
             }
         }
