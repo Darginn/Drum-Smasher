@@ -22,9 +22,24 @@ namespace DrumSmasher.Notes
         public Note OrigNoteRed;
         public Note OrigNoteBigBlue;
         public Note OrigNoteBigRed;
-
+        
         public Text ScoreText;
         public Text ComboText;
+
+        public Text Key1Text;
+        public Text Key2Text;
+        public Text Key3Text;
+        public Text Key4Text;
+
+        public GameInput.ButtonController Key1;
+        public GameInput.ButtonController Key2;
+        public GameInput.ButtonController Key3;
+        public GameInput.ButtonController Key4;
+
+        public int Key1Hits;
+        public int Key2Hits;
+        public int Key3Hits;
+        public int Key4Hits;
 
         public bool Paused;
         public bool Play;
@@ -33,6 +48,7 @@ namespace DrumSmasher.Notes
         public float NoteSpeed;
         public int PauseKeyDelayMS;
         public long Offset;
+        public double AutoPlayDelayMS;
         
         private Queue<ChartNote> _notesToSpawn;
         private List<Note> _spawnedNotes;
@@ -57,9 +73,22 @@ namespace DrumSmasher.Notes
             {
                 ComboText = ComboText,
                 ScoreText = ScoreText,
+                Key1Text = Key1Text,
+                Key2Text = Key2Text,
+                Key3Text = Key3Text,
+                Key4Text = Key4Text,
+                Key1 = Key1.KeyToPress,
+                Key2 = Key2.KeyToPress,
+                Key3 = Key3.KeyToPress,
+                Key4 = Key4.KeyToPress,
             };
-            
+
+            Key1Text.text = "";
+            Key2Text.text = "";
+            Key3Text.text = "";
+            Key4Text.text = "";
         }
+        
 
         void Update()
         {

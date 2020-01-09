@@ -10,6 +10,18 @@ namespace DrumSmasher
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance;
+        public static System.Random Random
+        {
+            get
+            {
+                if (_random == null)
+                    _random = new System.Random();
+
+                return _random;
+            }
+        }
+        private static System.Random _random;
+
         public bool StartPlaying;
 
         public NoteScroller NoteScroller;

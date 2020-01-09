@@ -13,6 +13,8 @@ namespace DrumSmasher.Notes
 
         public KeyCode Key;
         public KeyCode Key2;
+        public GameInput.ButtonController KeyController;
+        public GameInput.ButtonController KeyController2;
 
         public GameObject GoodEffect;
         public GameObject MissEffect;
@@ -43,10 +45,31 @@ namespace DrumSmasher.Notes
             if (Scroller.Paused || DefaultNote)
                 return;
             
-            if (Scroller.AutoPlay && transform.position.x < HitCircle.transform.position.x + 0.3f)
+            if (Scroller.AutoPlay)
             {
-                OnHit(true);
-                return;
+                KeyController.AutoPlay = true;
+                KeyController2.AutoPlay = true;
+
+                if (transform.position.x < HitCircle.transform.position.x + 0.3f)
+                {
+                    if (BigNote)
+                    {
+                        KeyController.SimulateMouseKey(Scroller.AutoPlayDelayMS);
+                        KeyController2.SimulateMouseKey(Scroller.AutoPlayDelayMS);
+                    }
+                    else if (GameManager.Random.Next(0, 1) == 1)
+                        KeyController.SimulateMouseKey(Scroller.AutoPlayDelayMS);
+                    else
+                        KeyController2.SimulateMouseKey(Scroller.AutoPlayDelayMS);
+
+                    OnHit(true);
+                    return;
+                }
+            }
+            else
+            {
+                KeyController.AutoPlay = false;
+                KeyController2.AutoPlay = false;
             }
 
             if (transform.position.x <= HitCircle.transform.position.x + HitCircle.transform.localScale.x &&
@@ -100,7 +123,7 @@ namespace DrumSmasher.Notes
         private void OnHit(bool goodHit)
         {
             Scroller.Sound.HitSource.Play();
-            Scroller.Tracker.Hit(goodHit);
+            Scroller.Tracker.Hit(goodHit, BigNote);
             Destroy(gameObject);
         }
     }
