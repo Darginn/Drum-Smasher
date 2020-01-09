@@ -54,7 +54,7 @@ namespace DrumSmasher.Notes
             Tracker = new NoteTracker()
             {
                 ComboText = ComboText,
-                ScoreText = ScoreText
+                ScoreText = ScoreText,
             };
             
         }

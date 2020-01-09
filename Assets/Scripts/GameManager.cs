@@ -38,6 +38,7 @@ namespace DrumSmasher
                 }
 
                 NoteScroller.Load(ch);
+                NoteScroller.Tracker.MultiplierValue = MultiplierValue;
                 NoteScroller.StartPlaying();
             }
             
