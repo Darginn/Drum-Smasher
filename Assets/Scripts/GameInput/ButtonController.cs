@@ -26,34 +26,21 @@ namespace DrumSmasher.GameInput
         // Update is called once per frame
         void Update()
         {
-            try
+            if (!AutoPlay)
             {
-                if (!AutoPlay)
+                if (Input.GetKeyDown(KeyToPress))
                 {
-                    if (Input.GetKeyDown(KeyToPress))
-                    {
-                        _spriteRenderer.sprite = PressedImage;
-                        KeyPress();
-                    }
+                    _spriteRenderer.sprite = PressedImage;
+                    KeyPress();
+                }
 
-                    if (Input.GetKeyUp(KeyToPress))
-                    {
-                        _spriteRenderer.sprite = DefaultImage;
-                    }
-                }
-                else
+                if (Input.GetKeyUp(KeyToPress))
                 {
-                    if (_clickEnd <= DateTime.Now)
-                    {
-                        Logger.Log($"Autoplay note up {DateTime.Now.Second}:{DateTime.Now.Millisecond}");
-                        _spriteRenderer.sprite = DefaultImage;
-                    }
+                    _spriteRenderer.sprite = DefaultImage;
                 }
             }
-            catch (Exception ex)
-            {
-                Logger.Log(ex.ToString(), LogLevel.ERROR);
-            }
+            else if (_clickEnd <= DateTime.Now)
+                _spriteRenderer.sprite = DefaultImage;
         }
 
         private void KeyPress()
@@ -66,17 +53,9 @@ namespace DrumSmasher.GameInput
 
         public void SimulateMouseKey(double delay)
         {
-            try
-            {
-                Logger.Log($"Autoplay note down {DateTime.Now.Second}:{DateTime.Now.Millisecond}");
-                _spriteRenderer.sprite = PressedImage;
-                _clickEnd = DateTime.Now.AddMilliseconds(delay);
-                KeyPress();
-            }
-            catch (Exception ex)
-            {
-                Logger.Log(ex.ToString(), LogLevel.ERROR);
-            }
+            _spriteRenderer.sprite = PressedImage;
+            _clickEnd = DateTime.Now.AddMilliseconds(delay);
+            KeyPress();
         }
     }
 }
