@@ -32,6 +32,7 @@ namespace DrumSmasher.Notes
         public bool ReachedEnd;
         public float NoteSpeed;
         public int PauseKeyDelayMS;
+        public long Offset;
         
         private Queue<ChartNote> _notesToSpawn;
         private List<Note> _spawnedNotes;
@@ -193,6 +194,9 @@ namespace DrumSmasher.Notes
             List<ChartNote> notes = ch.Notes.OrderBy(n => n.Time).ToList();
             for (int i = 0; i < notes.Count; i++)
                 _notesToSpawn.Enqueue(notes[i]);
+
+            Offset = ch.Offset;
+
             _noteLayer = 0f;
         }
 
@@ -200,7 +204,7 @@ namespace DrumSmasher.Notes
         {
             Logger.Log("Starting to play", LogLevel.Trace);
 
-            _songStart = DateTime.Now.AddMilliseconds(CurrentChart.Offset);
+            _songStart = DateTime.Now.AddMilliseconds(Offset);
             Play = true;
             Paused = false;
             _playTime.Start();
