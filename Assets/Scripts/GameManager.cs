@@ -27,7 +27,7 @@ namespace DrumSmasher
         public NoteScroller NoteScroller;
         public int MultiplierValue;
 
-        public int TargetFPS = 0; // Placeholder variable (0 = unlimited)
+        public int TargetFPS = 1000; // Placeholder value (0 = unlimited)
 
         // Start is called before the first frame update
         void Start()
