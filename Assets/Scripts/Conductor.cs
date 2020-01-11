@@ -1,7 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 namespace DrumSmasher
@@ -45,11 +48,25 @@ namespace DrumSmasher
 
             SongPositionInBeats = SongPosition / SecPerBeat;
             
-            if (MusicSource.time <= _musicClip.length)
+            if (MusicSource != null && MusicSource.time <= _musicClip.length)
             {
                 TimeSpan pos = TimeSpan.FromSeconds(MusicSource.time);
                 TimeSpan length = TimeSpan.FromSeconds(_musicClip.length);
                 MusicPositionText.text = $"{pos.Hours}:{pos.Seconds}:{pos.Milliseconds}/{length.Hours}:{length.Seconds}:{length.Milliseconds}";
+            }
+        }
+
+        
+        public void LoadSong(string file)
+        {
+            using (UnityWebRequest wr = UnityWebRequestMultimedia.GetAudioClip(file, AudioType.OGGVORBIS))
+            {
+                UnityWebRequestAsyncOperation ao = wr.SendWebRequest();
+
+                while (!ao.isDone)
+                    Task.Delay(1).Wait();
+
+                MusicSource.clip = DownloadHandlerAudioClip.GetContent(wr);
             }
         }
     }

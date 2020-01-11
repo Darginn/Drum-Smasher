@@ -9,19 +9,19 @@ Creator=Kite
 Tags=aquaelie metal marisa kirisame zun arrange suimusou immaterial and missing power th07.5 7.5 th manten suraimu_su_ suraimu onosaki onosakihito Pheon nyquill
 Genre=0
 Source=Touhou
-Offset=944
+Offset=2677
 PreviewStart=34802
 PreviewEnd=0
 BPM=0
-SoundFile= witch.mp3
+SoundFile=C:\Games\DrumSmasher\Assets\Charts\Sample Song\witch.ogg
 [/\]
 [notes]
 1=6591=1
 0=6943=1
-0=7649=1
+1=7649=1
 0=8355=1
-0=9061=1
-1=9414=1
+1=9061=1
+0=9414=1
 0=9767=1
 0=10473=1
 0=10649=1

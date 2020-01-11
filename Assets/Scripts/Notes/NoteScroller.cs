@@ -21,8 +21,6 @@ namespace DrumSmasher.Notes
 
         public Note OrigNoteBlue;
         public Note OrigNoteRed;
-        public Note OrigNoteBigBlue;
-        public Note OrigNoteBigRed;
         
         public Text ScoreText;
         public Text ComboText;
@@ -212,10 +210,7 @@ namespace DrumSmasher.Notes
             float start = (NoteSpeed * 4f * 2f) + 0f;
 
             Note origNote;
-            if (cn.BigNote)
-                origNote = cn.Color == 0 ? OrigNoteBigBlue : OrigNoteBigRed;
-            else
-                origNote = cn.Color == 0 ? OrigNoteBlue : OrigNoteRed;
+            origNote = cn.Color == 0 ? OrigNoteBlue : OrigNoteRed;
 
             Note n = Instantiate<Note>(origNote);
             n.StartPosition = new Vector3(start, origNote.transform.position.y, origNote.transform.position.z - _noteLayer);
@@ -223,6 +218,12 @@ namespace DrumSmasher.Notes
             n.DefaultNote = false;
             _spawnedNotes.Add(n);
             _noteLayer -= 0.02f;
+
+            if (cn.BigNote)
+            {
+                n.BigNote = true;
+                n.transform.localScale = new Vector3(1.35f, 1.35f, 1);
+            }
         }
 
         public void Load(Chart ch)

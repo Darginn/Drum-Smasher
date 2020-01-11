@@ -29,6 +29,7 @@ namespace DrumSmasher.Notes
         public bool DefaultNote;
 
         private bool _missed;
+        private bool _autoLeft;
         
         public Note() : base()
         {
@@ -50,18 +51,23 @@ namespace DrumSmasher.Notes
                 KeyController.AutoPlay = true;
                 KeyController2.AutoPlay = true;
 
-                if (transform.position.x < HitCircle.transform.position.x + 0.3f)
+                if (transform.position.x < HitCircle.transform.position.x)
                 {
                     if (BigNote)
                     {
                         KeyController.SimulateMouseKey(Scroller.AutoPlayDelayMS);
                         KeyController2.SimulateMouseKey(Scroller.AutoPlayDelayMS);
                     }
-                    else if (GameManager.Random.Next(0, 1) == 1)
+                    else if (_autoLeft)
+                    {
                         KeyController.SimulateMouseKey(Scroller.AutoPlayDelayMS);
+                        _autoLeft = false;
+                    }
                     else
+                    {
                         KeyController2.SimulateMouseKey(Scroller.AutoPlayDelayMS);
-
+                        _autoLeft = true;
+                    }
                     OnHit(true);
                     return;
                 }

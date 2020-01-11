@@ -2,7 +2,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace DrumSmasher
@@ -33,23 +35,50 @@ namespace DrumSmasher
 
         public HotKey TitleScreenKey;
 
+        private bool _chartLoaded;
+        private Charts.Chart _loadedChart;
+
+        public static void OnSceneLoaded(Charts.Chart chart)
+        {
+            Scene scene = SceneManager.GetActiveScene();
+            GameObject[] objs = scene.GetRootGameObjects();
+
+            Instance = objs.First(obj => obj.name.Equals("GameManager")).GetComponent<GameManager>();
+            Instance.NoteScroller.Sound.LoadSong(chart.SoundFile);
+
+            Instance.StartMap(chart);
+        }
+
         // Start is called before the first frame update
         void Start()
         {
             Instance = this;
-            Logger.Initialize("log.txt");
-            StartPlaying = true;
+            StartMap(null);
+        }
 
+        private void StartMap(Charts.Chart chart)
+        {
+            Logger.Log("Starting Map");
+
+            if (chart == null)
+                _chartLoaded = false;
+            else
+            {
+                _chartLoaded = true;
+                _loadedChart = chart;
+            }
+            
             QualitySettings.vSyncCount = 0;
             Application.targetFrameRate = TargetFPS;
             TitleScreenKey = new HotKey(KeyCode.Escape, new Action(OnTitleScreenKey), EscapeCheckDelayMS);
+
+            StartPlaying = true;
         }
         
-
         private void OnTitleScreenKey()
         {
-            Logger.Log("Switching to tile screen");
-            SceneManager.SwitchScene(SceneManager.SCENE_TITLE);
+            Logger.Log("Switching to title screen");
+            SceneManager.LoadScene("TitleScreen");
         }
 
         // Update is called once per frame
@@ -60,27 +89,23 @@ namespace DrumSmasher
             if (StartPlaying)
             {
                 StartPlaying = false;
-                const string testChartFolder = @"Assets\Charts\Sample Song\";
-                Charts.Chart ch = Charts.ChartFile.Load(testChartFolder + "Test.Chart");
-
-                if (ch == null)
+                
+                if (!_chartLoaded)
                 {
-                    Logger.Log("Chart is null", LogLevel.ERROR);
-                    return;
+                    const string testChartFolder = @"Assets\Charts\Sample Song\";
+                    _loadedChart = Charts.ChartFile.Load(testChartFolder + "testgenerated.Chart");
+
+                    if (_loadedChart == null)
+                    {
+                        Logger.Log("Chart is null", LogLevel.ERROR);
+                        return;
+                    }
                 }
 
-                NoteScroller.Load(ch);
+                NoteScroller.Load(_loadedChart);
                 NoteScroller.Tracker.MultiplierValue = MultiplierValue;
                 NoteScroller.StartPlaying();
             }
-            
-            //if (StartPlaying)
-            //{
-
-            //    NoteScroller.Load(ch);
-            //    NoteScroller.GameStart = true;
-            //    StartPlaying = false;
-            //}
         }
         
         void OnApplicationQuit()

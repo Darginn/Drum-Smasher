@@ -30,6 +30,9 @@ namespace DrumSmasher
 
         public static void Log(string message, LogLevel level = LogLevel.Info, bool console = true, [CallerMemberName()] string caller = "")
         {
+            if (_logStream == null)
+                Initialize("log.txt");
+
             string toLog = $"{DateTime.UtcNow}: *{level}* {caller}: {message}";
             _queue.Enqueue((toLog, level));
 

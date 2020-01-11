@@ -34,7 +34,7 @@ namespace DrumSmasher
                 return;
 
             //Key is activated
-            if (Input.GetKeyDown(Key))
+            if (Input.GetKey(Key))
             {
                 //No wait delay
                 if (DelayedActivationMS <= 0)
@@ -43,8 +43,7 @@ namespace DrumSmasher
                     _nextKeyCheck = DateTime.Now.AddMilliseconds(DelayKeyCheckMS);
                     return;
                 }
-
-                if (_activationTime == DateTime.MaxValue)
+                else if (_activationTime == DateTime.MaxValue)
                 {
                     _activationTime = DateTime.Now.AddMilliseconds(DelayedActivationMS);
                 }
@@ -54,7 +53,6 @@ namespace DrumSmasher
                     _nextKeyCheck = DateTime.Now.AddMilliseconds(DelayKeyCheckMS);
                     _activationTime = DateTime.MaxValue;
                 }
-
             }
             //Reset activation time incase we have a delay and key is not pressed anymore
             else if (KeyActive)
@@ -62,7 +60,6 @@ namespace DrumSmasher
                 KeyActive = false;
                 _activationTime = DateTime.MaxValue;
             }
-
         }
     }
 }
