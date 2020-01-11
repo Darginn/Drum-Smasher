@@ -30,6 +30,8 @@ namespace DrumSmasher.Notes
         public Text Key3Text;
         public Text Key4Text;
 
+        public Text AccuracyText;
+
         public GameInput.ButtonController Key1;
         public GameInput.ButtonController Key2;
         public GameInput.ButtonController Key3;
@@ -79,6 +81,7 @@ namespace DrumSmasher.Notes
                 Scroller = this,
                 ComboText = ComboText,
                 ScoreText = ScoreText,
+                AccuracyText = AccuracyText,
                 Key1Text = Key1Text,
                 Key2Text = Key2Text,
                 Key3Text = Key3Text,

@@ -36,6 +36,8 @@ namespace DrumSmasher.Notes
         public int Key3Hits { get; set; }
         public int Key4Hits { get; set; }
 
+        public double Accuracy;
+
         public long FirstOffsetNoteHit;
 
         public KeyCode Key1;
@@ -51,6 +53,8 @@ namespace DrumSmasher.Notes
         public Text Key2Text;
         public Text Key3Text;
         public Text Key4Text;
+
+        public Text AccuracyText;
 
         public NoteScroller Scroller;
 
@@ -103,6 +107,22 @@ namespace DrumSmasher.Notes
 
             ComboText.text = Combo + "x";
             ScoreText.text = Score.ToString();
+
+            if (goodHit)
+                GoodHits++;
+            else
+                BadHits++;
+
+            UpdateAcc();
+        }
+
+        private void UpdateAcc()
+        {
+            if (TotalNotes == 0)
+                return;
+
+            Accuracy = (100.0 / TotalNotes) * ((BadHits * 0.5) + GoodHits);
+            AccuracyText.text = Math.Round(Accuracy, 2, MidpointRounding.AwayFromZero).ToString() + " %";
         }
 
         public void Miss()
@@ -110,6 +130,10 @@ namespace DrumSmasher.Notes
             Combo = 0;
 
             ComboText.text = "Combo: 0";
+
+            Misses++;
+
+            UpdateAcc();
         }
 
         public void Reset()
