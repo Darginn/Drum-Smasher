@@ -4,13 +4,16 @@ Artist=t+pazolite
 Title=Night of Knights (tpz Overheat Remix)
 Album=東方花映塚　～ Phantasmagoria of Flower View.
 Year=2019
+Difficulty=
 Creator=eiri-
 Tags=Ayyri 東方Project ZUN Team Shanghai Alice Touhou Izayoi Sakuya Brain Power Max Burning MAD COOL&CREATE beatMARIO CCC CHS C.H.S CCCD-0050 十六夜 咲夜 PoFV TH09 TH 9 Flower Reflecting Mound Kaeizuka
+Genre=0
+Source=
 Offset=2672
 PreviewStart=20968
 PreviewEnd=0
-BPM=200
-SoundFile=C:\Games\DrumSmasher\Assets\Charts\Sample Song\song.ogg
+BPM=0
+SoundFile=Charts/Sample Song/song.ogg
 [/\]
 [notes]
 1=2968=0
@@ -1425,3 +1428,4 @@ SoundFile=C:\Games\DrumSmasher\Assets\Charts\Sample Song\song.ogg
 0=175543=0
 0=175618=1
 1=175768=0
+[/\]

@@ -59,12 +59,20 @@ namespace DrumSmasher
         
         public void LoadSong(string file)
         {
+            Logger.Log("Loading song " + file);
+            LoadSongFromFile(file);
+
+            if (MusicSource.clip == null)
+                Logger.Log("Failed to load audioclip");
+            else
+                Logger.Log("Loaded audio clip");
+        }
+
+        private IEnumerator LoadSongFromFile(string file)
+        {
             using (UnityWebRequest wr = UnityWebRequestMultimedia.GetAudioClip(file, AudioType.OGGVORBIS))
             {
-                UnityWebRequestAsyncOperation ao = wr.SendWebRequest();
-
-                while (!ao.isDone)
-                    Task.Delay(1).Wait();
+                yield return wr.SendWebRequest();
 
                 MusicSource.clip = DownloadHandlerAudioClip.GetContent(wr);
             }

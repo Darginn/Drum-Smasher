@@ -34,8 +34,7 @@ namespace DrumSmasher
         public int TargetFPS = 1000; // Placeholder value (0 = unlimited)
 
         public HotKey TitleScreenKey;
-
-        private bool _chartLoaded;
+        
         private Charts.Chart _loadedChart;
 
         public static void OnSceneLoaded(Charts.Chart chart)
@@ -44,8 +43,8 @@ namespace DrumSmasher
             GameObject[] objs = scene.GetRootGameObjects();
 
             Instance = objs.First(obj => obj.name.Equals("GameManager")).GetComponent<GameManager>();
-            Instance.NoteScroller.Sound.LoadSong(chart.SoundFile);
-
+            Instance.NoteScroller.Sound.LoadSong(Application.dataPath + '/' + chart.SoundFile);
+            
             Instance.StartMap(chart);
         }
 
@@ -53,25 +52,14 @@ namespace DrumSmasher
         void Start()
         {
             Instance = this;
-            StartMap(null);
         }
 
         private void StartMap(Charts.Chart chart)
         {
             Logger.Log("Starting Map");
 
-            if (chart == null)
-                _chartLoaded = false;
-            else
-            {
-                _chartLoaded = true;
-                _loadedChart = chart;
-            }
+            _loadedChart = chart;
             
-            QualitySettings.vSyncCount = 0;
-            Application.targetFrameRate = TargetFPS;
-            TitleScreenKey = new HotKey(KeyCode.Escape, new Action(OnTitleScreenKey), EscapeCheckDelayMS);
-
             StartPlaying = true;
         }
         
@@ -84,22 +72,23 @@ namespace DrumSmasher
         // Update is called once per frame
         void Update()
         {
+            if (TitleScreenKey == null)
+            {
+                TitleScreenKey = new HotKey(KeyCode.Escape, new Action(OnTitleScreenKey), EscapeCheckDelayMS);
+                QualitySettings.vSyncCount = 0;
+                Application.targetFrameRate = TargetFPS;
+            }
+
             TitleScreenKey.CheckKey();
 
             if (StartPlaying)
             {
                 StartPlaying = false;
                 
-                if (!_chartLoaded)
+                if (_loadedChart == null)
                 {
-                    const string testChartFolder = @"Assets\Charts\Sample Song\";
-                    _loadedChart = Charts.ChartFile.Load(testChartFolder + "testgenerated.Chart");
-
-                    if (_loadedChart == null)
-                    {
-                        Logger.Log("Chart is null", LogLevel.ERROR);
-                        return;
-                    }
+                    Logger.Log("No chart found");
+                    return;
                 }
 
                 NoteScroller.Load(_loadedChart);

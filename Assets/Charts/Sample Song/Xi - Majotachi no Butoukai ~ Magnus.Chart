@@ -13,7 +13,7 @@ Offset=2677
 PreviewStart=34802
 PreviewEnd=0
 BPM=0
-SoundFile=C:\Games\DrumSmasher\Assets\Charts\Sample Song\witch.ogg
+SoundFile=Charts/Sample Song/witch.ogg
 [/\]
 [notes]
 1=6591=1

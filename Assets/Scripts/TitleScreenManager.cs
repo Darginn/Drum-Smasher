@@ -36,6 +36,8 @@ namespace DrumSmasher
 
             _sceneActionActive = true;
 
+            Logger.Log("LoadedChart: " + (LoadedChart == null));
+
             AsyncOperation loadAO = SceneManager.LoadSceneAsync("Main");
             loadAO.completed += ao =>
             {
@@ -52,7 +54,7 @@ namespace DrumSmasher
             _sceneActionActive = true;
 
             Logger.Log("Selecting chart");
-            string path = EditorUtility.OpenFilePanel("Select Chart", @"C:\Games\DrumSmasher\Assets\Charts\Sample Song", "chart");
+            string path = EditorUtility.OpenFilePanel("Select Chart", Application.dataPath, "chart");
 
             if (path.Length < 0)
                 return;
@@ -72,7 +74,10 @@ namespace DrumSmasher
                     return;
             }
 
-            Logger.Log("Chart loaded");
+            if (LoadedChart != null)
+                Logger.Log("Chart loaded");
+            else
+                Logger.Log("Failed to load chart");
 
             _sceneActionActive = false;
         }
