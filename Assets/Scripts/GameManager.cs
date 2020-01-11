@@ -27,7 +27,11 @@ namespace DrumSmasher
         public NoteScroller NoteScroller;
         public int MultiplierValue;
 
+        public int EscapeCheckDelayMS;
+
         public int TargetFPS = 1000; // Placeholder value (0 = unlimited)
+
+        public HotKey TitleScreenKey;
 
         // Start is called before the first frame update
         void Start()
@@ -38,11 +42,21 @@ namespace DrumSmasher
 
             QualitySettings.vSyncCount = 0;
             Application.targetFrameRate = TargetFPS;
+            TitleScreenKey = new HotKey(KeyCode.Escape, new Action(OnTitleScreenKey), EscapeCheckDelayMS);
+        }
+        
+
+        private void OnTitleScreenKey()
+        {
+            Logger.Log("Switching to tile screen");
+            SceneManager.SwitchScene(SceneManager.SCENE_TITLE);
         }
 
         // Update is called once per frame
         void Update()
         {
+            TitleScreenKey.CheckKey();
+
             if (StartPlaying)
             {
                 StartPlaying = false;
