@@ -13,6 +13,9 @@ namespace DrumSmasher
     {
         public Charts.Chart LoadedChart;
         private bool _sceneActionActive;
+        public GameObject PlayAlert;
+        public GameObject FailAlert;
+        public GameObject SettingsAlert;
 
         void Start()
         {
@@ -30,7 +33,7 @@ namespace DrumSmasher
                 return;
             else if (LoadedChart == null)
             {
-                EditorUtility.DisplayDialog("No chart loaded", "Please load a chart before playing", "ok");
+                PlayAlert.SetActive(true);
                 return;
             }
 
@@ -64,14 +67,9 @@ namespace DrumSmasher
 
             if (LoadedChart == null)
             {
-                if (EditorUtility.DisplayDialog("Error", "Failed to load chart", "Retry", "Cancel"))
-                {
-                    Logger.Log("Chart failed to load");
-                    LoadMap();
-                    return;
-                }
-                else
-                    return;
+                FailAlert.SetActive(true);
+                Logger.Log("Chart failed to load");
+                return;
             }
 
             if (LoadedChart != null)
@@ -84,7 +82,7 @@ namespace DrumSmasher
 
         public void Settings()
         {
-            EditorUtility.DisplayDialog("Not implemented", "Settings is currently not implemented", "ok");
+            SettingsAlert.SetActive(true);
         }
 
         public void Exit()

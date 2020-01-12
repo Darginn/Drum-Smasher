@@ -1225,7 +1225,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 745d8ce0e29228b48a3bd95f4c018363, type: 3}
+  m_audioClip: {fileID: 8300000, guid: adff9fec8fc72c04581c8557b9a399e7, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -2806,7 +2806,7 @@ PrefabInstance:
     - target: {fileID: 663423705026359352, guid: 15c91c338d0c11f4d8334504dd1cc17c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 41.589996
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 663423705026359352, guid: 15c91c338d0c11f4d8334504dd1cc17c,
         type: 3}
@@ -2862,6 +2862,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: taiko-note-b
+      objectReference: {fileID: 0}
+    - target: {fileID: 663423705026359353, guid: 15c91c338d0c11f4d8334504dd1cc17c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 663423705026359359, guid: 15c91c338d0c11f4d8334504dd1cc17c,
         type: 3}
@@ -2972,10 +2977,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: taiko-note-r
       objectReference: {fileID: 0}
+    - target: {fileID: 5883529851759556829, guid: d9741731745348246abd03ec58cfbe0f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5883529851759556830, guid: d9741731745348246abd03ec58cfbe0f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 41.59
+      value: 40.000004
       objectReference: {fileID: 0}
     - target: {fileID: 5883529851759556830, guid: d9741731745348246abd03ec58cfbe0f,
         type: 3}
