@@ -122,7 +122,7 @@ namespace DrumSmasher.Notes
                 return;
 
             Accuracy = (100.0 / TotalNotes) * ((BadHits * 0.5) + GoodHits);
-            AccuracyText.text = Math.Round(Accuracy, 2, MidpointRounding.AwayFromZero).ToString() + " %";
+            AccuracyText.text = String.Format("{0:0.00}", Accuracy) + "%";
         }
 
         public void Miss()
