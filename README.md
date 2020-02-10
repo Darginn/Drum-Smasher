@@ -6,3 +6,5 @@ This is a WIP Taiko no Tatsujin inspired game being developed using the Unity En
 Feel free to visit the [Roadmap](https://trello.com/b/26vG8T7M/project-drum-smasher "Project Drum Smasher on Trello") to see current progress.
 
 Join our new [Discord](https://discord.gg/eVdng2P "Official Project Drum Smasher Discord Server") Server!
+
+<iframe src="https://discordapp.com/widget?id=635059285579137029&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0"></iframe>
