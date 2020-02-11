@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 namespace DrumSmasher
 {
@@ -35,13 +36,14 @@ namespace DrumSmasher
         void Start()
         {
             MusicSource = GetComponent<AudioSource>();
+            
+
 
             SecPerBeat = 60f / SongBpm;
 
             DspSongTime = (float)AudioSettings.dspTime;
         }
 
-        // Update is called once per frame
         void Update()
         {
             SongPosition = (float)(AudioSettings.dspTime - DspSongTime - Offset);
@@ -52,7 +54,7 @@ namespace DrumSmasher
             {
                 TimeSpan pos = TimeSpan.FromSeconds(MusicSource.time);
                 TimeSpan length = TimeSpan.FromSeconds(_musicClip.length);
-                MusicPositionText.text = $"{pos.Hours}:{pos.Seconds}:{pos.Milliseconds}/{length.Hours}:{length.Seconds}:{length.Milliseconds}";
+                MusicPositionText.text = $"{pos.Minutes}:{pos.Seconds}:{pos.Milliseconds}/{length.Minutes}:{length.Seconds}:{length.Milliseconds}";
             }
         }
 
@@ -60,7 +62,7 @@ namespace DrumSmasher
         public void LoadSong(string file)
         {
             Logger.Log("Loading song " + file);
-            LoadSongFromFile(file);
+            StartCoroutine(LoadSongFromFile(file));
 
             if (MusicSource.clip == null)
                 Logger.Log("Failed to load audioclip");
@@ -68,9 +70,11 @@ namespace DrumSmasher
                 Logger.Log("Loaded audio clip");
         }
 
+   
+
         private IEnumerator LoadSongFromFile(string file)
         {
-            using (UnityWebRequest wr = UnityWebRequestMultimedia.GetAudioClip(file, AudioType.OGGVORBIS))
+            using (UnityWebRequest wr = UnityWebRequestMultimedia.GetAudioClip(file, AudioType.UNKNOWN))
             {
                 yield return wr.SendWebRequest();
 
