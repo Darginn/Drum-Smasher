@@ -110,6 +110,21 @@ namespace DrumSmasher
                 SettingsMenu.SetActive(false);
         }
 
+        public void ConvertOsuMap()
+        {
+
+            Logger.Log("Selecting osu map");
+            string path = EditorUtility.OpenFilePanel("Select osu map", Application.dataPath, "osu");
+            string output = EditorUtility.SaveFilePanel("Save chart to", Application.dataPath, path.Remove(0, path.LastIndexOf('/') + 1).Replace(".osu", ""), "chart");
+
+            if (path.Length <= 0 || output.Length <= 0)
+                return;
+            
+            var chart = Charts.ChartFile.ConvertOsuFile(path);
+
+            Charts.ChartFile.Save(output, chart);
+        }
+
         public void SetFullscreen(bool isFullscreen)
         {
             Screen.fullScreen = isFullscreen;
