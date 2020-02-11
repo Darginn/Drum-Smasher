@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 namespace DrumSmasher
@@ -15,11 +16,32 @@ namespace DrumSmasher
         private bool _sceneActionActive;
         public GameObject PlayAlert;
         public GameObject FailAlert;
-        public GameObject SettingsAlert;
+        public GameObject SettingsMenu;
+
+        public Dropdown ResolutionDropdown;
+        Resolution[] resolutions;
 
         void Start()
         {
+            resolutions = Screen.resolutions;
 
+            ResolutionDropdown.ClearOptions();
+
+            List<string> options = new List<string>();
+            int currentResolutionIndex = 0;
+            for (int i = 0; i < resolutions.Length; i++)
+            {
+                string option = resolutions[i].width + " x " + resolutions[i].height;
+                options.Add(option);
+
+                if (resolutions[i].width == Screen.currentResolution.width &&
+                    resolutions[i].height == Screen.currentResolution.height)
+                    currentResolutionIndex = i;
+            }
+
+            ResolutionDropdown.AddOptions(options);
+            ResolutionDropdown.value = currentResolutionIndex;
+            ResolutionDropdown.RefreshShownValue();
         }
 
         void Update()
@@ -82,7 +104,21 @@ namespace DrumSmasher
 
         public void Settings()
         {
-            SettingsAlert.SetActive(true);
+            if (SettingsMenu.activeSelf == false)
+                SettingsMenu.SetActive(true);
+            else
+                SettingsMenu.SetActive(false);
+        }
+
+        public void SetFullscreen(bool isFullscreen)
+        {
+            Screen.fullScreen = isFullscreen;
+        }
+
+        public void SetResolution(int resolutionIndex)
+        {
+            Resolution resolution = resolutions[resolutionIndex];
+            Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
         }
 
         public void Exit()
@@ -98,5 +134,6 @@ namespace DrumSmasher
         {
             Logger.Dispose();
         }
+
     }
 }
