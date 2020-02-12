@@ -338,11 +338,18 @@ namespace DrumSmasher.Charts
                         bigNote = false;
                         color = 1;
                         break;
+                    case 2:
+                        bigNote = false;
+                        color = 0;
+                        break;
                     case 4:
                         bigNote = true;
                         color = 1;
                         break;
-
+                    case 6:
+                        bigNote = true;
+                        color = 0;
+                        break;
                     case 8:
                         bigNote = false;
                         color = 0;
