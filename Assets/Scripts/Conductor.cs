@@ -50,7 +50,7 @@ namespace DrumSmasher
 
             SongPositionInBeats = SongPosition / SecPerBeat;
             
-            if (MusicSource != null && MusicSource.time <= _musicClip.length)
+            if (MusicSource != null && _musicClip != null && MusicSource.time <= _musicClip.length)
             {
                 TimeSpan pos = TimeSpan.FromSeconds(MusicSource.time);
                 TimeSpan length = TimeSpan.FromSeconds(_musicClip.length);
