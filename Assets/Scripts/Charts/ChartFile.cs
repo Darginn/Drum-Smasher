@@ -345,11 +345,11 @@ namespace DrumSmasher.Charts
 
                     case 8:
                         bigNote = false;
-                        color = 2;
+                        color = 0;
                         break;
                     case 12:
                         bigNote = true;
-                        color = 2;
+                        color = 0;
                         break;
                 }
 
