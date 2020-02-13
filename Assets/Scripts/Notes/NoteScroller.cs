@@ -12,7 +12,7 @@ namespace DrumSmasher.Notes
 {
     public class NoteScroller : MonoBehaviour
     {
-        public Stopwatch GameTime { get { return _playTime; } }
+        public GameTime GameTime { get { return _gameTime; } }
         public Conductor Sound;
         public NoteTracker Tracker;
 
@@ -38,6 +38,7 @@ namespace DrumSmasher.Notes
         public GameInput.ButtonController Key4;
 
         public Text SoundOffsetText;
+        public long SoundOffset;
 
         public int Key1Hits;
         public int Key2Hits;
@@ -56,9 +57,9 @@ namespace DrumSmasher.Notes
         public float BPM;
         public float CurrentBeat;
         
-        private Queue<ChartNote> _notesToSpawn;
+        private List<ChartNote> _notesToSpawn;
         private List<Note> _spawnedNotes;
-        private Stopwatch _playTime;
+        private GameTime _gameTime;
         private Vector3 _startPos;
         private DateTime _songStart;
         private DateTime _nextPause;
@@ -74,8 +75,8 @@ namespace DrumSmasher.Notes
         void Start()
         {
             _spawnedNotes = new List<Note>();
-            _playTime = new Stopwatch();
-            _notesToSpawn = new Queue<ChartNote>();
+            _gameTime = new GameTime();
+            _notesToSpawn = new List<ChartNote>();
             Tracker = new NoteTracker()
             {
                 Scroller = this,
@@ -104,7 +105,8 @@ namespace DrumSmasher.Notes
             if (!Play || ReachedEnd)
                 return;
 
-            SoundOffsetText.text = "Offset: " + _playTime.ElapsedMilliseconds;
+            SoundOffsetText.text = "Offset: " + _gameTime.ElapsedMilliseconds;
+            SoundOffset = (long)_gameTime.ElapsedMilliseconds;
 
             //120 bpm
             //2 beats / s
@@ -136,14 +138,14 @@ namespace DrumSmasher.Notes
 
                     Paused = false;
                     UnPauseMusic();
-                    _playTime.Start();
+                    _gameTime.Start();
                 }
                 else
                 {
                     Paused = true;
                     _pausedAt = DateTime.Now;
                     PauseMusic();
-                    _playTime.Stop();
+                    _gameTime.Stop();
                 }
 
                 _nextPause = DateTime.Now.AddMilliseconds(PauseKeyDelayMS);
@@ -197,22 +199,46 @@ namespace DrumSmasher.Notes
             //Sound.MusicSource.Stop();
         }
 
+        public void ReSkip(int amountMS)
+        {
+            TimeSpan oldTime = _gameTime.Time;
+
+            _gameTime.RemoveTime(TimeSpan.FromMilliseconds(amountMS));
+
+            var notes = CurrentChart.Notes.Where(n => n.Time.TotalMilliseconds > _gameTime.ElapsedMilliseconds && n.Time <= oldTime)
+                                          .OrderBy(n => n.Time);
+
+            _notesToSpawn.InsertRange(0, notes);
+        }
+
+        public void Skip(int amountMS)
+        {
+            _gameTime.AddTime(TimeSpan.FromMilliseconds(amountMS));
+
+            for (int i = 0; i < _notesToSpawn.Count; i++)
+                if (_notesToSpawn[i].Time < _gameTime.Time.Add(TimeSpan.FromMilliseconds(Offset)))
+                    _notesToSpawn.RemoveAt(i);
+        }
+
         private void UnPauseMusic()
         {
             Sound.Audio.Resume();
+            Paused = false;
         }
 
         private void PauseMusic()
         {
             Sound.Audio.Pause();
+            Paused = true;
         }
 
         private void TrySpawnNote()
         {
-            if (_notesToSpawn.Count == 0 || _notesToSpawn.ElementAt(0).Time.Ticks > _playTime.ElapsedTicks)
+            if (_notesToSpawn.Count == 0 || _notesToSpawn.ElementAt(0).Time.Ticks > _gameTime.ElapsedTicks)
                 return;
 
-            ChartNote cn = _notesToSpawn.Dequeue();
+            ChartNote cn = _notesToSpawn[0];
+            _notesToSpawn.RemoveAt(0);
 
             float start = (NoteSpeed * 4f * 2f) + 0f;
 
@@ -256,7 +282,7 @@ namespace DrumSmasher.Notes
 
             List<ChartNote> notes = ch.Notes.OrderBy(n => n.Time).ToList();
             for (int i = 0; i < notes.Count; i++)
-                _notesToSpawn.Enqueue(notes[i]);
+                _notesToSpawn.Add(notes[i]);
 
             Offset = ch.Offset;
 
@@ -272,7 +298,7 @@ namespace DrumSmasher.Notes
 
             Play = true;
             Paused = false;
-            _playTime.Start();
+            _gameTime.Start();
         }
     }
 }

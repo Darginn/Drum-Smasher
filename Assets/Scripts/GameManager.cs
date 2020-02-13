@@ -43,8 +43,9 @@ namespace DrumSmasher
             GameObject[] objs = scene.GetRootGameObjects();
 
             Instance = objs.First(obj => obj.name.Equals("GameManager")).GetComponent<GameManager>();
+            Instance.NoteScroller.Sound.Scroller = Instance.NoteScroller;
             Instance.NoteScroller.Sound.LoadSong(Application.dataPath + "/Charts/" + chart.SoundFile);
-            
+
             Instance.StartMap(chart);
         }
 
