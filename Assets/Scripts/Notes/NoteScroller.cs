@@ -105,8 +105,6 @@ namespace DrumSmasher.Notes
 
         void Update()
         {
-            Logger.Log((_songStart <= _gameTime.Time).ToString());
-
             if (!Play || ReachedEnd)
                 return;
 
