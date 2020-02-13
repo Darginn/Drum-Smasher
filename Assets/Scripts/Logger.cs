@@ -33,7 +33,8 @@ namespace DrumSmasher
             if (_logStream == null)
                 Initialize("log.txt");
 
-            string toLog = $"{DateTime.UtcNow}: *{level}* {caller}: {message}";
+            string time = $"{DateTime.UtcNow.Day}.{DateTime.UtcNow.Month}.{DateTime.UtcNow.Year} {DateTime.UtcNow.Hour}:{DateTime.UtcNow.Minute}:{DateTime.UtcNow.Second}:{DateTime.UtcNow.Millisecond}";
+            string toLog = $"{time}: *{level}* {caller}: {message}";
             _queue.Enqueue((toLog, level));
 
             System.Threading.ThreadPool.QueueUserWorkItem(new System.Threading.WaitCallback(obj =>

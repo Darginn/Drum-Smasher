@@ -7,6 +7,8 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using SFB;
+using System.IO;
 
 namespace DrumSmasher
 {
@@ -19,7 +21,10 @@ namespace DrumSmasher
         public GameObject SettingsMenu;
 
         public Dropdown ResolutionDropdown;
+
         Resolution[] resolutions;
+        private ExtensionFilter _extChartFilter = new ExtensionFilter("Chart", "chart");
+        private ExtensionFilter _extOsuFilter = new ExtensionFilter("Osu difficulty", "osu");
 
         void Start()
         {
@@ -79,7 +84,7 @@ namespace DrumSmasher
             _sceneActionActive = true;
 
             Logger.Log("Selecting chart");
-            string path = EditorUtility.OpenFilePanel("Select Chart", Application.dataPath, "chart");
+            string path = StandaloneFileBrowser.OpenFilePanel("Select chart", Application.dataPath, new ExtensionFilter[] { _extChartFilter }, false)[0];
 
             if (path.Length < 0)
                 return;
@@ -109,15 +114,33 @@ namespace DrumSmasher
             else
                 SettingsMenu.SetActive(false);
         }
-
+        
         public void ConvertOsuMap()
         {
-
             Logger.Log("Selecting osu map");
-            string path = EditorUtility.OpenFilePanel("Select osu map", Application.dataPath, "osu");
-            string output = EditorUtility.SaveFilePanel("Save chart to", Application.dataPath, path.Remove(0, path.LastIndexOf('/') + 1).Replace(".osu", ""), "chart");
+            string path = StandaloneFileBrowser.OpenFilePanel("Select osu map", Application.dataPath, new ExtensionFilter[] { _extOsuFilter }, false)[0];
+            
+            if (path.Length <= 0)
+                return;
 
-            if (path.Length <= 0 || output.Length <= 0)
+            FileInfo chartFile = new FileInfo(path);
+
+            if (!chartFile.Exists)
+            {
+                if (new DirectoryInfo(path).Exists)
+                {
+                    Logger.Log("Converting folders is not supported yet");
+                    return;
+                }
+
+                Logger.Log("Chartfile not found");
+                return;
+            }
+
+            string chartName = chartFile.Name;
+            string output = StandaloneFileBrowser.SaveFilePanel("Select save location", Application.dataPath, chartName, new ExtensionFilter[] { _extChartFilter } );
+
+            if (output.Length <= 0)
                 return;
             
             var chart = Charts.ChartFile.ConvertOsuFile(path);
