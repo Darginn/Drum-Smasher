@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-using UnityEngine.Audio;
+using NAudio;
+using NAudio.Wave;
 
 namespace DrumSmasher
 {
@@ -20,9 +21,19 @@ namespace DrumSmasher
         public AudioSource HitSource;
         public float Offset;
         public Text MusicPositionText;
-        public uAudio.uAudioPlayer Audio;
+        public AudioSource MusicSource;
         public Notes.NoteScroller Scroller;
-        
+
+        private DateTime _nextTimeJump;
+
+        private AudioClip _musicClip
+        {
+            get
+            {
+                return MusicSource.clip;
+            }
+        }
+
         // Start is called before the first frame update
         void Start()
         {
@@ -36,55 +47,25 @@ namespace DrumSmasher
             SongPosition = (float)(AudioSettings.dspTime - DspSongTime - Offset);
 
             SongPositionInBeats = SongPosition / SecPerBeat;
-            
-            if (Audio != null)
-            {
-                if (Audio.CurrentTime <= Audio.TotalTime)
-                {
-                    TimeSpan pos = Audio.CurrentTime;
-                    TimeSpan length = Audio.TotalTime;
-                    MusicPositionText.text = $"{pos.Minutes}:{pos.Seconds}:{pos.Milliseconds}/{length.Minutes}:{length.Seconds}:{length.Milliseconds}";
-                }
 
-                if (Input.GetKeyDown(KeyCode.DownArrow))
-                {
-                    if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
-                        VolumeDown(10);
-                    else
-                        VolumeDown();
-                }
-                else if (Input.GetKeyDown(KeyCode.UpArrow))
-                {
-                    if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
-                        VolumeUp(10);
-                    else
-                        VolumeUp();
-                }
-                else if (Input.GetKeyDown(KeyCode.LeftArrow))
-                {
-                    if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
-                        ReSkip(10 * 1000);
-                    else
-                        ReSkip();
-                }
-                else if (Input.GetKeyDown(KeyCode.RightArrow))
-                {
-                    if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
-                        Skip(10 * 1000);
-                    else
-                        Skip();
-                }
+            if (MusicSource != null && _musicClip != null && MusicSource.time <= _musicClip.length)
+            {
+                TimeSpan pos = TimeSpan.FromSeconds(MusicSource.time);
+                TimeSpan length = TimeSpan.FromSeconds(_musicClip.length);
+                MusicPositionText.text = $"{pos.Minutes}:{pos.Seconds}:{pos.Milliseconds}/{length.Minutes}:{length.Seconds}:{length.Milliseconds}";
             }
         }
 
         public void VolumeUp(int amount = 5)
         {
-            Audio.ChangeCurrentVolume(Audio.Volume + (amount / 100));
+            MusicSource.volume += (amount / 100);
+            HitSource.volume += amount / 100;
         }
 
         public void VolumeDown(int amount = 5)
         {
-            Audio.ChangeCurrentVolume(Audio.Volume - (amount / 100));
+            MusicSource.volume -= (amount / 100);
+            HitSource.volume -= amount / 100;
         }
 
         /// <summary>
@@ -96,12 +77,14 @@ namespace DrumSmasher
             if (amountMS <= 0)
                 return;
 
-            TimeSpan newTime = Audio.CurrentTime.Add(TimeSpan.FromMilliseconds(amountMS));
+            TimeSpan pos = TimeSpan.FromMilliseconds(SongPosition);
+            TimeSpan length = TimeSpan.FromMilliseconds(_musicClip.length);
+            float newTime = pos.Milliseconds + amountMS;
 
-            if (newTime > Audio.TotalTime)
-                newTime = Audio.TotalTime;
+            if (newTime > length.Milliseconds)
+                newTime = length.Milliseconds;
 
-            Audio.ChangeCurrentTime(newTime);
+            MusicSource.time = length.Seconds;
 
             Scroller?.Skip(amountMS);
         }
@@ -115,19 +98,38 @@ namespace DrumSmasher
             if (amountMS <= 0)
                 return;
 
-            TimeSpan newTime = TimeSpan.FromMilliseconds(Audio.CurrentTime.TotalMilliseconds - amountMS);
+            TimeSpan pos = TimeSpan.FromMilliseconds(SongPosition);
+            TimeSpan length = TimeSpan.FromMilliseconds(_musicClip.length);
+            float newTime = pos.Milliseconds + amountMS;
 
-            if (newTime.TotalMilliseconds < 0)
-                newTime = TimeSpan.FromMilliseconds(0);
+            if (newTime > length.Milliseconds)
+                newTime = length.Milliseconds;
 
-            Audio.ChangeCurrentTime(newTime);
+            MusicSource.time = length.Seconds;
+
             Scroller?.ReSkip(amountMS);
         }
-        
+
         public void LoadSong(string file)
         {
             Logger.Log("Loading song " + file);
-            Audio.targetFile = file;
+            StartCoroutine(LoadSongFromFile(file));
+
+            if (MusicSource.clip == null)
+                Logger.Log("Failed to load audioclip");
+            else
+                Logger.Log("Loaded audio clip");
+        }
+
+
+
+        private IEnumerator LoadSongFromFile(string file)
+        {
+            WWW www = new WWW(file);
+
+            yield return www;
+
+            MusicSource.clip = NAudioPlayer.FromMp3Data(www.bytes);
         }
     }
 }

@@ -1,0 +1,9 @@
+13.2.2020 16:26:34:327: *Info* LoadMap: Selecting chart
+13.2.2020 16:26:35:504: *Info* LoadMap: Loading path
+13.2.2020 16:26:35:519: *Info* LoadMap: Chart loaded
+13.2.2020 16:26:37:52: *Info* SwitchToTaiko: LoadedChart: False
+13.2.2020 16:26:37:86: *Info* LoadSong: Loading song C:/Users/Jb112/Documents/Games/Drum Smasher/Assets/Charts/katagiri - Sendan Life (katagiri Bootleg) (Ozu) [YAZD].mp3
+13.2.2020 16:26:37:92: *Info* LoadSong: Failed to load audioclip
+13.2.2020 16:26:37:92: *Info* StartMap: Starting Map
+13.2.2020 16:26:37:97: *Trace* StartPlaying: Starting to play
+13.2.2020 16:27:12:665: *Info* Hit: First offset MS: 35567.0567, Offset song S: 34.13331

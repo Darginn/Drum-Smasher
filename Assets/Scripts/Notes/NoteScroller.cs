@@ -12,7 +12,7 @@ namespace DrumSmasher.Notes
 {
     public class NoteScroller : MonoBehaviour
     {
-        public GameTime GameTime { get { return _gameTime; } }
+        public GameTime GameTime { get { return _playTime; } }
         public Conductor Sound;
         public NoteTracker Tracker;
 
@@ -61,7 +61,7 @@ namespace DrumSmasher.Notes
         
         private List<ChartNote> _notesToSpawn;
         private List<Note> _spawnedNotes;
-        private GameTime _gameTime;
+        private GameTime _playTime;
         private Stopwatch _realTime;
         private Vector3 _startPos;
         private TimeSpan _songStart;
@@ -78,7 +78,7 @@ namespace DrumSmasher.Notes
         void Start()
         {
             _spawnedNotes = new List<Note>();
-            _gameTime = new GameTime();
+            _playTime = new GameTime();
             _notesToSpawn = new List<ChartNote>();
             Tracker = new NoteTracker()
             {
@@ -101,46 +101,35 @@ namespace DrumSmasher.Notes
             Key3Text.text = "";
             Key4Text.text = "";
         }
-        
+
 
         void Update()
         {
             if (!Play || ReachedEnd)
                 return;
 
-            //Start music based on offset
-            if (_songStart <= _gameTime.Time && Sound.Audio.PlaybackState != uAudio.uAudio_backend.PlayBackState.Playing)
-            {
-                Logger.Log($"Starting music (Start: {_songStart.TotalMilliseconds} Gametime: {_gameTime.Time.TotalMilliseconds}");
-                PlayMusic();
-            }
-
-
-            SoundOffsetText.text = "Offset: " + _gameTime.ElapsedMilliseconds;
-            SoundOffset = (long)_gameTime.ElapsedMilliseconds;
-
-            RealTimeText.text = $"{_realTime.Elapsed.Minutes}:{_realTime.Elapsed.Seconds}:{_realTime.Elapsed.Milliseconds}";
+            SoundOffsetText.text = "Offset: " + _playTime.ElapsedMilliseconds;
 
             //120 bpm
             //2 beats / s
             // 120 / 60 = 2 beats per second
             //1 / 2 = 0.5 s â beat
 
-            if (BPM > 0 && Sound.Audio.IsPlaying)
+            if (BPM > 0 && Sound.MusicSource.isPlaying)
             {
                 float beatsPerSec = BPM / 60f;
                 float secPerBeat = 1 / beatsPerSec;
 
-                double beatPos = (Sound.Audio.CurrentTime.TotalSeconds / secPerBeat) - (Offset / 1000f / secPerBeat);
-                CurrentBeat = (float)beatPos;
+                float beatPos = (Sound.MusicSource.time / secPerBeat) - (Offset / 1000f / secPerBeat);
+                CurrentBeat = beatPos;
             }
-            
+
             if (_nextPause < DateTime.Now && Input.GetKeyDown(KeyCode.Space))
             {
                 if (Paused)
                 {
                     long difference;
-                    foreach(Note n in _spawnedNotes)
+                    foreach (Note n in _spawnedNotes)
                     {
                         if (n == null)
                             continue;
@@ -151,14 +140,14 @@ namespace DrumSmasher.Notes
 
                     Paused = false;
                     UnPauseMusic();
-                    _gameTime.Start();
+                    _playTime.Start();
                 }
                 else
                 {
                     Paused = true;
                     _pausedAt = DateTime.Now;
                     PauseMusic();
-                    _gameTime.Stop();
+                    _playTime.Stop();
                 }
 
                 _nextPause = DateTime.Now.AddMilliseconds(PauseKeyDelayMS);
@@ -166,6 +155,10 @@ namespace DrumSmasher.Notes
 
             if (Paused)
                 return;
+
+            //Start music based on offset
+            if (!Sound.MusicSource.isPlaying && _songStart.Ticks <= DateTime.Now.Ticks)
+                PlayMusic();
 
             //Check for chart end
             if (_notesToSpawn.Count == 0 && _spawnedNotes.Count > 0)
@@ -185,37 +178,31 @@ namespace DrumSmasher.Notes
 
         private void PlayMusic()
         {
-            Logger.Log("Playing song " + Sound.Audio.targetFile);
-
             if (Paused)
             {
                 UnPauseMusic();
                 return;
             }
-            if (Sound.Audio.IsPlaying)
-                Sound.Audio.Stop();
-            
-            Sound.Audio.Play();
-            Sound.Audio.StartSong();
+            if (Sound.MusicSource.isPlaying)
+                Sound.MusicSource.Stop();
+
+            Sound.MusicSource.Play();
         }
         private void StopMusic()
         {
-            Logger.Log("Stopping song");
-
-            if (!Sound.Audio.IsPlaying)
+            if (!Sound.MusicSource.isPlaying)
                 return;
 
-            Sound.Audio.Stop();
-            Paused = false;
+            Sound.MusicSource.Stop();
         }
 
         public void ReSkip(int amountMS)
         {
-            TimeSpan oldTime = _gameTime.Time;
+            TimeSpan oldTime = _playTime.Time;
 
-            _gameTime.RemoveTime(TimeSpan.FromMilliseconds(amountMS));
+            _playTime.RemoveTime(TimeSpan.FromMilliseconds(amountMS));
 
-            var notes = CurrentChart.Notes.Where(n => n.Time.TotalMilliseconds > _gameTime.ElapsedMilliseconds && n.Time <= oldTime)
+            var notes = CurrentChart.Notes.Where(n => n.Time.TotalMilliseconds > _playTime.ElapsedMilliseconds && n.Time <= oldTime)
                                           .OrderBy(n => n.Time);
 
             _notesToSpawn.InsertRange(0, notes);
@@ -223,42 +210,26 @@ namespace DrumSmasher.Notes
 
         public void Skip(int amountMS)
         {
-            _gameTime.AddTime(TimeSpan.FromMilliseconds(amountMS));
+            _playTime.AddTime(TimeSpan.FromMilliseconds(amountMS));
 
             for (int i = 0; i < _notesToSpawn.Count; i++)
-                if (_notesToSpawn[i].Time < _gameTime.Time.Add(TimeSpan.FromMilliseconds(Offset)))
+                if (_notesToSpawn[i].Time < _playTime.Time.Add(TimeSpan.FromMilliseconds(Offset)))
                     _notesToSpawn.RemoveAt(i);
         }
 
         private void UnPauseMusic()
         {
-            if (Sound.Audio.PlaybackState != uAudio.uAudio_backend.PlayBackState.Paused)
-            {
-                if (Sound.Audio.IsPlaying)
-                    return;
-                else
-                {
-                    PlayMusic();
-                    return;
-                }
-            }
-
-            Sound.Audio.Resume();
-            Paused = false;
+            Sound.MusicSource.UnPause();
         }
 
         private void PauseMusic()
         {
-            if (!Sound.Audio.IsPlaying || Sound.Audio.PlaybackState == uAudio.uAudio_backend.PlayBackState.Paused)
-                return;
-
-            Sound.Audio.Pause();
-            Paused = true;
+            Sound.MusicSource.Pause();
         }
 
         private void TrySpawnNote()
         {
-            if (_notesToSpawn.Count == 0 || _notesToSpawn.ElementAt(0).Time.Ticks > _gameTime.ElapsedTicks)
+            if (_notesToSpawn.Count == 0 || _notesToSpawn.ElementAt(0).Time.Ticks > _playTime.ElapsedTicks)
                 return;
 
             ChartNote cn = _notesToSpawn[0];
@@ -331,15 +302,15 @@ namespace DrumSmasher.Notes
             _realTime.Start();
             
             if (Offset < 0)
-                _songStart = _gameTime.Time.Add(TimeSpan.FromMilliseconds(Offset * -1));
+                _songStart = _playTime.Time.Add(TimeSpan.FromMilliseconds(Offset * -1));
             else
             {
-                _songStart = _gameTime.Time;
-                _gameTime.AddTime(TimeSpan.FromMilliseconds(Offset));
+                _songStart = _playTime.Time;
+                _playTime.AddTime(TimeSpan.FromMilliseconds(Offset));
             }
 
             Paused = false;
-            _gameTime.Start();
+            _playTime.Start();
             Play = true;
         }
     }

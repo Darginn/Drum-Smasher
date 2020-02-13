@@ -88,14 +88,14 @@ namespace DrumSmasher.Notes
                 Key4Text.text = code.ToString() + ": " + Key4Hits;
             }
         }
-        
+
         public void Hit(bool goodHit, bool bigNote)
         {
             if (Scroller.AutoPlay && !_offsetCheck)
             {
                 _offsetCheck = true;
 
-                Logger.Log($"First offset MS: {Scroller.GameTime.ElapsedMilliseconds}, Offset song S: {Scroller.Sound.Audio.CurrentTime.TotalSeconds}");
+                Logger.Log($"First offset MS: {Scroller.GameTime.ElapsedMilliseconds}, Offset song S: {Scroller.Sound.MusicSource.time}");
             }
 
             Combo++;
