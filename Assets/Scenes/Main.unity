@@ -1296,8 +1296,8 @@ MonoBehaviour:
   HitSource: {fileID: 1674947432}
   Offset: 0
   MusicPositionText: {fileID: 331562888}
-  Audio: {fileID: 1843041674}
-  Scroller: {fileID: 0}
+  MusicSource: {fileID: 861510757}
+  Scroller: {fileID: 275989790}
 --- !u!82 &861510757
 AudioSource:
   m_ObjectHideFlags: 0
