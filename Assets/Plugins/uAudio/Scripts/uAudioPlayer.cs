@@ -441,23 +441,8 @@ namespace uAudio
 #if uAudio_debug
                             UnityEngine.Debug.LogWarning("%B!%");
 #endif
-                        }
-
-                        if (myAudioSource.clip != null)
-                        {
-#if uAudio_debug
-                            UnityEngine.Debug.LogWarning("%B7%");
-#endif
-                            if (!myAudioSource.isPlaying)
-                                myAudioSource.Play();
-
-#if uAudio_debug
-                            UnityEngine.Debug.LogWarning("%B8%");
-#endif
-                            updateTime = true;
-                        }
-                        else
                             State = uAudio_backend.PlayBackState.Stopped;
+                        }
                     }
                     catch (System.Exception ex)
                     {
@@ -470,6 +455,27 @@ namespace uAudio
                     }
                 }
             }
+        }
+
+        public void StartSong()
+        {
+
+            if (myAudioSource.clip != null)
+            {
+#if uAudio_debug
+                            UnityEngine.Debug.LogWarning("%B7%");
+#endif
+                if (!myAudioSource.isPlaying)
+                    myAudioSource.Play();
+
+#if uAudio_debug
+                            UnityEngine.Debug.LogWarning("%B8%");
+#endif
+                updateTime = true;
+                State = uAudio_backend.PlayBackState.Playing;
+            }
+            else
+                State = uAudio_backend.PlayBackState.Stopped;
         }
 
         void Song_Stream_Loop(float[] data)

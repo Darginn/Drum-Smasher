@@ -155,8 +155,11 @@ namespace DrumSmasher.Notes
                 return;
 
             //Start music based on offset
-            if (Sound.Audio.PlaybackState != uAudio.uAudio_backend.PlayBackState.Playing && _songStart.Ticks <= DateTime.Now.Ticks)
+            if (!_musicInit && Sound.Audio.PlaybackState != uAudio.uAudio_backend.PlayBackState.Playing && _songStart.Ticks <= DateTime.Now.Ticks)
+            {
+                _musicInit = true;
                 PlayMusic();
+            }
 
             //Check for chart end
             if (_notesToSpawn.Count == 0 && _spawnedNotes.Count > 0)
@@ -174,29 +177,32 @@ namespace DrumSmasher.Notes
             TrySpawnNote();
         }
 
+        private bool _musicInit;
+
         private void PlayMusic()
         {
             Logger.Log("Playing song " + Sound.Audio.targetFile);
+
+            if (Paused)
+            {
+                UnPauseMusic();
+                return;
+            }
+            if (Sound.Audio.IsPlaying)
+                Sound.Audio.Stop();
+            
             Sound.Audio.Play();
-            //if (Paused)
-            //{
-            //    UnPauseMusic();
-            //    return;
-            //}
-            //if (Sound.MusicSource.isPlaying)
-            //    Sound.MusicSource.Stop();
-
-            //Sound.MusicSource.Play();
+            Sound.Audio.StartSong();
         }
-
         private void StopMusic()
         {
             Logger.Log("Stopping song");
-            Sound.Audio.Stop();
-            //if (!Sound.MusicSource.isPlaying)
-            //    return;
 
-            //Sound.MusicSource.Stop();
+            if (!Sound.Audio.IsPlaying)
+                return;
+
+            Sound.Audio.Stop();
+            Paused = false;
         }
 
         public void ReSkip(int amountMS)
@@ -222,12 +228,26 @@ namespace DrumSmasher.Notes
 
         private void UnPauseMusic()
         {
+            if (Sound.Audio.PlaybackState != uAudio.uAudio_backend.PlayBackState.Paused)
+            {
+                if (Sound.Audio.IsPlaying)
+                    return;
+                else
+                {
+                    PlayMusic();
+                    return;
+                }
+            }
+
             Sound.Audio.Resume();
             Paused = false;
         }
 
         private void PauseMusic()
         {
+            if (!Sound.Audio.IsPlaying || Sound.Audio.PlaybackState == uAudio.uAudio_backend.PlayBackState.Paused)
+                return;
+
             Sound.Audio.Pause();
             Paused = true;
         }
