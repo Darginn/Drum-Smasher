@@ -85,7 +85,7 @@ namespace DrumSmasher
             _sceneActionActive = true;
 
             Logger.Log("Selecting chart");
-            string path = StandaloneFileBrowser.OpenFilePanel("Select chart", Application.dataPath, new ExtensionFilter[] { _extChartFilter }, false)[0];
+            string path = StandaloneFileBrowser.OpenFilePanel("Select chart", Application.dataPath + "/Charts/", new ExtensionFilter[] { _extChartFilter }, false)[0];
 
             if (path.Length < 0)
                 return;

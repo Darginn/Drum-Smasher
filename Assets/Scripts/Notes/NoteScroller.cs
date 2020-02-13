@@ -30,6 +30,8 @@ namespace DrumSmasher.Notes
         public Text Key3Text;
         public Text Key4Text;
 
+        public Text RealTimeText;
+
         public Text AccuracyText;
 
         public GameInput.ButtonController Key1;
@@ -60,8 +62,9 @@ namespace DrumSmasher.Notes
         private List<ChartNote> _notesToSpawn;
         private List<Note> _spawnedNotes;
         private GameTime _gameTime;
+        private Stopwatch _realTime;
         private Vector3 _startPos;
-        private DateTime _songStart;
+        private TimeSpan _songStart;
         private DateTime _nextPause;
         private DateTime _pausedAt;
         private float _noteLayer;
@@ -103,7 +106,7 @@ namespace DrumSmasher.Notes
         void Update()
         {
             //Start music based on offset
-            if (Sound.Audio.PlaybackState != uAudio.uAudio_backend.PlayBackState.Playing && _songStart.Ticks <= DateTime.Now.Ticks)
+            if (Sound.Audio.PlaybackState != uAudio.uAudio_backend.PlayBackState.Playing && _songStart <= _gameTime.Time)
                 PlayMusic();
 
             if (!Play || ReachedEnd)
@@ -111,6 +114,8 @@ namespace DrumSmasher.Notes
 
             SoundOffsetText.text = "Offset: " + _gameTime.ElapsedMilliseconds;
             SoundOffset = (long)_gameTime.ElapsedMilliseconds;
+
+            RealTimeText.text = $"{_realTime.Elapsed.Minutes}:{_realTime.Elapsed.Seconds}:{_realTime.Elapsed.Milliseconds}";
 
             //120 bpm
             //2 beats / s
@@ -309,12 +314,31 @@ namespace DrumSmasher.Notes
         {
             Logger.Log("Starting to play", LogLevel.Trace);
 
-            _songStart = DateTime.Now;
 
             Play = true;
             Paused = false;
             _gameTime.Start();
-            _gameTime.RemoveTime(TimeSpan.FromMilliseconds(Offset));
+
+            if (_realTime == null)
+                _realTime = new Stopwatch();
+            else
+            {
+                _realTime.Stop();
+                _realTime.Reset();
+            }
+
+            _realTime.Start();
+
+            if (Offset < 0)
+            {
+                _songStart = _gameTime.Time.Add(TimeSpan.FromMilliseconds(Offset * -1));
+                _gameTime.RemoveTime(TimeSpan.FromMilliseconds(Offset * -1));
+            }
+            else
+            {
+                _songStart = _gameTime.Time;
+                _gameTime.AddTime(TimeSpan.FromMilliseconds(Offset));
+            }
         }
     }
 }
