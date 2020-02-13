@@ -111,13 +111,13 @@ namespace DrumSmasher.Notes
             // 120 / 60 = 2 beats per second
             //1 / 2 = 0.5 s â beat
 
-            if (BPM > 0 && Sound.MusicSource.isPlaying)
+            if (BPM > 0 && Sound.Audio.IsPlaying)
             {
                 float beatsPerSec = BPM / 60f;
                 float secPerBeat = 1 / beatsPerSec;
 
-                float beatPos = (Sound.MusicSource.time / secPerBeat) - (Offset / 1000f / secPerBeat);
-                CurrentBeat = beatPos;
+                double beatPos = (Sound.Audio.CurrentTime.TotalSeconds / secPerBeat) - (Offset / 1000f / secPerBeat);
+                CurrentBeat = (float)beatPos;
             }
             
             if (_nextPause < DateTime.Now && Input.GetKeyDown(KeyCode.Space))
@@ -153,7 +153,7 @@ namespace DrumSmasher.Notes
                 return;
 
             //Start music based on offset
-            if (!Sound.MusicSource.isPlaying && _songStart.Ticks <= DateTime.Now.Ticks)
+            if (Sound.Audio.PlaybackState != uAudio.uAudio_backend.PlayBackState.Playing && _songStart.Ticks <= DateTime.Now.Ticks)
                 PlayMusic();
 
             //Check for chart end
@@ -174,33 +174,37 @@ namespace DrumSmasher.Notes
 
         private void PlayMusic()
         {
-            if (Paused)
-            {
-                UnPauseMusic();
-                return;
-            }
-            if (Sound.MusicSource.isPlaying)
-                Sound.MusicSource.Stop();
+            Logger.Log("Playing song " + Sound.Audio.targetFile);
+            Sound.Audio.Play();
+            //if (Paused)
+            //{
+            //    UnPauseMusic();
+            //    return;
+            //}
+            //if (Sound.MusicSource.isPlaying)
+            //    Sound.MusicSource.Stop();
 
-            Sound.MusicSource.Play();
+            //Sound.MusicSource.Play();
         }
 
         private void StopMusic()
         {
-            if (!Sound.MusicSource.isPlaying)
-                return;
+            Logger.Log("Stopping song");
+            Sound.Audio.Stop();
+            //if (!Sound.MusicSource.isPlaying)
+            //    return;
 
-            Sound.MusicSource.Stop();
+            //Sound.MusicSource.Stop();
         }
 
         private void UnPauseMusic()
         {
-            Sound.MusicSource.UnPause();
+            Sound.Audio.Resume();
         }
 
         private void PauseMusic()
         {
-            Sound.MusicSource.Pause();
+            Sound.Audio.Pause();
         }
 
         private void TrySpawnNote()
@@ -265,6 +269,7 @@ namespace DrumSmasher.Notes
             Logger.Log("Starting to play", LogLevel.Trace);
 
             _songStart = DateTime.Now.AddMilliseconds(Offset);
+
             Play = true;
             Paused = false;
             _playTime.Start();

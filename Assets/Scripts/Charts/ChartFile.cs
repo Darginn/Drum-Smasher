@@ -315,7 +315,7 @@ namespace DrumSmasher.Charts
             ch.Source = (string)metadata.Properties["Source"].Value;
             ch.PreviewStart = (long)(float)general.Properties["PreviewTime"].Value;
             ch.Offset = osuFile.Offset;
-            ch.SoundFile = (string)general.Properties["AudioFilename"].Value;
+            ch.SoundFile = ((string)general.Properties["AudioFilename"].Value).TrimStart(' ');
 
             ch.Notes = new List<ChartNote>();
             OsuSection snote = osuFile.Sections["HitObjects"];

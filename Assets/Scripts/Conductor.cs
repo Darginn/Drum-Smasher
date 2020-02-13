@@ -17,28 +17,17 @@ namespace DrumSmasher
         public float SongPosition;
         public float SongPositionInBeats;
         public float DspSongTime;
-        public AudioSource MusicSource;
         public AudioSource HitSource;
         public float Offset;
         public bool ReachedEnd;
         public Text MusicPositionText;
+        public uAudio.uAudioPlayer Audio;
 
         private DateTime _nextTimeJump;
-
-        private AudioClip _musicClip
-        {
-            get
-            {
-                return MusicSource.clip;
-            }
-        }
+        
         // Start is called before the first frame update
         void Start()
         {
-            MusicSource = GetComponent<AudioSource>();
-            
-
-
             SecPerBeat = 60f / SongBpm;
 
             DspSongTime = (float)AudioSettings.dspTime;
@@ -50,10 +39,10 @@ namespace DrumSmasher
 
             SongPositionInBeats = SongPosition / SecPerBeat;
             
-            if (MusicSource != null && _musicClip != null && MusicSource.time <= _musicClip.length)
+            if (Audio != null && Audio.CurrentTime <= Audio.TotalTime)
             {
-                TimeSpan pos = TimeSpan.FromSeconds(MusicSource.time);
-                TimeSpan length = TimeSpan.FromSeconds(_musicClip.length);
+                TimeSpan pos = Audio.CurrentTime;
+                TimeSpan length = Audio.TotalTime;
                 MusicPositionText.text = $"{pos.Minutes}:{pos.Seconds}:{pos.Milliseconds}/{length.Minutes}:{length.Seconds}:{length.Milliseconds}";
             }
         }
@@ -62,24 +51,7 @@ namespace DrumSmasher
         public void LoadSong(string file)
         {
             Logger.Log("Loading song " + file);
-            StartCoroutine(LoadSongFromFile(file));
-
-            if (MusicSource.clip == null)
-                Logger.Log("Failed to load audioclip");
-            else
-                Logger.Log("Loaded audio clip");
-        }
-
-   
-
-        private IEnumerator LoadSongFromFile(string file)
-        {
-            using (UnityWebRequest wr = UnityWebRequestMultimedia.GetAudioClip(file, AudioType.UNKNOWN))
-            {
-                yield return wr.SendWebRequest();
-
-                MusicSource.clip = DownloadHandlerAudioClip.GetContent(wr);
-            }
+            Audio.targetFile = file;
         }
     }
 }

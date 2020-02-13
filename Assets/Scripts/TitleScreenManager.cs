@@ -118,6 +118,7 @@ namespace DrumSmasher
         public void ConvertOsuMap()
         {
             Logger.Log("Selecting osu map");
+            
             string path = StandaloneFileBrowser.OpenFilePanel("Select osu map", Application.dataPath, new ExtensionFilter[] { _extOsuFilter }, false)[0];
             
             if (path.Length <= 0)
@@ -144,8 +145,9 @@ namespace DrumSmasher
                 return;
             
             var chart = Charts.ChartFile.ConvertOsuFile(path);
-
+            
             Charts.ChartFile.Save(output, chart);
+            File.Copy(chartFile.Directory.FullName + @"\" + chart.SoundFile, new FileInfo(output).Directory.FullName + @"\" + chart.SoundFile);
         }
 
         public void SetFullscreen(bool isFullscreen)

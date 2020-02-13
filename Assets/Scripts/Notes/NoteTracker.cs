@@ -95,7 +95,7 @@ namespace DrumSmasher.Notes
             {
                 _offsetCheck = true;
 
-                Logger.Log($"First offset MS: {Scroller.GameTime.ElapsedMilliseconds}, Offset song S: {Scroller.Sound.MusicSource.time}");
+                Logger.Log($"First offset MS: {Scroller.GameTime.ElapsedMilliseconds}, Offset song S: {Scroller.Sound.Audio.CurrentTime.TotalSeconds}");
             }
 
             Combo++;
