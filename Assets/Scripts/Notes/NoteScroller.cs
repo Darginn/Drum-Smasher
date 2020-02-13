@@ -102,6 +102,10 @@ namespace DrumSmasher.Notes
 
         void Update()
         {
+            //Start music based on offset
+            if (Sound.Audio.PlaybackState != uAudio.uAudio_backend.PlayBackState.Playing && _songStart.Ticks <= DateTime.Now.Ticks)
+                PlayMusic();
+
             if (!Play || ReachedEnd)
                 return;
 
@@ -154,13 +158,6 @@ namespace DrumSmasher.Notes
             if (Paused)
                 return;
 
-            //Start music based on offset
-            if (!_musicInit && Sound.Audio.PlaybackState != uAudio.uAudio_backend.PlayBackState.Playing && _songStart.Ticks <= DateTime.Now.Ticks)
-            {
-                _musicInit = true;
-                PlayMusic();
-            }
-
             //Check for chart end
             if (_notesToSpawn.Count == 0 && _spawnedNotes.Count > 0)
             {
@@ -176,8 +173,6 @@ namespace DrumSmasher.Notes
             //Try to spawn next note
             TrySpawnNote();
         }
-
-        private bool _musicInit;
 
         private void PlayMusic()
         {
@@ -314,11 +309,12 @@ namespace DrumSmasher.Notes
         {
             Logger.Log("Starting to play", LogLevel.Trace);
 
-            _songStart = DateTime.Now.AddMilliseconds(Offset);
+            _songStart = DateTime.Now;
 
             Play = true;
             Paused = false;
             _gameTime.Start();
+            _gameTime.RemoveTime(TimeSpan.FromMilliseconds(Offset));
         }
     }
 }
