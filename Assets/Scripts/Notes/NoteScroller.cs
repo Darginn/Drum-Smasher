@@ -105,12 +105,18 @@ namespace DrumSmasher.Notes
 
         void Update()
         {
-            //Start music based on offset
-            if (Sound.Audio.PlaybackState != uAudio.uAudio_backend.PlayBackState.Playing && _songStart <= _gameTime.Time)
-                PlayMusic();
+            Logger.Log((_songStart <= _gameTime.Time).ToString());
 
             if (!Play || ReachedEnd)
                 return;
+
+            //Start music based on offset
+            if (_songStart <= _gameTime.Time && Sound.Audio.PlaybackState != uAudio.uAudio_backend.PlayBackState.Playing)
+            {
+                Logger.Log($"Starting music (Start: {_songStart.TotalMilliseconds} Gametime: {_gameTime.Time.TotalMilliseconds}");
+                PlayMusic();
+            }
+
 
             SoundOffsetText.text = "Offset: " + _gameTime.ElapsedMilliseconds;
             SoundOffset = (long)_gameTime.ElapsedMilliseconds;
@@ -315,9 +321,6 @@ namespace DrumSmasher.Notes
             Logger.Log("Starting to play", LogLevel.Trace);
 
 
-            Play = true;
-            Paused = false;
-            _gameTime.Start();
 
             if (_realTime == null)
                 _realTime = new Stopwatch();
@@ -328,17 +331,18 @@ namespace DrumSmasher.Notes
             }
 
             _realTime.Start();
-
+            
             if (Offset < 0)
-            {
                 _songStart = _gameTime.Time.Add(TimeSpan.FromMilliseconds(Offset * -1));
-                _gameTime.RemoveTime(TimeSpan.FromMilliseconds(Offset * -1));
-            }
             else
             {
                 _songStart = _gameTime.Time;
                 _gameTime.AddTime(TimeSpan.FromMilliseconds(Offset));
             }
+
+            Paused = false;
+            _gameTime.Start();
+            Play = true;
         }
     }
 }
