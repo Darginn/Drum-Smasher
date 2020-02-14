@@ -1,5 +1,6 @@
 ﻿using DrumSmasher.Charts;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -158,7 +159,7 @@ namespace DrumSmasher.Notes
 
             //Start music based on offset
             if (!Sound.MusicSource.isPlaying && _songStart.Ticks <= DateTime.Now.Ticks)
-                PlayMusic();
+                StartCoroutine(WaitToPlayMusic());
 
             //Check for chart end
             if (_notesToSpawn.Count == 0 && _spawnedNotes.Count > 0)
@@ -174,6 +175,12 @@ namespace DrumSmasher.Notes
 
             //Try to spawn next note
             TrySpawnNote();
+        }
+
+        private IEnumerator WaitToPlayMusic()
+        {
+            yield return new WaitForSeconds(0.8f);
+            PlayMusic();
         }
 
         private void PlayMusic()
