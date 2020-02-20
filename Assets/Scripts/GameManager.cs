@@ -44,7 +44,7 @@ namespace DrumSmasher
 
             Instance = objs.First(obj => obj.name.Equals("GameManager")).GetComponent<GameManager>();
             Instance.NoteScroller.Sound.Scroller = Instance.NoteScroller;
-            Instance.NoteScroller.Sound.LoadSong(Application.dataPath + "/Charts/" + chart.SoundFile);
+            Instance.NoteScroller.Sound.LoadSong(Application.dataPath + $"/../Charts/{chart.Artist} - {chart.Title} ({chart.Creator})/" + chart.SoundFile);
 
             Instance.StartMap(chart);
         }
@@ -64,10 +64,10 @@ namespace DrumSmasher
             StartPlaying = true;
         }
         
-        private void OnTitleScreenKey()
+        private void OnSongListScreenKey()
         {
-            Logger.Log("Switching to title screen");
-            SceneManager.LoadScene("TitleScreen");
+            Logger.Log("Switching to Song List");
+            SceneManager.LoadScene("Song List");
         }
 
         // Update is called once per frame
@@ -75,7 +75,7 @@ namespace DrumSmasher
         {
             if (TitleScreenKey == null)
             {
-                TitleScreenKey = new HotKey(KeyCode.Escape, new Action(OnTitleScreenKey), EscapeCheckDelayMS);
+                TitleScreenKey = new HotKey(KeyCode.Escape, new Action(OnSongListScreenKey), EscapeCheckDelayMS);
                 QualitySettings.vSyncCount = 0;
                 Application.targetFrameRate = TargetFPS;
             }

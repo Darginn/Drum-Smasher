@@ -55,7 +55,12 @@ namespace DrumSmasher
 
         }
 
-        public void SwitchToTaiko()
+        public void SwitchToSonglist()
+        {
+            SceneManager.LoadScene("Song List");
+        }
+
+        /*public void SwitchToTaiko()
         {
             if (_sceneActionActive)
                 return;
@@ -106,7 +111,7 @@ namespace DrumSmasher
                 Logger.Log("Failed to load chart");
 
             _sceneActionActive = false;
-        }
+        }*/
 
         public void Settings()
         {

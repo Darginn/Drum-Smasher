@@ -28,39 +28,7 @@ namespace DrumSmasher
 
             Logger.Log($"Found {_songFolder.FullName}");
             Songs = ScanForSongsRecursive(_songFolder).ToList();
-
-            //ScanForSongsRecursive(_songFolder);
         }
-
-        /*private void ScanForSongsRecursive(object folder)
-        {
-            List<SongInfo> list = new List<SongInfo>();
-            List<DirectoryInfo> foldersToScan = new List<DirectoryInfo>();
-            foldersToScan.Add((DirectoryInfo)folder);
-            while (foldersToScan.Count > 0)
-            {
-                DirectoryInfo[] currentScan = foldersToScan.ToArray();
-                foldersToScan.Clear();
-                for (int i = 0; i < currentScan.Length; ++i)
-                {
-                    foreach (FileInfo f in currentScan[i].GetFiles())
-                    {
-                        if (f.Name.EndsWith(".chart"))
-                        {
-                            Chart c = ChartFile.Load(f.FullName);
-                            SongInfo si = new SongInfo($"{c.Artist} - {c.Title}", $"{c.Title} - {c.Artist}", c);
-                            list.Add(si);
-                            break;
-                        }
-                    }
-                    foreach (DirectoryInfo d in currentScan[i].GetDirectories())
-                    {
-                        foldersToScan.Add(d);
-                    }
-                }
-            }
-            Songs = list;
-        }*/
 
         private IEnumerable<SongInfo> ScanForSongsRecursive(DirectoryInfo directory)
         {
@@ -76,7 +44,8 @@ namespace DrumSmasher
                     continue;
                 }
 
-                SongInfo si = new SongInfo($"{c.Artist} - {c.Title} [{c.Difficulty}]", $"{c.Title} [{c.Difficulty}] - {c.Artist}", c);
+                Logger.Log($"Loaded SongInfo: {c.Artist} - {c.Title} [{c.Difficulty}]");
+                SongInfo si = new SongInfo($"{c.Artist}", $"{c.Title}", $"{c.Difficulty}", c);
 
                 yield return si;
             }
@@ -84,16 +53,21 @@ namespace DrumSmasher
 
         public class SongInfo
         {
-            public string DisplayArtist;
-            public string DisplayName;
-            public string DisplayDifficulty;
+            public string Artist;
+            public string Name;
+            public string Difficulty;
             public Chart chart;
 
-            public SongInfo(string displayArtist, string displayName, Chart c)
+            public string DisplayName;
+
+            public SongInfo(string displayArtist, string displayName, string difficulty, Chart c)
             {
-                DisplayArtist = displayArtist;
-                DisplayName = displayName;
+                Artist = displayArtist;
+                Name = displayName;
+                Difficulty = difficulty;
                 chart = c;
+
+                DisplayName = displayArtist + " - " + displayName + $" [{difficulty}]";
             }
 
             public SongInfo()

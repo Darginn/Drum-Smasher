@@ -1,1 +1,12 @@
-20.2.2020 0:32:41:184: *Info* RefreshSongs: Found C:\Users\Jb112\Documents\Games\Drum Smasher\Charts\
+20.2.2020 18:50:7:122: *Info* ConvertOsuMap: Selecting osu map
+20.2.2020 18:50:36:856: *WARNING* ConvertOsuMap: Chart Folder doesn't exist, creating new one:
+20.2.2020 18:50:36:857: *Info* ConvertOsuMap: Directory C:\Users\Jb112\Documents\Games\Drum Smasher\Charts\Hitori Tori - perthed again (yambabom remix) (tsubaki131)\ created successfully
+20.2.2020 18:50:36:860: *Info* ConvertOsuFile: General
+20.2.2020 18:50:36:861: *Info* ConvertOsuFile: Editor
+20.2.2020 18:50:36:861: *Info* ConvertOsuFile: Metadata
+20.2.2020 18:50:36:861: *Info* ConvertOsuFile: Difficulty
+20.2.2020 18:50:36:861: *Info* ConvertOsuFile: Events
+20.2.2020 18:50:36:861: *Info* ConvertOsuFile: TimingPoints
+20.2.2020 18:50:36:862: *Info* ConvertOsuFile: Colours
+20.2.2020 18:50:36:862: *Info* ConvertOsuFile: HitObjects
+20.2.2020 18:50:36:873: *Trace* Save: Saving chart to C:\Users\Jb112\Documents\Games\Drum Smasher\Charts\Hitori Tori - perthed again (yambabom remix) (tsubaki131)\
