@@ -1,72 +1,38 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using System.Threading;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+using DrumSmasher.Charts;
+using System.Linq;
+using System;
 
 namespace DrumSmasher
 {
     public class SongScanning : MonoBehaviour
     {
-        public static List<SongInfo> AllSongs;
+        public List<SongInfo> Songs;
+        private DirectoryInfo _songFolder;
 
-        public delegate void OnFinished(List<SongInfo> songs);
-        public Image LoadingImage;
-        private List<SongInfo> songs = null;
-        System.Object LockObject = new System.Object();
-
-        [System.Serializable]
-        public class SongInfo
+        public void Awake()
         {
-            public FileInfo fileInfo;
-            public string artist, name, displayArtist, displayName;
+            _songFolder = new DirectoryInfo(Application.dataPath + "/../Charts/");
         }
 
-        void Start()
+        public void RefreshSongs()
         {
-            Application.backgroundLoadingPriority = UnityEngine.ThreadPriority.Low;
-            StartCoroutine(ScanAndContinue(delegate (List<SongInfo> songs)
+            if (!_songFolder.Exists)
             {
-                AllSongs = songs;
-            }));
+                Logger.Log("Directory not found! Creating new one", LogLevel.WARNING);
+                _songFolder.Create();
+                Logger.Log($"Directory {_songFolder.FullName} created successfully");
+            }
+
+            Logger.Log($"Found {_songFolder.FullName}");
+            Songs = ScanForSongsRecursive(_songFolder).ToList();
+
+            //ScanForSongsRecursive(_songFolder);
         }
 
-        private IEnumerator ScanAndContinue(OnFinished onFinished)
-        {
-            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Song List", LoadSceneMode.Single);
-            asyncLoad.allowSceneActivation = false;
-            Thread thread = new Thread(ScanForSongsRecursively);
-            thread.IsBackground = true;
-            thread.Start(new DirectoryInfo(Application.dataPath).Parent);
-            while (true)
-            {
-                yield return null;
-                lock (LockObject)
-                {
-                    if (songs != null) break;
-                }
-            }
-            thread.Abort();
-            AllSongs = songs;
-            while (asyncLoad.isDone)
-            {
-                Logger.Log("Still loading Scene: " + asyncLoad.progress);
-                if (asyncLoad.progress >= 0.9) break;
-                yield return null;
-            }
-
-            while (LoadingImage.color.a > 0)
-            {
-                LoadingImage.color -= new Color(0, 0, 0, Time.deltaTime);
-                yield return null;
-            }
-
-            asyncLoad.allowSceneActivation = true;
-        }
-
-        private void ScanForSongsRecursively(object folder)
+        /*private void ScanForSongsRecursive(object folder)
         {
             List<SongInfo> list = new List<SongInfo>();
             List<DirectoryInfo> foldersToScan = new List<DirectoryInfo>();
@@ -75,13 +41,15 @@ namespace DrumSmasher
             {
                 DirectoryInfo[] currentScan = foldersToScan.ToArray();
                 foldersToScan.Clear();
-                for (int i = 0; i < currentScan.Length; i++)
+                for (int i = 0; i < currentScan.Length; ++i)
                 {
                     foreach (FileInfo f in currentScan[i].GetFiles())
                     {
-                        if (f.Name == "song.chart")
+                        if (f.Name.EndsWith(".chart"))
                         {
-                            list.Add(CreateSongInfo(currentScan[i]));
+                            Chart c = ChartFile.Load(f.FullName);
+                            SongInfo si = new SongInfo($"{c.Artist} - {c.Title}", $"{c.Title} - {c.Artist}", c);
+                            list.Add(si);
                             break;
                         }
                     }
@@ -91,57 +59,47 @@ namespace DrumSmasher
                     }
                 }
             }
-            List<SongInfo> sortedList = Sort(list);
-            lock (LockObject)
+            Songs = list;
+        }*/
+
+        private IEnumerable<SongInfo> ScanForSongsRecursive(DirectoryInfo directory)
+        {
+            List<FileInfo> chartFiles = directory.EnumerateFiles("*.chart", SearchOption.AllDirectories).ToList();
+
+            foreach (FileInfo chartFile in chartFiles)
             {
-                songs = sortedList;
+                Chart c = ChartFile.Load(chartFile.FullName);
+
+                if (c == null)
+                {
+                    Logger.Log($"Could not load chart {chartFile.FullName}", LogLevel.WARNING);
+                    continue;
+                }
+
+                SongInfo si = new SongInfo($"{c.Artist} - {c.Title} [{c.Difficulty}]", $"{c.Title} [{c.Difficulty}] - {c.Artist}", c);
+
+                yield return si;
             }
         }
 
-        private List<SongInfo> Sort(List<SongInfo> songs)
+        public class SongInfo
         {
-            Dictionary<string, SongInfo> songByArtists = new Dictionary<string, SongInfo>();
-            List<string> artists = new List<string>();
-            for(int i = 0; i < songs.Count; i++)
-            {
-                if(!songByArtists.ContainsKey(songs[i].displayArtist))
-                {
-                    artists.Add(songs[i].displayArtist);
-                    songByArtists.Add(songs[i].displayArtist, songs[i]);
-                }
-            }
-            artists.Sort();
-            List<SongInfo> sortedList = new List<SongInfo>();
-            for(int i = 0; i < artists.Count; i++)
-            {
-                sortedList.Add(songByArtists[artists[i]]);
-            }
-            return sortedList;
-        }
+            public string DisplayArtist;
+            public string DisplayName;
+            public string DisplayDifficulty;
+            public Chart chart;
 
-        private SongInfo CreateSongInfo(DirectoryInfo folder)
-        {
-            SongInfo songInfo = new SongInfo();
-            FileInfo ini = null;
-            foreach(FileInfo f in folder.GetFiles())
+            public SongInfo(string displayArtist, string displayName, Chart c)
             {
-                if(f.Name == "song.chart")
-                {
-                    songInfo.fileInfo = f;
-                    ini = f;
-                    break;
-                }
+                DisplayArtist = displayArtist;
+                DisplayName = displayName;
+                chart = c;
             }
-            string[] lines = File.ReadAllLines(ini.FullName);
-            for(int i = 0; i < lines.Length; i++)
+
+            public SongInfo()
             {
-                if (lines[i].StartsWith("Title")) songInfo.name = lines[i].Split("="[0])[0];
-                if (lines[i].StartsWith("Artist")) songInfo.artist = lines[i].Split("="[0])[0];
-                if (lines[i] == @"[/\]") break;
             }
-            songInfo.displayArtist = songInfo.artist + " - " + songInfo.name;
-            songInfo.displayName = songInfo.name + " - " + songInfo.artist;
-            return songInfo;
         }
     }
 }
+
