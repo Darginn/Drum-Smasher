@@ -1,24 +1,32 @@
-20.2.2020 23:26:9:852: *Info* ConvertOsuMap: Selecting osu map
-20.2.2020 23:26:22:968: *Info* ConvertOsuFile: General
-20.2.2020 23:26:22:968: *Info* ConvertOsuFile: Editor
-20.2.2020 23:26:22:968: *Info* ConvertOsuFile: Metadata
-20.2.2020 23:26:22:968: *Info* ConvertOsuFile: Difficulty
-20.2.2020 23:26:22:968: *Info* ConvertOsuFile: Events
-20.2.2020 23:26:22:968: *Info* ConvertOsuFile: TimingPoints
-20.2.2020 23:26:22:969: *Info* ConvertOsuFile: Colours
-20.2.2020 23:26:22:969: *Info* ConvertOsuFile: HitObjects
-20.2.2020 23:26:22:981: *Trace* Save: Saving chart to C:\Users\Jb112\Documents\Games\Drum Smasher\Charts\Hitori Tori - perthed again (yambabom remix) (tsubaki131)\
-20.2.2020 23:26:22:991: *Trace* Save: Finished save process for C:\Users\Jb112\Documents\Games\Drum Smasher\Charts\Hitori Tori - perthed again (yambabom remix) (tsubaki131)\Hitori Tori - perthed again (yambabom remix) (tsubaki131) [miKuru'oni].chart
-20.2.2020 23:26:51:251: *Info* RefreshSongs: Found C:\Users\Jb112\Documents\Games\Drum Smasher\Charts\
-20.2.2020 23:26:51:268: *Info* ScanForSongsRecursive: Loaded SongInfo: Hitori Tori - perthed again (yambabom remix) [miKuru'oni]
-20.2.2020 23:26:51:285: *Info* ScanForSongsRecursive: Loaded SongInfo: katagiri - Sendan Life (katagiri Bootleg) [YAZD]
-20.2.2020 23:26:51:297: *Info* ScanForSongsRecursive: Loaded SongInfo: Kola Kid - can't hide your love [31's Taiko]
-20.2.2020 23:26:51:309: *Info* ScanForSongsRecursive: Loaded SongInfo: Masayoshi Minoshima feat. nomico - Bad Apple!! [lepidon! - Taiko Oni]
-20.2.2020 23:26:51:316: *Info* ScanForSongsRecursive: Loaded SongInfo: SoundTeMP - Dreamer's Dream [Ono's Muzukashii]
-20.2.2020 23:26:52:310: *Info* LoadMap: Chart loaded, Switching to Taiko
-20.2.2020 23:26:52:310: *Info* SwitchToTaiko: LoadedChart: False
-20.2.2020 23:26:52:435: *Info* LoadSong: Loading song C:/Users/Jb112/Documents/Games/Drum Smasher/Assets/../Charts/Hitori Tori - perthed again (yambabom remix) (tsubaki131)/06 perthed again (yambabom remix).mp3
-20.2.2020 23:26:52:440: *Info* LoadSong: Failed to load audioclip
-20.2.2020 23:26:52:440: *Info* StartMap: Starting Map
-20.2.2020 23:26:52:446: *Trace* StartPlaying: Starting to play
-20.2.2020 23:26:55:152: *Info* Hit: First offset MS: 3047.6218, Offset song S: 1.343991
+21.2.2020 17:25:34:931: *Info* RefreshSongs: Found C:\Users\Jb112\Documents\Games\Drum Smasher\Charts\
+21.2.2020 17:25:34:960: *Info* ScanForSongsRecursive: Loaded SongInfo: DM DOKURO - Devourer of Gods Compilation [Devourer of Onis]
+21.2.2020 17:25:34:971: *Info* ScanForSongsRecursive: Loaded SongInfo: katagiri - Sendan Life (katagiri Bootleg) [YAZD]
+21.2.2020 17:25:34:978: *Info* ScanForSongsRecursive: Loaded SongInfo: Kola Kid - can't hide your love [31's Taiko]
+21.2.2020 17:25:34:985: *Info* ScanForSongsRecursive: Loaded SongInfo: Masayoshi Minoshima feat. nomico - Bad Apple!! [lepidon! - Taiko Oni]
+21.2.2020 17:25:34:993: *Info* ScanForSongsRecursive: Loaded SongInfo: SoundTeMP - Dreamer's Dream [Ono's Muzukashii]
+21.2.2020 17:25:35:4: *Info* ScanForSongsRecursive: Loaded SongInfo: Yuuyu - Howdy! and... Good-Die! [GENOCIDE.EXE]
+21.2.2020 17:25:37:470: *Info* LoadMap: Chart loaded, Switching to Taiko
+21.2.2020 17:25:37:471: *Info* SwitchToTaiko: LoadedChart: True
+21.2.2020 17:25:37:503: *Info* LoadSong: Loading song C:\Users\Jb112\Documents\Games\Drum Smasher\Charts\Yuuyu - Howdy! and... Good-Die! (3san)\audio.mp3
+21.2.2020 17:25:37:508: *Info* StartMap: Starting Map
+21.2.2020 17:25:37:511: *Info* Load: Loading chart DrumSmasher.Charts.Chart
+21.2.2020 17:25:37:803: *Info* Load: Loaded 2005 notes
+21.2.2020 17:25:37:803: *Info* StartPlaying: Current GameTime: -1333.14913333333
+21.2.2020 17:25:37:803: *Info* StartPlaying: Time Start To Hit: 1333.33333333333
+21.2.2020 17:25:37:803: *Info* StartPlaying: Starting music at MS: 1333.33333333333
+21.2.2020 17:25:40:474: *Info* Update: Starting music at 1337.59906666667
+21.2.2020 17:30:18:899: *Info* OnTitleScreenKey: Switching to title screen
+21.2.2020 17:30:25:783: *Info* RefreshSongs: Found C:\Users\Jb112\Documents\Games\Drum Smasher\Charts\
+21.2.2020 17:30:25:806: *Info* ScanForSongsRecursive: Loaded SongInfo: DM DOKURO - Devourer of Gods Compilation [Devourer of Onis]
+21.2.2020 17:30:25:817: *Info* ScanForSongsRecursive: Loaded SongInfo: katagiri - Sendan Life (katagiri Bootleg) [YAZD]
+21.2.2020 17:30:25:825: *Info* ScanForSongsRecursive: Loaded SongInfo: Kola Kid - can't hide your love [31's Taiko]
+21.2.2020 17:30:25:832: *Info* ScanForSongsRecursive: Loaded SongInfo: Masayoshi Minoshima feat. nomico - Bad Apple!! [lepidon! - Taiko Oni]
+21.2.2020 17:30:25:836: *Info* ScanForSongsRecursive: Loaded SongInfo: SoundTeMP - Dreamer's Dream [Ono's Muzukashii]
+21.2.2020 17:30:25:847: *Info* ScanForSongsRecursive: Loaded SongInfo: Yuuyu - Howdy! and... Good-Die! [GENOCIDE.EXE]
+21.2.2020 17:30:27:856: *Info* RefreshSongs: Found C:\Users\Jb112\Documents\Games\Drum Smasher\Charts\
+21.2.2020 17:30:27:879: *Info* ScanForSongsRecursive: Loaded SongInfo: DM DOKURO - Devourer of Gods Compilation [Devourer of Onis]
+21.2.2020 17:30:27:890: *Info* ScanForSongsRecursive: Loaded SongInfo: katagiri - Sendan Life (katagiri Bootleg) [YAZD]
+21.2.2020 17:30:27:898: *Info* ScanForSongsRecursive: Loaded SongInfo: Kola Kid - can't hide your love [31's Taiko]
+21.2.2020 17:30:27:905: *Info* ScanForSongsRecursive: Loaded SongInfo: Masayoshi Minoshima feat. nomico - Bad Apple!! [lepidon! - Taiko Oni]
+21.2.2020 17:30:27:909: *Info* ScanForSongsRecursive: Loaded SongInfo: SoundTeMP - Dreamer's Dream [Ono's Muzukashii]
+21.2.2020 17:30:27:919: *Info* ScanForSongsRecursive: Loaded SongInfo: Yuuyu - Howdy! and... Good-Die! [GENOCIDE.EXE]
