@@ -125,7 +125,7 @@ namespace DrumSmasher
         {
             Logger.Log("Selecting osu map");
             
-            string path = StandaloneFileBrowser.OpenFilePanel("Select osu map", Application.dataPath, new ExtensionFilter[] { _extOsuFilter }, false)[0];
+            string path = StandaloneFileBrowser.OpenFilePanel("Select osu map", Application.dataPath + "/../", new ExtensionFilter[] { _extOsuFilter }, false)[0];
             
             if (path.Length <= 0)
                 return;
@@ -144,16 +144,24 @@ namespace DrumSmasher
                 return;
             }
 
-            string chartName = chartFile.Name;
-            string output = StandaloneFileBrowser.SaveFilePanel("Select save location", Application.dataPath, chartName, new ExtensionFilter[] { _extChartFilter } );
+            string[] c = File.ReadAllLines(chartFile.FullName);
+            string title = "";
+            string artist = "";
+            string creator = "";
 
-            if (output.Length <= 0)
-                return;
+            for (int i = 0; i < c.Length; i++)
+            {
+                if (c[i].StartsWith("Title:")) title = c[i].Split(":"[0])[1];
+                if (c[i].StartsWith("Artist:")) artist = c[i].Split(":"[0])[1];
+                if (c[i].StartsWith("Creator:")) creator = c[i].Split(":"[0])[1];
+            }
             
             var chart = Charts.ChartFile.ConvertOsuFile(path);
             
-            Charts.ChartFile.Save(output, chart);
-            File.Copy(chartFile.Directory.FullName + @"\" + chart.SoundFile, new FileInfo(output).Directory.FullName + @"\" + chart.SoundFile);
+            Charts.ChartFile.Save(chart);
+            DirectoryInfo newChartPath = new DirectoryInfo(Application.dataPath + $"/../Charts/{artist} - {title} ({creator})/");
+            if(!File.Exists(newChartPath.FullName + @"\" + chart.SoundFile))
+                File.Copy(chartFile.Directory.FullName + @"\" + chart.SoundFile, new FileInfo(newChartPath.FullName).Directory.FullName + @"\" + chart.SoundFile);
         }
 
         public void SetFullscreen(bool isFullscreen)

@@ -1,2 +1,9 @@
-20.2.2020 18:43:43:819: *Info* ConvertOsuMap: Selecting osu map
-20.2.2020 18:44:1:361: *WARNING* ConvertOsuMap: Chart Folder doesn't exist, creating new one:
+20.2.2020 23:15:53:200: *Info* ConvertOsuMap: Selecting osu map
+20.2.2020 23:16:5:822: *Info* ConvertOsuFile: General
+20.2.2020 23:16:5:823: *Info* ConvertOsuFile: Editor
+20.2.2020 23:16:5:823: *Info* ConvertOsuFile: Metadata
+20.2.2020 23:16:5:823: *Info* ConvertOsuFile: Difficulty
+20.2.2020 23:16:5:823: *Info* ConvertOsuFile: Events
+20.2.2020 23:16:5:823: *Info* ConvertOsuFile: TimingPoints
+20.2.2020 23:16:5:824: *Info* ConvertOsuFile: HitObjects
+20.2.2020 23:16:5:828: *Trace* Save: Saving chart to C:/Users/Jb112/Documents/Games/Drum Smasher/Assets/../Charts/YoungKillaG - Gohan (Chromoxx)/

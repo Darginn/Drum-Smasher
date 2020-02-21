@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using UnityEngine;
 
 namespace DrumSmasher.Charts
 {
@@ -14,10 +15,22 @@ namespace DrumSmasher.Charts
         private const string SECTION_END = @"[/\]";
         private const string COMMENT = "//";
         
-        public static void Save(string file, Chart chart)
+        public static void Save(Chart chart)
         {
-            Logger.Log("Saving chart to " + file, LogLevel.Trace);
-            StreamWriter swriter = new StreamWriter(file);
+            DirectoryInfo chartFile = new DirectoryInfo(Application.dataPath + $"/../Charts/{chart.Artist} - {chart.Title} ({chart.Creator})/");
+
+            if (!chartFile.Exists)
+            {
+                Logger.Log("Chart Folder doesn't exist, creating new one:", LogLevel.WARNING);
+                chartFile.Create();
+                Logger.Log($"Directory {chartFile.FullName} created successfully");
+            }
+
+            string chartFileSW = Path.Combine(chartFile.FullName, $"{chart.Artist} - {chart.Title} ({chart.Creator}) [{chart.Difficulty}]" + ".chart");
+
+
+            Logger.Log("Saving chart to " + chartFileSW, LogLevel.Trace);
+            StreamWriter swriter = new StreamWriter(chartFileSW);
             try
             {
                 swriter.WriteLine(SECTION_SETTINGS);
@@ -83,10 +96,10 @@ namespace DrumSmasher.Charts
             }
             catch (Exception ex)
             {
-                Logger.Log("Could not save chart to file " + file + Environment.NewLine + ex.ToString(), LogLevel.ERROR);
+                Logger.Log("Could not save chart to file " + chartFileSW + Environment.NewLine + ex.ToString(), LogLevel.ERROR);
                 swriter.Dispose();
             }
-            Logger.Log("Finished save process for " + file, LogLevel.Trace);
+            Logger.Log("Finished save process for " + chartFileSW, LogLevel.Trace);
         }
 
         public static Chart Load(string file)
