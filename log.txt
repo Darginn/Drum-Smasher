@@ -1,9 +1,24 @@
-13.2.2020 16:26:34:327: *Info* LoadMap: Selecting chart
-13.2.2020 16:26:35:504: *Info* LoadMap: Loading path
-13.2.2020 16:26:35:519: *Info* LoadMap: Chart loaded
-13.2.2020 16:26:37:52: *Info* SwitchToTaiko: LoadedChart: False
-13.2.2020 16:26:37:86: *Info* LoadSong: Loading song C:/Users/Jb112/Documents/Games/Drum Smasher/Assets/Charts/katagiri - Sendan Life (katagiri Bootleg) (Ozu) [YAZD].mp3
-13.2.2020 16:26:37:92: *Info* LoadSong: Failed to load audioclip
-13.2.2020 16:26:37:92: *Info* StartMap: Starting Map
-13.2.2020 16:26:37:97: *Trace* StartPlaying: Starting to play
-13.2.2020 16:27:12:665: *Info* Hit: First offset MS: 35567.0567, Offset song S: 34.13331
+20.2.2020 23:26:9:852: *Info* ConvertOsuMap: Selecting osu map
+20.2.2020 23:26:22:968: *Info* ConvertOsuFile: General
+20.2.2020 23:26:22:968: *Info* ConvertOsuFile: Editor
+20.2.2020 23:26:22:968: *Info* ConvertOsuFile: Metadata
+20.2.2020 23:26:22:968: *Info* ConvertOsuFile: Difficulty
+20.2.2020 23:26:22:968: *Info* ConvertOsuFile: Events
+20.2.2020 23:26:22:968: *Info* ConvertOsuFile: TimingPoints
+20.2.2020 23:26:22:969: *Info* ConvertOsuFile: Colours
+20.2.2020 23:26:22:969: *Info* ConvertOsuFile: HitObjects
+20.2.2020 23:26:22:981: *Trace* Save: Saving chart to C:\Users\Jb112\Documents\Games\Drum Smasher\Charts\Hitori Tori - perthed again (yambabom remix) (tsubaki131)\
+20.2.2020 23:26:22:991: *Trace* Save: Finished save process for C:\Users\Jb112\Documents\Games\Drum Smasher\Charts\Hitori Tori - perthed again (yambabom remix) (tsubaki131)\Hitori Tori - perthed again (yambabom remix) (tsubaki131) [miKuru'oni].chart
+20.2.2020 23:26:51:251: *Info* RefreshSongs: Found C:\Users\Jb112\Documents\Games\Drum Smasher\Charts\
+20.2.2020 23:26:51:268: *Info* ScanForSongsRecursive: Loaded SongInfo: Hitori Tori - perthed again (yambabom remix) [miKuru'oni]
+20.2.2020 23:26:51:285: *Info* ScanForSongsRecursive: Loaded SongInfo: katagiri - Sendan Life (katagiri Bootleg) [YAZD]
+20.2.2020 23:26:51:297: *Info* ScanForSongsRecursive: Loaded SongInfo: Kola Kid - can't hide your love [31's Taiko]
+20.2.2020 23:26:51:309: *Info* ScanForSongsRecursive: Loaded SongInfo: Masayoshi Minoshima feat. nomico - Bad Apple!! [lepidon! - Taiko Oni]
+20.2.2020 23:26:51:316: *Info* ScanForSongsRecursive: Loaded SongInfo: SoundTeMP - Dreamer's Dream [Ono's Muzukashii]
+20.2.2020 23:26:52:310: *Info* LoadMap: Chart loaded, Switching to Taiko
+20.2.2020 23:26:52:310: *Info* SwitchToTaiko: LoadedChart: False
+20.2.2020 23:26:52:435: *Info* LoadSong: Loading song C:/Users/Jb112/Documents/Games/Drum Smasher/Assets/../Charts/Hitori Tori - perthed again (yambabom remix) (tsubaki131)/06 perthed again (yambabom remix).mp3
+20.2.2020 23:26:52:440: *Info* LoadSong: Failed to load audioclip
+20.2.2020 23:26:52:440: *Info* StartMap: Starting Map
+20.2.2020 23:26:52:446: *Trace* StartPlaying: Starting to play
+20.2.2020 23:26:55:152: *Info* Hit: First offset MS: 3047.6218, Offset song S: 1.343991

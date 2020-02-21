@@ -1,6 +1,9 @@
-13.2.2020 16:24:32:362: *Info* LoadMap: Selecting chart
-13.2.2020 16:24:34:120: *Info* LoadMap: Loading path
-13.2.2020 16:24:34:136: *Info* LoadMap: Chart loaded
-13.2.2020 16:24:36:23: *Info* SwitchToTaiko: LoadedChart: False
-13.2.2020 16:24:36:55: *Info* LoadSong: Loading song C:/Users/Jb112/Documents/Games/Drum Smasher/Assets/Charts/katagiri - Sendan Life (katagiri Bootleg) (Ozu) [YAZD].mp3
-13.2.2020 16:24:36:64: *Info* Update: No chart found
+20.2.2020 23:15:53:200: *Info* ConvertOsuMap: Selecting osu map
+20.2.2020 23:16:5:822: *Info* ConvertOsuFile: General
+20.2.2020 23:16:5:823: *Info* ConvertOsuFile: Editor
+20.2.2020 23:16:5:823: *Info* ConvertOsuFile: Metadata
+20.2.2020 23:16:5:823: *Info* ConvertOsuFile: Difficulty
+20.2.2020 23:16:5:823: *Info* ConvertOsuFile: Events
+20.2.2020 23:16:5:823: *Info* ConvertOsuFile: TimingPoints
+20.2.2020 23:16:5:824: *Info* ConvertOsuFile: HitObjects
+20.2.2020 23:16:5:828: *Trace* Save: Saving chart to C:/Users/Jb112/Documents/Games/Drum Smasher/Assets/../Charts/YoungKillaG - Gohan (Chromoxx)/
