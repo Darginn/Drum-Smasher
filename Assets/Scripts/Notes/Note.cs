@@ -1,136 +1,193 @@
-﻿using System;
+﻿using DrumSmasher.GameInput;
+using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace DrumSmasher.Notes
 {
     public class Note : MonoBehaviour
     {
+        public TimeSpan StartTime;
+        public double Speed;
         public bool BigNote;
 
-        public KeyCode Key;
-        public KeyCode Key2;
-        public GameInput.ButtonController KeyController;
-        public GameInput.ButtonController KeyController2;
-
-        public GameObject GoodEffect;
-        public GameObject MissEffect;
-
-        public NoteScroller Scroller;
-        public GameObject EndLine;
         public GameObject HitCircle;
+        public GameObject EndLine;
 
-        public Vector3 StartPosition;
-        public DateTime StartTime;
+        public AudioSource HitSound;
 
-        public bool DefaultNote;
-
-        private bool _missed;
-        private bool _autoLeft;
-        
-        public Note() : base()
+        public double HitWindowRangeX;
+        public double HitWindowMinX
         {
-
+            get
+            {
+                return HitCircle.transform.position.x - HitWindowRangeX;
+            }
+        }
+        public double HitWindowMaxX
+        {
+            get
+            {
+                return HitCircle.transform.position.x + HitWindowRangeX;
+            }
         }
 
+        public bool Active;
+        public bool Paused;
+        public bool AutoPlay;
+        public double AutoPlayDelayMS;
+        public NoteTracker Tracker;
+        public ButtonController Key1;
+        public ButtonController Key2;
+
+        public GameObject RingOverlay;
+
+        public bool Hitted;
+        public bool Missed;
+
+        private static bool _autoPlayNext;
+
+        // Start is called before the first frame update
         void Start()
         {
 
         }
 
+        // Update is called once per frame
         void Update()
         {
-            if (Scroller.Paused || DefaultNote)
+            if (!Active || Paused)
                 return;
-            
-            if (Scroller.AutoPlay)
-            {
-                KeyController.AutoPlay = true;
-                KeyController2.AutoPlay = true;
 
-                if (transform.position.x < HitCircle.transform.position.x)
+            //check if we missed
+            if (!Missed && HitWindowMinX > transform.position.x)
+                NoteMiss();
+
+            //check for hit
+            if (!Hitted && !Missed)
+            {
+                if (AutoPlay)
                 {
-                    if (BigNote)
+                    if (transform.position.x < HitCircle.transform.position.x)
                     {
-                        KeyController.SimulateMouseKey(Scroller.AutoPlayDelayMS);
-                        KeyController2.SimulateMouseKey(Scroller.AutoPlayDelayMS);
-                    }
-                    else if (_autoLeft)
-                    {
-                        KeyController.SimulateMouseKey(Scroller.AutoPlayDelayMS);
-                        _autoLeft = false;
-                    }
-                    else
-                    {
-                        KeyController2.SimulateMouseKey(Scroller.AutoPlayDelayMS);
-                        _autoLeft = true;
-                    }
-                    OnHit(true);
-                    return;
-                }
-            }
-            else
-            {
-                KeyController.AutoPlay = false;
-                KeyController2.AutoPlay = false;
-            }
+                        Key1.AutoPlay = true;
+                        Key2.AutoPlay = true;
 
-            if (transform.position.x <= HitCircle.transform.position.x + HitCircle.transform.localScale.x &&
-                transform.position.x >= HitCircle.transform.position.x - HitCircle.transform.localScale.x)
-            {
-                bool key = Input.GetKeyDown(Key);
-                bool key2 = Input.GetKeyDown(Key2);
+                        if (BigNote)
+                        {
+                            Key1.SimulateMouseKey(AutoPlayDelayMS);
+                            Key2.SimulateMouseKey(AutoPlayDelayMS);
 
-                if (BigNote)
-                {
-                    if (key && key2)
-                    {
-                        OnHit(true);
-                        return;
-                    }
-                    else if (key || key2)
-                    {
-                        OnHit(false);
-                        return;
+                            NoteHit(true, true);
+                        }
+                        else
+                        {
+                            if (_autoPlayNext)
+                            {
+                                Key1.SimulateMouseKey(AutoPlayDelayMS);
+                                NoteHit(true, false);
+                                _autoPlayNext = false;
+                            }
+                            else
+                            {
+                                Key2.SimulateMouseKey(AutoPlayDelayMS);
+                                NoteHit(false, true);
+                                _autoPlayNext = true;
+                            }
+                        }
                     }
                 }
-                else if (key || key2)
+                else
                 {
-                    OnHit(true);
-                    return;
+                    if (transform.position.x <= HitCircle.transform.position.x + HitCircle.transform.localScale.x &&
+                        transform.position.x >= HitCircle.transform.position.x - HitCircle.transform.localScale.x)
+                    {
+                        Key1.AutoPlay = false;
+                        Key2.AutoPlay = false;
+
+                        bool key = Input.GetKeyDown(Key1.KeyToPress);
+                        bool key2 = Input.GetKeyDown(Key2.KeyToPress);
+
+                        if (BigNote)
+                        {
+                            if (key && key2)
+                                NoteHit(true, true);
+                            else if (key )
+                                NoteHit(true, false);
+                            else if (key2)
+                                NoteHit(false, true);
+                        }
+                        else if (key || key2)
+                            NoteHit(true, false);
+                    }
                 }
             }
 
-            //Move
-            transform.position = StartPosition - new Vector3(Scroller.NoteSpeed * (float)DateTime.Now.Subtract(StartTime).TotalSeconds * 3f, 0f);
-
-            //Check if we missed
-            if (!_missed && transform.position.x < HitCircle.transform.position.x - HitCircle.transform.localScale.x)
+            //check if we should delete
+            if (transform.position.x <= EndLine.transform.position.x)
             {
-                OnMiss();
-                _missed = true;
-            }
-            //Check if we reached the end
-            else if (_missed && transform.position.x < EndLine.transform.position.x)
-            {
+                Active = false;
                 Destroy(gameObject);
                 return;
             }
+
+            MoveForward();
         }
 
-        private void OnMiss()
+        /// <summary>
+        /// Triggers when we hit the note
+        /// </summary>
+        private void NoteHit(bool key1, bool key2)
         {
-            Scroller.Tracker.Miss();
-        }
+            Active = false;
 
-        private void OnHit(bool goodHit)
-        {
-            Scroller.Sound.HitSource.Play();
-            Scroller.Tracker.Hit(goodHit, BigNote);
+            HitSound.Play();
+
+            NoteTracker.HitType type = BigNote ? (key1 && key2 ? NoteTracker.HitType.GoodHit : NoteTracker.HitType.BadHit) : NoteTracker.HitType.GoodHit;
+
+            Tracker.NoteHit(type, BigNote, (key1 ? new KeyCode?(Key1.KeyToPress) : null), (key2 ? new KeyCode?(Key2.KeyToPress) : null));
+
             Destroy(gameObject);
+        }
+
+        /// <summary>
+        /// Triggers when we miss the note
+        /// </summary>
+        private void NoteMiss()
+        {
+            Missed = true;
+            Tracker.NoteHit(NoteTracker.HitType.Miss);
+        }
+
+
+        /// <summary>
+        /// Checks if note is in hit window
+        /// </summary>
+        /// <returns></returns>
+        private bool IsInHitWindow()
+        {
+            if (HitWindowMinX <= transform.position.x &&
+                HitWindowMaxX >= transform.position.x)
+                return true;
+
+            return false;
+        }
+        
+        /// <summary>
+        /// Moves forward
+        /// </summary>
+        private void MoveForward()
+        {
+            transform.position = new Vector3(transform.position.x - Time.deltaTime * (float)Speed, transform.position.y, transform.position.z);
+        }
+
+        /// <summary>
+        /// Moves backward
+        /// </summary>
+        private void MoveBackwards()
+        {
+            transform.position = new Vector3(transform.position.x + Time.deltaTime * (float)Speed, transform.position.y, transform.position.z);
         }
     }
 }

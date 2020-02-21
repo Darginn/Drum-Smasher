@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -37,14 +38,15 @@ namespace DrumSmasher
         
         private Charts.Chart _loadedChart;
 
-        public static void OnSceneLoaded(Charts.Chart chart)
+        public static void OnSceneLoaded(Charts.Chart chart, DirectoryInfo chartDirectory)
         {
             Scene scene = SceneManager.GetActiveScene();
             GameObject[] objs = scene.GetRootGameObjects();
 
             Instance = objs.First(obj => obj.name.Equals("GameManager")).GetComponent<GameManager>();
-            Instance.NoteScroller.Sound.Scroller = Instance.NoteScroller;
-            Instance.NoteScroller.Sound.LoadSong(Application.dataPath + $"/../Charts/{chart.Artist} - {chart.Title} ({chart.Creator})/" + chart.SoundFile);
+            Instance.NoteScroller.GameSound.Scroller = Instance.NoteScroller;
+            
+            Instance.NoteScroller.GameSound.LoadSong(chartDirectory.FullName + @"\" + chart.SoundFile);
 
             Instance.StartMap(chart);
         }
@@ -64,10 +66,10 @@ namespace DrumSmasher
             StartPlaying = true;
         }
         
-        private void OnSongListScreenKey()
+        private void OnTitleScreenKey()
         {
-            Logger.Log("Switching to Song List");
-            SceneManager.LoadScene("Song List");
+            Logger.Log("Switching to title screen");
+            SceneManager.LoadScene("TitleScreen");
         }
 
         // Update is called once per frame
@@ -75,7 +77,7 @@ namespace DrumSmasher
         {
             if (TitleScreenKey == null)
             {
-                TitleScreenKey = new HotKey(KeyCode.Escape, new Action(OnSongListScreenKey), EscapeCheckDelayMS);
+                TitleScreenKey = new HotKey(KeyCode.Escape, new Action(OnTitleScreenKey), EscapeCheckDelayMS);
                 QualitySettings.vSyncCount = 0;
                 Application.targetFrameRate = TargetFPS;
             }

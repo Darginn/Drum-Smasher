@@ -56,6 +56,16 @@ namespace DrumSmasher
             }
         }
 
+        public void Play()
+        {
+            MusicSource.Play();
+        }
+
+        public void Stop()
+        {
+            MusicSource.Stop();
+        }
+
         public void VolumeUp(int amount = 5)
         {
             MusicSource.volume += (amount / 100);
@@ -67,58 +77,11 @@ namespace DrumSmasher
             MusicSource.volume -= (amount / 100);
             HitSource.volume -= amount / 100;
         }
-
-        /// <summary>
-        /// Goes forward in the track
-        /// </summary>
-        /// <param name="amountMS"></param>
-        public void Skip(int amountMS = 5000)
-        {
-            if (amountMS <= 0)
-                return;
-
-            TimeSpan pos = TimeSpan.FromMilliseconds(SongPosition);
-            TimeSpan length = TimeSpan.FromMilliseconds(_musicClip.length);
-            float newTime = pos.Milliseconds + amountMS;
-
-            if (newTime > length.Milliseconds)
-                newTime = length.Milliseconds;
-
-            MusicSource.time = length.Seconds;
-
-            Scroller?.Skip(amountMS);
-        }
-
-        /// <summary>
-        /// Goes back in the track
-        /// </summary>
-        /// <param name="amountMS"></param>
-        public void ReSkip(int amountMS = 5000)
-        {
-            if (amountMS <= 0)
-                return;
-
-            TimeSpan pos = TimeSpan.FromMilliseconds(SongPosition);
-            TimeSpan length = TimeSpan.FromMilliseconds(_musicClip.length);
-            float newTime = pos.Milliseconds + amountMS;
-
-            if (newTime > length.Milliseconds)
-                newTime = length.Milliseconds;
-
-            MusicSource.time = length.Seconds;
-
-            Scroller?.ReSkip(amountMS);
-        }
-
+        
         public void LoadSong(string file)
         {
             Logger.Log("Loading song " + file);
             StartCoroutine(LoadSongFromFile(file));
-
-            if (MusicSource.clip == null)
-                Logger.Log("Failed to load audioclip");
-            else
-                Logger.Log("Loaded audio clip");
         }
 
 

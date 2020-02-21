@@ -10,9 +10,10 @@ namespace DrumSmasher.GameInput
         public Sprite DefaultImage;
         public Sprite PressedImage;
         public KeyCode KeyToPress;
-        public bool AutoPlay;
-        public double AutoPlayClickDelay;
         public Notes.NoteScroller Scroller;
+        public bool AutoplayNextKey;
+
+        public bool AutoPlay;
 
         private SpriteRenderer _spriteRenderer;
         private DateTime _clickEnd;
@@ -21,6 +22,11 @@ namespace DrumSmasher.GameInput
         void Start()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
+        }
+
+        public void Load(int level)
+        {
+            
         }
 
         // Update is called once per frame
@@ -40,14 +46,17 @@ namespace DrumSmasher.GameInput
                 }
             }
             else if (_clickEnd <= DateTime.Now)
+            {
                 _spriteRenderer.sprite = DefaultImage;
+                _clickEnd = DateTime.MaxValue;
+            }
         }
 
         private void KeyPress()
         {
             if (Scroller != null)
             {
-                Scroller.Tracker.OnKeyHit(KeyToPress);
+                Scroller.Tracker.KeyHit(KeyToPress);
             }
         }
 
@@ -55,7 +64,6 @@ namespace DrumSmasher.GameInput
         {
             _spriteRenderer.sprite = PressedImage;
             _clickEnd = DateTime.Now.AddMilliseconds(delay);
-            KeyPress();
         }
     }
 }

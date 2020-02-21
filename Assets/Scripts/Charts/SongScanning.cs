@@ -45,7 +45,7 @@ namespace DrumSmasher
                 }
 
                 Logger.Log($"Loaded SongInfo: {c.Artist} - {c.Title} [{c.Difficulty}]");
-                SongInfo si = new SongInfo($"{c.Artist}", $"{c.Title}", $"{c.Difficulty}", c);
+                SongInfo si = new SongInfo($"{c.Artist}", $"{c.Title}", $"{c.Difficulty}", c, chartFile.Directory);
 
                 yield return si;
             }
@@ -57,16 +57,17 @@ namespace DrumSmasher
             public string Name;
             public string Difficulty;
             public Chart chart;
+            public DirectoryInfo ChartDirectory;
 
             public string DisplayName;
 
-            public SongInfo(string displayArtist, string displayName, string difficulty, Chart c)
+            public SongInfo(string displayArtist, string displayName, string difficulty, Chart c, System.IO.DirectoryInfo chartDirectory)
             {
                 Artist = displayArtist;
                 Name = displayName;
                 Difficulty = difficulty;
                 chart = c;
-
+                ChartDirectory = chartDirectory;
                 DisplayName = displayArtist + " - " + displayName + $" [{difficulty}]";
             }
 

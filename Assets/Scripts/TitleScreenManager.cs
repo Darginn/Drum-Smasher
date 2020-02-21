@@ -143,25 +143,20 @@ namespace DrumSmasher
                 Logger.Log("Chartfile not found");
                 return;
             }
-
-            string[] c = File.ReadAllLines(chartFile.FullName);
-            string title = "";
-            string artist = "";
-            string creator = "";
-
-            for (int i = 0; i < c.Length; i++)
-            {
-                if (c[i].StartsWith("Title:")) title = c[i].Split(":"[0])[1];
-                if (c[i].StartsWith("Artist:")) artist = c[i].Split(":"[0])[1];
-                if (c[i].StartsWith("Creator:")) creator = c[i].Split(":"[0])[1];
-            }
             
             var chart = Charts.ChartFile.ConvertOsuFile(path);
+            string artist = Charts.ChartFile.FixPath(chart.Artist);
+            string title = Charts.ChartFile.FixPath(chart.Title);
+            string creator = Charts.ChartFile.FixPath(chart.Creator);
+
+            DirectoryInfo chartPath = new DirectoryInfo(Application.dataPath + $"/../Charts/{artist} - {title} ({creator})/");
             
-            Charts.ChartFile.Save(chart);
-            DirectoryInfo newChartPath = new DirectoryInfo(Application.dataPath + $"/../Charts/{artist} - {title} ({creator})/");
-            if(!File.Exists(newChartPath.FullName + @"\" + chart.SoundFile))
-                File.Copy(chartFile.Directory.FullName + @"\" + chart.SoundFile, new FileInfo(newChartPath.FullName).Directory.FullName + @"\" + chart.SoundFile);
+            Charts.ChartFile.Save(chart, chartPath);
+            
+            FileInfo audio = new FileInfo(Path.Combine(chartPath.FullName, chart.SoundFile));
+
+            if(!audio.Exists)
+                File.Copy(chartFile.Directory.FullName + @"\" + chart.SoundFile, audio.FullName);
         }
 
         public void SetFullscreen(bool isFullscreen)

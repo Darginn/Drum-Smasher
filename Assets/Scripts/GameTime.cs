@@ -11,12 +11,29 @@ namespace DrumSmasher
     {
         private Stopwatch _originalTime;
         private double _timeOffsetMS;
+        private TimeSpan _elapsed => _originalTime.Elapsed;
 
-        public TimeSpan Time
+        public bool Enabled
         {
             get
             {
-                return _originalTime.Elapsed.Add(TimeSpan.FromMilliseconds(_timeOffsetMS));
+                if (_originalTime == null)
+                    return false;
+
+                return _originalTime.IsRunning;
+            }
+        }
+
+        public long ElapsedTicks
+        {
+            get
+            {
+                double elapsedMS = ElapsedMilliseconds;
+
+                if (elapsedMS < 0)
+                    return TimeSpan.FromMilliseconds(elapsedMS * -1).Ticks * -1;
+
+                return TimeSpan.FromMilliseconds(elapsedMS).Ticks;
             }
         }
 
@@ -24,7 +41,7 @@ namespace DrumSmasher
         {
             get
             {
-                return Time.TotalMilliseconds;
+                return _elapsed.TotalMilliseconds + _timeOffsetMS;
             }
         }
 
@@ -32,7 +49,7 @@ namespace DrumSmasher
         {
             get
             {
-                return Time.TotalSeconds;
+                return ElapsedMilliseconds / 1000.0;
             }
         }
 
@@ -40,7 +57,7 @@ namespace DrumSmasher
         {
             get
             {
-                return Time.TotalMinutes;
+                return ElapsedMilliseconds / 1000.0 / 60.0;
             }
         }
 
@@ -48,7 +65,7 @@ namespace DrumSmasher
         {
             get
             {
-                return Time.TotalHours;
+                return ElapsedMilliseconds / 1000.0 / 60.0 / 60.0;
             }
         }
 
@@ -56,15 +73,7 @@ namespace DrumSmasher
         {
             get
             {
-                return Time.TotalDays;
-            }
-        }
-
-        public double ElapsedTicks
-        {
-            get
-            {
-                return Time.Ticks;
+                return ElapsedMilliseconds / 1000.0 / 60.0 / 60.0 / 24.0;
             }
         }
 
@@ -85,12 +94,22 @@ namespace DrumSmasher
 
         public void RemoveTime(TimeSpan time)
         {
-            _timeOffsetMS -= time.TotalMilliseconds;
+            RemoveTime(time.TotalMilliseconds);
+        }
+
+        public void RemoveTime(double ms)
+        {
+            _timeOffsetMS -= ms;
         }
 
         public void AddTime(TimeSpan time)
         {
-            _timeOffsetMS += time.TotalMilliseconds;
+            AddTime(time);
+        }
+
+        public void AddTime(double ms)
+        {
+            _timeOffsetMS += ms;
         }
 
         public void ResetTime()

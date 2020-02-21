@@ -1,18 +1,42 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace DrumSmasher.Notes
 {
-    public class NoteTracker
+    public class NoteTracker : MonoBehaviour
     {
-        public long Score { get; private set; }
-        public int Combo { get; private set; }
-
+        public long Score
+        {
+            get
+            {
+                return _score;
+            }
+            set
+            {
+                _score = value;
+                ScoreText.text = value.ToString();
+            }
+        }
+        public int Combo
+        {
+            get
+            {
+                return _combo;
+            }
+            set
+            {
+                _combo = value;
+                ComboText.text = value + "x";
+            }
+        }
+        
+        public int GoodHits;
+        public int BadHits;
+        public int Misses;
+        
         public int TotalNotes
         {
             get
@@ -27,129 +51,190 @@ namespace DrumSmasher.Notes
                 return GoodHits + BadHits;
             }
         }
-        public int GoodHits { get; private set; }
-        public int BadHits { get; private set; }
-        public int Misses { get; private set; }
 
-        public int Key1Hits { get; set; }
-        public int Key2Hits { get; set; }
-        public int Key3Hits { get; set; }
-        public int Key4Hits { get; set; }
+        public int Key1Hits
+        {
+            get
+            {
+                return _key1Hits;
+            }
+            set
+            {
+                _key1Hits = value;
+                Key1Text.text = $"{Key1.ToString()}: {value}";
+            }
+        }
+        public int Key2Hits
+        {
+            get
+            {
+                return _key2Hits;
+            }
+            set
+            {
+                _key2Hits = value;
+                Key2Text.text = $"{Key2.ToString()}: {value}";
+            }
+        }
+        public int Key3Hits
+        {
+            get
+            {
+                return _key3Hits;
+            }
+            set
+            {
+                _key3Hits = value;
+                Key3Text.text = $"{Key3.ToString()}: {value}";
+            }
+        }
+        public int Key4Hits
+        {
+            get
+            {
+                return _key4Hits;
+            }
+            set
+            {
+                _key4Hits = value;
+                Key4Text.text = $"{Key4.ToString()}: {value}";
+            }
+        }
 
-        public double Accuracy;
+        public double Accuracy
+        {
+            get
+            {
+                return _accuracy;
+            }
+            set
+            {
+                _accuracy = value;
+                AccuracyText.text = string.Format("{0:0.00}", value) + "%";
+            }
+        }
 
         public long FirstOffsetNoteHit;
+        public double MultiplierValue;
 
         public KeyCode Key1;
         public KeyCode Key2;
         public KeyCode Key3;
         public KeyCode Key4;
 
-        public float MultiplierValue;
         public Text ScoreText;
         public Text ComboText;
+        public Text AccuracyText;
+        public Text OffsetText;
+        public GameTime GameTime;
 
         public Text Key1Text;
         public Text Key2Text;
         public Text Key3Text;
         public Text Key4Text;
 
-        public Text AccuracyText;
+        private long _score;
+        private int _combo;
 
-        public NoteScroller Scroller;
+        private int _key1Hits;
+        private int _key2Hits;
+        private int _key3Hits;
+        private int _key4Hits;
 
-        private bool _offsetCheck;
+        private double _accuracy;
 
-        public NoteTracker()
+        // Start is called before the first frame update
+        void Start()
         {
 
         }
 
-        public void OnKeyHit(KeyCode code)
+        // Update is called once per frame
+        void Update()
         {
-            if (Key1 == code)
-            {
-                Key1Hits++;
-                Key1Text.text = code.ToString() + ": " + Key1Hits;
-            }
-            else if (Key2 == code)
-            {
-                Key2Hits++;
-                Key2Text.text = code.ToString() + ": " + Key2Hits;
-            }
-            else if (Key3 == code)
-            {
-                Key3Hits++;
-                Key3Text.text = code.ToString() + ": " + Key3Hits;
-            }
-            else if (Key4 == code)
-            {
-                Key4Hits++;
-                Key4Text.text = code.ToString() + ": " + Key4Hits;
-            }
+            if (GameTime != null)
+                OffsetText.text = GameTime.ElapsedMilliseconds + " ms";
         }
 
-        public void Hit(bool goodHit, bool bigNote)
+        /// <summary>
+        /// Tracks a note hit
+        /// </summary>
+        /// <param name="type">Good/Bad/Miss</param>
+        /// <param name="bigNote">Big note?</param>
+        public void NoteHit(HitType type, bool bigNote = false, KeyCode? key = null, KeyCode? key2 = null)
         {
-            if (Scroller.AutoPlay && !_offsetCheck)
+            if (type == HitType.Miss)
             {
-                _offsetCheck = true;
+                Combo = 0;
+                Misses++;
 
-                Logger.Log($"First offset MS: {Scroller.GameTime.ElapsedMilliseconds}, Offset song S: {Scroller.Sound.MusicSource.time}");
+                goto atEnd;
             }
-
-            Combo++;
 
             if (Combo < 10)
-                Score += bigNote ? (goodHit ? 600 : 300) : 300;
+                Score += bigNote ? (type == HitType.GoodHit ? 600 : 300) : 300;
             else
-                Score += (long)(Math.Min((float)Math.Round(Combo / 10.0, MidpointRounding.AwayFromZero), 10f) * Math.Round(MultiplierValue, MidpointRounding.AwayFromZero));
+                Score += (long)(Math.Min((float)Math.Round(Combo / 10.0, MidpointRounding.AwayFromZero), 10.0) * Math.Round(MultiplierValue, MidpointRounding.AwayFromZero));
 
-            ComboText.text = Combo + "x";
-            ScoreText.text = Score.ToString();
-
-            if (goodHit)
+            if (type == HitType.GoodHit)
                 GoodHits++;
-            else
-                BadHits++;
 
-            UpdateAcc();
-        }
-
-        private void UpdateAcc()
-        {
-            if (TotalNotes == 0)
-                return;
-
+            atEnd:
             Accuracy = (100.0 / TotalNotes) * ((BadHits * 0.5) + GoodHits);
-            AccuracyText.text = String.Format("{0:0.00}", Accuracy) + "%";
+
+            
+            if (key.HasValue)
+                KeyHit(key.Value);
+            if (key2.HasValue)
+                KeyHit(key2.Value);
         }
 
-        public void Miss()
+        /// <summary>
+        /// Tracks a key hit
+        /// </summary>
+        /// <param name="key">Pressed key</param>
+        public void KeyHit(KeyCode key)
         {
-            Combo = 0;
-
-            ComboText.text = "Combo: 0";
-
-            Misses++;
-
-            UpdateAcc();
+            if (key == Key1)
+                Key1Hits++;
+            else if (key == Key2)
+                Key2Hits++;
+            else if (key == Key3)
+                Key3Hits++;
+            else if (key == Key4)
+                Key4Hits++;
+            else
+                Logger.Log("Key ignored since no play key: " + key.ToString(), LogLevel.WARNING);
         }
 
+        /// <summary>
+        /// Resets the tracker
+        /// </summary>
         public void Reset()
         {
-            ScoreText.text = "0";
-            Combo = 0;
-            ComboText.text = "";
+            Logger.Log("Resetting tracker", LogLevel.Trace);
 
-            Key1Hits = 0;
+            FirstOffsetNoteHit = 0;
+
             Key1Text.text = "";
-            Key2Hits = 0;
             Key2Text.text = "";
-            Key3Hits = 0;
             Key3Text.text = "";
-            Key4Hits = 0;
             Key4Text.text = "";
+
+            Score = 0;
+            Combo = 0;
+            Accuracy = 0;
+
+            GoodHits = 0;
+            BadHits = 0;
+            Misses = 0;
+        }
+
+        public enum HitType
+        {
+            Miss,
+            BadHit,
+            GoodHit,
         }
     }
 }

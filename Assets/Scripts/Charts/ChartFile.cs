@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.AccessControl;
 using System.Text;
 using UnityEngine;
 
@@ -14,33 +15,59 @@ namespace DrumSmasher.Charts
         private const string SECTION_NOTES = "[notes]";
         private const string SECTION_END = @"[/\]";
         private const string COMMENT = "//";
-        
-        public static void Save(Chart chart)
+        private static readonly List<string> _pathFixList = new List<string>()
         {
-            DirectoryInfo chartFile = new DirectoryInfo(Application.dataPath + $"/../Charts/{chart.Artist} - {chart.Title} ({chart.Creator})/");
+            "<", ">",
+            "|",
+            "?",
+            '"'.ToString()
+        };
 
-            if (!chartFile.Exists)
+        public static string FixPath(string path)
+        {
+            string p = string.Copy(path);
+
+            foreach (string str in _pathFixList)
+                p = p.Replace(str, "");
+
+            return p;
+        }
+
+        public static void Save(Chart chart, DirectoryInfo saveLocation)
+        {
+            string artist = FixPath(chart.Artist);
+            string title = FixPath(chart.Title);
+            string creator = FixPath(chart.Creator);
+            string difficulty = FixPath(chart.Difficulty);
+
+            if (!saveLocation.Exists)
             {
                 Logger.Log("Chart Folder doesn't exist, creating new one:", LogLevel.WARNING);
-                chartFile.Create();
-                Logger.Log($"Directory {chartFile.FullName} created successfully");
+                saveLocation.Create();
+                Logger.Log($"Directory {saveLocation.FullName} created successfully");
             }
 
-            string chartFileSW = Path.Combine(chartFile.FullName, $"{chart.Artist} - {chart.Title} ({chart.Creator}) [{chart.Difficulty}]" + ".chart");
+            string chartFileSW = Path.Combine(saveLocation.FullName, $"{artist} - {title} ({creator}) [{difficulty}]" + ".chart");
 
+            FileInfo file = new FileInfo(chartFileSW);
+            Logger.Log("Saving chart to " + file.FullName, LogLevel.Trace);
 
-            Logger.Log("Saving chart to " + chartFileSW, LogLevel.Trace);
-            StreamWriter swriter = new StreamWriter(chartFileSW);
-            try
+            if (!file.Directory.Exists)
+                file.Directory.Create();
+            else if (file.Exists)
+                file.Delete();
+            
+            using (StreamWriter swriter = new StreamWriter(chartFileSW))
             {
                 swriter.WriteLine(SECTION_SETTINGS);
                 PropertyInfo[] props = chart.GetType().GetProperties();
+
                 string line;
                 foreach (PropertyInfo prop in props)
                 {
                     if (!prop.CanRead || prop.Name.Equals("notes", StringComparison.CurrentCultureIgnoreCase))
                         continue;
-                    
+
                     line = prop.Name + "=";
 
                     if (prop.PropertyType == typeof(Int16) || prop.PropertyType == typeof(Int32) || prop.PropertyType == typeof(Int64) ||
@@ -56,7 +83,7 @@ namespace DrumSmasher.Charts
                     else if (prop.PropertyType == typeof(bool))
                     {
                         object val = prop.GetValue(chart);
-                        
+
                         if (val != null)
                         {
                             bool b = (bool)val;
@@ -85,20 +112,15 @@ namespace DrumSmasher.Charts
                 swriter.WriteLine(SECTION_END);
 
                 swriter.WriteLine(SECTION_NOTES);
-                foreach(ChartNote note in chart.Notes)
+                foreach (ChartNote note in chart.Notes)
                 {
                     line = ToString(note.BigNote) + "=" + note.Time.TotalMilliseconds.ToString() + "=" + note.Color.ToString();
                     swriter.WriteLine(line);
                 }
                 swriter.Flush();
                 swriter.WriteLine(SECTION_END);
-                swriter.Dispose();
             }
-            catch (Exception ex)
-            {
-                Logger.Log("Could not save chart to file " + chartFileSW + Environment.NewLine + ex.ToString(), LogLevel.ERROR);
-                swriter.Dispose();
-            }
+
             Logger.Log("Finished save process for " + chartFileSW, LogLevel.Trace);
         }
 

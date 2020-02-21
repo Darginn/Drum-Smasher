@@ -49,7 +49,20 @@ namespace DrumSmasher
 
 #if DEBUG
                     if (console)
-                        UnityEngine.Debug.Log(toLog);
+                    {
+                        switch(p.Item2)
+                        {
+                            default:
+                                UnityEngine.Debug.Log(p.Item1);
+                                break;
+                            case LogLevel.ERROR:
+                                UnityEngine.Debug.LogError(p.Item1);
+                                break;
+                            case LogLevel.WARNING:
+                                UnityEngine.Debug.LogWarning(p.Item1);
+                                break;
+                        }
+                    }
 #endif
                 }
             }));

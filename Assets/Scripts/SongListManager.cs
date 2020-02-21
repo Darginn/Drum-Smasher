@@ -37,19 +37,19 @@ namespace DrumSmasher
 
             for (int i = 0; i < SongList.Count; i++)
             {
-                InstantiatePrefab(SongList[i].DisplayName, SongList[i].chart);
+                InstantiatePrefab(SongList[i].DisplayName, SongList[i].chart, SongList[i].ChartDirectory);
             }
         }
 
-        public void InstantiatePrefab(string display, Charts.Chart chart)
+        public void InstantiatePrefab(string display, Charts.Chart chart, System.IO.DirectoryInfo chartDirectory)
         {
             GameObject songButton = Instantiate(ButtonPrefab);
             songButton.transform.SetParent(ListContent.transform, false);
             songButton.GetComponentInChildren<Text>().text = display;
-            songButton.GetComponent<Button>().onClick.AddListener(() => LoadMap(chart));
+            songButton.GetComponent<Button>().onClick.AddListener(() => LoadMap(chart, chartDirectory));
         }
 
-        public void LoadMap(Charts.Chart chart)
+        public void LoadMap(Charts.Chart chart, System.IO.DirectoryInfo chartDirectory)
         {
             if (_sceneActionActive)
                 return;
@@ -72,7 +72,7 @@ namespace DrumSmasher
                 Logger.Log("Chart loaded, Switching to Taiko");
                 LoadedChart = chart;
                 _sceneActionActive = false;
-                SwitchToTaiko();
+                SwitchToTaiko(chartDirectory);
             }
             else
             { 
@@ -91,7 +91,7 @@ namespace DrumSmasher
             SceneManager.LoadScene("TitleScreen");
         }
 
-        public void SwitchToTaiko()
+        public void SwitchToTaiko(System.IO.DirectoryInfo chartDirectory)
         {
             if (_sceneActionActive)
                 return;
@@ -101,13 +101,13 @@ namespace DrumSmasher
 
             _sceneActionActive = true;
 
-            Logger.Log("LoadedChart: " + (LoadedChart == null));
+            Logger.Log("LoadedChart: " + (LoadedChart != null));
 
             AsyncOperation loadAO = SceneManager.LoadSceneAsync("Main");
             loadAO.completed += ao =>
             {
                 _sceneActionActive = false;
-                GameManager.OnSceneLoaded(LoadedChart);
+                GameManager.OnSceneLoaded(LoadedChart, chartDirectory);
             };
         }
     }
