@@ -9,6 +9,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using SFB;
 using System.IO;
+using System.Collections;
 
 namespace DrumSmasher
 {
@@ -59,60 +60,7 @@ namespace DrumSmasher
         {
             SceneManager.LoadScene("Song List");
         }
-
-        /*public void SwitchToTaiko()
-        {
-            if (_sceneActionActive)
-                return;
-            else if (LoadedChart == null)
-            {
-                PlayAlert.SetActive(true);
-                return;
-            }
-
-            _sceneActionActive = true;
-
-            Logger.Log("LoadedChart: " + (LoadedChart == null));
-
-            AsyncOperation loadAO = SceneManager.LoadSceneAsync("Main");
-            loadAO.completed += ao =>
-            {
-                _sceneActionActive = false;
-                GameManager.OnSceneLoaded(LoadedChart);
-            };
-        }
-
-        public void LoadMap()
-        {
-            if (_sceneActionActive)
-                return;
-
-            _sceneActionActive = true;
-
-            Logger.Log("Selecting chart");
-            string path = StandaloneFileBrowser.OpenFilePanel("Select chart", Application.dataPath + "/Charts/", new ExtensionFilter[] { _extChartFilter }, false)[0];
-
-            if (path.Length < 0)
-                return;
-
-            Logger.Log("Loading path");
-            LoadedChart = Charts.ChartFile.Load(path);
-
-            if (LoadedChart == null)
-            {
-                FailAlert.SetActive(true);
-                Logger.Log("Chart failed to load");
-                return;
-            }
-
-            if (LoadedChart != null)
-                Logger.Log("Chart loaded");
-            else
-                Logger.Log("Failed to load chart");
-
-            _sceneActionActive = false;
-        }*/
-
+        
         public void Settings()
         {
             if (SettingsMenu.activeSelf == false)

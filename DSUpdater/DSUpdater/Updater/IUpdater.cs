@@ -8,7 +8,6 @@ namespace DSUpdater.Updater
 {
     public interface IUpdater
     {
-        char PathSplitter { get; }
         Dictionary<string, string> FileChecksums { get; }
 
         Task<byte[]> DownloadAsync(string host, params string[] path);

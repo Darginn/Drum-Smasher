@@ -62,6 +62,42 @@ namespace DSUpdater.Updater
                 _checksum += b;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="checksums">file, checksum</param>
+        /// <returns></returns>
+        public static IEnumerable<FileChecksum> CheckAgainst(string path, Dictionary<string, string> checksums)
+        {
+            DirectoryInfo dir = new DirectoryInfo(path);
+
+            if (!dir.Exists)
+                yield break;
+
+            foreach(FileInfo file in dir.EnumerateFiles("*", SearchOption.AllDirectories))
+            {
+                if (!checksums.ContainsKey(file.Name))
+                    continue;
+
+                FileChecksum ch = new FileChecksum(file.FullName);
+
+                if (!checksums[file.Name].Equals(ch.Checksum))
+                    yield return ch;
+            }
+        }
+
+        public static IEnumerable<FileChecksum> CreateChecksums(string path)
+        {
+            DirectoryInfo dir = new DirectoryInfo(path);
+
+            if (!dir.Exists)
+                yield break;
+
+            foreach (FileInfo file in dir.EnumerateFiles("*", SearchOption.AllDirectories))
+                yield return new FileChecksum(file.FullName);
+        }
+
         public override bool Equals(object obj)
         {
             return Equals(obj as FileChecksum);

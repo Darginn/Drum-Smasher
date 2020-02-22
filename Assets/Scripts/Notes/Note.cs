@@ -148,6 +148,8 @@ namespace DrumSmasher.Notes
 
             Tracker.NoteHit(type, BigNote, (key1 ? new KeyCode?(Key1.KeyToPress) : null), (key2 ? new KeyCode?(Key2.KeyToPress) : null));
 
+            Logger.Log($"Note hit at {Tracker.GameTime.ElapsedMilliseconds} ms GameTime, (pos: {transform.position.x}, {transform.position.y}, {transform.position.z}");
+
             Destroy(gameObject);
         }
 

@@ -9,19 +9,14 @@ namespace DSUpdater.Updater
 {
     class HTTPUpdater : IUpdater, IDisposable
     {
-        public char PathSplitter => _pathSplitter;
-        public Dictionary<string, string> FileChecksums => _fileChecksums;
-        public bool Disposed => _webClient == null;
-
-        private Dictionary<string, string> _fileChecksums;
-        private char _pathSplitter;
-
         private System.Net.WebClient _webClient;
 
         public HTTPUpdater()
         {
             _webClient = new System.Net.WebClient();
         }
+        
+        public Dictionary<string, string> FileChecksums => throw new NotImplementedException();
 
         public bool Check(string checksum, string file)
         {
@@ -31,30 +26,6 @@ namespace DSUpdater.Updater
             return csM.Equals(cs);
         }
 
-        public async Task<byte[]> DownloadAsync(string host, params string[] path)
-        {
-            string uri = host;
-
-            foreach (string str in path)
-                uri += "/" + str;
-
-            byte[] data = await Task.Run(() => _webClient.DownloadData(uri));
-
-            return data;
-        }
-
-        public async Task<string> DownloadStringAsync(string host, params string[] path)
-        {
-            string uri = host;
-
-            foreach (string str in path)
-                uri += "/" + str;
-
-            string data = await Task.Run(() => _webClient.DownloadString(uri));
-
-            return data;
-        }
-
         public void Dispose()
         {
             if (_webClient != null)
@@ -62,6 +33,43 @@ namespace DSUpdater.Updater
                 _webClient.Dispose();
                 _webClient = null;
             }
+        }
+
+        public Task<byte[]> DownloadAsync(string host, params string[] path)
+        {
+            return Task.Run(() =>
+            {
+                string url = ResolvePath(host, path);
+                return _webClient.DownloadData(url);
+            });
+        }
+
+        public Task<string> DownloadStringAsync(string host, params string[] path)
+        {
+            return Task.Run(() =>
+            {
+                string url = ResolvePath(host, path);
+                return _webClient.DownloadString(url);
+            });
+        }
+
+        public Task DownloadFileAsync(string host, string dest, params string[] path)
+        {
+            return Task.Run(() =>
+            {
+                string url = ResolvePath(host, path);
+                _webClient.DownloadFile(url, dest);
+            });
+        }
+
+        private string ResolvePath(string host, params string[] path)
+        {
+            string url = host.TrimEnd('/') + "/" + path;
+
+            for (int i = 1; i < path.Length; i++)
+                url += "/" + path[i];
+
+            return url;
         }
     }
 }
