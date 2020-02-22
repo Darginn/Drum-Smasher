@@ -129,9 +129,12 @@ namespace DrumSmasher.Notes
             GameTime.RemoveTime(_timeStartToHit);
             MusicStart += _timeStartToHit;
 
+            Active = true;
+
             GameTime.Start();
 
-            Active = true;
+            StartCoroutine(StartMusicAsync());
+            StartCoroutine(StartSpawningNotesAsync());
 
             Logger.Log("Current GameTime: " + GameTime.ElapsedMilliseconds);
             Logger.Log("Time Start To Hit: " + _timeStartToHit);
@@ -180,14 +183,50 @@ namespace DrumSmasher.Notes
             if (ApproachRate != AR)
                 ApproachRate = AR;
 
-            if (MusicStart <= GameTime.ElapsedMilliseconds)
-            {
-                Logger.Log("Starting music at " + GameTime.ElapsedMilliseconds);
-                GameSound.Play();
-                MusicStart = double.MaxValue;
-            }
+            //if (MusicStart <= GameTime.ElapsedMilliseconds)
+            //{
+            //    Logger.Log("Starting music at " + GameTime.ElapsedMilliseconds);
+            //    GameSound.Play();
+            //    MusicStart = double.MaxValue;
+            //}
             
-            TrySpawnNextNote();
+            //TrySpawnNextNote();
+        }
+
+        private IEnumerator StartSpawningNotesAsync()
+        {
+            while(Active)
+            {
+                TrySpawnNextNote();
+
+                yield return new WaitForSecondsRealtime(0.0005f);
+            }
+        }
+
+        private IEnumerator StartMusicAsync()
+        {
+            while(Active)
+            {
+                if (MusicStart <= GameTime.ElapsedMilliseconds)
+                {
+                    Logger.Log("Starting music at " + GameTime.ElapsedMilliseconds);
+                    GameSound.Play();
+                    double left = GameTime.ElapsedMilliseconds - MusicStart;
+                    MusicStart = double.MaxValue;
+
+                    //Might help being more accurate
+
+                    if (left > 0)
+                    {
+                        Logger.Log($"Reducing GameTime by {left} ms due to late audio start");
+                        GameTime.RemoveTime(left);
+                    }
+
+                    yield break;
+                }
+
+                yield return new WaitForSeconds(0.0005f);
+            }
         }
 
         /// <summary>
@@ -203,6 +242,8 @@ namespace DrumSmasher.Notes
             _currentNoteIndex++;
 
             SpawnNote(next);
+
+            Logger.Log($"Spawned note at {GameTime.ElapsedMilliseconds} ms, will reach hitcircle at {GameTime.ElapsedMilliseconds + next.SpawnOffset} ms");
         }
   
         /// <summary>
