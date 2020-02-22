@@ -29,95 +29,44 @@ namespace DSUpdater
                     "upinfo.txt"
                 };
 
+                DirectoryInfo installDir = new DirectoryInfo(Directory.GetCurrentDirectory());
+
                 _updater = new Updater.HTTPUpdater();
 
-                string upInfo = await _updater.DownloadStringAsync(updateInfo, routes);
+                string updaterInfo = await _updater.DownloadStringAsync(updateInfo, routes);
 
-                if (string.IsNullOrEmpty(upInfo))
+                if (string.IsNullOrEmpty(updaterInfo))
                 {
-                    Console.WriteLine("No updates found");
+                    Console.WriteLine("No new updates");
                     await Task.Delay(-1);
                 }
 
-                List<string> info = upInfo.Split(Environment.NewLine.ToCharArray()).ToList();
+                List<string> fileDownloads = updaterInfo.Split(Environment.NewLine).ToList();
+                Dictionary<string, string> checkSums = new Dictionary<string, string>();
 
-                string[] version = info[0].Split('.');
-                string ver = version[0];
-                string comp = version[1];
-                string run = version[2];
-
-                //file, (file, filepath, checksum)
-                Dictionary<string, (string, string[], string)> fileChecksums = new Dictionary<string, (string, string[], string)>();
-                List<(FileInfo, string, string[])> failedFiles = new List<(FileInfo, string, string[])>();
-
-                for (int i = 3; i < info.Count; i++)
+                bool cont = false;
+                for (int i = 0; i < fileDownloads.Count; i++)
                 {
-                    if (info[i].StartsWith("!create"))
+                    if (fileDownloads[i].Equals(@"/\"))
                     {
-                        string toCreate = info[i].Remove(0, "!create ".Length);
-
-                        DirectoryInfo dir = new DirectoryInfo(toCreate);
-
-                        dir.Create();
-
+                        cont = true;
                         continue;
                     }
 
-                    string[] fcsS = info[i].Split('=');
-                    string checksum = fcsS[1];
+                    if (!cont)
+                        continue;
 
-                    fcsS = fcsS[0].Split('/');
+                    string[] split = fileDownloads[i].Split('=');
 
-                    fileChecksums.Add(fcsS[fcsS.Length - 1], (fcsS[fcsS.Length - 1], fcsS, checksum));
+                    checkSums.Add(split[0], split[1]);
+                    i--;
                 }
 
-                DirectoryInfo currentDir = new DirectoryInfo(Directory.GetCurrentDirectory());
+                IEnumerable<FileChecksum> invalidFiles = FileChecksum.CheckAgainst(installDir.FullName, checkSums);
 
-                foreach(FileInfo fi in currentDir.EnumerateFiles())
+                if (invalidFiles.Count() > 0)
                 {
-                    string fiName = fi.Name + fi.Extension;
 
-                    Console.WriteLine("Checking " + fiName);
-
-                    if (!fileChecksums.ContainsKey(fi.Name + fi.Extension))
-                    {
-                        RequestToDelete(fi.Name);
-                        continue;
-                    }
-
-                    FileChecksum fc = new FileChecksum(fi.FullName);
-
-                    if (fc.Checksum.Equals(fileChecksums[fiName].Item3))
-                    {
-                        Console.WriteLine($"{fiName} passed checksum pass");
-
-                        fileChecksums.Remove(fiName);
-                        continue;
-                    }
-
-                    failedFiles.Add((fi, fiName, fileChecksums[fiName].Item2));
-                    Console.WriteLine($"{fiName} failed checksum pass (total: {failedFiles.Count})");
-
-                    fileChecksums.Remove(fiName);
-                }
-
-                failedFiles.ForEach(f => fileChecksums.Add(f.Item1.Name + f.Item1.Extension, (f.Item1.Name + f.Item1.Extension, f.Item3, f.Item2)));
-                
-                foreach(var pair in fileChecksums.Values)
-                {
-                    using (FileStream fstream = new FileStream(pair.Item1, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite))
-                    {
-                        byte[] data = await _updater.DownloadAsync("host", pair.Item2);
-                        fstream.Write(data, 0, data.Length);
-                    }
-
-                    FileChecksum fc = new FileChecksum(pair.Item1);
-
-                    if (!fc.Checksum.Equals(pair.Item3))
-                    {
-                        Console.WriteLine("checksum wrong after download");
-                        return;
-                    }
                 }
 
                 Console.WriteLine("Finished all processes!");
