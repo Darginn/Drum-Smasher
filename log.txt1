@@ -1,41 +1,11 @@
-22.2.2020 1:19:17:63: *Info* RefreshSongs: Found C:\Users\Jb112\Documents\Games\Drum Smasher\Charts\
-22.2.2020 1:19:17:93: *Info* ScanForSongsRecursive: Loaded SongInfo: Camellia - Nacreous Snowmelt [Delicate Crystal]
-22.2.2020 1:19:17:120: *Info* ScanForSongsRecursive: Loaded SongInfo: DM DOKURO - Devourer of Gods Compilation [Devourer of Onis]
-22.2.2020 1:19:17:150: *Info* ScanForSongsRecursive: Loaded SongInfo: Infected Mushroom - The Messenger 2012 (Sped Up Ver.) [Infected Oni (less SV)]
-22.2.2020 1:19:17:165: *Info* ScanForSongsRecursive: Loaded SongInfo: katagiri - Sendan Life (katagiri Bootleg) [YAZD]
-22.2.2020 1:19:17:177: *Info* ScanForSongsRecursive: Loaded SongInfo: Kola Kid - can't hide your love [31's Taiko]
-22.2.2020 1:19:17:189: *Info* ScanForSongsRecursive: Loaded SongInfo: Masayoshi Minoshima feat. nomico - Bad Apple!! [lepidon! - Taiko Oni]
-22.2.2020 1:19:17:196: *Info* ScanForSongsRecursive: Loaded SongInfo: SoundTeMP - Dreamer's Dream [Ono's Muzukashii]
-22.2.2020 1:19:17:223: *Info* ScanForSongsRecursive: Loaded SongInfo: toby fox - MEGALOVANIA (Camellia Remix) [The Final Battle of Protagonists]
-22.2.2020 1:19:17:238: *Info* ScanForSongsRecursive: Loaded SongInfo: Yuuyu - Howdy! and... Good-Die! [GENOCIDE.EXE]
-22.2.2020 1:19:29:376: *Info* LoadMap: Chart loaded, Switching to Taiko
-22.2.2020 1:19:29:376: *Info* SwitchToTaiko: LoadedChart: True
-22.2.2020 1:19:29:491: *Info* LoadSong: Loading song C:\Users\Jb112\Documents\Games\Drum Smasher\Charts\Infected Mushroom - The Messenger 2012 (Sped Up Ver.) (Nwolf)\The Messenger 2012 (1.3).mp3
-22.2.2020 1:19:29:496: *Info* StartMap: Starting Map
-22.2.2020 1:19:29:498: *Info* Load: Loading chart DrumSmasher.Charts.Chart
-22.2.2020 1:19:30:673: *Info* Load: Loaded 3637 notes
-22.2.2020 1:19:30:674: *Info* StartPlaying: Current GameTime: -1333.15393333333
-22.2.2020 1:19:30:674: *Info* StartPlaying: Time Start To Hit: 1333.33333333333
-22.2.2020 1:19:30:674: *Info* StartPlaying: Starting music at MS: 1333.33333333333
-22.2.2020 1:19:33:734: *Info* Update: Starting music at 1727.01216666667
-22.2.2020 1:26:17:408: *Info* OnTitleScreenKey: Switching to title screen
-22.2.2020 1:26:32:592: *Info* RefreshSongs: Found C:\Users\Jb112\Documents\Games\Drum Smasher\Charts\
-22.2.2020 1:26:32:612: *Info* ScanForSongsRecursive: Loaded SongInfo: Camellia - Nacreous Snowmelt [Delicate Crystal]
-22.2.2020 1:26:32:632: *Info* ScanForSongsRecursive: Loaded SongInfo: DM DOKURO - Devourer of Gods Compilation [Devourer of Onis]
-22.2.2020 1:26:32:651: *Info* ScanForSongsRecursive: Loaded SongInfo: Infected Mushroom - The Messenger 2012 (Sped Up Ver.) [Infected Oni (less SV)]
-22.2.2020 1:26:32:661: *Info* ScanForSongsRecursive: Loaded SongInfo: katagiri - Sendan Life (katagiri Bootleg) [YAZD]
-22.2.2020 1:26:32:669: *Info* ScanForSongsRecursive: Loaded SongInfo: Kola Kid - can't hide your love [31's Taiko]
-22.2.2020 1:26:32:676: *Info* ScanForSongsRecursive: Loaded SongInfo: Masayoshi Minoshima feat. nomico - Bad Apple!! [lepidon! - Taiko Oni]
-22.2.2020 1:26:32:680: *Info* ScanForSongsRecursive: Loaded SongInfo: SoundTeMP - Dreamer's Dream [Ono's Muzukashii]
-22.2.2020 1:26:32:697: *Info* ScanForSongsRecursive: Loaded SongInfo: toby fox - MEGALOVANIA (Camellia Remix) [The Final Battle of Protagonists]
-22.2.2020 1:26:32:708: *Info* ScanForSongsRecursive: Loaded SongInfo: Yuuyu - Howdy! and... Good-Die! [GENOCIDE.EXE]
-22.2.2020 1:26:39:169: *Info* LoadMap: Chart loaded, Switching to Taiko
-22.2.2020 1:26:39:169: *Info* SwitchToTaiko: LoadedChart: True
-22.2.2020 1:26:39:200: *Info* LoadSong: Loading song C:\Users\Jb112\Documents\Games\Drum Smasher\Charts\toby fox - MEGALOVANIA (Camellia Remix) (Rhytoly)\audio.mp3
-22.2.2020 1:26:39:200: *Info* StartMap: Starting Map
-22.2.2020 1:26:39:201: *Info* Load: Loading chart DrumSmasher.Charts.Chart
-22.2.2020 1:26:40:19: *Info* Load: Loaded 3334 notes
-22.2.2020 1:26:40:19: *Info* StartPlaying: Current GameTime: -1333.33303333333
-22.2.2020 1:26:40:19: *Info* StartPlaying: Time Start To Hit: 1333.33333333333
-22.2.2020 1:26:40:19: *Info* StartPlaying: Starting music at MS: 1333.33333333333
-22.2.2020 1:26:42:686: *Info* Update: Starting music at 1333.82366666667
+22.2.2020 16:42:41:588: *Info* RefreshSongs: Found C:\Users\Jb112\Documents\Games\Drum Smasher\Charts\
+22.2.2020 16:42:41:621: *Info* ScanForSongsRecursive: Loaded SongInfo: Camellia - Nacreous Snowmelt [Delicate Crystal]
+22.2.2020 16:42:41:647: *Info* ScanForSongsRecursive: Loaded SongInfo: DM DOKURO - Devourer of Gods Compilation [Devourer of Onis]
+22.2.2020 16:42:41:672: *Info* ScanForSongsRecursive: Loaded SongInfo: Infected Mushroom - The Messenger 2012 (Sped Up Ver.) [Infected Oni (less SV)]
+22.2.2020 16:42:41:685: *Info* ScanForSongsRecursive: Loaded SongInfo: katagiri - Sendan Life (katagiri Bootleg) [YAZD]
+22.2.2020 16:42:41:695: *Info* ScanForSongsRecursive: Loaded SongInfo: Kola Kid - can't hide your love [31's Taiko]
+22.2.2020 16:42:41:703: *Info* ScanForSongsRecursive: Loaded SongInfo: Masayoshi Minoshima feat. nomico - Bad Apple!! [lepidon! - Taiko Oni]
+22.2.2020 16:42:41:708: *Info* ScanForSongsRecursive: Loaded SongInfo: SoundTeMP - Dreamer's Dream [Ono's Muzukashii]
+22.2.2020 16:42:41:730: *Info* ScanForSongsRecursive: Loaded SongInfo: toby fox - MEGALOVANIA (Camellia Remix) [The Final Battle of Protagonists]
+22.2.2020 16:42:41:734: *Info* ScanForSongsRecursive: Loaded SongInfo: Xi - Majotachi no Butoukai ~ Magus [Extra Stage]
+22.2.2020 16:42:41:747: *Info* ScanForSongsRecursive: Loaded SongInfo: Yuuyu - Howdy! and... Good-Die! [GENOCIDE.EXE]
