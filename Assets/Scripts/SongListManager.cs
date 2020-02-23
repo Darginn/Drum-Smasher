@@ -11,7 +11,6 @@ namespace DrumSmasher
     {
         public Charts.Chart LoadedChart;
 
-        public GameObject ButtonPrefab;
         public GameObject ListContent;
         public GameObject ErrorPanel;
 
@@ -43,7 +42,7 @@ namespace DrumSmasher
 
         public void InstantiatePrefab(string display, Charts.Chart chart, System.IO.DirectoryInfo chartDirectory)
         {
-            GameObject songButton = Instantiate(ButtonPrefab);
+            GameObject songButton = Instantiate(Resources.Load ("Prefabs/SongListButton")) as GameObject;
             songButton.transform.SetParent(ListContent.transform, false);
             songButton.GetComponentInChildren<Text>().text = display;
             songButton.GetComponent<Button>().onClick.AddListener(() => LoadMap(chart, chartDirectory));
