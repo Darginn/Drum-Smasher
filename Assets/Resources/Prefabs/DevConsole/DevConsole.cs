@@ -22,6 +22,7 @@ namespace DrumSmasher.Prefab.DevConsole
         private readonly List<ICommand> _commands = new List<ICommand>()
         {
             new ApproachRateCommand(),
+            new AutoplayCommand(),
         };
 
         // Start is called before the first frame update

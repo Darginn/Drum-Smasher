@@ -54,8 +54,10 @@ namespace DrumSmasher
             
             Instance.NoteScroller.GameSound.LoadSong(chartDirectory.FullName + @"\" + chart.SoundFile);
 
+#if UNITY_EDITOR
             if (UnityEditor.EditorApplication.isPlaying)
                 Instance.NoteScroller.AutoPlay = true;
+#endif
 
             Instance.StartMap(chart);
         }
@@ -110,6 +112,10 @@ namespace DrumSmasher
 
             if (TitleScreenManager.TaikoSettings.Data.ApproachRate != NoteScroller.ApproachRate)
                 NoteScroller.ApproachRate = TitleScreenManager.TaikoSettings.Data.ApproachRate;
+
+#if !UNITY_EDITOR
+            NoteScroller.AutoPlay = TitleScreenManager.TaikoSettings.Data.Autoplay;
+#endif
 
 
             if (Input.GetKeyDown(KeyCode.KeypadMinus))

@@ -34,6 +34,7 @@ namespace DrumSmasher.Settings
         public class SettingsData
         {
             public float ApproachRate { get; set; }
+            public bool Autoplay { get; set; }
         }
     }
 }
