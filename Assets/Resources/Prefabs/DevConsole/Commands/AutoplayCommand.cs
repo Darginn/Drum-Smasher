@@ -29,7 +29,7 @@ namespace DrumSmasher.Prefab.DevConsole.Commands
             bool oldAP = taiko.Data.Autoplay;
             taiko.Data.Autoplay = newAP;
 
-            DevConsole.WriteLine($"Changed Approach rate from {oldAP} to {newAP}");
+            DevConsole.WriteLine($"Changed Autoplay from {oldAP} to {newAP}");
         }
     }
 }
