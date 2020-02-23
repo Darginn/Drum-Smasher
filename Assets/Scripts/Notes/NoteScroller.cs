@@ -17,7 +17,9 @@ namespace DrumSmasher.Notes
         public GameObject EndLine;
 
         public GameObject TaikoNoteRed;
+        public GameObject TaikoNoteRedBig;
         public GameObject TaikoNoteBlue;
+        public GameObject TaikoNoteBlueBig;
 
         public AudioSource HitSound;
 
@@ -49,6 +51,8 @@ namespace DrumSmasher.Notes
             set
             {
                 AR = value;
+
+                _timeHitToEnd = Vector3.Distance(HitCircle.transform.position, EndLine.transform.position) / NoteSpeed;
                 _timeStartToHit = Vector3.Distance(TaikoNoteBlue.transform.position, HitCircle.transform.position) / NoteSpeed;
             }
         }
@@ -66,6 +70,7 @@ namespace DrumSmasher.Notes
         public NoteTracker Tracker;
 
         private double _timeStartToHit;
+        private double _timeHitToEnd;
 
         private Chart _currentChart;
         private List<NoteInfo> _currentChartNotes;
@@ -95,21 +100,40 @@ namespace DrumSmasher.Notes
         /// <param name="chart">The chart to load</param>
         public void Load(Chart chart)
         {
-            Logger.Log("Loading chart " + chart.ToString());
-
             Reset();
 
             _currentChart = chart;
+
+            _timeStartToHit = Vector3.Distance(TaikoNoteBlue.transform.position, HitCircle.transform.position) / NoteSpeed;
+            _timeHitToEnd = Vector3.Distance(HitCircle.transform.position, EndLine.transform.position) / NoteSpeed;
+
+            GameTime.RemoveTime(_timeStartToHit * 1000);
+            MusicStart += _timeStartToHit * 1000;
+
+            Note blue = TaikoNoteBlue.GetComponent<Note>();
+            Note red = TaikoNoteRed.GetComponent<Note>();
+
+            red.Key1 = Key1Controller;
+            red.Key2 = Key2Controller;
+            blue.Key1 = Key3Controller;
+            blue.Key2 = Key4Controller;
+
+
+            TaikoNoteRedBig = Instantiate(TaikoNoteRed);
+            TaikoNoteBlueBig = Instantiate(TaikoNoteBlue);
+
+            TaikoNoteRedBig.transform.localScale = _bigNoteScale;
+            TaikoNoteBlueBig.transform.localScale = _bigNoteScale;
+
+            TaikoNoteRedBig.transform.position = TaikoNoteBlue.transform.position;
+            TaikoNoteBlueBig.transform.position = TaikoNoteBlue.transform.position;
 
             IOrderedEnumerable<ChartNote> sortedNotes = chart.Notes.OrderBy(n => n.Time.TotalMilliseconds);
             for (int i = 0; i < sortedNotes.Count(); i++)
             {
                 ChartNote n = sortedNotes.ElementAt(i);
-                _currentChartNotes.Add(new NoteInfo(n, n.Time.TotalMilliseconds /*TimeSpan.FromMilliseconds(n.Time.TotalMilliseconds - _timeStartToHit).TotalMilliseconds*/));
+                _currentChartNotes.Add(new NoteInfo(n, n.Time.TotalMilliseconds + (_timeStartToHit * 1000)));
             }
-
-
-            Logger.Log("Loaded " + _currentChartNotes.Count + " notes");
 
             Tracker.Key1 = Key1;
             Tracker.Key2 = Key2;
@@ -124,21 +148,12 @@ namespace DrumSmasher.Notes
         /// 
         public void StartPlaying()
         {
-            _timeStartToHit = (Vector3.Distance(TaikoNoteBlue.transform.position, HitCircle.transform.position) / NoteSpeed) * 1000;
-
-            GameTime.RemoveTime(_timeStartToHit);
-            MusicStart += _timeStartToHit;
-
             Active = true;
 
             GameTime.Start();
 
             StartCoroutine(StartMusicAsync());
             StartCoroutine(StartSpawningNotesAsync());
-
-            Logger.Log("Current GameTime: " + GameTime.ElapsedMilliseconds);
-            Logger.Log("Time Start To Hit: " + _timeStartToHit);
-            Logger.Log("Starting music at MS: " + MusicStart);
         }
 
         /// <summary>
@@ -177,20 +192,6 @@ namespace DrumSmasher.Notes
         // Update is called once per frame
         void Update()
         {
-            if (!Active)
-                return;
-
-            if (ApproachRate != AR)
-                ApproachRate = AR;
-
-            //if (MusicStart <= GameTime.ElapsedMilliseconds)
-            //{
-            //    Logger.Log("Starting music at " + GameTime.ElapsedMilliseconds);
-            //    GameSound.Play();
-            //    MusicStart = double.MaxValue;
-            //}
-            
-            //TrySpawnNextNote();
         }
 
         private IEnumerator StartSpawningNotesAsync()
@@ -199,7 +200,7 @@ namespace DrumSmasher.Notes
             {
                 TrySpawnNextNote();
 
-                yield return new WaitForSecondsRealtime(0.0005f);
+                yield return new WaitForSecondsRealtime(0.00005f);
             }
         }
 
@@ -235,7 +236,7 @@ namespace DrumSmasher.Notes
         private void TrySpawnNextNote()
         {
             if (_currentNoteIndex < 0 || _currentNoteIndex >= _currentChartNotes.Count ||
-                _currentChartNotes[_currentNoteIndex].SpawnOffset > GameTime.ElapsedMilliseconds)
+                _currentChartNotes[_currentNoteIndex].Time.TotalMilliseconds > GameTime.ElapsedMilliseconds /*GameSound.MusicSource.time * 1000*/)
                 return;
 
             NoteInfo next = _currentChartNotes[_currentNoteIndex];
@@ -250,40 +251,30 @@ namespace DrumSmasher.Notes
         /// <param name="note">The note to spawn</param>
         private void SpawnNote(NoteInfo note)
         {
-            GameObject nObj = Instantiate(note.Color == 0 ? TaikoNoteBlue : TaikoNoteRed);
+            GameObject nObj = Instantiate(note.Color == 0 ? (note.BigNote ? TaikoNoteBlueBig : TaikoNoteBlue) : (note.BigNote ? TaikoNoteRedBig : TaikoNoteRed));
             Note n = nObj.GetComponent<Note>();
-            
-            n.Speed = NoteSpeed;
-            n.HitWindowRangeX = HitWindowRange;
-            
-            n.transform.position = new Vector3(TaikoNoteBlue.transform.position.x, TaikoNoteBlue.transform.position.y, TaikoNoteBlue.transform.position.z + _noteLayer);
+
+            nObj.transform.position = new Vector3(TaikoNoteBlue.transform.position.x, TaikoNoteBlue.transform.position.y, TaikoNoteBlue.transform.position.z + _noteLayer);
             _noteLayer += 0.0002f;
-
-            if (n.BigNote)
-                n.transform.localScale = _bigNoteScale;
-
+            
             n.BigNote = note.BigNote;
             n.AutoPlay = AutoPlay;
             n.AutoPlayDelayMS = AutoPlayDelayMS;
+            n.HitWindowRangeX = HitWindowRange;
+            n.SpawnOffset = (float)note.Time.TotalMilliseconds;
+            n.Audio = GameSound.MusicSource;
+            n.StartPos = TaikoNoteBlue;
 
-            if (note.Color == 0)
-            {
-                n.Key1 = Key3Controller;
-                n.Key2 = Key4Controller;
-            }
-            else
-            {
-                n.Key1 = Key1Controller;
-                n.Key2 = Key2Controller;
-            }
-            
             n.Active = true;
 
             //Check if we are offbeat, if yes fix position
-            double msDiff = note.SpawnOffset - GameTime.ElapsedMilliseconds;
+            double msDiff = (GameSound.MusicSource.time * 1000) - note.Time.TotalMilliseconds;
             
-            if (msDiff > 0)
-                n.transform.position -= new Vector3((float)(msDiff / 1000.0 * (double)n.Speed), 0, 0);
+            n.TimeStartToHitS = (float)note.Time.TotalSeconds - GameSound.MusicSource.time;
+            n.TimeToHitOrig = (float)note.Time.TotalSeconds;
+            n.TimeHitToEndS = (float)_timeHitToEnd;
+
+            StartCoroutine(n.StartMoving());
         }
 
         private class NoteInfo : ChartNote

@@ -1233,6 +1233,9 @@ MonoBehaviour:
   PlayAlert: {fileID: 788255351}
   FailAlert: {fileID: 1350674369}
   SettingsMenu: {fileID: 1161567918}
+  DevConsolePrefab: {fileID: 273408681851003195, guid: af6e53592f8d7d94fbee3ddeee1726e3,
+    type: 3}
+  Canvas: {fileID: 2132988402}
   ResolutionDropdown: {fileID: 1360373552}
 --- !u!4 &606060833
 Transform:
@@ -1246,7 +1249,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &615063998
 GameObject:
@@ -2276,7 +2279,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1311946344
 GameObject:
@@ -2718,7 +2721,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 52.949707, y: 26.599976}
+  m_AnchoredPosition: {x: 52.949707, y: 26.600098}
   m_SizeDelta: {x: 105.900024, y: 52}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1550795786
@@ -2971,7 +2974,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1768285037
 GameObject:
@@ -3557,7 +3560,7 @@ RectTransform:
   - {fileID: 400569105}
   - {fileID: 1161567919}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

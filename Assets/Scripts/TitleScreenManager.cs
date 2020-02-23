@@ -10,6 +10,7 @@ using UnityEngine.SceneManagement;
 using SFB;
 using System.IO;
 using System.Collections;
+using DrumSmasher.Settings;
 
 namespace DrumSmasher
 {
@@ -20,15 +21,51 @@ namespace DrumSmasher
         public GameObject PlayAlert;
         public GameObject FailAlert;
         public GameObject SettingsMenu;
-
+        public GameObject DevConsolePrefab;
+        public GameObject Canvas;
+        
         public Dropdown ResolutionDropdown;
 
         Resolution[] resolutions;
         private ExtensionFilter _extChartFilter = new ExtensionFilter("Chart", "chart");
         private ExtensionFilter _extOsuFilter = new ExtensionFilter("Osu difficulty", "osu");
+        private GameObject _devConsole;
+
+        public static TitleScreenSettings TitleScreenSetting;
+        public static TaikoSettings TaikoSettings;
 
         void Start()
         {
+            if (TitleScreenSetting == null)
+            {
+                TitleScreenSetting = new TitleScreenSettings();
+                SettingsManager.AddOrUpdate(TitleScreenSetting);
+
+                TitleScreenSetting.Load();
+
+                if (string.IsNullOrEmpty(TitleScreenSetting.Data.DefaultConsoleMessage))
+                {
+                    //Set default values
+
+                    TitleScreenSetting.Data.DefaultConsoleMessage = "Hello world";
+                }
+            }
+
+            if (TaikoSettings == null)
+            {
+                TaikoSettings = new TaikoSettings();
+                SettingsManager.AddOrUpdate(TaikoSettings);
+
+                TaikoSettings.Load();
+
+                if (TaikoSettings.Data.ApproachRate == 0)
+                {
+                    //Set default values
+
+                    TaikoSettings.Data.ApproachRate = 6;
+                }
+            }
+
             resolutions = Screen.resolutions;
 
             ResolutionDropdown.ClearOptions();
@@ -53,7 +90,57 @@ namespace DrumSmasher
 
         void Update()
         {
+            if (Input.GetKeyDown(KeyCode.KeypadMinus))
+            {
+                if (_devConsole != null)
+                {
+                    if (_devConsole.activeSelf)
+                        _devConsole.SetActive(false);
+                    else
+                        _devConsole.SetActive(true);
+                }
+                else
+                {
+                    _devConsole = Instantiate(DevConsolePrefab);
+                    _devConsole.transform.SetParent(Canvas.transform);
 
+                    RectTransform rt = _devConsole.GetComponent<RectTransform>();        
+                    rt.anchoredPosition3D = new Vector3(950, 347, 1.5f);
+
+                    StartCoroutine(rt.MoveOverSeconds(rt.anchoredPosition3D, new Vector3(950, -383, 1.5f), 0.5f, true));
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                Vector3 old = _devConsole.transform.position;
+                Vector3 oldLocal = _devConsole.transform.localPosition;
+                _devConsole.transform.position -= new Vector3(5, 0, 0);
+                Logger.Log($"Moved from X {old.x} to {_devConsole.transform.position.x}, local: {_devConsole.transform.localPosition.x}, oldLocal: {oldLocal.x}");
+            }
+
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                Vector3 old = _devConsole.transform.position;
+                Vector3 oldLocal = _devConsole.transform.localPosition;
+                _devConsole.transform.position += new Vector3(5, 0, 0);
+                Logger.Log($"Moved from X {old.x} to {_devConsole.transform.position.x}, local: {_devConsole.transform.localPosition.x}, oldLocal: {oldLocal.x}");
+            }
+
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                Vector3 old = _devConsole.transform.position;
+                Vector3 oldLocal = _devConsole.transform.localPosition;
+                _devConsole.transform.position += new Vector3(0, 5, 0);
+                Logger.Log($"Moved from Y {old.y} to {_devConsole.transform.position.y}, local: {_devConsole.transform.localPosition.y}, oldLocal: {oldLocal.y}");
+            }
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                Vector3 old = _devConsole.transform.position;
+                Vector3 oldLocal = _devConsole.transform.localPosition;
+                _devConsole.transform.position -= new Vector3(0, 5, 0);
+                Logger.Log($"Moved from Y {old.y} to {_devConsole.transform.position.y}, local: {_devConsole.transform.localPosition.y}, oldLocal: {oldLocal.y}");
+            }
         }
 
         public void SwitchToSonglist()
@@ -122,13 +209,16 @@ namespace DrumSmasher
         {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
+            SettingsManager.SaveSettings();
 #else
             Application.Quit();
 #endif
+            Logger.Dispose();
         }
 
         void OnApplicationExit()
         {
+            SettingsManager.SaveSettings();
             Logger.Dispose();
         }
 

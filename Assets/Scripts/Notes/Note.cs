@@ -9,11 +9,16 @@ namespace DrumSmasher.Notes
     public class Note : MonoBehaviour
     {
         public TimeSpan StartTime;
-        public double Speed;
         public bool BigNote;
 
+        public GameObject StartPos;
         public GameObject HitCircle;
         public GameObject EndLine;
+        public float TimeStartToHitS;
+        public float TimeToHitOrig;
+        public float TimeHitToEndS;
+        public float SpawnOffset;
+        public AudioSource Audio;
 
         public AudioSource HitSound;
 
@@ -47,6 +52,7 @@ namespace DrumSmasher.Notes
         public bool Missed;
 
         private static bool _autoPlayNext;
+        private bool _moving;
 
         // Start is called before the first frame update
         void Start()
@@ -131,8 +137,6 @@ namespace DrumSmasher.Notes
                 Destroy(gameObject);
                 return;
             }
-
-            MoveForward();
         }
 
         /// <summary>
@@ -148,8 +152,6 @@ namespace DrumSmasher.Notes
 
             Tracker.NoteHit(type, BigNote, (key1 ? new KeyCode?(Key1.KeyToPress) : null), (key2 ? new KeyCode?(Key2.KeyToPress) : null));
 
-            Logger.Log($"Note hit at {Tracker.GameTime.ElapsedMilliseconds} ms GameTime, (pos: {transform.position.x}, {transform.position.y}, {transform.position.z}");
-
             Destroy(gameObject);
         }
 
@@ -162,8 +164,7 @@ namespace DrumSmasher.Notes
             Missed = true;
             Tracker.NoteHit(NoteTracker.HitType.Miss);
         }
-
-
+        
         /// <summary>
         /// Checks if note is in hit window
         /// </summary>
@@ -177,20 +178,19 @@ namespace DrumSmasher.Notes
             return false;
         }
         
-        /// <summary>
-        /// Moves forward
-        /// </summary>
-        private void MoveForward()
+        public IEnumerator StartMoving()
         {
-            transform.position = new Vector3(transform.position.x - Time.deltaTime * (float)Speed, transform.position.y, transform.position.z);
+            _moving = true;
+
+            yield return transform.MoveOverSeconds(StartPos.transform.position, HitCircle.transform.position, TimeStartToHitS);
+
+            StartCoroutine(MoveToEnd());
         }
 
-        /// <summary>
-        /// Moves backward
-        /// </summary>
-        private void MoveBackwards()
+        private IEnumerator MoveToEnd()
         {
-            transform.position = new Vector3(transform.position.x + Time.deltaTime * (float)Speed, transform.position.y, transform.position.z);
+            yield return transform.MoveOverSeconds(HitCircle.transform.position, EndLine.transform.position, TimeHitToEndS);
+            _moving = false;
         }
     }
 }
