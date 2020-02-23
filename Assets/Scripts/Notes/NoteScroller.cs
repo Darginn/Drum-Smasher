@@ -242,8 +242,6 @@ namespace DrumSmasher.Notes
             _currentNoteIndex++;
 
             SpawnNote(next);
-
-            Logger.Log($"Spawned note at {GameTime.ElapsedMilliseconds} ms, will reach hitcircle at {GameTime.ElapsedMilliseconds + next.SpawnOffset} ms");
         }
   
         /// <summary>

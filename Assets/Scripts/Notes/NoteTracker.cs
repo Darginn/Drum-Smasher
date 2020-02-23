@@ -167,8 +167,9 @@ namespace DrumSmasher.Notes
             {
                 Combo = 0;
                 Misses++;
+                Accuracy = (100.0 / TotalNotes) * ((BadHits * 0.5) + GoodHits);
 
-                goto atEnd;
+                return;
             }
 
             if (Combo < 10)
@@ -179,9 +180,9 @@ namespace DrumSmasher.Notes
             if (type == HitType.GoodHit)
                 GoodHits++;
 
-            atEnd:
-            Accuracy = (100.0 / TotalNotes) * ((BadHits * 0.5) + GoodHits);
+            Combo++;
 
+            Accuracy = (100.0 / TotalNotes) * ((BadHits * 0.5) + GoodHits);
             
             if (key.HasValue)
                 KeyHit(key.Value);

@@ -48,6 +48,9 @@ namespace DrumSmasher
             
             Instance.NoteScroller.GameSound.LoadSong(chartDirectory.FullName + @"\" + chart.SoundFile);
 
+            if (UnityEditor.EditorApplication.isPlaying)
+                Instance.NoteScroller.AutoPlay = true;
+
             Instance.StartMap(chart);
         }
 

@@ -436,10 +436,9 @@ MonoBehaviour:
   Key2: 106
   Key3: 100
   Key4: 107
-  HitWindowRange: 50
-  AutoPlay: 1
+  HitWindowRange: 2
+  AutoPlay: 0
   AutoPlayDelayMS: 80
-  AR: 8
   Key1Controller: {fileID: 121062835}
   Key2Controller: {fileID: 841194376}
   Key3Controller: {fileID: 1086453107}
@@ -2168,7 +2167,7 @@ SpriteRenderer:
   m_Size: {x: 3.6, y: 3.96}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1404780992
@@ -2653,8 +2652,6 @@ MonoBehaviour:
   MultiplierValue: 80
   EscapeCheckDelayMS: 250
   TargetFPS: 0
-  DevConsole: {fileID: 1000869489657596561, guid: 8b5fc1e7cbf3acf46a4807eab3e20228,
-    type: 3}
 --- !u!4 &1710752815
 Transform:
   m_ObjectHideFlags: 0

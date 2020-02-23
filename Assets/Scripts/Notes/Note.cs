@@ -158,6 +158,7 @@ namespace DrumSmasher.Notes
         /// </summary>
         private void NoteMiss()
         {
+            Logger.Log("Note missed");
             Missed = true;
             Tracker.NoteHit(NoteTracker.HitType.Miss);
         }
