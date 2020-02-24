@@ -25,15 +25,21 @@ namespace DrumSmasher
             obj.transform.localPosition = end;
         }
 
-        public static IEnumerator MoveOverSeconds(this Transform obj, Vector3 start, Vector3 end, float seconds)
+        public static IEnumerator MoveOverSeconds(this Transform obj, Vector3 start, Vector3 end, float seconds, bool keepZ = true)
         {
             float elapsedTime = 0;
 
+            float z = obj.position.z;
+        
             while (elapsedTime < seconds)
             {
                 obj.transform.localPosition = Vector3.Lerp(start, end, (elapsedTime / seconds));
-                elapsedTime += Time.deltaTime;
 
+                if (keepZ)
+                    obj.transform.localPosition = new Vector3(obj.transform.localPosition.x, obj.transform.localPosition.y, z);
+
+                elapsedTime += Time.deltaTime;
+                
                 yield return new WaitForEndOfFrame();
             }
 
