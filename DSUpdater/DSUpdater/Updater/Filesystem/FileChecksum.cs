@@ -4,34 +4,33 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace DSUpdater.Updater
+namespace DSUpdater.Updater.Filesystem
 {
     public class FileChecksum : IEquatable<FileChecksum>
     {
         public string Checksum => _checksum;
         public string File => _file;
+        public string Folder => _folder;
 
         private string _checksum;
         private string _file;
+        private string _folder;
         
         /// <summary>
         /// Generates the checksum from the file
         /// </summary>
         /// <param name="file"></param>
-        public FileChecksum(string file)
+        public FileChecksum(string folder, string file)
         {
-            GenerateChecksum(file);
-        }
+            _file = file;
+            _folder = folder;
 
-        public FileChecksum(string file, string checksum)
-        {
-            _file = file ?? "";
-            _checksum = checksum ?? "";
+            GenerateChecksum();
         }
-
-        public void GenerateChecksum(string file)
+        
+        public void GenerateChecksum()
         {
-            FileInfo fi = new FileInfo(file);
+            FileInfo fi = new FileInfo(Path.Combine(_folder, _file));
 
             if (!fi.Exists)
                 throw new Exception("Could not find file at GenerateChecksum");
@@ -61,43 +60,7 @@ namespace DSUpdater.Updater
             foreach (byte b in checksum)
                 _checksum += b;
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="checksums">file, checksum</param>
-        /// <returns></returns>
-        public static IEnumerable<FileChecksum> CheckAgainst(string path, Dictionary<string, string> checksums)
-        {
-            DirectoryInfo dir = new DirectoryInfo(path);
-
-            if (!dir.Exists)
-                yield break;
-
-            foreach(FileInfo file in dir.EnumerateFiles("*", SearchOption.AllDirectories))
-            {
-                if (!checksums.ContainsKey(file.Name))
-                    continue;
-
-                FileChecksum ch = new FileChecksum(file.FullName);
-
-                if (!checksums[file.Name].Equals(ch.Checksum))
-                    yield return ch;
-            }
-        }
-
-        public static IEnumerable<FileChecksum> CreateChecksums(string path)
-        {
-            DirectoryInfo dir = new DirectoryInfo(path);
-
-            if (!dir.Exists)
-                yield break;
-
-            foreach (FileInfo file in dir.EnumerateFiles("*", SearchOption.AllDirectories))
-                yield return new FileChecksum(file.FullName);
-        }
-
+        
         public override bool Equals(object obj)
         {
             return Equals(obj as FileChecksum);

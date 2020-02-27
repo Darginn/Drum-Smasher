@@ -1,4 +1,5 @@
-﻿using DSUpdater.Updater;
+﻿//using DSUpdater.Filesystem;
+using DSUpdater.Updater;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,7 +15,7 @@ namespace DSUpdater
 
 
         private static bool _closing;
-        private static Updater.HTTPUpdater _updater;
+        //private static Updater.HTTPUpdater _updater;
 
         static async Task MainTask(string[] args)
         {
@@ -31,43 +32,43 @@ namespace DSUpdater
 
                 DirectoryInfo installDir = new DirectoryInfo(Directory.GetCurrentDirectory());
 
-                _updater = new Updater.HTTPUpdater();
+                //_updater = new Updater.HTTPUpdater();
 
-                string updaterInfo = await _updater.DownloadStringAsync(updateInfo, routes);
+                //string updaterInfo = await _updater.DownloadStringAsync(updateInfo, routes);
 
-                if (string.IsNullOrEmpty(updaterInfo))
-                {
-                    Console.WriteLine("No new updates");
-                    await Task.Delay(-1);
-                }
+                //if (string.IsNullOrEmpty(updaterInfo))
+                //{
+                //    Console.WriteLine("No new updates");
+                //    await Task.Delay(-1);
+                //}
 
-                List<string> fileDownloads = updaterInfo.Split(Environment.NewLine).ToList();
-                Dictionary<string, string> checkSums = new Dictionary<string, string>();
+                //List<string> fileDownloads = updaterInfo.Split(Environment.NewLine).ToList();
+                //Dictionary<string, string> checkSums = new Dictionary<string, string>();
 
-                bool cont = false;
-                for (int i = 0; i < fileDownloads.Count; i++)
-                {
-                    if (fileDownloads[i].Equals(@"/\"))
-                    {
-                        cont = true;
-                        continue;
-                    }
+                //bool cont = false;
+                //for (int i = 0; i < fileDownloads.Count; i++)
+                //{
+                //    if (fileDownloads[i].Equals(@"/\"))
+                //    {
+                //        cont = true;
+                //        continue;
+                //    }
 
-                    if (!cont)
-                        continue;
+                //    if (!cont)
+                //        continue;
 
-                    string[] split = fileDownloads[i].Split('=');
+                //    string[] split = fileDownloads[i].Split('=');
 
-                    checkSums.Add(split[0], split[1]);
-                    i--;
-                }
+                //    checkSums.Add(split[0], split[1]);
+                //    i--;
+                //}
 
-                IEnumerable<FileChecksum> invalidFiles = FileChecksum.CheckAgainst(installDir.FullName, checkSums);
+                //IEnumerable<FileChecksum> invalidFiles = FileChecksum.CheckAgainst(installDir.FullName, checkSums);
 
-                if (invalidFiles.Count() > 0)
-                {
+                //if (invalidFiles.Count() > 0)
+                //{
 
-                }
+                //}
 
                 Console.WriteLine("Finished all processes!");
             }
