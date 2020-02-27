@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DrumSmasher.GameInput;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,8 @@ namespace DrumSmasher.Settings
     public class TitleScreenSettings : ISetting
     {
         public string Name { get; set; }
+        
+
 
         public TitleScreenData Data;
 
@@ -37,6 +40,15 @@ namespace DrumSmasher.Settings
         public class TitleScreenData
         {
             public string DefaultConsoleMessage { get; set; }
+            public string ScreenWidth { get; set; }
+            public string ScreenHeight { get; set; }
+            public string RefreshRate { get; set; }
+            public bool Fullscreen { get; set; }
+            public bool Vsync { get; set; }
+            public ButtonController LeftCenter { get; set; }
+            public ButtonController RightCenter { get; set; }
+            public ButtonController LeftRim { get; set; }
+            public ButtonController RightRim { get; set; }
         }
     }
 }
