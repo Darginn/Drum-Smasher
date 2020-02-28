@@ -11,6 +11,7 @@ using SFB;
 using System.IO;
 using System.Collections;
 using DrumSmasher.Settings;
+using DrumSmasher.Notes;
 
 namespace DrumSmasher
 {
@@ -48,6 +49,16 @@ namespace DrumSmasher
                     //Set default values
 
                     TitleScreenSetting.Data.DefaultConsoleMessage = "Hello world";
+                    TitleScreenSetting.Data.ScreenWidth = Screen.currentResolution.width;
+                    TitleScreenSetting.Data.ScreenHeight = Screen.currentResolution.height;
+                    TitleScreenSetting.Data.RefreshRate = Screen.currentResolution.refreshRate;
+                    TitleScreenSetting.Data.Fullscreen = true;
+                    TitleScreenSetting.Data.Vsync = false;
+                    //TitleScreenSetting.Data.LeftRim = 
+                    //TitleScreenSetting.Data.LeftCenter = 
+                    //TitleScreenSetting.Data.RightCenter = 
+                    //TitleScreenSetting.Data.RightRim =
+                    TitleScreenSetting.Data.ChartPath = Application.dataPath + "/../Charts";
                 }
             }
 
@@ -86,6 +97,11 @@ namespace DrumSmasher
             ResolutionDropdown.AddOptions(options);
             ResolutionDropdown.value = currentResolutionIndex;
             ResolutionDropdown.RefreshShownValue();
+
+            Screen.fullScreen = TitleScreenSetting.Data.Fullscreen;
+
+
+
         }
 
         void Update()
@@ -158,9 +174,9 @@ namespace DrumSmasher
         
         public void ConvertOsuMap()
         {
-            Logger.Log("Selecting osu map");
+            Logger.Log("Selecting .osu file");
             
-            string path = StandaloneFileBrowser.OpenFilePanel("Select osu map", Application.dataPath + "/../", new ExtensionFilter[] { _extOsuFilter }, false)[0];
+            string path = StandaloneFileBrowser.OpenFilePanel("Select .osu file", Application.dataPath + "/../Charts/", new ExtensionFilter[] { _extOsuFilter }, false)[0];
             
             if (path.Length <= 0)
                 return;
@@ -184,7 +200,7 @@ namespace DrumSmasher
             string title = Charts.ChartFile.FixPath(chart.Title);
             string creator = Charts.ChartFile.FixPath(chart.Creator);
 
-            DirectoryInfo chartPath = new DirectoryInfo(Application.dataPath + $"/../Charts/{artist} - {title} ({creator})/");
+            DirectoryInfo chartPath = new DirectoryInfo(TitleScreenSetting.Data.ChartPath + $"/{artist} - {title} ({creator})/");
             
             Charts.ChartFile.Save(chart, chartPath);
             
@@ -196,12 +212,18 @@ namespace DrumSmasher
 
         public void SetFullscreen(bool isFullscreen)
         {
-            Screen.fullScreen = isFullscreen;
+            TitleScreenSetting.Data.Fullscreen = isFullscreen;
+
+            Screen.fullScreen = TitleScreenSetting.Data.Fullscreen;
         }
 
         public void SetResolution(int resolutionIndex)
         {
             Resolution resolution = resolutions[resolutionIndex];
+
+            TitleScreenSetting.Data.ScreenWidth = resolution.width;
+            TitleScreenSetting.Data.ScreenHeight = resolution.height;
+
             Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
         }
 
