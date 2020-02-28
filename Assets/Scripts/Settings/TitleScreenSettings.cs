@@ -40,15 +40,16 @@ namespace DrumSmasher.Settings
         public class TitleScreenData
         {
             public string DefaultConsoleMessage { get; set; }
-            public string ScreenWidth { get; set; }
-            public string ScreenHeight { get; set; }
-            public string RefreshRate { get; set; }
+            public int ScreenWidth { get; set; }
+            public int ScreenHeight { get; set; }
+            public int RefreshRate { get; set; }
             public bool Fullscreen { get; set; }
             public bool Vsync { get; set; }
             public ButtonController LeftCenter { get; set; }
             public ButtonController RightCenter { get; set; }
             public ButtonController LeftRim { get; set; }
             public ButtonController RightRim { get; set; }
+            public string ChartPath { get; set; }
         }
     }
 }
