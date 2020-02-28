@@ -8,29 +8,25 @@ namespace DSUpdater.Updater.Filesystem
 {
     public class FileChecksum : IEquatable<FileChecksum>
     {
-        public string Checksum => _checksum;
-        public string File => _file;
-        public string Folder => _folder;
-
-        private string _checksum;
-        private string _file;
-        private string _folder;
+        public string Checksum;
+        public string File;
+        public string Folder;
         
         /// <summary>
         /// Generates the checksum from the file
         /// </summary>
         /// <param name="file"></param>
-        public FileChecksum(string folder, string file)
+        public FileChecksum(string file, string folder)
         {
-            _file = file;
-            _folder = folder;
+            File = file;
+            Folder = folder;
 
             GenerateChecksum();
         }
         
         public void GenerateChecksum()
         {
-            FileInfo fi = new FileInfo(Path.Combine(_folder, _file));
+            FileInfo fi = new FileInfo(Path.Combine(Folder, File));
 
             if (!fi.Exists)
                 throw new Exception("Could not find file at GenerateChecksum");
@@ -48,17 +44,16 @@ namespace DSUpdater.Updater.Filesystem
                 if (read != buffer.Length)
                     Array.Resize(ref buffer, read);
 
-                if (!md.TryComputeHash(buffer, checksum, out int bytesWritten))
-                    throw new Exception("Could not compute hash of " + fi.FullName);
+                checksum = md.ComputeHash(buffer, 0, buffer.Length);
             }
 
             if (checksum == null)
                 throw new Exception("Checksum is null for " + fi.FullName);
 
-            _checksum = "";
+            Checksum = "";
 
             foreach (byte b in checksum)
-                _checksum += b;
+                Checksum += b;
         }
         
         public override bool Equals(object obj)
@@ -69,12 +64,12 @@ namespace DSUpdater.Updater.Filesystem
         public bool Equals(FileChecksum other)
         {
             return other != null &&
-                   _checksum == other._checksum;
+                   Checksum == other.Checksum;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(_checksum);
+            return HashCode.Combine(Checksum);
         }
 
         public static bool operator ==(FileChecksum checksum1, FileChecksum checksum2)

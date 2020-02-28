@@ -33,7 +33,7 @@ namespace DSUpdater.Updater.Filesystem
             }
 
             foreach(FileInfo file in dir.EnumerateFiles("*", SearchOption.AllDirectories))
-                _files.Add(new FileChecksum(file.Directory.FullName, file.Name));
+                _files.Add(new FileChecksum(file.Name, file.Directory.FullName));
         }
 
         public override bool Equals(object obj)

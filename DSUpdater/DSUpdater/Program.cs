@@ -1,5 +1,6 @@
 ﻿//using DSUpdater.Filesystem;
 using DSUpdater.Updater;
+using DSUpdater.Updater.Filesystem;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,59 +17,158 @@ namespace DSUpdater
 
         private static bool _closing;
         //private static Updater.HTTPUpdater _updater;
+        private static HTTPDownloader _downloader;
 
         static async Task MainTask(string[] args)
         {
             try
             {
-                string updateInfo = "https://raw.githubusercontent.com";
+                //Dictionary<string, string> ddlList = new Dictionary<string, string>()
+                //{
+                //    { @"\test\Camellia - Nacreous Snowmelt (rubies87).rar", "http://puu.sh/Ffpw9/bd77c86b20.rar" },
+                //    { @"\test\DM DOKURO - Devourer of Gods Compilation (Stefan).rar", "http://puu.sh/FfpwH/e48831a5b9.rar" },
+                //    { @"\Infected Mushroom - The Messenger 2012 (Sped Up Ver.) (Nwolf).rar", "http://puu.sh/Ffpx6/af65c16088.rar" },
+                //    { @"\katagiri - Sendan Life (katagiri Bootleg) (Ozu).rar", "http://puu.sh/FfpxQ/fd001bc889.rar" },
+                //    { @"\Kola Kid - can't hide your love (Kert).rar", "http://puu.sh/FfpxQ/fd001bc889.rar" },
+                //    { @"Masayoshi Minoshima feat. nomico - Bad Apple!! (ouranhshc).rar", "http://puu.sh/Ffpyx/2a79059d68.rar" },
+                //    { @"SoundTeMP - Dreamer's Dream (P A N).rar", "http://puu.sh/FfpyB/3ed0efd8b0.rar" },
+                //    { @"toby fox - MEGALOVANIA (Camellia Remix) (Rhytoly).rar", "http://puu.sh/Ffpzr/e74ae08d39.rar" },
+                //    { @"Xi - Majotachi no Butoukai ~ Magus (Kite).rar", "http://puu.sh/FfpzQ/567924e894.rar" },
+                //    { @"Yuuyu - Howdy! and... Good-Die! (3san).rar", "http://puu.sh/FfpA0/c084bc4a7f.rar" },
+                //};
+
+                //DirectoryInfo folder = new DirectoryInfo(@"C:\Games\UpdaterTest\Charts\");
+
+                //Dictionary<string, string> fileCheckSums = new Dictionary<string, string>();
+
+                //foreach (FileInfo f in folder.EnumerateFiles())
+                //{
+                //    string path = f.FullName.Remove(0, folder.FullName.Length);
+                //    FileChecksum fc = new FileChecksum(f.FullName);
+
+                //    fileCheckSums.Add(path, fc.Checksum);
+                //}
+
+                //UpdateInfo upInfo = new UpdateInfo("http://puu.sh/");
+                //upInfo.DownloadList = ddlList;
+                //upInfo.ChecksumList = fileCheckSums;
+                //upInfo.Version = new int[4]
+                //{
+                //    0,
+                //    0,
+                //    0,
+                //    1
+                //};
+
+                //string upInfoJson = upInfo.ToString();
+
+                //File.WriteAllText(Path.Combine(folder.FullName, @"upInfo.txt"), upInfoJson);
+
+                //Console.WriteLine("done, " + Path.Combine(folder.FullName, @"upInfo.txt"));
+                //await Task.Delay(-1);
+
+                //string updateUrl = "https://raw.githubusercontent.com";
+                //string[] routes = new string[]
+                //{
+                //    "Darginn",
+                //    "Drum-Smasher",
+                //    "master",
+                //    "upinfo.txt"
+                //};
+                //http://puu.sh/FfpIC/122ad8d03a.txt
+
+                File.Delete(@"C:\Games\UpdaterTest\Charts\Install\updateinfo.json");
+
+                string updateUrl = "http://puu.sh";
                 string[] routes = new string[]
                 {
-                    "Darginn",
-                    "Drum-Smasher",
-                    "master",
-                    "upinfo.txt"
+                    "FfpIC",
+                    "122ad8d03a.txt"
                 };
 
-                DirectoryInfo installDir = new DirectoryInfo(Directory.GetCurrentDirectory());
+                _downloader = new HTTPDownloader(updateUrl);
 
-                //_updater = new Updater.HTTPUpdater();
+                string updateInfo = updateUrl;
 
-                //string updaterInfo = await _updater.DownloadStringAsync(updateInfo, routes);
+                foreach (string route in routes)
+                    updateInfo += "/" + route;
 
-                //if (string.IsNullOrEmpty(updaterInfo))
-                //{
-                //    Console.WriteLine("No new updates");
-                //    await Task.Delay(-1);
-                //}
+                string updateJson = await _downloader.DownloadStringAsync(updateInfo);
+                UpdateInfo info = Newtonsoft.Json.JsonConvert.DeserializeObject<UpdateInfo>(updateJson);
 
-                //List<string> fileDownloads = updaterInfo.Split(Environment.NewLine).ToList();
-                //Dictionary<string, string> checkSums = new Dictionary<string, string>();
+                if (info == null)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("ERROR: Failed to get update info");
+                    Console.ForegroundColor = ConsoleColor.White;
 
-                //bool cont = false;
-                //for (int i = 0; i < fileDownloads.Count; i++)
-                //{
-                //    if (fileDownloads[i].Equals(@"/\"))
-                //    {
-                //        cont = true;
-                //        continue;
-                //    }
+                    await Task.Delay(-1);
+                }
 
-                //    if (!cont)
-                //        continue;
+                //DirectoryInfo installDir = new DirectoryInfo(Directory.GetCurrentDirectory());                
+                DirectoryInfo installDir = new DirectoryInfo(@"C:\Games\UpdaterTest\Charts\Install\");
 
-                //    string[] split = fileDownloads[i].Split('=');
+                FileInfo lastUpdateInfo = new FileInfo(Path.Combine(installDir.FullName, @"updateinfo.json"));
 
-                //    checkSums.Add(split[0], split[1]);
-                //    i--;
-                //}
+                if (lastUpdateInfo.Exists)
+                {
+                    UpdateInfo lastUpdateJson = Newtonsoft.Json.JsonConvert.DeserializeObject<UpdateInfo>(File.ReadAllText(lastUpdateInfo.FullName));
 
-                //IEnumerable<FileChecksum> invalidFiles = FileChecksum.CheckAgainst(installDir.FullName, checkSums);
+                    bool pass = true;
+                    for (int i = 0; i < lastUpdateJson.Version.Length; i++)
+                    {
+                        int lastVer = lastUpdateJson.Version[i];
+                        int curVer = info.Version[i];
 
-                //if (invalidFiles.Count() > 0)
-                //{
+                        if (lastVer != curVer)
+                        {
+                            pass = false;
+                            break;
+                        }
+                    }
 
-                //}
+                    if (pass)
+                    {
+                        Console.WriteLine("We are up to date");
+                        await Task.Delay(-1);
+                    }
+                }
+
+                File.WriteAllText(lastUpdateInfo.FullName, updateJson);
+                Console.WriteLine("Updating...");
+
+                _downloader.DownloadDict = info.DownloadList;
+                Console.WriteLine("Starting download");
+
+                _downloader.StartDownloadThreaded(installDir.FullName, 4);
+
+                while(_downloader.ToDownload > 0)
+                {
+                    Console.WriteLine("Files to download left: " + _downloader.ToDownload);
+
+                    await Task.Delay(2000);
+                }
+
+                Console.WriteLine("Finished downloading, failed files: " + _downloader.FailedDownloads);
+
+                FolderChecksum checksums = new FolderChecksum(installDir.FullName);
+                checksums.GenerateChecksums();
+
+                foreach(var pair in info.ChecksumList)
+                {
+                    FileChecksum f = checksums.Files.FirstOrDefault(fc => Path.Combine(fc.Folder, fc.File).Contains(pair.Key));
+
+                    if (f == null || string.IsNullOrEmpty(f.File))
+                    {
+                        Console.WriteLine("Could not find checksum for: " + pair.Key);
+                        continue;
+                    }
+
+                    if (!f.Checksum.Equals(pair.Value))
+                        Console.WriteLine("File checksum invalid: " + pair.Key);
+                    else
+                        Console.WriteLine("File is valid: " + pair.Key);
+                }
 
                 Console.WriteLine("Finished all processes!");
             }

@@ -1,0 +1,11 @@
+C:\Games\DrumSmasher\DSUpdater\DSUpdater\bin\Debug\netcoreapp2.2\DSUpdater.deps.json
+C:\Games\DrumSmasher\DSUpdater\DSUpdater\bin\Debug\netcoreapp2.2\DSUpdater.runtimeconfig.json
+C:\Games\DrumSmasher\DSUpdater\DSUpdater\bin\Debug\netcoreapp2.2\DSUpdater.runtimeconfig.dev.json
+C:\Games\DrumSmasher\DSUpdater\DSUpdater\bin\Debug\netcoreapp2.2\DSUpdater.dll
+C:\Games\DrumSmasher\DSUpdater\DSUpdater\obj\Debug\netcoreapp2.2\DSUpdater.csprojAssemblyReference.cache
+C:\Games\DrumSmasher\DSUpdater\DSUpdater\obj\Debug\netcoreapp2.2\DSUpdater.csproj.CoreCompileInputs.cache
+C:\Games\DrumSmasher\DSUpdater\DSUpdater\obj\Debug\netcoreapp2.2\DSUpdater.AssemblyInfoInputs.cache
+C:\Games\DrumSmasher\DSUpdater\DSUpdater\obj\Debug\netcoreapp2.2\DSUpdater.AssemblyInfo.cs
+C:\Games\DrumSmasher\DSUpdater\DSUpdater\bin\Debug\netcoreapp2.2\DSUpdater.pdb
+C:\Games\DrumSmasher\DSUpdater\DSUpdater\obj\Debug\netcoreapp2.2\DSUpdater.dll
+C:\Games\DrumSmasher\DSUpdater\DSUpdater\obj\Debug\netcoreapp2.2\DSUpdater.pdb

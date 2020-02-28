@@ -18,16 +18,19 @@ namespace DSUpdater.Updater
         public int[] Version;
 
         public string Host;
-        public string HostBasePath;
 
-        public UpdateInfo(string host, string hostBasePath)
+        public UpdateInfo(string host)
         {
             Host = host;
-            HostBasePath = hostBasePath;
 
             DownloadList = new Dictionary<string, string>();
             ChecksumList = new Dictionary<string, string>();
             Version = new int[4];
+        }
+
+        public override string ToString()
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
         }
     }
 }
