@@ -8,6 +8,12 @@ namespace DrumSmasher.Prefab.DevConsole.Commands
 {
     public class ApproachRateCommand : BaseCommand
     {
+        [AutoInit]
+        public static void Init()
+        {
+            DevConsole.Commands.Add(new ApproachRateCommand());
+        }
+
         public override string Command => "ar";
 
         public override void Execute(params string[] args)

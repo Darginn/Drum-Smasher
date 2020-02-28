@@ -52,13 +52,15 @@ namespace DrumSmasher
             if (!SettingsManager.SettingsStorage.ContainsKey("Taiko"))
             {
                 ts = new TaikoSettings();
-                SettingsManager.AddOrUpdate(tss);
+                SettingsManager.AddOrUpdate(ts);
 
                 ts.Load();
             }
             else
                 ts = SettingsManager.SettingsStorage["TitleScreen"] as TaikoSettings;
 
+            //Initialize static AutoInit Attributes
+            System.Reflection.Assembly.GetExecutingAssembly().ActivateAttributeMethods<AutoInitAttribute>();
 
             resolutions = Screen.resolutions;
 

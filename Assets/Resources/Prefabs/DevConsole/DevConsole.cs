@@ -19,12 +19,9 @@ namespace DrumSmasher.Prefab.DevConsole
 
         private const int _maxLinesOnScreen = 26;
         private const int _maxLineLength = 9999;
-
-        private readonly List<ICommand> _commands = new List<ICommand>()
-        {
-            new ApproachRateCommand(),
-            new AutoplayCommand(),
-        };
+        
+        private static List<ICommand> _commands = new List<ICommand>();
+        public static List<ICommand> Commands => _commands;
 
         // Start is called before the first frame update
         void Start()

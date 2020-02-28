@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -65,5 +66,41 @@ namespace DrumSmasher
 
             rect.anchoredPosition3D = end;
         }
+
+        public static List<Exception> ActivateAttributeMethods<Attrib>(this Assembly ass) where Attrib : Attribute
+        {
+            List<Exception> exceptions = new List<Exception>();
+
+            foreach(Type t in ass.GetTypes())
+            {
+                foreach (MethodInfo mi in t.GetMethods())
+                {
+                    try
+                    {
+                        if (!mi.IsStatic)
+                            continue;
+
+                        Attrib attrib = mi.GetCustomAttribute<Attrib>();
+
+                        if (attrib == null)
+                            continue;
+
+                        mi.Invoke(null, null);
+                        Logger.Log("Invoked method: " + mi.Name, LogLevel.Trace);
+                    }
+                    catch (Exception ex)
+                    {
+                        exceptions.Add(ex);
+                    }
+                }
+            }
+
+            return exceptions;
+        }
+    }
+
+    public class AutoInitAttribute : Attribute
+    {
+
     }
 }
