@@ -1236,6 +1236,7 @@ MonoBehaviour:
   DevConsolePrefab: {fileID: 273408681851003195, guid: af6e53592f8d7d94fbee3ddeee1726e3,
     type: 3}
   Canvas: {fileID: 2132988402}
+  FullscreenToggle: {fileID: 523460744}
   ResolutionDropdown: {fileID: 1360373552}
 --- !u!4 &606060833
 Transform:
