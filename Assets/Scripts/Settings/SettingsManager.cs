@@ -57,7 +57,7 @@ namespace DrumSmasher.Settings
             
             return val;
         }
-
+        
         public static void SaveSettings()
         {
             List<ISetting> settings = SettingsStorage.Values.ToList();

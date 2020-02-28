@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace DrumSmasher.Settings
 {
@@ -37,19 +38,38 @@ namespace DrumSmasher.Settings
             return Newtonsoft.Json.JsonConvert.SerializeObject(Data);
         }
 
-        public class TitleScreenData
+        public class TitleScreenData : IDataStorage
         {
+            public string Name { get; set; }
             public string DefaultConsoleMessage { get; set; }
             public int ScreenWidth { get; set; }
             public int ScreenHeight { get; set; }
             public int RefreshRate { get; set; }
             public bool Fullscreen { get; set; }
             public bool Vsync { get; set; }
-            public ButtonController LeftCenter { get; set; }
-            public ButtonController RightCenter { get; set; }
-            public ButtonController LeftRim { get; set; }
-            public ButtonController RightRim { get; set; }
+            public int ResolutionIndex { get; set; }
+            //public ButtonController LeftCenter { get; set; }
+            //public ButtonController RightCenter { get; set; }
+            //public ButtonController LeftRim { get; set; }
+            //public ButtonController RightRim { get; set; }
             public string ChartPath { get; set; }
+
+            public TitleScreenData()
+            {
+                Name = "TitleScreen";
+                DefaultConsoleMessage = "Hello world";
+                ScreenWidth = Screen.currentResolution.width;
+                ScreenHeight = Screen.currentResolution.height;
+                RefreshRate = Screen.currentResolution.refreshRate;
+                Fullscreen = true;
+                Vsync = false;
+                ResolutionIndex = 0;
+                //LeftRim = 
+                //LeftCenter = 
+                //RightCenter = 
+                //RightRim =
+                ChartPath = Application.dataPath + "/../Charts";
+            }
         }
     }
 }

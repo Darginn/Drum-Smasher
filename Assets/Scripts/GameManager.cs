@@ -1,4 +1,5 @@
 ﻿using DrumSmasher.Notes;
+using DrumSmasher.Settings;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -110,8 +111,10 @@ namespace DrumSmasher
                 NoteScroller.StartPlaying();
             }
 
-            if (TitleScreenManager.TaikoSettings.Data.ApproachRate != NoteScroller.ApproachRate)
-                NoteScroller.ApproachRate = TitleScreenManager.TaikoSettings.Data.ApproachRate;
+            TaikoSettings ts = SettingsManager.SettingsStorage["Taiko"] as TaikoSettings;
+
+            if (ts.Data.ApproachRate != NoteScroller.ApproachRate)
+                NoteScroller.ApproachRate = ts.Data.ApproachRate;
 
 #if !UNITY_EDITOR
             NoteScroller.AutoPlay = TitleScreenManager.TaikoSettings.Data.Autoplay;

@@ -24,6 +24,7 @@ namespace DrumSmasher
         public GameObject SettingsMenu;
         public GameObject DevConsolePrefab;
         public GameObject Canvas;
+        public Toggle FullscreenToggle;
         
         public Dropdown ResolutionDropdown;
 
@@ -31,51 +32,33 @@ namespace DrumSmasher
         private ExtensionFilter _extChartFilter = new ExtensionFilter("Chart", "chart");
         private ExtensionFilter _extOsuFilter = new ExtensionFilter("Osu difficulty", "osu");
         private GameObject _devConsole;
-
-        public static TitleScreenSettings TitleScreenSetting;
-        public static TaikoSettings TaikoSettings;
-
+        
         void Start()
         {
-            if (TitleScreenSetting == null)
+            TitleScreenSettings tss = null;
+
+            if (!SettingsManager.SettingsStorage.ContainsKey("TitleScreen"))
             {
-                TitleScreenSetting = new TitleScreenSettings();
-                SettingsManager.AddOrUpdate(TitleScreenSetting);
+                tss = new TitleScreenSettings();
+                SettingsManager.AddOrUpdate(tss);
 
-                TitleScreenSetting.Load();
-
-                if (string.IsNullOrEmpty(TitleScreenSetting.Data.DefaultConsoleMessage))
-                {
-                    //Set default values
-
-                    TitleScreenSetting.Data.DefaultConsoleMessage = "Hello world";
-                    TitleScreenSetting.Data.ScreenWidth = Screen.currentResolution.width;
-                    TitleScreenSetting.Data.ScreenHeight = Screen.currentResolution.height;
-                    TitleScreenSetting.Data.RefreshRate = Screen.currentResolution.refreshRate;
-                    TitleScreenSetting.Data.Fullscreen = true;
-                    TitleScreenSetting.Data.Vsync = false;
-                    //TitleScreenSetting.Data.LeftRim = 
-                    //TitleScreenSetting.Data.LeftCenter = 
-                    //TitleScreenSetting.Data.RightCenter = 
-                    //TitleScreenSetting.Data.RightRim =
-                    TitleScreenSetting.Data.ChartPath = Application.dataPath + "/../Charts";
-                }
+                tss.Load();
             }
+            else
+                tss = SettingsManager.SettingsStorage["TitleScreen"] as TitleScreenSettings;
 
-            if (TaikoSettings == null)
+
+            TaikoSettings ts = null;
+            if (!SettingsManager.SettingsStorage.ContainsKey("Taiko"))
             {
-                TaikoSettings = new TaikoSettings();
-                SettingsManager.AddOrUpdate(TaikoSettings);
+                ts = new TaikoSettings();
+                SettingsManager.AddOrUpdate(tss);
 
-                TaikoSettings.Load();
-
-                if (TaikoSettings.Data.ApproachRate == 0)
-                {
-                    //Set default values
-
-                    TaikoSettings.Data.ApproachRate = 6;
-                }
+                ts.Load();
             }
+            else
+                ts = SettingsManager.SettingsStorage["TitleScreen"] as TaikoSettings;
+
 
             resolutions = Screen.resolutions;
 
@@ -85,7 +68,7 @@ namespace DrumSmasher
             int currentResolutionIndex = 0;
             for (int i = 0; i < resolutions.Length; i++)
             {
-                string option = resolutions[i].width + " x " + resolutions[i].height + " " + resolutions[i].refreshRate + "hz";
+                string option = $"{resolutions[i].width} x {resolutions[i].height} {resolutions[i].refreshRate} hz";
                 options.Add(option);
 
                 if (resolutions[i].width == Screen.currentResolution.width &&
@@ -98,10 +81,8 @@ namespace DrumSmasher
             ResolutionDropdown.value = currentResolutionIndex;
             ResolutionDropdown.RefreshShownValue();
 
-            Screen.fullScreen = TitleScreenSetting.Data.Fullscreen;
-
-
-
+            SetFullscreen(tss.Data.Fullscreen);
+            SetResolution(tss.Data.ScreenWidth, tss.Data.ScreenHeight, tss.Data.RefreshRate);
         }
 
         void Update()
@@ -200,7 +181,9 @@ namespace DrumSmasher
             string title = Charts.ChartFile.FixPath(chart.Title);
             string creator = Charts.ChartFile.FixPath(chart.Creator);
 
-            DirectoryInfo chartPath = new DirectoryInfo(TitleScreenSetting.Data.ChartPath + $"/{artist} - {title} ({creator})/");
+            TitleScreenSettings tss = SettingsManager.SettingsStorage["TitleScreen"] as TitleScreenSettings;
+
+            DirectoryInfo chartPath = new DirectoryInfo(tss.Data.ChartPath + $"/{artist} - {title} ({creator})/");
             
             Charts.ChartFile.Save(chart, chartPath);
             
@@ -212,19 +195,40 @@ namespace DrumSmasher
 
         public void SetFullscreen(bool isFullscreen)
         {
-            TitleScreenSetting.Data.Fullscreen = isFullscreen;
+            TitleScreenSettings tss = SettingsManager.SettingsStorage["TitleScreen"] as TitleScreenSettings;
+            tss.Data.Fullscreen = isFullscreen;
 
-            Screen.fullScreen = TitleScreenSetting.Data.Fullscreen;
+            Screen.fullScreen = tss.Data.Fullscreen;
+            FullscreenToggle.isOn = tss.Data.Fullscreen;
         }
 
         public void SetResolution(int resolutionIndex)
         {
             Resolution resolution = resolutions[resolutionIndex];
+            SetResolution(resolution.width, resolution.height, resolution.refreshRate);
+        }
 
-            TitleScreenSetting.Data.ScreenWidth = resolution.width;
-            TitleScreenSetting.Data.ScreenHeight = resolution.height;
+        public void SetResolution(int width, int height, int refreshRate)
+        {
+            TitleScreenSettings tss = SettingsManager.SettingsStorage["TitleScreen"] as TitleScreenSettings;
 
-            Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+            tss.Data.ScreenWidth = width;
+            tss.Data.ScreenHeight = height;
+            tss.Data.RefreshRate = refreshRate;
+            
+            Screen.SetResolution(width, height, tss.Data.Fullscreen);
+            string optionStr = $"{width} x {height} {refreshRate} hz";
+            int option = ResolutionDropdown.options.FindIndex(o => o.text.Equals(optionStr));
+
+            if (option == -1)
+            {
+                Logger.Log("Could not find option: " + optionStr, LogLevel.ERROR);
+                return;
+            }
+
+            var op = ResolutionDropdown.options.ElementAt(option);
+            ResolutionDropdown.options.RemoveAt(option);
+            ResolutionDropdown.options.Insert(0, op);
         }
 
         public void Exit()

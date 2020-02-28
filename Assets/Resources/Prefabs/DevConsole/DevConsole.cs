@@ -1,4 +1,5 @@
 ﻿using DrumSmasher.Prefab.DevConsole.Commands;
+using DrumSmasher.Settings;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,9 +30,10 @@ namespace DrumSmasher.Prefab.DevConsole
         void Start()
         {
             _lines = new List<string>();
+            TitleScreenSettings tss = SettingsManager.SettingsStorage["TitleScreen"] as TitleScreenSettings;
 
-            if (TitleScreenManager.TitleScreenSetting.Data.DefaultConsoleMessage != null)
-                WriteLine(TitleScreenManager.TitleScreenSetting.Data.DefaultConsoleMessage);
+            if (tss.Data.DefaultConsoleMessage != null)
+                WriteLine(tss.Data.DefaultConsoleMessage);
         }
 
         // Update is called once per frame

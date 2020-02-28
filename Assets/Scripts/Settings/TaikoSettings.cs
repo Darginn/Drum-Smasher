@@ -31,10 +31,18 @@ namespace DrumSmasher.Settings
             return Newtonsoft.Json.JsonConvert.SerializeObject(Data);
         }
 
-        public class SettingsData
+        public class SettingsData : IDataStorage
         {
             public float ApproachRate { get; set; }
             public bool Autoplay { get; set; }
+            public string Name { get; set; }
+
+            public SettingsData()
+            {
+                Name = "Taiko";
+                ApproachRate = 6;
+                Autoplay = false;
+            }
         }
     }
 }
