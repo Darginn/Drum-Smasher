@@ -7,3 +7,6 @@ Feel free to visit the [Roadmap](https://trello.com/b/26vG8T7M/project-drum-smas
 
 Join our new [Discord](https://discord.gg/eVdng2P "Official Project Drum Smasher Discord Server") Server!
 
+Update Repository: https://github.com/Blade12629/Drum-Smasher-Update/blob/master/README.md
+
+Updater Repository: https://github.com/Blade12629/Drum-Smasher-Updater/blob/master/README.md
