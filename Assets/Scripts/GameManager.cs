@@ -142,10 +142,10 @@ namespace DrumSmasher
                 }
             }
         }
-        
-        void OnApplicationQuit()
+
+        private void OnApplicationQuit()
         {
-            Logger.Dispose();
+            SettingsManager.Exit();
         }
     }
 }

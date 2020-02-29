@@ -78,6 +78,14 @@ namespace DrumSmasher.Settings
             }
         }
 
+        public static event EventHandler OnExit;
+
+        public static void Exit()
+        {
+            OnExit?.Invoke(null, null);
+            SaveSettings();
+        }
+
         private class SaveData
         {
             public string Name { get; set; }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -97,10 +97,11 @@ namespace DrumSmasher
 
             return exceptions;
         }
-    }
 
-    public class AutoInitAttribute : Attribute
-    {
-
+        public static async Task AwaitTaskAsync(this Task task)
+        {
+            while (!task.IsCompleted || !task.IsCanceled || !task.IsFaulted)
+                await Task.Delay(1);
+        }
     }
 }

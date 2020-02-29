@@ -12,6 +12,7 @@ using System.IO;
 using System.Collections;
 using DrumSmasher.Settings;
 using DrumSmasher.Notes;
+using System.Threading;
 
 namespace DrumSmasher
 {
@@ -61,6 +62,8 @@ namespace DrumSmasher
 
             //Initialize static AutoInit Attributes
             System.Reflection.Assembly.GetExecutingAssembly().ActivateAttributeMethods<AutoInitAttribute>();
+
+            SettingsManager.OnExit += (s, e) => Logger.Dispose();
 
             resolutions = Screen.resolutions;
 
@@ -238,17 +241,15 @@ namespace DrumSmasher
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
             SettingsManager.SaveSettings();
+            Logger.Dispose();
 #else
             Application.Quit();
 #endif
-            Logger.Dispose();
         }
-
-        void OnApplicationExit()
+        
+        private void OnApplicationQuit()
         {
-            SettingsManager.SaveSettings();
-            Logger.Dispose();
+            SettingsManager.Exit();
         }
-
     }
 }
