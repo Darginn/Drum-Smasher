@@ -31,8 +31,8 @@ namespace DrumSmasher
             float elapsedTime = 0;
 
             float z = obj.position.z;
-        
-            while (elapsedTime < seconds)
+
+            while (obj != null && elapsedTime < seconds)
             {
                 obj.transform.localPosition = Vector3.Lerp(start, end, (elapsedTime / seconds));
 
