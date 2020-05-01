@@ -97,11 +97,5 @@ namespace DrumSmasher
 
             return exceptions;
         }
-
-        public static async Task AwaitTaskAsync(this Task task)
-        {
-            while (!task.IsCompleted || !task.IsCanceled || !task.IsFaulted)
-                await Task.Delay(1);
-        }
     }
 }

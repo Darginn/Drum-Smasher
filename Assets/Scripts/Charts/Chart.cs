@@ -21,6 +21,8 @@ namespace DrumSmasher.Charts
         public long PreviewStart { get; set; }
         public long PreviewEnd { get; set; }
 
+        public int Speed { get; set; }
+
 
         public float BPM { get; set; }
 

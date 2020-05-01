@@ -11,7 +11,6 @@ using SFB;
 using System.IO;
 using System.Collections;
 using DrumSmasher.Settings;
-using DrumSmasher.Notes;
 using System.Threading;
 
 namespace DrumSmasher

@@ -2,68 +2,95 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace DrumSmasher.GameInput
 {
     public class ButtonController : MonoBehaviour
     {
-        public Sprite DefaultImage;
-        public Sprite PressedImage;
         public KeyCode KeyToPress;
-        public Notes.NoteScroller Scroller;
-        public bool AutoplayNextKey;
+        public UnityEvent OnPressed;
+        public UnityEvent OnPressedUp;
+        public bool TriggerMultipleTimes;
 
-        public bool AutoPlay;
+        public float HoldDuration;
+        private float _holdingSince;
 
-        private SpriteRenderer _spriteRenderer;
-        private DateTime _clickEnd;
+        public float Cooldown;
+        private bool _isUnderCooldown;
+        private float _timeSinceLastActivation;
+
+        private bool _pressed;
 
         // Start is called before the first frame update
         void Start()
         {
-            _spriteRenderer = GetComponent<SpriteRenderer>();
-        }
-
-        public void Load(int level)
-        {
-            
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (!AutoPlay)
+            if (_pressed && Input.GetKeyUp(KeyToPress))
+                KeyUp();
+
+            //Check if cooldown is enabled
+            if (Cooldown > 0)
+            {
+                if (_isUnderCooldown)
+                {
+                    _timeSinceLastActivation += Time.deltaTime;
+
+                    if (_timeSinceLastActivation >= Cooldown) //We are not under cooldown anymore
+                        _isUnderCooldown = false;
+                    else //We are still under cooldown
+                        return;
+                }
+                else //Enable cooldown
+                {
+                    _timeSinceLastActivation = 0;
+                    _isUnderCooldown = true;
+                }
+            }
+
+            if (HoldDuration > 0)
+            {
+                _holdingSince += Time.deltaTime;
+
+                if (_holdingSince >= HoldDuration)
+                {
+                    TriggerKey();
+                    return;
+                }
+
+                return;
+            }
+
+            if (TriggerMultipleTimes)
+            {
+                if (Input.GetKey(KeyToPress))
+                    TriggerKey();
+            }
+            else
             {
                 if (Input.GetKeyDown(KeyToPress))
-                {
-                    _spriteRenderer.sprite = PressedImage;
-                    KeyPress();
-                }
-
-                if (Input.GetKeyUp(KeyToPress))
-                {
-                    _spriteRenderer.sprite = DefaultImage;
-                }
-            }
-            else if (_clickEnd <= DateTime.Now)
-            {
-                _spriteRenderer.sprite = DefaultImage;
-                _clickEnd = DateTime.MaxValue;
+                    TriggerKey();
             }
         }
 
-        private void KeyPress()
+        public void TriggerKey()
         {
-            if (Scroller != null)
-            {
-                Scroller.Tracker.KeyHit(KeyToPress);
-            }
+            OnPressed?.Invoke();
+
+            if (HoldDuration > 0)
+                _holdingSince = 0;
+
+            _pressed = true;
         }
 
-        public void SimulateMouseKey(double delay)
+        public void KeyUp()
         {
-            _spriteRenderer.sprite = PressedImage;
-            _clickEnd = DateTime.Now.AddMilliseconds(delay);
+            OnPressedUp?.Invoke();
+            _pressed = false;
         }
     }
 }

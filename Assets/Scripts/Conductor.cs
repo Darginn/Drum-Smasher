@@ -22,7 +22,6 @@ namespace DrumSmasher
         public float Offset;
         public Text MusicPositionText;
         public AudioSource MusicSource;
-        public Notes.NoteScroller Scroller;
 
         private DateTime _nextTimeJump;
 
