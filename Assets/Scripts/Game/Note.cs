@@ -14,6 +14,7 @@ namespace DrumSmasher.Game
         public float StartTime = float.MaxValue;
         public bool AutoPlay = false;
         public float HitRange;
+        public StatisticHandler StatisticHandler;
 
         public SoundConductor Conductor { get; set; }
         public ButtonController Key1Controller { get; set; }
@@ -126,19 +127,26 @@ namespace DrumSmasher.Game
             {
                 if (gameObject.transform.position.x <= _hitCirclePosition.x)
                 {
-                    OnNoteHit(HitType.GoodHit);
 
                     if (_noteType == NoteType.Big)
                     {
+                        OnNoteHit(HitType.GoodHit, true, true);
+
                         Key1Controller.TriggerKey();
                         Key2Controller.TriggerKey();
                     }
                     else
                     {
                         if (_autoPlaySwitch)
+                        {
+                            OnNoteHit(HitType.GoodHit, false, true);
                             Key2Controller.TriggerKey();
+                        }
                         else
+                        {
+                            OnNoteHit(HitType.GoodHit, true, false);
                             Key1Controller.TriggerKey();
+                        }
 
                         _autoPlaySwitch = !_autoPlaySwitch;
                     }
@@ -150,9 +158,8 @@ namespace DrumSmasher.Game
             //We can hit the note
             if (CanBeHit())
             {
-
                 //Check for player input
-                OnNoteHit(GetHitType());
+                OnNoteHit(GetHitType(), Input.GetKeyDown(Key1Controller.KeyToPress), Input.GetKeyDown(Key2Controller.KeyToPress));
             }
         }
 
@@ -169,7 +176,7 @@ namespace DrumSmasher.Game
             }
             else
             {
-                if (!Input.GetKeyDown(Key1Controller.KeyToPress) ||
+                if (!Input.GetKeyDown(Key1Controller.KeyToPress) &&
                     !Input.GetKeyDown(Key2Controller.KeyToPress))
                     hits -= 2;
             }
@@ -192,12 +199,36 @@ namespace DrumSmasher.Game
                    (gameObject.transform.position.x < _hitCirclePosition.x + HitRange);
         }
 
-        private void OnNoteHit(HitType hitType)
+        private void OnNoteHit(HitType hitType, bool key1, bool key2)
         {
-            Conductor.PlayHitSound();
-            Destroy(gameObject);
+            bool bignote = transform.localScale == _noteBigScale;
 
-            Logger.Log("Note hit! ", LogLevel.Trace);
+            switch(hitType)
+            {
+                case HitType.BadHit:
+                    Conductor.PlayHitSound();
+                    Destroy(gameObject);
+                    int keyId = key1 ? Key1Controller.KeyId : Key2Controller.KeyId;
+
+                    StatisticHandler.OnNoteHit(HitType.BadHit, bignote);
+
+                    return;
+
+                case HitType.GoodHit:
+                    Conductor.PlayHitSound();
+                    Destroy(gameObject);
+                    StatisticHandler.OnNoteHit(HitType.GoodHit, bignote);
+                    return;
+
+                case HitType.Miss:
+                    StatisticHandler.OnNoteHit(HitType.Miss, bignote);
+                    return;
+
+                default:
+                case HitType.None:
+                    return;
+            }
+
         }
 
         private float GetDistanceByTime(float time, float speed)

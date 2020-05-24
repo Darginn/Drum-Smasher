@@ -33,33 +33,29 @@ namespace DrumSmasher
             if (_logStream == null)
                 Initialize("log.txt");
 
-            string time = $"{DateTime.UtcNow.Day}.{DateTime.UtcNow.Month}.{DateTime.UtcNow.Year} {DateTime.UtcNow.Hour}:{DateTime.UtcNow.Minute}:{DateTime.UtcNow.Second}:{DateTime.UtcNow.Millisecond}";
-            string toLog = $"{time}: *{level}* {caller}: {message}";
-            _queue.Enqueue((toLog, level));
-
             System.Threading.ThreadPool.QueueUserWorkItem(new System.Threading.WaitCallback(obj =>
             {
                 lock(_logLock)
                 {
-                    if (!_queue.TryDequeue(out (string, LogLevel) p))
-                        return;
+                    string time = $"{DateTime.UtcNow.Day}.{DateTime.UtcNow.Month}.{DateTime.UtcNow.Year} {DateTime.UtcNow.Hour}:{DateTime.UtcNow.Minute}:{DateTime.UtcNow.Second}:{DateTime.UtcNow.Millisecond}";
+                    string toLog = $"{time}: *{level}* {caller}: {message}";
 
-                    _logStream.WriteLine(p.Item1);
+                    _logStream.WriteLine(toLog);
                     _logStream.Flush();
 
 #if DEBUG
                     if (console)
                     {
-                        switch(p.Item2)
+                        switch(level)
                         {
                             default:
-                                UnityEngine.Debug.Log(p.Item1);
+                                UnityEngine.Debug.Log(toLog);
                                 break;
                             case LogLevel.ERROR:
-                                UnityEngine.Debug.LogError(p.Item1);
+                                UnityEngine.Debug.LogError(toLog);
                                 break;
                             case LogLevel.WARNING:
-                                UnityEngine.Debug.LogWarning(p.Item1);
+                                UnityEngine.Debug.LogWarning(toLog);
                                 break;
                         }
                     }

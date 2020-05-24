@@ -27,10 +27,7 @@ namespace DrumSmasher.Game
 
         void Update()
         {
-            if (!_stopWatch.IsRunning || _stopWatch.ElapsedMilliseconds < _lightUpDurationMS)
-                return;
 
-            Reset();
         }
 
         public void Trigger()

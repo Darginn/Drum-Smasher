@@ -27,16 +27,15 @@ namespace DrumSmasher.Game
         /// </summary>
         public PlayState PlayState => _playState;
 
-        [SerializeField]
-        private AudioSource _musicSource;
-        [SerializeField]
-        private double _dspSongTime;
-        [SerializeField]
-        private double _currentTime;
-        [SerializeField]
-        private PlayState _playState = PlayState.Stopped;
-        [SerializeField]
-        private AudioSource _hitSound;
+        [SerializeField] private AudioSource _musicSource;
+        [SerializeField] private double _dspSongTime;
+        [SerializeField] private double _currentTime;
+        [SerializeField] private PlayState _playState = PlayState.Stopped;
+        [SerializeField] private AudioSource _hitSound;
+        [SerializeField] private StatisticHandler _statisticHandler;
+
+        private float _lastUpdated;
+        private const float _SOUND_OFFSET_UPDATE_DELAY = 0.1f;
 
         void Start()
         {
@@ -49,6 +48,18 @@ namespace DrumSmasher.Game
                 return;
 
             _currentTime = AudioSettings.dspTime - _dspSongTime;
+        }
+
+        void FixedUpdate()
+        {
+            _lastUpdated += Time.fixedDeltaTime;
+
+            if (_playState != PlayState.Playing ||
+                _lastUpdated < _SOUND_OFFSET_UPDATE_DELAY)
+                return;
+
+            _statisticHandler.UpdateSoundOffset((float)(_currentTime * 1000));
+            _lastUpdated = 0f;
         }
 
         /// <summary>

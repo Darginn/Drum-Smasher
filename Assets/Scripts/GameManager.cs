@@ -39,8 +39,8 @@ namespace DrumSmasher
         public GameObject Canvas;
 
         //private Charts.Chart _loadedChart;
-        
-        //private GameObject _devConsole;
+
+        private GameObject _devConsole;
 
         [SerializeField]
         private NoteScroller _scroller;
@@ -74,33 +74,30 @@ namespace DrumSmasher
             {
                 TitleScreenKey = new HotKey(KeyCode.Escape, new Action(OnTitleScreenKey), EscapeCheckDelayMS);
                 QualitySettings.vSyncCount = 0;
-                Application.targetFrameRate = TargetFPS;
             }
 
             TitleScreenKey.CheckKey();
 
-            #region old
-            //if (Input.GetKeyDown(KeyCode.KeypadMinus))
-            //{
-            //    if (_devConsole != null)
-            //    {
-            //        if (_devConsole.activeSelf)
-            //            _devConsole.SetActive(false);
-            //        else
-            //            _devConsole.SetActive(true);
-            //    }
-            //    else
-            //    {
-            //        _devConsole = Instantiate(DevConsolePrefab);
-            //        _devConsole.transform.SetParent(Canvas.transform);
+            if (Input.GetKeyDown(KeyCode.KeypadMinus))
+            {
+                if (_devConsole != null)
+                {
+                    if (_devConsole.activeSelf)
+                        _devConsole.SetActive(false);
+                    else
+                        _devConsole.SetActive(true);
+                }
+                else
+                {
+                    _devConsole = Instantiate(DevConsolePrefab);
+                    _devConsole.transform.SetParent(Canvas.transform);
 
-            //        RectTransform rt = _devConsole.GetComponent<RectTransform>();
-            //        rt.anchoredPosition3D = new Vector3(950, 347, 1.5f);
+                    RectTransform rt = _devConsole.GetComponent<RectTransform>();
+                    rt.anchoredPosition3D = new Vector3(950, 347, 1.5f);
 
-            //        StartCoroutine(rt.MoveOverSeconds(rt.anchoredPosition3D, new Vector3(950, -383, 1.5f), 0.5f, true));
-            //    }
-            //}
-            #endregion
+                    StartCoroutine(rt.MoveOverSeconds(rt.anchoredPosition3D, new Vector3(950, -383, 1.5f), 0.5f, true));
+                }
+            }
         }
 
         private void OnApplicationQuit()

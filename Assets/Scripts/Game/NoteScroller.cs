@@ -7,6 +7,7 @@ using UnityEngine;
 using DrumSmasher.Charts;
 using System.IO;
 using DrumSmasher.GameInput;
+using UnityEngine.SceneManagement;
 
 namespace DrumSmasher.Game
 {
@@ -17,30 +18,23 @@ namespace DrumSmasher.Game
         private int _notesIndex;
         private bool _reachedEndOfChart;
 
-        [SerializeField]
-        private SoundConductor _conductor;
-        [SerializeField]
-        private float _speed;
-        [SerializeField]
-        private float _defaultSpeed = 6f;
-        [SerializeField]
-        private float _offset;
-        [SerializeField]
-        private Vector3 _startPosition;
-        [SerializeField]
-        private Vector3 _hitCirclePosition;
-        [SerializeField]
-        private GameObject _notePrefab;
-        [SerializeField]
-        private ButtonController _key1Controller;
-        [SerializeField]
-        private ButtonController _key2Controller;
-        [SerializeField]
-        private ButtonController _key3Controller;
-        [SerializeField]
-        private ButtonController _key4Controller;
+        [SerializeField] private SoundConductor _conductor;
+        [SerializeField] private float _speed;
+        [SerializeField] private float _defaultSpeed = 6f;
+        [SerializeField] private float _offset;
+        [SerializeField] private Vector3 _startPosition;
+        [SerializeField] private Vector3 _hitCirclePosition;
+        [SerializeField] private GameObject _notePrefab;
+        [SerializeField] private ButtonController _key1Controller;
+        [SerializeField] private ButtonController _key2Controller;
+        [SerializeField] private ButtonController _key3Controller;
+        [SerializeField] private ButtonController _key4Controller;
+        [SerializeField] internal bool AutoPlay;
+        [SerializeField] StatisticHandler _statisticHandler;
+        [SerializeField] ScoreScreen _scoreScreen;
 
         private float _layer;
+        private DirectoryInfo _chartDirectory;
 
         void Start()
         {
@@ -53,6 +47,35 @@ namespace DrumSmasher.Game
                 return;
 
             TrySpawnNote();
+        }
+
+        void FixedUpdate()
+        {
+            if (!_reachedEndOfChart || _lastNote != null)
+                return;
+
+            EnableScoreScreen();
+        }
+
+        public void EnableScoreScreen()
+        {
+            if (!_reachedEndOfChart)
+                _reachedEndOfChart = true;
+
+            var stats = _statisticHandler.GetScoreStatistics();
+            _scoreScreen.SetScoreStatistic(stats);
+            _scoreScreen.Show();
+        }
+
+        public void Retry()
+        {
+            LoadChart(_chart, _chartDirectory);
+            Play();
+        }
+
+        public void Exit()
+        {
+            SceneManager.LoadScene("TitleScreen");
         }
 
         /// <summary>
@@ -77,15 +100,50 @@ namespace DrumSmasher.Game
         /// <param name="chart">chart to load</param>
         public void LoadChart(Chart chart, DirectoryInfo chartDirectory)
         {
+            _scoreScreen.Reset();
+            _statisticHandler.Reset();
+            _conductor.Stop();
+            _reachedEndOfChart = false;
             _notes = chart.Notes.ToList();
             _notesIndex = 0;
             _chart = chart;
             _layer = 0f;
             _speed = chart.Speed;
 
+            _chartDirectory = chartDirectory;
             _conductor.LoadMp3File(Path.Combine(chartDirectory.FullName, chart.SoundFile));
 
             SetSpeed(_speed);
+
+            LoadSettings();
+        }
+
+        public void LoadSettings()
+        {
+            Logger.Log("Loading Taiko Settings");
+
+            Settings.TaikoSettings settings = (Settings.TaikoSettings)Settings.SettingsManager.SettingsStorage["Taiko"];
+            AutoPlay = settings.Data.Autoplay;
+            _key1Controller.AutoPlay = AutoPlay;
+            _key2Controller.AutoPlay = AutoPlay;
+            _key3Controller.AutoPlay = AutoPlay;
+            _key4Controller.AutoPlay = AutoPlay;
+
+            _key1Controller.KeyId = 1;
+            _key2Controller.KeyId = 2;
+            _key3Controller.KeyId = 3;
+            _key4Controller.KeyId = 4;
+
+            if (!Enum.TryParse(settings.Data.Key1, out _key1Controller.KeyToPress))
+                Logger.Log($"Could not parse key {settings.Data.Key1}", LogLevel.ERROR);
+            if (!Enum.TryParse(settings.Data.Key2, out _key2Controller.KeyToPress))
+                Logger.Log($"Could not parse key {settings.Data.Key2}", LogLevel.ERROR);
+            if (!Enum.TryParse(settings.Data.Key3, out _key3Controller.KeyToPress))
+                Logger.Log($"Could not parse key {settings.Data.Key3}", LogLevel.ERROR);
+            if (!Enum.TryParse(settings.Data.Key4, out _key4Controller.KeyToPress))
+                Logger.Log($"Could not parse key {settings.Data.Key4}", LogLevel.ERROR);
+
+            Logger.Log("Loaded Taiko Settings");
         }
 
         /// <summary>
@@ -96,6 +154,8 @@ namespace DrumSmasher.Game
             _conductor.Play();
             _reachedEndOfChart = false;
         }
+
+        private GameObject _lastNote;
 
         private (double, ChartNote) GetNextAvailableNote()
         {
@@ -139,8 +199,10 @@ namespace DrumSmasher.Game
             NoteType type = note.BigNote ? NoteType.Big : NoteType.Small;
 
             noteScript.SetNoteType(type, color);
+            noteScript.AutoPlay = AutoPlay;
+            noteScript.StatisticHandler = _statisticHandler;
 
-            switch(color)
+            switch (color)
             {
                 default:
                 case NoteColor.Blue:
@@ -158,8 +220,8 @@ namespace DrumSmasher.Game
             noteScript.Conductor = _conductor;
             noteScript.StartTime = (float)startTime;
 
-            //SpriteRenderer renderer = noteToSpawn.GetComponent<SpriteRenderer>();
-            //renderer.sortingOrder = 2 + _notesIndex;
+            if (_notesIndex >= _notes.Count)
+                _lastNote = noteScript.gameObject;
         }
     }
 }

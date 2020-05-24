@@ -36,7 +36,8 @@ namespace DrumSmasher.Prefab.DevConsole
         // Update is called once per frame
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.KeypadEnter) && InputField.text.Length > 0)
+            if ((Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return)) && 
+                InputField.text.Length > 0)
             {
                 WriteLine(InputField.text, false);
 

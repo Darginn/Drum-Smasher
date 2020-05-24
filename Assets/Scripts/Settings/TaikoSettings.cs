@@ -33,15 +33,21 @@ namespace DrumSmasher.Settings
 
         public class SettingsData : IDataStorage
         {
-            public float ApproachRate { get; set; }
             public bool Autoplay { get; set; }
             public string Name { get; set; }
+            public string Key1 { get; set; }
+            public string Key2 { get; set; }
+            public string Key3 { get; set; }
+            public string Key4 { get; set; }
 
             public SettingsData()
             {
                 Name = "Taiko";
-                ApproachRate = 6;
-                Autoplay = false;
+                Autoplay = true;
+                Key1 = "D";
+                Key2 = "F";
+                Key3 = "J";
+                Key4 = "K";
             }
         }
     }

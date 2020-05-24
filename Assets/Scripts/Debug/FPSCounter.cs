@@ -6,20 +6,43 @@ namespace DrumSmasher.Debug
 {
     public class FPSCounter : MonoBehaviour
     {
-        public int AvgFrameRate;
-        public int MaxFrameRate;
-        public Text FPSText;
-        public Text MAXFPSText;
+        [SerializeField] private int _avgFrameRate;
+        [SerializeField] private int _maxFrameRate;
 
-        public void Update()
+        [SerializeField] private Text _avgFramerateText;
+        [SerializeField] private Text _maxFramerateText;
+
+        [SerializeField] private float _updateDelay = 0.25f;
+
+        private int _oldFramerate;
+        private int _oldMaxFramerate;
+
+        private float _timeSinceLastUpdate;
+
+        void FixedUpdate()
         {
-            float current = 0;
-            current = (int)(1f / Time.unscaledDeltaTime);
-            AvgFrameRate = (int)current;
-            FPSText.text = AvgFrameRate.ToString() + " FPS";
-            if (MaxFrameRate < AvgFrameRate)
-                MaxFrameRate = AvgFrameRate;
-            MAXFPSText.text = "Max: " + MaxFrameRate.ToString() + " FPS";
+            _timeSinceLastUpdate += Time.fixedDeltaTime;
+            
+            if (_timeSinceLastUpdate < _updateDelay)
+                return;
+
+            _avgFrameRate = (int)(Time.frameCount / Time.time);
+
+            if (_avgFrameRate > _maxFrameRate)
+                _maxFrameRate = _avgFrameRate;
+
+            if (_avgFrameRate != _oldFramerate)
+            {
+                _avgFramerateText.text = _avgFrameRate.ToString();
+                _oldFramerate = _avgFrameRate;
+            }
+
+            if (_maxFrameRate != _oldMaxFramerate)
+            {
+                _maxFramerateText.text = _maxFrameRate.ToString();
+                _oldMaxFramerate = _maxFrameRate;
+            }
         }
+
     }
 }

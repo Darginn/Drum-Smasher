@@ -35,6 +35,8 @@ namespace DrumSmasher.Prefab.DevConsole.Commands
             bool oldAP = taiko.Data.Autoplay;
             taiko.Data.Autoplay = newAP;
 
+            taiko.Save();
+
             DevConsole.WriteLine($"Changed Autoplay from {oldAP} to {newAP}");
         }
     }

@@ -1,3 +1,4 @@
+using DrumSmasher.Game;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,14 +12,13 @@ namespace DrumSmasher.GameInput
         public KeyCode KeyToPress;
         public UnityEvent OnPressed;
         public UnityEvent OnPressedUp;
-        public bool TriggerMultipleTimes;
+        public bool AutoPlay;
+        public float AutoPlayDelay = 0.1f;
+        public int KeyId;
+        public StatisticHandler StatisticHandler;
 
-        public float HoldDuration;
         private float _holdingSince;
 
-        public float Cooldown;
-        private bool _isUnderCooldown;
-        private float _timeSinceLastActivation;
 
         private bool _pressed;
 
@@ -30,67 +30,35 @@ namespace DrumSmasher.GameInput
         // Update is called once per frame
         void Update()
         {
-            if (_pressed && Input.GetKeyUp(KeyToPress))
-                KeyUp();
-
-            //Check if cooldown is enabled
-            if (Cooldown > 0)
-            {
-                if (_isUnderCooldown)
-                {
-                    _timeSinceLastActivation += Time.deltaTime;
-
-                    if (_timeSinceLastActivation >= Cooldown) //We are not under cooldown anymore
-                        _isUnderCooldown = false;
-                    else //We are still under cooldown
-                        return;
-                }
-                else //Enable cooldown
-                {
-                    _timeSinceLastActivation = 0;
-                    _isUnderCooldown = true;
-                }
-            }
-
-            if (HoldDuration > 0)
+            if (_pressed)
             {
                 _holdingSince += Time.deltaTime;
 
-                if (_holdingSince >= HoldDuration)
+                if (AutoPlay)
                 {
-                    TriggerKey();
-                    return;
+                    if (_holdingSince >= AutoPlayDelay)
+                        KeyUp();
                 }
-
-                return;
+                else if (Input.GetKeyUp(KeyToPress))
+                    KeyUp();
             }
 
-            if (TriggerMultipleTimes)
-            {
-                if (Input.GetKey(KeyToPress))
-                    TriggerKey();
-            }
-            else
-            {
-                if (Input.GetKeyDown(KeyToPress))
-                    TriggerKey();
-            }
+            if (Input.GetKeyDown(KeyToPress))
+                TriggerKey();
         }
 
         public void TriggerKey()
         {
             OnPressed?.Invoke();
-
-            if (HoldDuration > 0)
-                _holdingSince = 0;
-
             _pressed = true;
+            StatisticHandler.IncrementKey(KeyId);
         }
 
         public void KeyUp()
         {
             OnPressedUp?.Invoke();
             _pressed = false;
+            _holdingSince = 0f;
         }
     }
 }
