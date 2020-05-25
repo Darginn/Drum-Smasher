@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using System.Collections;
 #if UNITY_EDITOR
 using System.Diagnostics;
 #endif
@@ -26,6 +27,7 @@ namespace DrumSmasher.Game
         /// Current Playstate of the music
         /// </summary>
         public PlayState PlayState => _playState;
+        public bool LoadedMp3 { get; private set; }
 
         [SerializeField] private AudioSource _musicSource;
         [SerializeField] private double _dspSongTime;
@@ -119,11 +121,11 @@ namespace DrumSmasher.Game
         /// <param name="file">file path</param>
         public void LoadMp3File(string file)
         {
+            LoadedMp3 = false;
 #if UNITY_EDITOR
             Stopwatch sw = new Stopwatch();
             sw.Start();
 #endif
-
             byte[] data = LoadAudioBytes(file);
 
 #if UNITY_EDITOR
@@ -132,7 +134,6 @@ namespace DrumSmasher.Game
             sw.Reset();
             sw.Start();
 #endif
-
             WAV wav = ConvertMP3DataToWAV(data);
 
 #if UNITY_EDITOR
@@ -148,6 +149,8 @@ namespace DrumSmasher.Game
             sw.Stop();
             Logger.Log($"Converting WAV to AudioClip took {sw.ElapsedMilliseconds} ms", LogLevel.Trace);
 #endif
+
+            LoadedMp3 = true;
         }
 
         /// <summary>

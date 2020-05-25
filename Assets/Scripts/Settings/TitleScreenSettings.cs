@@ -53,6 +53,8 @@ namespace DrumSmasher.Settings
             //public ButtonController LeftRim { get; set; }
             //public ButtonController RightRim { get; set; }
             public string ChartPath { get; set; }
+            public int FPSMenu { get; set; }
+            public int FPSInGame { get; set; }
 
             public TitleScreenData()
             {
@@ -69,6 +71,9 @@ namespace DrumSmasher.Settings
                 //RightCenter = 
                 //RightRim =
                 ChartPath = Application.dataPath + "/../Charts";
+
+                FPSMenu = 0;
+                FPSInGame = 0;
             }
         }
     }

@@ -44,9 +44,9 @@ namespace DrumSmasher.Settings
             {
                 Name = "Taiko";
                 Autoplay = true;
-                Key1 = "D";
-                Key2 = "F";
-                Key3 = "J";
+                Key1 = "F";
+                Key2 = "J";
+                Key3 = "D";
                 Key4 = "K";
             }
         }

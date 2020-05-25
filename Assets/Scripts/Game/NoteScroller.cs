@@ -8,6 +8,7 @@ using DrumSmasher.Charts;
 using System.IO;
 using DrumSmasher.GameInput;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 namespace DrumSmasher.Game
 {
@@ -32,6 +33,7 @@ namespace DrumSmasher.Game
         [SerializeField] internal bool AutoPlay;
         [SerializeField] StatisticHandler _statisticHandler;
         [SerializeField] ScoreScreen _scoreScreen;
+        [SerializeField] List<(string, float)> _currentMods;
 
         private float _layer;
         private DirectoryInfo _chartDirectory;
@@ -51,7 +53,7 @@ namespace DrumSmasher.Game
 
         void FixedUpdate()
         {
-            if (!_reachedEndOfChart || _lastNote != null)
+            if (!_reachedEndOfChart || _lastNote != null || _notesIndex <= 0)
                 return;
 
             EnableScoreScreen();
@@ -69,13 +71,26 @@ namespace DrumSmasher.Game
 
         public void Retry()
         {
-            LoadChart(_chart, _chartDirectory);
-            Play();
+            AsyncOperation loadAO = SceneManager.LoadSceneAsync("Main");
+            loadAO.completed += ao =>
+            {
+                GameManager.OnSceneLoaded(_chart, _chartDirectory, _currentMods);
+            };
         }
 
         public void Exit()
         {
             SceneManager.LoadScene("TitleScreen");
+        }
+
+        private void Reset()
+        {
+            _scoreScreen.Reset();
+            _conductor.Stop();
+            _layer = 0f;
+            _statisticHandler.Reset();
+            _reachedEndOfChart = false;
+            _notesIndex = 0;
         }
 
         /// <summary>
@@ -98,24 +113,33 @@ namespace DrumSmasher.Game
         /// Loads a chart
         /// </summary>
         /// <param name="chart">chart to load</param>
-        public void LoadChart(Chart chart, DirectoryInfo chartDirectory)
+        public void LoadChart(Chart chart, DirectoryInfo chartDirectory, bool startPlaying = false, 
+                              List<(string, float)> mods = null)
         {
-            _scoreScreen.Reset();
-            _statisticHandler.Reset();
-            _conductor.Stop();
-            _reachedEndOfChart = false;
+            Reset();
+
             _notes = chart.Notes.ToList();
-            _notesIndex = 0;
             _chart = chart;
-            _layer = 0f;
             _speed = chart.Speed;
 
             _chartDirectory = chartDirectory;
             _conductor.LoadMp3File(Path.Combine(chartDirectory.FullName, chart.SoundFile));
 
             SetSpeed(_speed);
-
             LoadSettings();
+
+            if (startPlaying)
+                Play(mods);
+
+        }
+
+        public void SetAutoPlay(bool autoplay)
+        {
+            AutoPlay = autoplay;
+            _key1Controller.AutoPlay = autoplay;
+            _key2Controller.AutoPlay = autoplay;
+            _key3Controller.AutoPlay = autoplay;
+            _key4Controller.AutoPlay = autoplay;
         }
 
         public void LoadSettings()
@@ -123,24 +147,22 @@ namespace DrumSmasher.Game
             Logger.Log("Loading Taiko Settings");
 
             Settings.TaikoSettings settings = (Settings.TaikoSettings)Settings.SettingsManager.SettingsStorage["Taiko"];
-            AutoPlay = settings.Data.Autoplay;
-            _key1Controller.AutoPlay = AutoPlay;
-            _key2Controller.AutoPlay = AutoPlay;
-            _key3Controller.AutoPlay = AutoPlay;
-            _key4Controller.AutoPlay = AutoPlay;
+
+            if (settings.Data.Autoplay)
+                SetAutoPlay(true);
 
             _key1Controller.KeyId = 1;
             _key2Controller.KeyId = 2;
             _key3Controller.KeyId = 3;
             _key4Controller.KeyId = 4;
 
-            if (!Enum.TryParse(settings.Data.Key1, out _key1Controller.KeyToPress))
+            if (!Enum.TryParse(settings.Data.Key1.ToUpper(), out _key1Controller.KeyToPress))
                 Logger.Log($"Could not parse key {settings.Data.Key1}", LogLevel.ERROR);
-            if (!Enum.TryParse(settings.Data.Key2, out _key2Controller.KeyToPress))
+            if (!Enum.TryParse(settings.Data.Key2.ToUpper(), out _key2Controller.KeyToPress))
                 Logger.Log($"Could not parse key {settings.Data.Key2}", LogLevel.ERROR);
-            if (!Enum.TryParse(settings.Data.Key3, out _key3Controller.KeyToPress))
+            if (!Enum.TryParse(settings.Data.Key3.ToUpper(), out _key3Controller.KeyToPress))
                 Logger.Log($"Could not parse key {settings.Data.Key3}", LogLevel.ERROR);
-            if (!Enum.TryParse(settings.Data.Key4, out _key4Controller.KeyToPress))
+            if (!Enum.TryParse(settings.Data.Key4.ToUpper(), out _key4Controller.KeyToPress))
                 Logger.Log($"Could not parse key {settings.Data.Key4}", LogLevel.ERROR);
 
             Logger.Log("Loaded Taiko Settings");
@@ -149,8 +171,26 @@ namespace DrumSmasher.Game
         /// <summary>
         /// Starts playing the chart
         /// </summary>
-        public void Play()
+        public void Play(List<(string, float)> mods = null)
         {
+            if (mods != null)
+            {
+                for (int i = 0; i < mods.Count; i++)
+                {
+                    Mods.BaseMod baseMod = GameObject.Find(mods[i].Item1).GetComponent<Mods.BaseMod>();
+                    baseMod.OnEnabled(this);
+
+                    _statisticHandler.Multiplier += baseMod.Multiplier - 1f;
+
+                    Logger.Log($"Enabled mod {mods[i]} {i + 1}/{mods.Count}");
+                }
+
+                _currentMods = mods;
+            }
+
+            if (AutoPlay)
+                _statisticHandler.Multiplier = 0f;
+
             _conductor.Play();
             _reachedEndOfChart = false;
         }

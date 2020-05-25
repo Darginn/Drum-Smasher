@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DrumSmasher.Settings;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -19,6 +20,8 @@ namespace DrumSmasher
         SongScanning _scan;
         public List<SongScanning.SongInfo> SongList;
 
+        [SerializeField] Game.Mods.ModPanel _modPanel;
+
         public void Start()
         {
             _scan = FindObjectOfType<SongScanning>();
@@ -38,6 +41,11 @@ namespace DrumSmasher
             {
                 InstantiatePrefab(SongList[i].DisplayName, SongList[i].chart, SongList[i].ChartDirectory);
             }
+
+            TitleScreenSettings tss = (TitleScreenSettings)SettingsManager.SettingsStorage["TitleScreen"];
+            Application.targetFrameRate = tss.Data.FPSMenu;
+            QualitySettings.vSyncCount = 0;
+            Logger.Log($"Set FPS limit to {Application.targetFrameRate} and VSYNC {(QualitySettings.vSyncCount <= 0 ? "false" : "true")}");
         }
 
         public void InstantiatePrefab(string display, Charts.Chart chart, System.IO.DirectoryInfo chartDirectory)
@@ -106,7 +114,7 @@ namespace DrumSmasher
             loadAO.completed += ao =>
             {
                 _sceneActionActive = false;
-                GameManager.OnSceneLoaded(LoadedChart, chartDirectory);
+                GameManager.OnSceneLoaded(LoadedChart, chartDirectory, _modPanel.GetMods());
             };
         }
     }

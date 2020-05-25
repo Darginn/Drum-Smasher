@@ -57,7 +57,11 @@ namespace DrumSmasher
                 ts.Load();
             }
             else
-                ts = SettingsManager.SettingsStorage["TitleScreen"] as TaikoSettings;
+                ts = SettingsManager.SettingsStorage["Taiko"] as TaikoSettings;
+
+            Application.targetFrameRate = tss.Data.FPSMenu;
+            QualitySettings.vSyncCount = 0;
+            Logger.Log($"Set FPS limit to {Application.targetFrameRate} and VSYNC {(QualitySettings.vSyncCount <= 0 ? "false" : "true")}");
 
             //Initialize static AutoInit Attributes
             System.Reflection.Assembly.GetExecutingAssembly().ActivateAttributeMethods<AutoInitAttribute>();
@@ -91,6 +95,15 @@ namespace DrumSmasher
 
         void Update()
         {
+        }
+
+        void FixedUpdate()
+        {
+            CheckForInput();
+        }
+
+        private void CheckForInput()
+        {
             if (Input.GetKeyDown(KeyCode.KeypadMinus))
             {
                 if (_devConsole != null)
@@ -105,7 +118,7 @@ namespace DrumSmasher
                     _devConsole = Instantiate(DevConsolePrefab);
                     _devConsole.transform.SetParent(Canvas.transform);
 
-                    RectTransform rt = _devConsole.GetComponent<RectTransform>();        
+                    RectTransform rt = _devConsole.GetComponent<RectTransform>();
                     rt.anchoredPosition3D = new Vector3(950, 347, 1.5f);
 
                     StartCoroutine(rt.MoveOverSeconds(rt.anchoredPosition3D, new Vector3(950, -383, 1.5f), 0.5f, true));
@@ -117,7 +130,6 @@ namespace DrumSmasher
                 Vector3 old = _devConsole.transform.position;
                 Vector3 oldLocal = _devConsole.transform.localPosition;
                 _devConsole.transform.position -= new Vector3(5, 0, 0);
-                Logger.Log($"Moved from X {old.x} to {_devConsole.transform.position.x}, local: {_devConsole.transform.localPosition.x}, oldLocal: {oldLocal.x}");
             }
 
             else if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -125,7 +137,6 @@ namespace DrumSmasher
                 Vector3 old = _devConsole.transform.position;
                 Vector3 oldLocal = _devConsole.transform.localPosition;
                 _devConsole.transform.position += new Vector3(5, 0, 0);
-                Logger.Log($"Moved from X {old.x} to {_devConsole.transform.position.x}, local: {_devConsole.transform.localPosition.x}, oldLocal: {oldLocal.x}");
             }
 
             if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -133,14 +144,12 @@ namespace DrumSmasher
                 Vector3 old = _devConsole.transform.position;
                 Vector3 oldLocal = _devConsole.transform.localPosition;
                 _devConsole.transform.position += new Vector3(0, 5, 0);
-                Logger.Log($"Moved from Y {old.y} to {_devConsole.transform.position.y}, local: {_devConsole.transform.localPosition.y}, oldLocal: {oldLocal.y}");
             }
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
                 Vector3 old = _devConsole.transform.position;
                 Vector3 oldLocal = _devConsole.transform.localPosition;
                 _devConsole.transform.position -= new Vector3(0, 5, 0);
-                Logger.Log($"Moved from Y {old.y} to {_devConsole.transform.position.y}, local: {_devConsole.transform.localPosition.y}, oldLocal: {oldLocal.y}");
             }
         }
 

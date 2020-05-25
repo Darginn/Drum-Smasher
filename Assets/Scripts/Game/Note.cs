@@ -16,6 +16,9 @@ namespace DrumSmasher.Game
         public float HitRange;
         public StatisticHandler StatisticHandler;
 
+        public SpriteRenderer Renderer;
+        public SpriteRenderer OverlayRenderer;
+
         public SoundConductor Conductor { get; set; }
         public ButtonController Key1Controller { get; set; }
         public ButtonController Key2Controller { get; set; }

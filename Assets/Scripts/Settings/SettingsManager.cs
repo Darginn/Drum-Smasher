@@ -71,7 +71,11 @@ namespace DrumSmasher.Settings
 
                 string path = Path.Combine(Application.dataPath + "/", "Settings/", setting.Name + ".setting");
 
-                if (File.Exists(path))
+                FileInfo fi = new FileInfo(path);
+
+                if (!fi.Directory.Exists)
+                    fi.Directory.Create();
+                else if (File.Exists(path))
                     File.Delete(path);
 
                 File.WriteAllText(path, json);

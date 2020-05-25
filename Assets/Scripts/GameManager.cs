@@ -42,17 +42,21 @@ namespace DrumSmasher
 
         private GameObject _devConsole;
 
-        [SerializeField]
-        private NoteScroller _scroller;
+        [SerializeField] private NoteScroller _scroller;
 
-        public static void OnSceneLoaded(Charts.Chart chart, DirectoryInfo chartDirectory)
+        public static void OnSceneLoaded(Charts.Chart chart, DirectoryInfo chartDirectory, List<(string, float)> mods = null)
         {
             Scene scene = SceneManager.GetActiveScene();
             GameObject[] objs = scene.GetRootGameObjects();
 
             Instance = objs.First(obj => obj.name.Equals("GameManager")).GetComponent<GameManager>();
-            Instance._scroller.LoadChart(chart, chartDirectory);
-            Instance._scroller.Play();
+
+            TitleScreenSettings tss = (TitleScreenSettings)SettingsManager.SettingsStorage["TitleScreen"];
+            Application.targetFrameRate = tss.Data.FPSInGame;
+            QualitySettings.vSyncCount = 0;
+
+            Logger.Log($"Set FPS limit to {Application.targetFrameRate} and VSYNC {(QualitySettings.vSyncCount <= 0 ? "false" : "true")}");
+            Instance._scroller.LoadChart(chart, chartDirectory, true, mods);
         }
 
         // Start is called before the first frame update
@@ -69,6 +73,11 @@ namespace DrumSmasher
 
         // Update is called once per frame
         void Update()
+        {
+            
+        }
+
+        void FixedUpdate()
         {
             if (TitleScreenKey == null)
             {

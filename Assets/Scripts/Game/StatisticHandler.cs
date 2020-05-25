@@ -22,10 +22,12 @@ namespace DrumSmasher.Game
         [SerializeField] Text _key3Text;
         [SerializeField] Text _key4Text;
 
-        [SerializeField] double _multiplierValue;
+        [SerializeField] double _multiplierValue = 1f;
 
         private CultureInfo _elGR = CultureInfo.CreateSpecificCulture("el-GR");
 
+        public float Multiplier;
+        
         private ulong _currentScore;
         private long _currentCombo;
         private double _currentAccuracy;
@@ -108,9 +110,9 @@ namespace DrumSmasher.Game
                     _currentCombo++;
 
                     if (_currentCombo < 10)
-                        _currentScore += 300u;
+                        _currentScore += (bigNote ? 600u : 300u) * (ulong)Multiplier;
                     else
-                        _currentScore += (ulong)(Math.Min((double)Math.Round(_currentCombo / 10.0, MidpointRounding.AwayFromZero), 10.0) * Math.Round(_multiplierValue, MidpointRounding.AwayFromZero));
+                        _currentScore += (ulong)((Math.Min((double)Math.Round(_currentCombo / 10.0, MidpointRounding.AwayFromZero), 10.0) * Math.Round(_multiplierValue, MidpointRounding.AwayFromZero))) * (ulong)Multiplier; ;
                     break;
 
                 case HitType.GoodHit:
@@ -118,9 +120,9 @@ namespace DrumSmasher.Game
                     _currentCombo++;
 
                     if (_currentCombo < 10)
-                        _currentScore += bigNote ? 600u : 300u;
+                        _currentScore += (bigNote ? 600u : 300u) * (ulong)Multiplier;
                     else
-                        _currentScore += (ulong)(Math.Min((double)Math.Round(_currentCombo / 10.0, MidpointRounding.AwayFromZero), 10.0) * Math.Round(_multiplierValue, MidpointRounding.AwayFromZero));
+                        _currentScore += (ulong)((Math.Min((double)Math.Round(_currentCombo / 10.0, MidpointRounding.AwayFromZero), 10.0) * Math.Round(_multiplierValue, MidpointRounding.AwayFromZero))) * (ulong)Multiplier; ;
                     break;
             }
             _totalNotes++;
