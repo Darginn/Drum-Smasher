@@ -51,7 +51,7 @@ namespace DrumSmasher.GameInput
         {
             OnPressed?.Invoke();
             _pressed = true;
-            StatisticHandler.IncrementKey(KeyId);
+            StatisticHandler?.IncrementKey(KeyId);
         }
 
         public void KeyUp()

@@ -252,6 +252,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1712874711}
     m_Modifications:
+    - target: {fileID: 1992685783038006994, guid: 4e30d3c9a7d19a040b8bcba005b79fbb,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2785751506191290360, guid: 4e30d3c9a7d19a040b8bcba005b79fbb,
         type: 3}
       propertyPath: m_Name
@@ -366,6 +371,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4290005745339157842, guid: 4e30d3c9a7d19a040b8bcba005b79fbb,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5384845182939996130, guid: 4e30d3c9a7d19a040b8bcba005b79fbb,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8111065055688681736, guid: 4e30d3c9a7d19a040b8bcba005b79fbb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e30d3c9a7d19a040b8bcba005b79fbb, type: 3}
@@ -2157,7 +2177,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1927203085}
   m_HandleRect: {fileID: 1927203084}
   m_Direction: 3
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

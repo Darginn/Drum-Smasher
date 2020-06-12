@@ -12,7 +12,7 @@ namespace DrumSmasher.Game.Mods
         public override string Name => _name;
         public override float Multiplier => _multiplier;
 
-        [SerializeField] private string _name = "AutoPlay";
+        [SerializeField] private string _name = "AutoPlayMod";
         [SerializeField] private float _multiplier = 1.125f;
 
         public override void OnEnabled(NoteScroller scroller)

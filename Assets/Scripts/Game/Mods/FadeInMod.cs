@@ -13,10 +13,11 @@ namespace DrumSmasher.Game.Mods
         public override string Name => _name;
         public override float Multiplier => _multiplier;
 
-        [SerializeField] private string _name = "FadeIn";
+        [SerializeField] private string _name = "FadeInMod";
         [SerializeField] private float _multiplier = 1.125f;
-        [SerializeField] private float _hiddenSpeedMulti = 1.25f;
-        [SerializeField] private float _hiddenDelay = 1f;
+        [SerializeField] private Transform _end;
+
+        private float _distance;
 
         public override void OnEnabled(NoteScroller scroller)
         {
@@ -30,6 +31,15 @@ namespace DrumSmasher.Game.Mods
 
         protected override void OnTriggerEnter2D(Collider2D collider)
         {
+            if (_distance == 0f)
+            {
+                _distance = transform.position.x - _end.position.x;
+
+                if (_distance < 0)
+                    _distance *= -1;
+            }
+
+            
             StartCoroutine(TurnVisibleCoroutine(collider.gameObject));
         }
 
@@ -40,27 +50,32 @@ namespace DrumSmasher.Game.Mods
             SpriteRenderer renderer = n.Renderer;
             SpriteRenderer renderer2 = n.OverlayRenderer;
 
-            renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, 0f);
-            renderer2.color = new Color(renderer2.color.r, renderer2.color.g, renderer2.color.b, 0f);
-
-            float delay = 0;
-
-            while (renderer.color.a < 1)
+            while (n != null && n.transform.position.x >= _end.position.x)
             {
-                if (obj == null ||
-                    renderer == null ||
-                    renderer2 == null)
-                    yield return null;
+                _distance = transform.position.x - _end.position.x;
 
-                if (delay < _hiddenDelay)
+                if (_distance < 0)
+                    _distance *= -1;
+
+                float distOne = 100f / _distance;
+
+                float distance = (n.transform.position.x - transform.position.x);
+
+                if (distance < 0)
+                    distance *= -1;
+
+                float currentPercentage = ((distOne * distance) / 100f);
+
+                if (currentPercentage < renderer.color.a)
                 {
-                    delay += Time.deltaTime;
                     yield return new WaitForEndOfFrame();
                     continue;
                 }
 
-                renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, renderer.color.a + (_hiddenSpeedMulti * Time.deltaTime));
-                renderer2.color = new Color(renderer2.color.r, renderer2.color.g, renderer2.color.b, renderer2.color.a + (_hiddenSpeedMulti * Time.deltaTime));
+                renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, currentPercentage);
+                renderer2.color = new Color(renderer2.color.r, renderer2.color.g, renderer2.color.b, currentPercentage);
+
+                Logger.Log($"Current percentage: {currentPercentage} %");
 
                 yield return new WaitForEndOfFrame();
             }

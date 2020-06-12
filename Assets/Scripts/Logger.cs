@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DSServerCommon;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -71,6 +72,14 @@ namespace DrumSmasher
                 _logStream.Dispose();
         }
 
+    }
+
+    public class SimpleLogger : ILogger
+    {
+        public void Log(string message, int logLevel = 0, [CallerMemberName] string callerName = "")
+        {
+            Logger.Log(message, (LogLevel)logLevel, true, callerName);
+        }
     }
 
     public enum LogLevel

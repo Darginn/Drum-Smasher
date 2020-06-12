@@ -91,10 +91,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1535823241492532707}
   - component: {fileID: 1535823241492532710}
-  - component: {fileID: 1535823241492532709}
   - component: {fileID: 1009469801249259870}
   - component: {fileID: 1172429345013681713}
-  - component: {fileID: 449616587121129908}
+  - component: {fileID: -4970573723639178174}
+  - component: {fileID: 8649933725503186038}
   m_Layer: 0
   m_Name: TaikoNoteBlue
   m_TagString: Untagged
@@ -167,22 +167,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &1535823241492532709
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1535823241492532706}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 1.5
 --- !u!114 &1009469801249259870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -305,7 +289,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!50 &449616587121129908
+--- !u!50 &-4970573723639178174
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -326,3 +310,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!58 &8649933725503186038
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1535823241492532706}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.008682966}
+  serializedVersion: 2
+  m_Radius: 1.2023594

@@ -9,6 +9,7 @@ using System.IO;
 using DrumSmasher.GameInput;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using Assets.Scripts.Game.Mods;
 
 namespace DrumSmasher.Game
 {
@@ -175,12 +176,22 @@ namespace DrumSmasher.Game
         {
             if (mods != null)
             {
+                if (mods.Any(m => m.Item1.Equals("AutoPlayMod", StringComparison.CurrentCultureIgnoreCase)))
+                    AutoPlay = true;
+
+                GameObject modPanel = GameObject.Find("Mods");
+                ModController[] modControllers = modPanel.GetComponentsInChildren<ModController>();
+                Logger.Log(modControllers.Length.ToString());
+
+                for (int i = 0; i < modControllers.Length; i++)
+                    Logger.Log(modControllers[i].Name);
+
                 for (int i = 0; i < mods.Count; i++)
                 {
-                    Mods.BaseMod baseMod = GameObject.Find(mods[i].Item1).GetComponent<Mods.BaseMod>();
-                    baseMod.OnEnabled(this);
-
-                    _statisticHandler.Multiplier += baseMod.Multiplier - 1f;
+                    ModController controller = modControllers.First(mc => mc.Name.Equals(mods[i].Item1, StringComparison.CurrentCultureIgnoreCase));
+                    
+                    controller.ModObject.SetActive(true);
+                    _statisticHandler.Multiplier += controller.BaseMod.Multiplier - 1f;
 
                     Logger.Log($"Enabled mod {mods[i]} {i + 1}/{mods.Count}");
                 }
@@ -189,7 +200,13 @@ namespace DrumSmasher.Game
             }
 
             if (AutoPlay)
+            {
                 _statisticHandler.Multiplier = 0f;
+                _key1Controller.AutoPlay = true;
+                _key2Controller.AutoPlay = true;
+                _key3Controller.AutoPlay = true;
+                _key4Controller.AutoPlay = true;
+            }
 
             _conductor.Play();
             _reachedEndOfChart = false;
