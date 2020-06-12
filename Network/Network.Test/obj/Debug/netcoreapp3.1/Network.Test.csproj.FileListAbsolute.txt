@@ -1,0 +1,15 @@
+D:\reposSSD\Drum-Smasher\Network\Network.Test\bin\Debug\netcoreapp3.1\Network.Test.exe
+D:\reposSSD\Drum-Smasher\Network\Network.Test\bin\Debug\netcoreapp3.1\Network.Test.deps.json
+D:\reposSSD\Drum-Smasher\Network\Network.Test\bin\Debug\netcoreapp3.1\Network.Test.runtimeconfig.json
+D:\reposSSD\Drum-Smasher\Network\Network.Test\bin\Debug\netcoreapp3.1\Network.Test.runtimeconfig.dev.json
+D:\reposSSD\Drum-Smasher\Network\Network.Test\bin\Debug\netcoreapp3.1\Network.Test.dll
+D:\reposSSD\Drum-Smasher\Network\Network.Test\bin\Debug\netcoreapp3.1\Network.Test.pdb
+D:\reposSSD\Drum-Smasher\Network\Network.Test\bin\Debug\netcoreapp3.1\Network.dll
+D:\reposSSD\Drum-Smasher\Network\Network.Test\bin\Debug\netcoreapp3.1\Network.pdb
+D:\reposSSD\Drum-Smasher\Network\Network.Test\obj\Debug\netcoreapp3.1\Network.Test.csprojAssemblyReference.cache
+D:\reposSSD\Drum-Smasher\Network\Network.Test\obj\Debug\netcoreapp3.1\Network.Test.AssemblyInfoInputs.cache
+D:\reposSSD\Drum-Smasher\Network\Network.Test\obj\Debug\netcoreapp3.1\Network.Test.AssemblyInfo.cs
+D:\reposSSD\Drum-Smasher\Network\Network.Test\obj\Debug\netcoreapp3.1\Network.Test.csproj.CopyComplete
+D:\reposSSD\Drum-Smasher\Network\Network.Test\obj\Debug\netcoreapp3.1\Network.Test.dll
+D:\reposSSD\Drum-Smasher\Network\Network.Test\obj\Debug\netcoreapp3.1\Network.Test.pdb
+D:\reposSSD\Drum-Smasher\Network\Network.Test\bin\Debug\netcoreapp3.1\NetCoreServer.dll

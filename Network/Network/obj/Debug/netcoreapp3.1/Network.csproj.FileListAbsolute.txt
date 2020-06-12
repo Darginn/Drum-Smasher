@@ -1,0 +1,8 @@
+D:\reposSSD\Drum-Smasher\Network\Network\obj\Debug\netcoreapp3.1\Network.csprojAssemblyReference.cache
+D:\reposSSD\Drum-Smasher\Network\Network\obj\Debug\netcoreapp3.1\Network.AssemblyInfoInputs.cache
+D:\reposSSD\Drum-Smasher\Network\Network\obj\Debug\netcoreapp3.1\Network.AssemblyInfo.cs
+D:\reposSSD\Drum-Smasher\Network\Network\bin\Debug\netcoreapp3.1\Network.deps.json
+D:\reposSSD\Drum-Smasher\Network\Network\bin\Debug\netcoreapp3.1\Network.dll
+D:\reposSSD\Drum-Smasher\Network\Network\bin\Debug\netcoreapp3.1\Network.pdb
+D:\reposSSD\Drum-Smasher\Network\Network\obj\Debug\netcoreapp3.1\Network.dll
+D:\reposSSD\Drum-Smasher\Network\Network\obj\Debug\netcoreapp3.1\Network.pdb
