@@ -12,6 +12,6 @@ namespace DSServerCommon.Packets
         Message,
         JoinChat,
         PartChat,
-        UsernameRequest,
+        RequestUserData,
     }
 }

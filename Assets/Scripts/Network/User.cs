@@ -40,8 +40,7 @@ namespace DrumSmasher.Network
         /// </summary>
         public bool IsAuthenticated => _isAuthenticated && AccountData != null;
 
-        public ConcurrentDictionary<long, string> Usernames => _usernames;
-
+        [Obsolete("Use RequestOrGetUsername(long userId)")]
         private ConcurrentDictionary<long, string> _usernames;
         private bool _isAuthenticated;
         private ILogger _logger;
@@ -56,7 +55,9 @@ namespace DrumSmasher.Network
             _pass = pass;
             _logger = logger;
             _currentChannel = -1;
+#pragma warning disable CS0618 // Type or member is obsolete
             _usernames = new ConcurrentDictionary<long, string>();
+#pragma warning restore CS0618 // Type or member is obsolete
             PacketHandler = new ClientPacketHandler(logger);
             UIChat.Chat.OnNewUserMessage += OnUserChatMessage;
         }
@@ -287,7 +288,38 @@ namespace DrumSmasher.Network
         public void OnAccountInfoReceived(AccountData data)
         {
             AccountData = data;
+#pragma warning disable CS0618 // Type or member is obsolete
             _usernames.TryAdd(data.Id, data.Name);
+#pragma warning restore CS0618 // Type or member is obsolete
+        }
+
+        public string RequestOrGetUsername(long userId)
+        {
+#pragma warning disable CS0618 // Type or member is obsolete
+            if (_usernames.ContainsKey(userId))
+            {
+                if (_usernames.TryGetValue(userId, out string username))
+                    return username;
+
+                return "Failed to receive username";
+            }
+            else
+            {
+                RequestUserDataPacket rudp = new RequestUserDataPacket(userId, _logger);
+                PacketWriter writer = rudp.WriteData(new PacketWriter());
+                rudp.InsertPacketId(ref writer);
+
+                SendData(writer.ToBytes());
+                return "SYS: Username Requested";
+            }
+#pragma warning restore CS0618 // Type or member is obsolete
+        }
+
+        public void OnUserData(AccountData data)
+        {
+#pragma warning disable CS0618 // Type or member is obsolete
+            _usernames.TryAdd(data.Id, data.Name);
+#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         /// <summary>
@@ -306,12 +338,12 @@ namespace DrumSmasher.Network
         public void OnMessageReceived(long userId, long dest, bool channel, string message)
         {
             //ToDo: implement multiple channels
-            UIChat.Chat.AddLine($"{DateTime.Now.Hour}:{DateTime.Now.Minute} {_usernames[userId]}@{dest}: {message}");
+            UIChat.Chat.AddLine($"{DateTime.Now.Hour}:{DateTime.Now.Minute} {RequestOrGetUsername(userId)}@{dest}: {message}");
         }
 
         public void OnChatJoined(long userId)
         {
-            UIChat.Chat.SysMsg($"User {_usernames[userId]} joined the chat");
+            UIChat.Chat.SysMsg($"User {RequestOrGetUsername(userId)} joined the chat");
         }
 
         public void OnChatJoined(bool confirmation)
@@ -321,7 +353,7 @@ namespace DrumSmasher.Network
 
         public void OnChatParted(long userId)
         {
-            UIChat.Chat.SysMsg($"User {_usernames[userId]} parted the chat");
+            UIChat.Chat.SysMsg($"User {RequestOrGetUsername(userId)} parted the chat");
         }
 
         public void OnChatParted(bool confirmation)
