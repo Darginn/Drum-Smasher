@@ -22,7 +22,7 @@ namespace DrumSmasher.Network
                 new JoinChatPacket(logger),
                 new MessagePacket(logger),
                 new PartChatPacket(logger),
-                new UsernameRequestPacket(logger)
+                new RequestUserDataPacket(logger)
             };
 
             for (int i = 0; i < packets.Count; i++)

@@ -24,14 +24,20 @@ namespace DrumSmasher.Network.Packets
 
         public override PacketWriter ReadData(PacketReader reader, PacketWriter writer, User from)
         {
-            AccountData data = new AccountData()
-            {
-                Id = reader.ReadInt64(),
-                Name = reader.ReadString(),
-                IsAdmin = reader.ReadBoolean()
-            };
+            int count = reader.ReadByte();
 
-            from.OnUserData(data);
+            AccountData data;
+            for (int i = 0; i < count; i++)
+            {
+                data = new AccountData()
+                {
+                    Id = reader.ReadInt64(),
+                    Name = reader.ReadString(),
+                    IsAdmin = reader.ReadBoolean()
+                };
+
+                from.OnUserData(data);
+            }
 
             return null;
         }
