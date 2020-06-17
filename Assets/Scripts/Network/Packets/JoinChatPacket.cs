@@ -28,7 +28,7 @@ namespace DrumSmasher.Network.Packets
             long userId = reader.ReadInt64();
             long channelId = reader.ReadInt64();
 
-            if (userId == from.AccountData.Id)
+            if (from.AccountData == null || userId == from.AccountData.Id)
                 from.OnChatJoined(true);
             else
                 from.OnChatJoined(userId);

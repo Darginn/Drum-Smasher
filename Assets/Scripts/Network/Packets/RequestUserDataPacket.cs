@@ -25,6 +25,7 @@ namespace DrumSmasher.Network.Packets
         public override PacketWriter ReadData(PacketReader reader, PacketWriter writer, User from)
         {
             int count = reader.ReadByte();
+            Logger.Log($"Received {count} accounts");
 
             AccountData data;
             for (int i = 0; i < count; i++)

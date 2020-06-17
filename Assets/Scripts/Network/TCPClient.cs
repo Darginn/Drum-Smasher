@@ -97,8 +97,8 @@ namespace DrumSmasher.Network
                 {
                     while (_keepReceiving)
                     {
-                        StateObject so = new StateObject(2048);
-                        _socket.BeginReceive(so.Bytes, 0, 2048, SocketFlags.None, new AsyncCallback(EndReceive), so);
+                        StateObject so = new StateObject(8192);
+                        _socket.BeginReceive(so.Bytes, 0, 8192, SocketFlags.None, new AsyncCallback(EndReceive), so);
                         _readerHandle.WaitOne();
                     }
                 }
