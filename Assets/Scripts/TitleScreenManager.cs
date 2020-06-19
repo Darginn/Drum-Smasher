@@ -198,7 +198,9 @@ namespace DrumSmasher
             TitleScreenSettings tss = SettingsManager.SettingsStorage["TitleScreen"] as TitleScreenSettings;
 
             DirectoryInfo chartPath = new DirectoryInfo(tss.Data.ChartPath + $"/{artist} - {title} ({creator})/");
-            
+
+            chart.Speed = 23;
+
             Charts.ChartFile.Save(chart, chartPath);
             
             FileInfo audio = new FileInfo(Path.Combine(chartPath.FullName, chart.SoundFile));
