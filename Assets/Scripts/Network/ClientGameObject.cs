@@ -33,6 +33,14 @@ namespace DrumSmasher.Network
         [SerializeField] private string _serverIP;
         [SerializeField] private int _serverPort;
 
+        void OnApplicationQuit()
+        {
+            if (User != null && User.AccountData != null)
+            {
+                User.PartChat(User.CurrentChannel);
+                User.Disconnect();
+            }
+        }
 
         public void ConnectAndLogin()
         {

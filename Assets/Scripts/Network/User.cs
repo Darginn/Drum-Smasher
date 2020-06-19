@@ -39,6 +39,7 @@ namespace DrumSmasher.Network
         /// Is user authenticated
         /// </summary>
         public bool IsAuthenticated => _isAuthenticated && AccountData != null;
+        public int CurrentChannel => _currentChannel;
 
         [Obsolete("Use RequestOrGetUsername(long userId)")]
         private ConcurrentDictionary<long, string> _usernames;
@@ -118,6 +119,9 @@ namespace DrumSmasher.Network
                         _currentChannel = -1;
                         SendData(writer.ToBytes());
                     }
+                    break;
+                case "/disconnect":
+                        Disconnect();
                     break;
             }
         }
@@ -367,6 +371,15 @@ namespace DrumSmasher.Network
         {
             _logger.Log($"Joined chat: {confirmation}");
             UIChat.Chat.SysMsg($"Joined chat: {confirmation}");
+        }
+
+        public void PartChat(long chatId)
+        {
+            PartChatPacket pcp = new PartChatPacket(chatId, _logger);
+            PacketWriter writer = pcp.WriteData(new PacketWriter());
+            pcp.InsertPacketId(ref writer);
+
+            SendData(writer.ToBytes());
         }
 
         public void OnChatParted(long userId)
