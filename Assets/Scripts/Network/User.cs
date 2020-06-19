@@ -387,6 +387,8 @@ namespace DrumSmasher.Network
             msg.InsertPacketId(ref writer);
 
             SendEncrypted(writer.ToBytes());
+
+            OnMessageReceived(AccountData.Id, dest, channel, message);
         }
 
         /// <summary>
