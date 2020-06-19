@@ -45,6 +45,8 @@ namespace DrumSmasher.Network.Packets
 
         public override PacketWriter WriteData(PacketWriter writer)
         {
+            _logger.Log($"Writing request for user data for user {_userId}");
+
             writer.Write(_userId);
             return writer;
         }

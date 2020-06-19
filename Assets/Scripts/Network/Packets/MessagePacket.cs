@@ -33,6 +33,8 @@ namespace DrumSmasher.Network.Packets
             bool isChannel = reader.ReadBoolean();
             string msg = reader.ReadString();
 
+            _logger.Log($"Reading chat message from user {userId}");
+
             from.OnMessageReceived(userId, dest, isChannel, msg);
 
             return null;
@@ -40,6 +42,8 @@ namespace DrumSmasher.Network.Packets
 
         public override PacketWriter WriteData(PacketWriter writer)
         {
+            _logger.Log("Writing chat message");
+
             writer.Write(_dest);
             writer.Write(_channel);
             writer.Write(_message);

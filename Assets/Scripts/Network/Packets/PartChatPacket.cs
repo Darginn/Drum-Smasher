@@ -27,6 +27,8 @@ namespace DrumSmasher.Network.Packets
             long userId = reader.ReadInt64();
             long channelId = reader.ReadInt64();
 
+            _logger.Log($"Reading chat part for user {userId}");
+
             if (userId == from.AccountData.Id)
                 from.OnChatParted(true);
             else
@@ -37,6 +39,7 @@ namespace DrumSmasher.Network.Packets
 
         public override PacketWriter WriteData(PacketWriter writer)
         {
+            _logger.Log("Writing chat part");
             writer.Write(_channelId);
             return writer;
         }

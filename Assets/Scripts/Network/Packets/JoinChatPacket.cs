@@ -27,6 +27,7 @@ namespace DrumSmasher.Network.Packets
             bool status = reader.ReadBoolean();
             long userId = reader.ReadInt64();
             long channelId = reader.ReadInt64();
+            _logger.Log($"Reading chat join for user {userId}");
 
             if (from.AccountData == null || userId == from.AccountData.Id)
                 from.OnChatJoined(true);
@@ -38,6 +39,8 @@ namespace DrumSmasher.Network.Packets
 
         public override PacketWriter WriteData(PacketWriter writer)
         {
+            _logger.Log("Writing chat join");
+
             writer.Write(_channelId);
             return writer;
         }

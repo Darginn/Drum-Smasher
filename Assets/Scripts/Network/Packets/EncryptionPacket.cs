@@ -48,6 +48,8 @@ namespace DrumSmasher.Network.Packets
 
         public override PacketWriter WriteData(PacketWriter writer)
         {
+            _logger.Log("Writing encryption");
+
             switch (_state)
             {
                 default:

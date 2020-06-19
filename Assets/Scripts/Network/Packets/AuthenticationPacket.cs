@@ -22,6 +22,7 @@ namespace DrumSmasher.Network.Packets
 
         public override PacketWriter ReadData(PacketReader reader, PacketWriter writer, User from)
         {
+            _logger.Log("Reading authentication");
             from.OnAuthenticated(reader.ReadBoolean());
 
             return null;
@@ -33,6 +34,8 @@ namespace DrumSmasher.Network.Packets
                 throw new NullReferenceException(nameof(_account));
             else if (string.IsNullOrEmpty(_password))
                 throw new NullReferenceException(nameof(_password));
+
+            _logger.Log("Writing authentication");
 
             writer.Write(_account);
             writer.Write(_password);

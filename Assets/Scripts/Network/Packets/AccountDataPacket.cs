@@ -24,6 +24,8 @@ namespace DrumSmasher.Network.Packets
                 IsAdmin = reader.ReadBoolean()
             };
 
+            _logger.Log($"Reading account data for {accData.Id}");
+
             from.OnAccountInfoReceived(accData);
 
             return null;

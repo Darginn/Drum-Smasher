@@ -72,7 +72,7 @@ namespace DrumSmasher.Network
 
             if (_currentChannel < 0)
             {
-                _logger.Log("Could not send message, did not join any channel yet");
+                _logger.Log("Could not send message, did not join any channel yet", DSServerCommon.LogLevel.Error);
                 return;
             }
 
@@ -81,6 +81,8 @@ namespace DrumSmasher.Network
 
         private void OnUserChatCommand(string message)
         {
+            _logger.Log($"User chat command: {message}");
+
             string[] split = message.Split(' ');
 
             switch(split[0].ToLower())
@@ -154,11 +156,14 @@ namespace DrumSmasher.Network
             while (!IsAuthenticated)
                 yield return new WaitForEndOfFrame();
 
-            _logger.Log("Authenticated");
-            UIChat.Chat.SysMsg("Authenticated");
+            _logger.Log("Authenticated, waiting for account data");
+            UIChat.Chat.SysMsg("Authenticated, waiting for account data");
 
             while (AccountData == null && AccountData.Name == null)
                 yield return new WaitForEndOfFrame();
+
+            _logger.Log("Account data received, joining chat 1");
+            UIChat.Chat.SysMsg("Account data received, joining chat 1");
 
             OnUserChatCommand("/join 1");
         }
@@ -194,7 +199,7 @@ namespace DrumSmasher.Network
                 //Check if packet id is valid
                 if (!(pId = TryParsePacketId(pkId)).HasValue)
                 {
-                    _logger.Log($"Could not find packet id {pkId}");
+                    _logger.Log($"Could not find packet id {pkId}", DSServerCommon.LogLevel.Error);
                     return;
                 }
                 _logger.Log($"Found packet id {pkId}");
@@ -205,7 +210,7 @@ namespace DrumSmasher.Network
                 //Check if packet exists
                 if (packet == null)
                 {
-                    _logger.Log($"Could not get packet {pkId}");
+                    _logger.Log($"Could not get packet {pkId}", DSServerCommon.LogLevel.Error);
                     return;
                 }
                 _logger.Log($"Found packet {pId}");
@@ -242,7 +247,7 @@ namespace DrumSmasher.Network
             }
             catch (Exception ex)
             {
-                _logger.Log($"Error occurred while processing a packet: " + ex.ToString());
+                _logger.Log($"Error occurred while processing a packet: " + ex.ToString(), DSServerCommon.LogLevel.Error);
             }
         }
 
@@ -273,7 +278,7 @@ namespace DrumSmasher.Network
         {
             if (!status)
             {
-                _logger.Log("Failed to authenticated");
+                _logger.Log("Failed to authenticated", DSServerCommon.LogLevel.Error);
                 return false;
             }
 
@@ -287,6 +292,7 @@ namespace DrumSmasher.Network
         /// </summary>
         public void OnAccountInfoReceived(AccountData data)
         {
+            _logger.Log($"Received own account data {data.Id}:{data.Name}");
             AccountData = data;
 #pragma warning disable CS0618 // Type or member is obsolete
             _usernames.TryAdd(data.Id, data.Name);
@@ -310,13 +316,14 @@ namespace DrumSmasher.Network
                 rudp.InsertPacketId(ref writer);
 
                 SendData(writer.ToBytes());
-                return "SYS: Username Requested";
+                return "SYSTEM: Username Requested";
             }
 #pragma warning restore CS0618 // Type or member is obsolete
         }
 
         public void OnUserData(AccountData data)
         {
+            _logger.Log($"Adding user {data.Id}:{data.Name}");
 #pragma warning disable CS0618 // Type or member is obsolete
             _usernames.TryAdd(data.Id, data.Name);
 #pragma warning restore CS0618 // Type or member is obsolete
@@ -327,6 +334,7 @@ namespace DrumSmasher.Network
         /// </summary>
         public override void Disconnect()
         {
+            _logger.Log("Disconnecting");
             ClearUserData();
 
             base.Disconnect();
@@ -337,38 +345,40 @@ namespace DrumSmasher.Network
         /// </summary>
         public void OnMessageReceived(long userId, long dest, bool channel, string message)
         {
+            string hour = DateTime.Now.Hour < 10 ? '0' + DateTime.Now.Hour.ToString() : 
+                                                    DateTime.Now.Hour.ToString();
+            string minute = DateTime.Now.Minute < 10 ? '0' + DateTime.Now.Minute.ToString() :
+                                                       DateTime.Now.Minute.ToString();
+
+            string msg = $"{hour}:{minute} {RequestOrGetUsername(userId)}@{dest}: {message}";
+
+            _logger.Log(msg);
             //ToDo: implement multiple channels
-            UIChat.Chat.AddLine($"{DateTime.Now.Hour}:{DateTime.Now.Minute} {RequestOrGetUsername(userId)}@{dest}: {message}");
+            UIChat.Chat.AddLine(msg);
         }
 
         public void OnChatJoined(long userId)
         {
+            _logger.Log($"User {RequestOrGetUsername(userId)} joined the chat");
             UIChat.Chat.SysMsg($"User {RequestOrGetUsername(userId)} joined the chat");
         }
 
         public void OnChatJoined(bool confirmation)
         {
+            _logger.Log($"Joined chat: {confirmation}");
             UIChat.Chat.SysMsg($"Joined chat: {confirmation}");
         }
 
         public void OnChatParted(long userId)
         {
+            _logger.Log($"User {RequestOrGetUsername(userId)} parted the chat");
             UIChat.Chat.SysMsg($"User {RequestOrGetUsername(userId)} parted the chat");
         }
 
         public void OnChatParted(bool confirmation)
         {
+            _logger.Log($"Parted chat");
             UIChat.Chat.SysMsg($"Parted chat");
-        }
-
-        public void OnChatParted()
-        {
-            UIChat.Chat.SysMsg("Parted chat");
-        }
-
-        public void SendUsernameRequest(long userId)
-        {
-
         }
 
         /// <summary>
@@ -378,9 +388,11 @@ namespace DrumSmasher.Network
         {
             if (string.IsNullOrEmpty(message))
             {
-                _logger.Log("Could not send message, message is null or empty");
+                _logger.Log("Could not send message, message is null or empty", DSServerCommon.LogLevel.Error);
                 return;
             }
+
+            _logger.Log($"Sending message: {message}");
 
             MessagePacket msg = new MessagePacket(dest, channel, message, _logger);
             PacketWriter writer = msg.WriteData(new PacketWriter());
@@ -396,6 +408,8 @@ namespace DrumSmasher.Network
         /// </summary>
         private void ClearUserData()
         {
+            _logger.Log("Clearing user data");
+
             AccountData = null;
             _isAuthenticated = false;
         }

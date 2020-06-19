@@ -10,83 +10,45 @@ namespace DrumSmasher
 {
     public static class Logger
     {
-        private static StreamWriter _logStream;
-        private static object _logLock = new object();
-        private static ConcurrentQueue<(string, LogLevel)> _queue;
+        private static DSServerCommon.Logger _logger;
 
-        public static void Initialize(string logFile)
+        public static ILogger GetLogger()
         {
-            if (File.Exists(logFile))
+            if (_logger == null ||
+                _logger.IsDisposed)
             {
-                if (File.Exists(logFile + 1))
-                    File.Delete(logFile + 1);
-
-                File.Move(logFile, logFile + 1);
-            }
-            
-            _logStream = new StreamWriter(logFile);
-            _queue = new ConcurrentQueue<(string, LogLevel)>();
-        }
-
-
-        public static void Log(string message, LogLevel level = LogLevel.Info, bool console = true, [CallerMemberName()] string caller = "")
-        {
-            if (_logStream == null)
-                Initialize("log.txt");
-
-            System.Threading.ThreadPool.QueueUserWorkItem(new System.Threading.WaitCallback(obj =>
-            {
-                lock(_logLock)
+                _logger = new DSServerCommon.Logger(false);
+#if UNITY_EDITOR
+                _logger.AdditionLog += new Action<string, LogLevel>((s, l) =>
                 {
-                    string time = $"{DateTime.UtcNow.Day}.{DateTime.UtcNow.Month}.{DateTime.UtcNow.Year} {DateTime.UtcNow.Hour}:{DateTime.UtcNow.Minute}:{DateTime.UtcNow.Second}:{DateTime.UtcNow.Millisecond}";
-                    string toLog = $"{time}: *{level}* {caller}: {message}";
-
-                    _logStream.WriteLine(toLog);
-                    _logStream.Flush();
-
-#if DEBUG
-                    if (console)
+                    switch(l)
                     {
-                        switch(level)
-                        {
-                            default:
-                                UnityEngine.Debug.Log(toLog);
-                                break;
-                            case LogLevel.ERROR:
-                                UnityEngine.Debug.LogError(toLog);
-                                break;
-                            case LogLevel.WARNING:
-                                UnityEngine.Debug.LogWarning(toLog);
-                                break;
-                        }
-                    }
-#endif
-                }
-            }));
+                        case LogLevel.Error:
+                            UnityEngine.Debug.LogError(s);
+                            break;
 
+                        case LogLevel.Warning:
+                            UnityEngine.Debug.LogWarning(s);
+                            break;
+
+                        case LogLevel.Info:
+                            UnityEngine.Debug.Log(s);
+                            break;
+                    }
+                });
+#endif
+            }
+
+            return _logger;
         }
+
+        public static void Log(string message, LogLevel level = LogLevel.Info, [CallerMemberName()] string caller = "")
+            => _logger.Log(message, level, caller);
 
         public static void Dispose()
         {
-            if (_logStream != null)
-                _logStream.Dispose();
+            _logger.Dispose();
+            _logger = null;
         }
-
-    }
-
-    public class SimpleLogger : ILogger
-    {
-        public void Log(string message, int logLevel = 0, [CallerMemberName] string callerName = "")
-        {
-            Logger.Log(message, (LogLevel)logLevel, true, callerName);
-        }
-    }
-
-    public enum LogLevel
-    {
-        Info,
-        Trace,
-        WARNING,
-        ERROR
     }
 }
