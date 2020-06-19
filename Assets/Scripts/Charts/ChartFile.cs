@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using DSServerCommon;
 using System.Security.AccessControl;
 using System.Text;
 using UnityEngine;
@@ -42,7 +43,7 @@ namespace DrumSmasher.Charts
 
             if (!saveLocation.Exists)
             {
-                Logger.Log("Chart Folder doesn't exist, creating new one:", LogLevel.WARNING);
+                Logger.Log("Chart Folder doesn't exist, creating new one:", LogLevel.Warning);
                 saveLocation.Create();
                 Logger.Log($"Directory {saveLocation.FullName} created successfully");
             }
@@ -50,7 +51,7 @@ namespace DrumSmasher.Charts
             string chartFileSW = Path.Combine(saveLocation.FullName, $"{artist} - {title} ({creator}) [{difficulty}]" + ".chart");
 
             FileInfo file = new FileInfo(chartFileSW);
-            Logger.Log("Saving chart to " + file.FullName, LogLevel.Trace);
+            Logger.Log("Saving chart to " + file.FullName);
 
             if (!file.Directory.Exists)
                 file.Directory.Create();
@@ -103,7 +104,7 @@ namespace DrumSmasher.Charts
                     }
                     else
                     {
-                        Logger.Log("Not supported propertyType: " + prop.PropertyType, LogLevel.WARNING);
+                        Logger.Log("Not supported propertyType: " + prop.PropertyType, LogLevel.Warning);
                     }
 
                     swriter.WriteLine(line);
@@ -121,14 +122,14 @@ namespace DrumSmasher.Charts
                 swriter.WriteLine(SECTION_END);
             }
 
-            Logger.Log("Finished save process for " + chartFileSW, LogLevel.Trace);
+            Logger.Log("Finished save process for " + chartFileSW);
         }
 
         public static Chart Load(string file)
         {
             if (!File.Exists(file))
             {
-                Logger.Log("Failed to load chart file " + file, LogLevel.WARNING);
+                Logger.Log("Failed to load chart file " + file, LogLevel.Warning);
                 return null;
             }
 
@@ -208,7 +209,7 @@ namespace DrumSmasher.Charts
                             else if (prop.PropertyType.IsAssignableFrom(typeof(Enum)))
                                 prop.SetValue(c, Enum.Parse(prop.PropertyType, lineSplit[1]));
                             else
-                                Logger.Log("Unsupported property type " + prop.PropertyType.ToString(), LogLevel.WARNING);
+                                Logger.Log("Unsupported property type " + prop.PropertyType.ToString(), LogLevel.Warning);
                         }
                         else if (notes)
                         {
@@ -222,13 +223,13 @@ namespace DrumSmasher.Charts
                                 c.Notes.Add(cn);
                             }
                             else
-                                Logger.Log("Could not parse time " + lineSplit[1], LogLevel.WARNING);
+                                Logger.Log("Could not parse time " + lineSplit[1], LogLevel.Warning);
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    Logger.Log("Exception at reading chart " + file + Environment.NewLine + ex.ToString(), LogLevel.ERROR);
+                    Logger.Log("Exception at reading chart " + file + Environment.NewLine + ex.ToString(), LogLevel.Error);
                 }
             }
 

@@ -50,6 +50,7 @@ namespace DSServerCommon
                 _logToConsole = logToConsole;
                 _logToFile = logToFile;
                 _logFile = logFile;
+                _queue = new ConcurrentQueue<(DateTime, string, LogLevel, string)>();
 
                 if (logToFile)
                 {
@@ -121,6 +122,8 @@ namespace DSServerCommon
                 return;
 
             _writer.Dispose();
+            _queue.Clear();
+
             IsDisposed = true;
         }
     }

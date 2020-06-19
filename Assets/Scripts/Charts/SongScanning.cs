@@ -4,6 +4,7 @@ using System.IO;
 using DrumSmasher.Charts;
 using System.Linq;
 using System;
+using DSServerCommon;
 
 namespace DrumSmasher
 {
@@ -21,7 +22,7 @@ namespace DrumSmasher
         {
             if (!_songFolder.Exists)
             {
-                Logger.Log("Directory not found! Creating new one", LogLevel.WARNING);
+                Logger.Log("Directory not found! Creating new one", LogLevel.Warning);
                 _songFolder.Create();
                 Logger.Log($"Directory {_songFolder.FullName} created successfully");
             }
@@ -40,7 +41,7 @@ namespace DrumSmasher
 
                 if (c == null)
                 {
-                    Logger.Log($"Could not load chart {chartFile.FullName}", LogLevel.WARNING);
+                    Logger.Log($"Could not load chart {chartFile.FullName}", LogLevel.Warning);
                     continue;
                 }
 

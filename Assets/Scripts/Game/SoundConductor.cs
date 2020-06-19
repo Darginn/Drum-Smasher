@@ -130,7 +130,7 @@ namespace DrumSmasher.Game
 
 #if UNITY_EDITOR
             sw.Stop();
-            Logger.Log($"Loading MP3 to bytes took {sw.ElapsedMilliseconds} ms", LogLevel.Trace);
+            Logger.Log($"Loading MP3 to bytes took {sw.ElapsedMilliseconds} ms");
             sw.Reset();
             sw.Start();
 #endif
@@ -138,7 +138,7 @@ namespace DrumSmasher.Game
 
 #if UNITY_EDITOR
             sw.Stop();
-            Logger.Log($"Converting MP3 bytes to WAV took {sw.ElapsedMilliseconds} ms", LogLevel.Trace);
+            Logger.Log($"Converting MP3 bytes to WAV took {sw.ElapsedMilliseconds} ms");
             sw.Reset();
             sw.Start();
 #endif
@@ -147,7 +147,7 @@ namespace DrumSmasher.Game
 
 #if UNITY_EDITOR
             sw.Stop();
-            Logger.Log($"Converting WAV to AudioClip took {sw.ElapsedMilliseconds} ms", LogLevel.Trace);
+            Logger.Log($"Converting WAV to AudioClip took {sw.ElapsedMilliseconds} ms");
 #endif
 
             LoadedMp3 = true;

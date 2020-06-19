@@ -86,7 +86,7 @@ namespace DrumSmasher
                             continue;
 
                         mi.Invoke(null, null);
-                        Logger.Log("Invoked method: " + mi.Name, LogLevel.Trace);
+                        Logger.Log("Invoked method: " + mi.Name);
                     }
                     catch (Exception ex)
                     {

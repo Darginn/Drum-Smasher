@@ -43,7 +43,7 @@ namespace DrumSmasher
         }
 
         public static void Log(string message, LogLevel level = LogLevel.Info, [CallerMemberName()] string caller = "")
-            => _logger.Log(message, level, caller);
+            => GetLogger().Log(message, level, caller);
 
         public static void Dispose()
         {

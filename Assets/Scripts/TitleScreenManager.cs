@@ -12,6 +12,7 @@ using System.IO;
 using System.Collections;
 using DrumSmasher.Settings;
 using System.Threading;
+using DSServerCommon;
 
 namespace DrumSmasher
 {
@@ -235,7 +236,7 @@ namespace DrumSmasher
 
             if (option == -1)
             {
-                Logger.Log("Could not find option: " + optionStr, LogLevel.ERROR);
+                Logger.Log("Could not find option: " + optionStr, LogLevel.Error);
                 return;
             }
 

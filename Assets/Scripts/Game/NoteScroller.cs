@@ -10,6 +10,7 @@ using DrumSmasher.GameInput;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using Assets.Scripts.Game.Mods;
+using DSServerCommon;
 
 namespace DrumSmasher.Game
 {
@@ -158,13 +159,13 @@ namespace DrumSmasher.Game
             _key4Controller.KeyId = 4;
 
             if (!Enum.TryParse(settings.Data.Key1.ToUpper(), out _key1Controller.KeyToPress))
-                Logger.Log($"Could not parse key {settings.Data.Key1}", LogLevel.ERROR);
+                Logger.Log($"Could not parse key {settings.Data.Key1}", LogLevel.Error);
             if (!Enum.TryParse(settings.Data.Key2.ToUpper(), out _key2Controller.KeyToPress))
-                Logger.Log($"Could not parse key {settings.Data.Key2}", LogLevel.ERROR);
+                Logger.Log($"Could not parse key {settings.Data.Key2}", LogLevel.Error);
             if (!Enum.TryParse(settings.Data.Key3.ToUpper(), out _key3Controller.KeyToPress))
-                Logger.Log($"Could not parse key {settings.Data.Key3}", LogLevel.ERROR);
+                Logger.Log($"Could not parse key {settings.Data.Key3}", LogLevel.Error);
             if (!Enum.TryParse(settings.Data.Key4.ToUpper(), out _key4Controller.KeyToPress))
-                Logger.Log($"Could not parse key {settings.Data.Key4}", LogLevel.ERROR);
+                Logger.Log($"Could not parse key {settings.Data.Key4}", LogLevel.Error);
 
             Logger.Log("Loaded Taiko Settings");
         }

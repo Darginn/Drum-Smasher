@@ -20,7 +20,7 @@ namespace DrumSmasher.Network
                 if (_user == null)
                     _user = new User(IPAddress.Parse(_serverIP), _serverPort,
                                      _accountName.text, _accountPass.text,
-                                     new SimpleLogger());
+                                     Logger.GetLogger());
 
                 return _user;
             }
