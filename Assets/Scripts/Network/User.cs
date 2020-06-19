@@ -283,6 +283,8 @@ namespace DrumSmasher.Network
             if (!status)
             {
                 _logger.Log("Failed to authenticated", DSServerCommon.LogLevel.Error);
+                UIChat.Chat.AddLine("Failed to authenticated..., account not found or password wrong");
+                Disconnect();
                 return false;
             }
 
@@ -311,11 +313,11 @@ namespace DrumSmasher.Network
                 if (_usernames.TryGetValue(userId, out string username))
                     return username;
 
-                return "Failed to receive username";
+                return "SYSTEM: Failed to receive username";
             }
             else
             {
-                RequestUserDataPacket rudp = new RequestUserDataPacket(userId, _logger);
+                UserDataPacket rudp = new UserDataPacket(userId, _logger);
                 PacketWriter writer = rudp.WriteData(new PacketWriter());
                 rudp.InsertPacketId(ref writer);
 
@@ -412,8 +414,6 @@ namespace DrumSmasher.Network
             msg.InsertPacketId(ref writer);
 
             SendEncrypted(writer.ToBytes());
-
-            OnMessageReceived(AccountData.Id, dest, channel, message);
         }
 
         /// <summary>

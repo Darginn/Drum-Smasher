@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace DrumSmasher.Network.Packets
 {
-    public class RequestUserDataPacket : BasePacket<User>
+    public class UserDataPacket : BasePacket<User>
     {
         private long _userId;
 
-        public RequestUserDataPacket(ILogger logger) : base(PacketId.RequestUserData, logger)
+        public UserDataPacket(ILogger logger) : base(PacketId.UserData, logger)
         {
 
         }
 
-        public RequestUserDataPacket(long userId, ILogger logger) : base(PacketId.RequestUserData, logger)
+        public UserDataPacket(long userId, ILogger logger) : base(PacketId.UserData, logger)
         {
             _userId = userId;
         }

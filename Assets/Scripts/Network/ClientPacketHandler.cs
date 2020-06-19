@@ -16,13 +16,12 @@ namespace DrumSmasher.Network
         {
             List<BasePacket<User>> packets = new List<BasePacket<User>>()
             {
-                new AccountDataPacket(logger),
                 new AuthenticationPacket(logger),
                 new EncryptionPacket(logger),
                 new JoinChatPacket(logger),
                 new MessagePacket(logger),
                 new PartChatPacket(logger),
-                new RequestUserDataPacket(logger)
+                new UserDataPacket(logger)
             };
 
             for (int i = 0; i < packets.Count; i++)

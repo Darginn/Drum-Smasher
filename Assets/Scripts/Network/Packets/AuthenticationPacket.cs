@@ -23,7 +23,20 @@ namespace DrumSmasher.Network.Packets
         public override PacketWriter ReadData(PacketReader reader, PacketWriter writer, User from)
         {
             _logger.Log("Reading authentication");
-            from.OnAuthenticated(reader.ReadBoolean());
+            bool authenticated = reader.ReadBoolean();
+            from.OnAuthenticated(authenticated);
+
+            if (!authenticated)
+                return null;
+
+            AccountData data = new AccountData()
+            {
+                Id = reader.ReadInt64(),
+                Name = reader.ReadString(),
+                IsAdmin = reader.ReadBoolean()
+            };
+
+            from.OnAccountInfoReceived(data);
 
             return null;
         }

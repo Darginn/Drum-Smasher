@@ -8,10 +8,9 @@ namespace DSServerCommon.Packets
     {
         Encryption = 1,
         Authentication,
-        AccountData,
         Message,
         JoinChat,
         PartChat,
-        RequestUserData,
+        UserData,
     }
 }
