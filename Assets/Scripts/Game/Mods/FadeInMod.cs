@@ -17,16 +17,21 @@ namespace DrumSmasher.Game.Mods
         [SerializeField] private float _multiplier = 1.125f;
         [SerializeField] private Transform _end;
 
+        [SerializeField] private Collider2D _firstCollider;
+        [SerializeField] private Collider2D _secondCollider;
+
         private float _distance;
 
         public override void OnEnabled(NoteScroller scroller)
         {
-            GetComponent<Collider2D>().enabled = true;
+            _firstCollider.enabled = true;
+            _secondCollider.enabled = true;
         }
 
         public override void OnDisabled(NoteScroller scroller)
         {
-            GetComponent<Collider2D>().enabled = false;
+            _firstCollider.enabled = false;
+            _secondCollider.enabled = false;
         }
 
         protected override void OnTriggerEnter2D(Collider2D collider)
@@ -74,8 +79,6 @@ namespace DrumSmasher.Game.Mods
 
                 renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, currentPercentage);
                 renderer2.color = new Color(renderer2.color.r, renderer2.color.g, renderer2.color.b, currentPercentage);
-
-                Logger.Log($"Current percentage: {currentPercentage} %");
 
                 yield return new WaitForEndOfFrame();
             }

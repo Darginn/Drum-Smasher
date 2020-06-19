@@ -350,6 +350,8 @@ MonoBehaviour:
   _name: FadeInMod
   _multiplier: 1.125
   _end: {fileID: 1750418977}
+  _firstCollider: {fileID: 1946558277}
+  _secondCollider: {fileID: 52885641}
 --- !u!1 &67039729
 GameObject:
   m_ObjectHideFlags: 0
@@ -5067,7 +5069,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1935798336
 Transform:
   m_ObjectHideFlags: 0
