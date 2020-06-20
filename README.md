@@ -11,4 +11,4 @@ Join our new [Discord](https://discord.gg/eVdng2P "Official Project Drum Smasher
 
 Update Repository: https://github.com/Blade12629/Drum-Smasher-Update/blob/master/README.md
 
-Updater Repository: https://github.com/Blade12629/Drum-Smasher-Updater/blob/master/README.md
+Network Repository (private for now): https://github.com/Blade12629/DSNetwork
