@@ -13,6 +13,8 @@ namespace DrumSmasher.Game
         public float Speed = float.MaxValue;
         public float StartTime = float.MaxValue;
         public bool AutoPlay = false;
+
+        public bool CanBeHit;
         public float HitRange;
         public StatisticHandler StatisticHandler;
 
@@ -40,7 +42,6 @@ namespace DrumSmasher.Game
 
         private static bool _autoPlaySwitch;
 
-        private bool _canBeHit = true;
         private bool _destroyThis = false;
 
         void Start()
@@ -58,17 +59,8 @@ namespace DrumSmasher.Game
             //Update our current position based on time
             UpdatePosition();
 
-            if (_canBeHit)
-            {
-                //We are out of hitrange
-                if ((gameObject.transform.position.x < _hitCirclePosition.x - HitRange))
-                {
-                    _canBeHit = false;
-                    return;
-                }
-
+            if (CanBeHit)
                 CheckForNoteHit();
-            }
             
             //We reached our end
             if (_destroyThis || gameObject.transform.position.x < _endPosition.x)
@@ -184,7 +176,7 @@ namespace DrumSmasher.Game
             }
 
             //We can hit the note
-            if (CanBeHit())
+            if (CanBeHit)
             {
                 //Check for player input
                 OnNoteHit(GetHitType());
@@ -249,12 +241,6 @@ namespace DrumSmasher.Game
                 case 2:
                     return HitType.GoodHit;
             }
-        }
-
-        private bool CanBeHit()
-        {
-            return (gameObject.transform.position.x > _hitCirclePosition.x - HitRange) &&
-                   (gameObject.transform.position.x < _hitCirclePosition.x + HitRange);
         }
 
         private void OnNoteHit(HitType hitType)

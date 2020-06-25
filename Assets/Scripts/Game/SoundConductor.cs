@@ -33,7 +33,7 @@ namespace DrumSmasher.Game
         [SerializeField] private double _dspSongTime;
         [SerializeField] private double _currentTime;
         [SerializeField] private PlayState _playState = PlayState.Stopped;
-        [SerializeField] private AudioSource _hitSound;
+        [SerializeField] private AudioSource _hitSoundNote;
         [SerializeField] private StatisticHandler _statisticHandler;
 
         private float _lastUpdated;
@@ -79,7 +79,8 @@ namespace DrumSmasher.Game
 
         public void PlayHitSound()
         {
-            _hitSound.Play();
+            if (_hitSoundNote != null && _hitSoundNote.clip != null)
+                _hitSoundNote.Play();
         }
 
         /// <summary>

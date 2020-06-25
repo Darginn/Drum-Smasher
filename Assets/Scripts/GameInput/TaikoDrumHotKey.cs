@@ -20,6 +20,7 @@ namespace DrumSmasher.GameInput
 
         [SerializeField] private float _timeSinceLastHit;
         [SerializeField] private float _autoplayHitDuration;
+        [SerializeField] private AudioSource _hitSound;
 
         protected override void Update()
         {
@@ -51,6 +52,8 @@ namespace DrumSmasher.GameInput
 
         public override void OnKeyDown()
         {
+            if (_hitSound != null && _hitSound.clip != null)
+                _hitSound.Play();
             _renderer.sprite = _triggerSprite;
             _timeSinceLastHit = 0f;
 
