@@ -178,6 +178,22 @@ namespace DrumSmasher.Game
             //We can hit the note
             if (CanBeHit)
             {
+                switch (_noteColor)
+                {
+                    default:
+                    case NoteColor.Blue:
+                        if ((Key1Controller.IsKeyDown && Key1Controller.HoldingSince == 0f) ||
+                            (Key4Controller.IsKeyDown && Key4Controller.HoldingSince == 0f))
+                            OnNoteHit(GetHitType());
+                        break;
+
+                    case NoteColor.Red:
+                        if ((Key2Controller.IsKeyDown && Key2Controller.HoldingSince == 0f) ||
+                            (Key3Controller.IsKeyDown && Key3Controller.HoldingSince == 0f))
+                            OnNoteHit(GetHitType());
+                        break;
+                }
+
                 //Check for player input
                 OnNoteHit(GetHitType());
             }
@@ -197,12 +213,12 @@ namespace DrumSmasher.Game
                     default:
                     case NoteColor.Blue:
                         hotkey1 = Key1Controller;
-                        hotkey2 = Key2Controller;
+                        hotkey2 = Key4Controller;
                         break;
 
                     case NoteColor.Red:
-                        hotkey1 = Key3Controller;
-                        hotkey2 = Key4Controller;
+                        hotkey1 = Key2Controller;
+                        hotkey2 = Key3Controller;
                         break;
                 }
 
