@@ -96,23 +96,27 @@ namespace DrumSmasher
 
         void Update()
         {
+            CheckForInput();
         }
 
         void FixedUpdate()
         {
-            CheckForInput();
         }
 
         private void CheckForInput()
         {
             if (Input.GetKeyDown(KeyCode.KeypadMinus))
             {
+                Logger.Log("Toggling Console");
+
                 if (_devConsole != null)
                 {
                     if (_devConsole.activeSelf)
                         _devConsole.SetActive(false);
                     else
                         _devConsole.SetActive(true);
+
+                    Logger.Log("Toggled Console");
                 }
                 else
                 {
@@ -123,6 +127,7 @@ namespace DrumSmasher
                     rt.anchoredPosition3D = new Vector3(950, 347, 1.5f);
 
                     StartCoroutine(rt.MoveOverSeconds(rt.anchoredPosition3D, new Vector3(950, -383, 1.5f), 0.5f, true));
+                    Logger.Log("Toggled Console");
                 }
             }
 
