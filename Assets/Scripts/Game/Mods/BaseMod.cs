@@ -17,7 +17,6 @@ namespace DrumSmasher.Game.Mods
 
         protected virtual void Start()
         {
-
         }
 
         protected virtual void Update()

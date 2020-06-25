@@ -19,26 +19,24 @@ namespace DrumSmasher.Game
         public SpriteRenderer Renderer;
         public SpriteRenderer OverlayRenderer;
 
-        public SoundConductor Conductor { get; set; }
-        public ButtonController Key1Controller { get; set; }
-        public ButtonController Key2Controller { get; set; }
+        public bool IgnoreColor;
 
-        private NoteType _noteType { get; set; }
+        public SoundConductor Conductor { get; set; }
+        public TaikoDrumHotKey Key1Controller { get; set; }
+        public TaikoDrumHotKey Key2Controller { get; set; }
+        public TaikoDrumHotKey Key3Controller { get; set; }
+        public TaikoDrumHotKey Key4Controller { get; set; }
+
+        private NoteType _noteType;
+        private NoteColor _noteColor;
         
-        [SerializeField]
-        private Vector3 _startPosition;
-        [SerializeField]
-        private Vector3 _hitCirclePosition;
-        [SerializeField]
-        private Vector3 _endPosition;
-        [SerializeField]
-        private Vector3 _noteSmallScale;
-        [SerializeField]
-        private Vector3 _noteBigScale;
-        [SerializeField]
-        private Color _noteColorRed;
-        [SerializeField]
-        private Color _noteColorBlue;
+        [SerializeField] private Vector3 _startPosition;
+        [SerializeField] private Vector3 _hitCirclePosition;
+        [SerializeField] private Vector3 _endPosition;
+        [SerializeField] private Vector3 _noteSmallScale;
+        [SerializeField] private Vector3 _noteBigScale;
+        [SerializeField] private Color _noteColorRed;
+        [SerializeField] private Color _noteColorBlue;
 
         private static bool _autoPlaySwitch;
 
@@ -104,6 +102,8 @@ namespace DrumSmasher.Game
                     gameObject.GetComponent<SpriteRenderer>().color = _noteColorBlue;
                     break;
             }
+
+            _noteColor = color;
         }
 
         public void UpdatePosition()
@@ -133,22 +133,47 @@ namespace DrumSmasher.Game
 
                     if (_noteType == NoteType.Big)
                     {
-                        OnNoteHit(HitType.GoodHit, true, true);
+                        OnNoteHit(HitType.GoodHit);
 
-                        Key1Controller.TriggerKey();
-                        Key2Controller.TriggerKey();
+                        switch(_noteColor)
+                        {
+                            case NoteColor.Blue:
+                                Key1Controller.OnKeyDown();
+                                Key4Controller.OnKeyDown();
+                                break;
+                            case NoteColor.Red:
+                                Key2Controller.OnKeyDown();
+                                Key3Controller.OnKeyDown();
+                                break;
+                        }
                     }
                     else
                     {
                         if (_autoPlaySwitch)
                         {
-                            OnNoteHit(HitType.GoodHit, false, true);
-                            Key2Controller.TriggerKey();
+                            OnNoteHit(HitType.GoodHit);
+                            switch(_noteColor)
+                            {
+                                case NoteColor.Blue:
+                                    Key1Controller.OnKeyDown();
+                                    break;
+                                case NoteColor.Red:
+                                    Key2Controller.OnKeyDown();
+                                    break;
+                            }
                         }
                         else
                         {
-                            OnNoteHit(HitType.GoodHit, true, false);
-                            Key1Controller.TriggerKey();
+                            OnNoteHit(HitType.GoodHit);
+                            switch (_noteColor)
+                            {
+                                case NoteColor.Blue:
+                                    Key4Controller.OnKeyDown();
+                                    break;
+                                case NoteColor.Red:
+                                    Key3Controller.OnKeyDown();
+                                    break;
+                            }
                         }
 
                         _autoPlaySwitch = !_autoPlaySwitch;
@@ -162,35 +187,65 @@ namespace DrumSmasher.Game
             if (CanBeHit())
             {
                 //Check for player input
-                OnNoteHit(GetHitType(), Input.GetKeyDown(Key1Controller.KeyToPress), Input.GetKeyDown(Key2Controller.KeyToPress));
+                OnNoteHit(GetHitType());
             }
+        }
+
+        private short CheckForHit()
+        {
+            short value = 0;
+
+            if (!IgnoreColor)
+            {
+                TaikoDrumHotKey hotkey1;
+                TaikoDrumHotKey hotkey2;
+
+                switch (_noteColor)
+                {
+                    default:
+                    case NoteColor.Blue:
+                        hotkey1 = Key1Controller;
+                        hotkey2 = Key2Controller;
+                        break;
+
+                    case NoteColor.Red:
+                        hotkey1 = Key3Controller;
+                        hotkey2 = Key4Controller;
+                        break;
+                }
+
+
+                if (hotkey1.IsKeyDown && hotkey1.HoldingSince == 0f)
+                    value++;
+                if (hotkey2.IsKeyDown && hotkey2.HoldingSince == 0f)
+                    value++;
+            }
+            else
+            {
+                if (Key1Controller.IsKeyDown && Key1Controller.HoldingSince == 0f)
+                    value++;
+                if (Key2Controller.IsKeyDown && Key2Controller.HoldingSince == 0f)
+                    value++;
+                if (Key3Controller.IsKeyDown && Key3Controller.HoldingSince == 0f)
+                    value++;
+                if (Key4Controller.IsKeyDown && Key4Controller.HoldingSince == 0f)
+                    value++;
+            }
+
+            return value;
         }
 
         private HitType GetHitType()
         {
-            int hits = 2;
-
-            if (_noteType == NoteType.Big)
-            {
-                if (!Input.GetKeyDown(Key1Controller.KeyToPress))
-                    hits--;
-                if (!Input.GetKeyDown(Key2Controller.KeyToPress))
-                    hits--;
-            }
-            else
-            {
-                if (!Input.GetKeyDown(Key1Controller.KeyToPress) &&
-                    !Input.GetKeyDown(Key2Controller.KeyToPress))
-                    hits -= 2;
-            }
+            int hits = CheckForHit();
 
             switch (hits)
             {
-                default:
                 case 0:
                     return HitType.Miss;
                 case 1:
                     return HitType.BadHit;
+                default:
                 case 2:
                     return HitType.GoodHit;
             }
@@ -202,7 +257,7 @@ namespace DrumSmasher.Game
                    (gameObject.transform.position.x < _hitCirclePosition.x + HitRange);
         }
 
-        private void OnNoteHit(HitType hitType, bool key1, bool key2)
+        private void OnNoteHit(HitType hitType)
         {
             bool bignote = transform.localScale == _noteBigScale;
 
@@ -211,7 +266,6 @@ namespace DrumSmasher.Game
                 case HitType.BadHit:
                     Conductor.PlayHitSound();
                     Destroy(gameObject);
-                    int keyId = key1 ? Key1Controller.KeyId : Key2Controller.KeyId;
 
                     StatisticHandler.OnNoteHit(HitType.BadHit, bignote);
 

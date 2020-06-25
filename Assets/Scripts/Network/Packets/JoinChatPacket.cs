@@ -27,12 +27,13 @@ namespace DrumSmasher.Network.Packets
             bool status = reader.ReadBoolean();
             long userId = reader.ReadInt64();
             long channelId = reader.ReadInt64();
+            string channelName = reader.ReadString();
             _logger.Log($"Reading chat join for user {userId}");
 
             if (from.AccountData == null || userId == from.AccountData.Id)
-                from.OnChatJoined(true);
+                from.OnChatJoined(true, channelId, channelName);
             else
-                from.OnChatJoined(userId);
+                from.OnChatJoined(userId, channelId, channelName);
 
             return null;
         }

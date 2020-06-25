@@ -11,11 +11,14 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using Assets.Scripts.Game.Mods;
 using DSServerCommon;
+using DrumSmasher.Game.Mods;
 
 namespace DrumSmasher.Game
 {
     public class NoteScroller : MonoBehaviour 
     {
+        public bool IgnoreColor;
+
         private Chart _chart;
         private List<ChartNote> _notes;
         private int _notesIndex;
@@ -28,14 +31,19 @@ namespace DrumSmasher.Game
         [SerializeField] private Vector3 _startPosition;
         [SerializeField] private Vector3 _hitCirclePosition;
         [SerializeField] private GameObject _notePrefab;
-        [SerializeField] private ButtonController _key1Controller;
-        [SerializeField] private ButtonController _key2Controller;
-        [SerializeField] private ButtonController _key3Controller;
-        [SerializeField] private ButtonController _key4Controller;
+        //[SerializeField] private ButtonController _key1Controller;
+        //[SerializeField] private ButtonController _key2Controller;
+        //[SerializeField] private ButtonController _key3Controller;
+        //[SerializeField] private ButtonController _key4Controller;
         [SerializeField] internal bool AutoPlay;
         [SerializeField] StatisticHandler _statisticHandler;
         [SerializeField] ScoreScreen _scoreScreen;
         [SerializeField] List<(string, float)> _currentMods;
+
+        [SerializeField] TaikoDrumHotKey _hotkeyDrumOuterLeft;
+        [SerializeField] TaikoDrumHotKey _hotkeyDrumInnerLeft;
+        [SerializeField] TaikoDrumHotKey _hotkeyDrumInnerRight;
+        [SerializeField] TaikoDrumHotKey _hotkeyDrumOuterRight;
 
         private float _layer;
         private DirectoryInfo _chartDirectory;
@@ -137,11 +145,12 @@ namespace DrumSmasher.Game
 
         public void SetAutoPlay(bool autoplay)
         {
+            _statisticHandler.Multiplier = 0f;
             AutoPlay = autoplay;
-            _key1Controller.AutoPlay = autoplay;
-            _key2Controller.AutoPlay = autoplay;
-            _key3Controller.AutoPlay = autoplay;
-            _key4Controller.AutoPlay = autoplay;
+            _hotkeyDrumOuterLeft.IsAutoplayEnabled = autoplay;
+            _hotkeyDrumInnerLeft.IsAutoplayEnabled = autoplay;
+            _hotkeyDrumInnerRight.IsAutoplayEnabled = autoplay;
+            _hotkeyDrumOuterRight.IsAutoplayEnabled = autoplay;
         }
 
         public void LoadSettings()
@@ -153,19 +162,25 @@ namespace DrumSmasher.Game
             if (settings.Data.Autoplay)
                 SetAutoPlay(true);
 
-            _key1Controller.KeyId = 1;
-            _key2Controller.KeyId = 2;
-            _key3Controller.KeyId = 3;
-            _key4Controller.KeyId = 4;
-
-            if (!Enum.TryParse(settings.Data.Key1.ToUpper(), out _key1Controller.KeyToPress))
+            if (!Enum.TryParse(settings.Data.Key1.ToUpper(), out KeyCode k1))
                 Logger.Log($"Could not parse key {settings.Data.Key1}", LogLevel.Error);
-            if (!Enum.TryParse(settings.Data.Key2.ToUpper(), out _key2Controller.KeyToPress))
+            else
+                _hotkeyDrumOuterLeft.Key = k1;
+
+            if (!Enum.TryParse(settings.Data.Key2.ToUpper(), out KeyCode k2))
                 Logger.Log($"Could not parse key {settings.Data.Key2}", LogLevel.Error);
-            if (!Enum.TryParse(settings.Data.Key3.ToUpper(), out _key3Controller.KeyToPress))
+            else
+                _hotkeyDrumInnerLeft.Key = k2;
+
+            if (!Enum.TryParse(settings.Data.Key3.ToUpper(), out KeyCode k3))
                 Logger.Log($"Could not parse key {settings.Data.Key3}", LogLevel.Error);
-            if (!Enum.TryParse(settings.Data.Key4.ToUpper(), out _key4Controller.KeyToPress))
+            else
+                _hotkeyDrumInnerRight.Key = k3;
+
+            if (!Enum.TryParse(settings.Data.Key4.ToUpper(), out KeyCode k4))
                 Logger.Log($"Could not parse key {settings.Data.Key4}", LogLevel.Error);
+            else
+                _hotkeyDrumOuterRight.Key = k4;
 
             Logger.Log("Loaded Taiko Settings");
         }
@@ -194,6 +209,9 @@ namespace DrumSmasher.Game
                     controller.ModObject.SetActive(true);
                     _statisticHandler.Multiplier += controller.BaseMod.Multiplier - 1f;
 
+                    BaseMod bm = controller.ModObject.GetComponentInChildren<BaseMod>();
+                    bm.OnEnabled(this);
+
                     Logger.Log($"Enabled mod {mods[i]} {i + 1}/{mods.Count}");
                 }
 
@@ -201,13 +219,7 @@ namespace DrumSmasher.Game
             }
 
             if (AutoPlay)
-            {
-                _statisticHandler.Multiplier = 0f;
-                _key1Controller.AutoPlay = true;
-                _key2Controller.AutoPlay = true;
-                _key3Controller.AutoPlay = true;
-                _key4Controller.AutoPlay = true;
-            }
+                SetAutoPlay(AutoPlay);
 
             _conductor.Play();
             _reachedEndOfChart = false;
@@ -260,19 +272,12 @@ namespace DrumSmasher.Game
             noteScript.AutoPlay = AutoPlay;
             noteScript.StatisticHandler = _statisticHandler;
 
-            switch (color)
-            {
-                default:
-                case NoteColor.Blue:
-                    noteScript.Key1Controller = _key3Controller;
-                    noteScript.Key2Controller = _key4Controller;
-                    break;
+            noteScript.Key1Controller = _hotkeyDrumOuterLeft;
+            noteScript.Key2Controller = _hotkeyDrumInnerLeft;
+            noteScript.Key3Controller = _hotkeyDrumInnerRight;
+            noteScript.Key4Controller = _hotkeyDrumOuterRight;
 
-                case NoteColor.Red:
-                    noteScript.Key1Controller = _key1Controller;
-                    noteScript.Key2Controller = _key2Controller;
-                    break;
-            }
+            noteScript.IgnoreColor = IgnoreColor;
 
             noteScript.Speed = _speed;
             noteScript.Conductor = _conductor;

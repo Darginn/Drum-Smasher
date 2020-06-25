@@ -408,7 +408,7 @@ GameObject:
   m_Component:
   - component: {fileID: 121062834}
   - component: {fileID: 121062836}
-  - component: {fileID: 121062835}
+  - component: {fileID: 121062837}
   m_Layer: 0
   m_Name: taiko-inner-left
   m_TagString: Untagged
@@ -430,22 +430,6 @@ Transform:
   m_Father: {fileID: 1404780992}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &121062835
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 121062833}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32c175ea5ecf73f4e8cef929132aa144, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _renderer: {fileID: 121062836}
-  _triggerSprite: {fileID: 21300000, guid: 2c212105b4cead84f928ff071a0c8431, type: 3}
-  _defaultSprite: {fileID: 21300000, guid: 242ec56ce48c7ef4e96c219cfee4696a, type: 3}
-  _lightUpDurationMS: 50
 --- !u!212 &121062836
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -496,6 +480,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &121062837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 121062833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b233d809270ad469a0d8d72419cb85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _keyDown: 0
+  _holdingSince: 0
+  IsAutoplayEnabled: 0
+  Key: 102
+  _renderer: {fileID: 121062836}
+  _triggerSprite: {fileID: 21300000, guid: 2c212105b4cead84f928ff071a0c8431, type: 3}
+  _defaultSprite: {fileID: 21300000, guid: 242ec56ce48c7ef4e96c219cfee4696a, type: 3}
+  _timeSinceLastHit: 0
+  _autoplayHitDuration: 0.1
 --- !u!1 &146001933
 GameObject:
   m_ObjectHideFlags: 0
@@ -849,10 +854,6 @@ GameObject:
   m_Component:
   - component: {fileID: 275989789}
   - component: {fileID: 275989788}
-  - component: {fileID: 275989793}
-  - component: {fileID: 275989792}
-  - component: {fileID: 275989791}
-  - component: {fileID: 275989790}
   m_Layer: 0
   m_Name: NoteScroller
   m_TagString: Untagged
@@ -872,6 +873,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06368dc1edd8a1349995d344f5b55622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IgnoreColor: 0
   _conductor: {fileID: 861510756}
   _speed: 15
   _defaultSpeed: 15
@@ -880,13 +882,13 @@ MonoBehaviour:
   _hitCirclePosition: {x: -10.7975, y: 2.458, z: 0}
   _notePrefab: {fileID: 1535823241492532706, guid: c63ca7437e83a1e4e9ce0ec10a4e3991,
     type: 3}
-  _key1Controller: {fileID: 275989793}
-  _key2Controller: {fileID: 275989792}
-  _key3Controller: {fileID: 275989791}
-  _key4Controller: {fileID: 275989790}
   AutoPlay: 0
   _statisticHandler: {fileID: 258617719}
   _scoreScreen: {fileID: 1846047538}
+  _hotkeyDrumOuterLeft: {fileID: 1086453108}
+  _hotkeyDrumInnerLeft: {fileID: 121062837}
+  _hotkeyDrumInnerRight: {fileID: 841194377}
+  _hotkeyDrumOuterRight: {fileID: 2082615726}
 --- !u!4 &275989789
 Transform:
   m_ObjectHideFlags: 0
@@ -902,186 +904,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &275989790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 275989787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f755ea1205021d4c950c3d970c56ca1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  KeyToPress: 107
-  OnPressed:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2082615725}
-        m_MethodName: Trigger
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnPressedUp:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2082615725}
-        m_MethodName: Reset
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  AutoPlay: 0
-  AutoPlayDelay: 0.1
-  KeyId: 0
-  StatisticHandler: {fileID: 258617719}
---- !u!114 &275989791
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 275989787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f755ea1205021d4c950c3d970c56ca1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  KeyToPress: 100
-  OnPressed:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1086453107}
-        m_MethodName: Trigger
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnPressedUp:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1086453107}
-        m_MethodName: Reset
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  AutoPlay: 0
-  AutoPlayDelay: 0.1
-  KeyId: 0
-  StatisticHandler: {fileID: 258617719}
---- !u!114 &275989792
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 275989787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f755ea1205021d4c950c3d970c56ca1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  KeyToPress: 106
-  OnPressed:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 841194376}
-        m_MethodName: Trigger
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnPressedUp:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 841194376}
-        m_MethodName: Reset
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  AutoPlay: 0
-  AutoPlayDelay: 0.1
-  KeyId: 0
-  StatisticHandler: {fileID: 258617719}
---- !u!114 &275989793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 275989787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f755ea1205021d4c950c3d970c56ca1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  KeyToPress: 102
-  OnPressed:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 121062835}
-        m_MethodName: Trigger
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnPressedUp:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 121062835}
-        m_MethodName: Reset
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  AutoPlay: 0
-  AutoPlayDelay: 0.1
-  KeyId: 0
-  StatisticHandler: {fileID: 258617719}
 --- !u!1 &276751497
 GameObject:
   m_ObjectHideFlags: 0
@@ -2497,7 +2319,7 @@ GameObject:
   m_Component:
   - component: {fileID: 841194375}
   - component: {fileID: 841194378}
-  - component: {fileID: 841194376}
+  - component: {fileID: 841194377}
   m_Layer: 0
   m_Name: taiko-inner-right
   m_TagString: Untagged
@@ -2519,7 +2341,7 @@ Transform:
   m_Father: {fileID: 1404780992}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &841194376
+--- !u!114 &841194377
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2528,13 +2350,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 841194374}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32c175ea5ecf73f4e8cef929132aa144, type: 3}
+  m_Script: {fileID: 11500000, guid: 78b233d809270ad469a0d8d72419cb85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _keyDown: 0
+  _holdingSince: 0
+  IsAutoplayEnabled: 0
+  Key: 106
   _renderer: {fileID: 841194378}
   _triggerSprite: {fileID: 21300000, guid: 2c212105b4cead84f928ff071a0c8431, type: 3}
   _defaultSprite: {fileID: 21300000, guid: 242ec56ce48c7ef4e96c219cfee4696a, type: 3}
-  _lightUpDurationMS: 50
+  _timeSinceLastHit: 0
+  _autoplayHitDuration: 0.1
 --- !u!212 &841194378
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3176,6 +3003,7 @@ Transform:
   - {fileID: 67039730}
   - {fileID: 360025467}
   - {fileID: 1521457196}
+  - {fileID: 1693527899}
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3436,7 +3264,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1086453106}
   - component: {fileID: 1086453109}
-  - component: {fileID: 1086453107}
+  - component: {fileID: 1086453108}
   m_Layer: 0
   m_Name: taiko-outer-left
   m_TagString: Untagged
@@ -3458,7 +3286,7 @@ Transform:
   m_Father: {fileID: 1404780992}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1086453107
+--- !u!114 &1086453108
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3467,13 +3295,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1086453105}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32c175ea5ecf73f4e8cef929132aa144, type: 3}
+  m_Script: {fileID: 11500000, guid: 78b233d809270ad469a0d8d72419cb85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _keyDown: 0
+  _holdingSince: 0
+  IsAutoplayEnabled: 0
+  Key: 100
   _renderer: {fileID: 1086453109}
   _triggerSprite: {fileID: 21300000, guid: 07f35c50ad168264ca0c6e49fa69a1ab, type: 3}
   _defaultSprite: {fileID: 21300000, guid: 19cb1197b0b4c5d45b105380acb5bf90, type: 3}
-  _lightUpDurationMS: 50
+  _timeSinceLastHit: 0
+  _autoplayHitDuration: 0.1
 --- !u!212 &1086453109
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4282,6 +4115,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1486492162}
   m_CullTransparentMesh: 0
+--- !u!1 &1515968778
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1515968779}
+  - component: {fileID: 1515968780}
+  m_Layer: 0
+  m_Name: IgnoreColorMod
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1515968779
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1515968778}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1693527899}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1515968780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1515968778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad1c7435477a58b40a9eb20767c087e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: IgnoreColorMod
+  _multiplier: 0.5
 --- !u!1 &1521457195
 GameObject:
   m_ObjectHideFlags: 0
@@ -4533,6 +4411,52 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1693527898
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1693527899}
+  - component: {fileID: 1693527900}
+  m_Layer: 0
+  m_Name: IgnoreColorController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1693527899
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1693527898}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1515968779}
+  m_Father: {fileID: 947972791}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1693527900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1693527898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37ee2e2db84ca2544b91ec2fa095c7cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ModObject: {fileID: 1515968778}
+  BaseMod: {fileID: 1515968780}
 --- !u!1 &1697656231
 GameObject:
   m_ObjectHideFlags: 0
@@ -4937,7 +4861,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 137, y: -31.350098}
+  m_AnchoredPosition: {x: 137, y: -31.349976}
   m_SizeDelta: {x: -100, y: -80.400024}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1846047538
@@ -5509,7 +5433,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2082615724}
   - component: {fileID: 2082615727}
-  - component: {fileID: 2082615725}
+  - component: {fileID: 2082615726}
   m_Layer: 0
   m_Name: taiko-outer-right
   m_TagString: Untagged
@@ -5531,7 +5455,7 @@ Transform:
   m_Father: {fileID: 1404780992}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2082615725
+--- !u!114 &2082615726
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5540,13 +5464,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 2082615723}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32c175ea5ecf73f4e8cef929132aa144, type: 3}
+  m_Script: {fileID: 11500000, guid: 78b233d809270ad469a0d8d72419cb85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _keyDown: 0
+  _holdingSince: 0
+  IsAutoplayEnabled: 0
+  Key: 107
   _renderer: {fileID: 2082615727}
   _triggerSprite: {fileID: 21300000, guid: 07f35c50ad168264ca0c6e49fa69a1ab, type: 3}
   _defaultSprite: {fileID: 21300000, guid: 19cb1197b0b4c5d45b105380acb5bf90, type: 3}
-  _lightUpDurationMS: 50
+  _timeSinceLastHit: 0
+  _autoplayHitDuration: 0.1
 --- !u!212 &2082615727
 SpriteRenderer:
   m_ObjectHideFlags: 0

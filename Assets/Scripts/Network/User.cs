@@ -290,6 +290,7 @@ namespace DrumSmasher.Network
 
             _logger.Log("Authenticated");
             _isAuthenticated = true;
+
             return true;
         }
 
@@ -359,20 +360,22 @@ namespace DrumSmasher.Network
             string msg = $"{hour}:{minute} {RequestOrGetUsername(userId)}@{dest}: {message}";
 
             _logger.Log(msg);
-            //ToDo: implement multiple channels
+            //TODO: implement multiple channels
             UIChat.Chat.AddLine(msg);
         }
 
-        public void OnChatJoined(long userId)
+        //TODO: implement private messages
+
+        public void OnChatJoined(long userId, long channelId, string channelName)
         {
-            _logger.Log($"User {RequestOrGetUsername(userId)} joined the chat");
-            UIChat.Chat.SysMsg($"User {RequestOrGetUsername(userId)} joined the chat");
+            _logger.Log($"User {RequestOrGetUsername(userId)} joined the chat {channelName} (ID: {channelId})");
+            UIChat.Chat.SysMsg($"User {RequestOrGetUsername(userId)} joined the chat {channelName} (ID: {channelId})");
         }
 
-        public void OnChatJoined(bool confirmation)
+        public void OnChatJoined(bool confirmation, long channelId, string channelName)
         {
-            _logger.Log($"Joined chat: {confirmation}");
-            UIChat.Chat.SysMsg($"Joined chat: {confirmation}");
+            _logger.Log($"Joined chat {channelName} (ID: {channelId}): {confirmation}");
+            UIChat.Chat.SysMsg($"Joined chat {channelName} (ID: {channelId}): {confirmation}");
         }
 
         public void PartChat(long chatId)
