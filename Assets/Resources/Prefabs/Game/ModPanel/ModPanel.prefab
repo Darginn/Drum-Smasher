@@ -91,7 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _image: {fileID: 7717541905995086125}
   _modName: IgnoreColorMod
-  _multiplier: 1.125
+  _multiplier: 0.5
 --- !u!114 &5463837983759332788
 MonoBehaviour:
   m_ObjectHideFlags: 0
