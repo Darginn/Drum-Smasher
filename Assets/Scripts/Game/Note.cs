@@ -131,7 +131,7 @@ namespace DrumSmasher.Game
 
                 if (AutoPlay)
                 {
-                    if (transform.localPosition.x <= _hitCirclePosition.x)
+                    if (transform.position.x <= _hitCirclePosition.x)
                         OnNoteHit(HitType.GoodHit, hotkey1, hotkey2);
                 }
                 else
@@ -228,6 +228,7 @@ namespace DrumSmasher.Game
                     _autoPlaySwitch = !_autoPlaySwitch;
                 }
 
+                Destroy(gameObject);
                 return;
             }
 

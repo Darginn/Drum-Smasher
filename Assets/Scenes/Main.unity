@@ -879,7 +879,7 @@ MonoBehaviour:
   _defaultSpeed: 15
   _offset: 0
   _startPosition: {x: 74.4, y: 2.458, z: 0}
-  _hitCirclePosition: {x: -10.7975, y: 2.458, z: 0}
+  _hitCirclePosition: {x: -10.78751, y: 2.458, z: 0}
   _notePrefab: {fileID: 1535823241492532706, guid: c63ca7437e83a1e4e9ce0ec10a4e3991,
     type: 3}
   AutoPlay: 0
