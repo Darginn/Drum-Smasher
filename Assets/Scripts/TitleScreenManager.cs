@@ -33,7 +33,86 @@ namespace DrumSmasher
         private ExtensionFilter _extChartFilter = new ExtensionFilter("Chart", "chart");
         private ExtensionFilter _extOsuFilter = new ExtensionFilter("Osu difficulty", "osu");
         private GameObject _devConsole;
+
+        [SerializeField] private Text key1Text;
+        [SerializeField] private Text key2Text;
+        [SerializeField] private Text key3Text;
+        [SerializeField] private Text key4Text;
         
+        public void SetHotKey1()
+        {
+            StartCoroutine(SetHotKeyCoroutine(0));
+        }
+
+        public void SetHotKey2()
+        {
+            StartCoroutine(SetHotKeyCoroutine(1));
+        }
+
+        public void SetHotKey3()
+        {
+            StartCoroutine(SetHotKeyCoroutine(2));
+        }
+
+        public void SetHotKey4()
+        {
+            StartCoroutine(SetHotKeyCoroutine(3));
+        }
+
+        private IEnumerator SetHotKeyCoroutine(int value)
+        {
+            KeyCode? key = null;
+
+            while(!key.HasValue)
+            {
+                if (Input.GetKey(KeyCode.Escape))
+                    break;
+
+                foreach (KeyCode keyCode in Enum.GetValues(typeof(KeyCode)))
+                    if (Input.GetKey(keyCode))
+                        key = keyCode;
+
+                yield return new WaitForEndOfFrame();
+            }
+
+            if (!key.HasValue)
+                yield return null;
+
+            SetHotKey(value, key.Value);
+        }
+
+        /// <param name="value">0-3</param>
+        private void SetHotKey(int value, KeyCode key)
+        {
+            TaikoSettings ts = SettingsManager.SettingsStorage["Taiko"] as TaikoSettings;
+
+            switch(value)
+            {
+                default:
+                case 0:
+                    key1Text.text = key.ToString();
+                    ts.Data.Key1 = key1Text.text;
+                    break;
+
+                case 1:
+                    key2Text.text = key.ToString();
+                    ts.Data.Key2 = key2Text.text;
+                    break;
+
+                case 2:
+                    key3Text.text = key.ToString();
+                    ts.Data.Key3 = key3Text.text;
+                    break;
+
+                case 3:
+                    key4Text.text = key.ToString();
+                    ts.Data.Key4 = key4Text.text;
+                    break;
+            }
+
+            SettingsManager.AddOrUpdate(ts);
+        }
+
         void Start()
         {
             TitleScreenSettings tss = null;
@@ -59,6 +138,11 @@ namespace DrumSmasher
             }
             else
                 ts = SettingsManager.SettingsStorage["Taiko"] as TaikoSettings;
+
+            key1Text.text = ts.Data.Key1;
+            key2Text.text = ts.Data.Key2;
+            key3Text.text = ts.Data.Key3;
+            key4Text.text = ts.Data.Key4;
 
             Application.targetFrameRate = tss.Data.FPSMenu;
             QualitySettings.vSyncCount = 0;
