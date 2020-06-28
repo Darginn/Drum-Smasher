@@ -37,7 +37,9 @@ namespace DrumSmasher.Game
 
         private NoteType _noteType;
         private NoteColor _noteColor;
-        
+        private bool _missed;
+        private bool _canBeHitWasTrue;
+
         [SerializeField] private Vector3 _startPosition;
         [SerializeField] private Vector3 _hitCirclePosition;
         [SerializeField] private Vector3 _endPosition;
@@ -69,8 +71,20 @@ namespace DrumSmasher.Game
             if (_destroyThis || gameObject.transform.position.x < _endPosition.x)
                 Destroy(gameObject);
 
+            if (_missed)
+                return;
+            else if (!CanBeHit && _canBeHitWasTrue)
+            {
+                _missed = true;
+                StatisticHandler.OnNoteHit(HitType.Miss, _noteType == NoteType.Big ? true : false);
+                return;
+            }
+
             if (CanBeHit)
             {
+                if (!_canBeHitWasTrue)
+                    _canBeHitWasTrue = true;
+
                 TaikoDrumHotKey hotkey1 = null;
                 TaikoDrumHotKey hotkey2 = null;
                 int hitValue = 0;
