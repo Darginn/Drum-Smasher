@@ -47,6 +47,7 @@ namespace DrumSmasher.Game
 
         private float _layer;
         private DirectoryInfo _chartDirectory;
+        private GameObject _lastNote;
 
         void Start()
         {
@@ -131,7 +132,6 @@ namespace DrumSmasher.Game
             _notes = chart.Notes.ToList();
             _chart = chart;
             _speed = chart.Speed;
-
             _chartDirectory = chartDirectory;
             _conductor.LoadMp3File(Path.Combine(chartDirectory.FullName, chart.SoundFile));
 
@@ -190,10 +190,12 @@ namespace DrumSmasher.Game
         /// </summary>
         public void Play(List<(string, float)> mods = null)
         {
+            bool autoplay = false;
+
             if (mods != null)
             {
                 if (mods.Any(m => m.Item1.Equals("AutoPlayMod", StringComparison.CurrentCultureIgnoreCase)))
-                    AutoPlay = true;
+                    autoplay = true;
 
                 GameObject modPanel = GameObject.Find("Mods");
                 ModController[] modControllers = modPanel.GetComponentsInChildren<ModController>();
@@ -218,14 +220,12 @@ namespace DrumSmasher.Game
                 _currentMods = mods;
             }
 
-            if (AutoPlay)
-                SetAutoPlay(AutoPlay);
+            if (autoplay)
+                SetAutoPlay(true);
 
             _conductor.Play();
             _reachedEndOfChart = false;
         }
-
-        private GameObject _lastNote;
 
         private (double, ChartNote) GetNextAvailableNote()
         {
@@ -271,6 +271,7 @@ namespace DrumSmasher.Game
             noteScript.SetNoteType(type, color);
             noteScript.AutoPlay = AutoPlay;
             noteScript.StatisticHandler = _statisticHandler;
+            noteScript.NoteScroller = this;
 
             noteScript.Key1Controller = _hotkeyDrumOuterLeft;
             noteScript.Key2Controller = _hotkeyDrumInnerLeft;

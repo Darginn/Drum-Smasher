@@ -1,5 +1,6 @@
 ﻿using DrumSmasher.GameInput;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,13 +11,18 @@ namespace DrumSmasher.Game
 {
     public class Note : MonoBehaviour
     {
+        public int NoteId;
         public float Speed = float.MaxValue;
         public float StartTime = float.MaxValue;
         public bool AutoPlay = false;
 
+        private static bool _lastHitRed;
+        private static bool _lastHitBlue;
+
         public bool CanBeHit;
         public float HitRange;
         public StatisticHandler StatisticHandler;
+        public NoteScroller NoteScroller;
 
         public SpriteRenderer Renderer;
         public SpriteRenderer OverlayRenderer;
@@ -59,12 +65,92 @@ namespace DrumSmasher.Game
             //Update our current position based on time
             UpdatePosition();
 
-            if (CanBeHit)
-                CheckForNoteHit();
-            
             //We reached our end
             if (_destroyThis || gameObject.transform.position.x < _endPosition.x)
                 Destroy(gameObject);
+
+            if (CanBeHit)
+            {
+                TaikoDrumHotKey hotkey1 = null;
+                TaikoDrumHotKey hotkey2 = null;
+                int hitValue = 0;
+
+                switch (_noteColor)
+                {
+                    case NoteColor.Red:
+                        switch (_noteType)
+                        {
+                            case NoteType.Big:
+                                if (Key2Controller.IsKeyDown && Key2Controller.HoldingSince == 0f)
+                                    hitValue++;
+
+                                if (Key3Controller.IsKeyDown && Key3Controller.HoldingSince == 0f)
+                                    hitValue++;
+
+                                hotkey1 = Key2Controller;
+                                hotkey2 = Key3Controller;
+                                break;
+
+                            case NoteType.Small:
+                                if ((Key2Controller.IsKeyDown && Key2Controller.HoldingSince == 0f) ||
+                                    (Key3Controller.IsKeyDown && Key3Controller.HoldingSince == 0f))
+                                    hitValue += 2;
+
+                                hotkey1 = Key2Controller;
+                                hotkey2 = Key3Controller;
+                                break;
+                        }
+                        break;
+
+                    case NoteColor.Blue:
+                        switch (_noteType)
+                        {
+                            case NoteType.Big:
+
+                                if (Key1Controller.IsKeyDown && Key1Controller.HoldingSince == 0f)
+                                    hitValue++;
+
+                                if (Key4Controller.IsKeyDown && Key4Controller.HoldingSince == 0f)
+                                    hitValue++;
+
+                                hotkey1 = Key1Controller;
+                                hotkey2 = Key4Controller;
+                                break;
+
+                            case NoteType.Small:
+                                if ((Key1Controller.IsKeyDown && Key1Controller.HoldingSince == 0f) ||
+                                    (Key4Controller.IsKeyDown && Key4Controller.HoldingSince == 0f))
+                                    hitValue += 2;
+
+                                hotkey1 = Key1Controller;
+                                hotkey2 = Key4Controller;
+                                break;
+                        }
+                        break;
+                }
+
+                if (AutoPlay)
+                {
+                    if (transform.localPosition.x <= _hitCirclePosition.x)
+                        OnNoteHit(HitType.GoodHit, hotkey1, hotkey2);
+                }
+                else
+                {
+                    if (hitValue > 0)
+                    {
+                        switch (hitValue)
+                        {
+                            default:
+                            case 1:
+                                OnNoteHit(HitType.BadHit, hotkey1, hotkey2);
+                                break;
+                            case 2:
+                                OnNoteHit(HitType.GoodHit, hotkey1, hotkey2);
+                                break;
+                        }
+                    }
+                }
+            }
         }
 
         public void SetNoteType(NoteType type, NoteColor color)
@@ -116,178 +202,83 @@ namespace DrumSmasher.Game
             _startPosition.z = value;
         }
 
-        private void CheckForNoteHit()
+        private void OnNoteHit(HitType hit, TaikoDrumHotKey hotkey1, TaikoDrumHotKey hotKey2)
         {
+            if (hit == HitType.Miss)
+                return;
+            
+            bool bignote = transform.localScale == _noteBigScale;
+
             if (AutoPlay)
             {
-                if (gameObject.transform.position.x <= _hitCirclePosition.x)
+                StatisticHandler.OnNoteHit(HitType.GoodHit, bignote);
+
+                if (bignote)
                 {
-
-                    if (_noteType == NoteType.Big)
-                    {
-                        OnNoteHit(HitType.GoodHit);
-
-                        switch(_noteColor)
-                        {
-                            case NoteColor.Blue:
-                                Key1Controller.OnKeyDown();
-                                Key4Controller.OnKeyDown();
-                                break;
-                            case NoteColor.Red:
-                                Key2Controller.OnKeyDown();
-                                Key3Controller.OnKeyDown();
-                                break;
-                        }
-                    }
+                    hotkey1.OnKeyDown();
+                    hotKey2.OnKeyDown();
+                }
+                else
+                {
+                    if (_autoPlaySwitch)
+                        hotKey2.OnKeyDown();
                     else
-                    {
-                        if (_autoPlaySwitch)
-                        {
-                            OnNoteHit(HitType.GoodHit);
-                            switch(_noteColor)
-                            {
-                                case NoteColor.Blue:
-                                    Key1Controller.OnKeyDown();
-                                    break;
-                                case NoteColor.Red:
-                                    Key2Controller.OnKeyDown();
-                                    break;
-                            }
-                        }
-                        else
-                        {
-                            OnNoteHit(HitType.GoodHit);
-                            switch (_noteColor)
-                            {
-                                case NoteColor.Blue:
-                                    Key4Controller.OnKeyDown();
-                                    break;
-                                case NoteColor.Red:
-                                    Key3Controller.OnKeyDown();
-                                    break;
-                            }
-                        }
-
-                        _autoPlaySwitch = !_autoPlaySwitch;
-                    }
+                        hotkey1.OnKeyDown();
+                    
+                    _autoPlaySwitch = !_autoPlaySwitch;
                 }
 
                 return;
             }
 
-            //We can hit the note
-            if (CanBeHit)
+            switch (_noteColor)
             {
-                switch (_noteColor)
-                {
-                    default:
-                    case NoteColor.Blue:
-                        if ((Key1Controller.IsKeyDown && Key1Controller.HoldingSince == 0f) ||
-                            (Key4Controller.IsKeyDown && Key4Controller.HoldingSince == 0f))
-                            OnNoteHit(GetHitType());
-                        break;
+                case NoteColor.Red:
+                    if (!AutoPlay && _lastHitRed)
+                        return;
 
-                    case NoteColor.Red:
-                        if ((Key2Controller.IsKeyDown && Key2Controller.HoldingSince == 0f) ||
-                            (Key3Controller.IsKeyDown && Key3Controller.HoldingSince == 0f))
-                            OnNoteHit(GetHitType());
-                        break;
-                }
+                    _lastHitRed = true;
+                    break;
 
-                //Check for player input
-                OnNoteHit(GetHitType());
-            }
-        }
+                case NoteColor.Blue:
+                    if (!AutoPlay && _lastHitBlue)
+                        return;
 
-        private short CheckForHit()
-        {
-            short value = 0;
-
-            if (!IgnoreColor)
-            {
-                TaikoDrumHotKey hotkey1;
-                TaikoDrumHotKey hotkey2;
-
-                switch (_noteColor)
-                {
-                    default:
-                    case NoteColor.Blue:
-                        hotkey1 = Key1Controller;
-                        hotkey2 = Key4Controller;
-                        break;
-
-                    case NoteColor.Red:
-                        hotkey1 = Key2Controller;
-                        hotkey2 = Key3Controller;
-                        break;
-                }
-
-
-                if (hotkey1.IsKeyDown && hotkey1.HoldingSince == 0f)
-                    value++;
-                if (hotkey2.IsKeyDown && hotkey2.HoldingSince == 0f)
-                    value++;
-            }
-            else
-            {
-                if (Key1Controller.IsKeyDown && Key1Controller.HoldingSince == 0f)
-                    value++;
-                if (Key2Controller.IsKeyDown && Key2Controller.HoldingSince == 0f)
-                    value++;
-                if (Key3Controller.IsKeyDown && Key3Controller.HoldingSince == 0f)
-                    value++;
-                if (Key4Controller.IsKeyDown && Key4Controller.HoldingSince == 0f)
-                    value++;
+                    _lastHitBlue = true;
+                    break;
             }
 
-            return value;
-        }
-
-        private HitType GetHitType()
-        {
-            int hits = CheckForHit();
-
-            switch (hits)
-            {
-                case 0:
-                    return HitType.Miss;
-                case 1:
-                    return HitType.BadHit;
-                default:
-                case 2:
-                    return HitType.GoodHit;
-            }
-        }
-
-        private void OnNoteHit(HitType hitType)
-        {
-            bool bignote = transform.localScale == _noteBigScale;
-
-            switch(hitType)
+            switch (hit)
             {
                 case HitType.BadHit:
                     Conductor.PlayHitSound();
-                    Destroy(gameObject);
-
                     StatisticHandler.OnNoteHit(HitType.BadHit, bignote);
-
+                    StartCoroutine(ResetNoteHit(_noteColor));
                     return;
 
                 case HitType.GoodHit:
                     Conductor.PlayHitSound();
-                    Destroy(gameObject);
                     StatisticHandler.OnNoteHit(HitType.GoodHit, bignote);
-                    return;
-
-                case HitType.Miss:
-                    StatisticHandler.OnNoteHit(HitType.Miss, bignote);
-                    return;
-
-                default:
-                case HitType.None:
+                    StartCoroutine(ResetNoteHit(_noteColor));
                     return;
             }
+        }
 
+        private IEnumerator ResetNoteHit(NoteColor color)
+        {
+            yield return new WaitForEndOfFrame();
+            switch(color)
+            {
+                case NoteColor.Red:
+                    _lastHitRed = false;
+                    break;
+
+                case NoteColor.Blue:
+                    _lastHitBlue = false;
+                    break;
+            }
+
+            Destroy(gameObject);
         }
 
         private float GetDistanceByTime(float time, float speed)
