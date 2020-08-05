@@ -9,6 +9,7 @@ namespace DrumSmasher.Game
     public enum NoteColor
     {
         Red,
-        Blue
+        Blue,
+        Yellow
     }
 }

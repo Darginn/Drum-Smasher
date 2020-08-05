@@ -47,6 +47,7 @@ namespace DrumSmasher.Game
         [SerializeField] private Vector3 _noteBigScale;
         [SerializeField] private Color _noteColorRed;
         [SerializeField] private Color _noteColorBlue;
+        [SerializeField] private Color _noteColorYellow;
 
         private static bool _autoPlaySwitch;
 
@@ -179,6 +180,15 @@ namespace DrumSmasher.Game
                 case NoteType.Big:
                     gameObject.transform.localScale = _noteBigScale;
                     break;
+
+                case NoteType.SmallLong:
+                    gameObject.transform.localScale = _noteSmallScale;
+                    break;
+
+                case NoteType.BigLong:
+                    gameObject.transform.localScale = _noteBigScale;
+                    break;
+
             }
 
             _noteType = type;
@@ -192,6 +202,10 @@ namespace DrumSmasher.Game
 
                 case NoteColor.Blue:
                     gameObject.GetComponent<SpriteRenderer>().color = _noteColorBlue;
+                    break;
+
+                case NoteColor.Yellow:
+                    gameObject.GetComponent<SpriteRenderer>().color = _noteColorYellow;
                     break;
             }
 

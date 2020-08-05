@@ -9,6 +9,8 @@ namespace DrumSmasher.Game
     public enum NoteType
     {
         Small,
-        Big
+        Big,
+        SmallLong,
+        BigLong
     }
 }
