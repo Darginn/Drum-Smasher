@@ -35,3 +35,7 @@ D:\reposSSD\DSNetwork\DSServer\bin\Debug\netcoreapp3.1\Pomelo.EntityFrameworkCor
 D:\reposSSD\DSNetwork\DSServer\bin\Debug\netcoreapp3.1\Pomelo.JsonObject.dll
 D:\reposSSD\DSNetwork\DSServer\bin\Debug\netcoreapp3.1\BCrypt.Net-Next.dll
 D:\reposSSD\DSNetwork\DSServer\bin\Debug\netcoreapp3.1\DSharpPlus.dll
+D:\reposSSD\Drum-Smasher\Server\DSServer\obj\Debug\netcoreapp3.1\DSServer.csprojAssemblyReference.cache
+D:\reposSSD\Drum-Smasher\Server\DSServer\obj\Debug\netcoreapp3.1\DSServer.AssemblyInfoInputs.cache
+D:\reposSSD\Drum-Smasher\Server\DSServer\obj\Debug\netcoreapp3.1\DSServer.AssemblyInfo.cs
+D:\reposSSD\Drum-Smasher\Server\DSServer\obj\Debug\netcoreapp3.1\DSServer.dll
