@@ -1,0 +1,3 @@
+System.Exception: abc
+   at DSServer.Program.MainTask(String[] args) in D:\reposSSD\DSNetwork\DSServer\Program.cs:line 35
+   at DSServer.Program.Main(String[] args) in D:\reposSSD\DSNetwork\DSServer\Program.cs:line 24
