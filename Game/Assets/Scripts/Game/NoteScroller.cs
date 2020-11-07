@@ -227,36 +227,40 @@ namespace DrumSmasher.Game
             _reachedEndOfChart = false;
         }
 
-        private (double, ChartNote) GetNextAvailableNote()
+        private bool TryGetNextAvailableNote(out NextNote note)
         {
             if (_notes.Count <= _notesIndex)
             {
                 _reachedEndOfChart = true;
-                return (-1, null);
+                note = default;
+                return false;
             }
 
             double spawnTime = _notes[_notesIndex].Time.TotalSeconds - _offset;
 
             if (spawnTime > _conductor.CurrentTime)
-                return (-1, null);
+            {
+                note = default;
+                return false;
+            }
 
             int index = _notesIndex;
             _notesIndex++;
 
-            return (spawnTime, _notes[index]);
+            note = new NextNote(spawnTime, _notes[index]);
+            return true;
         }
 
-        private void TrySpawnNote()
+        private bool TrySpawnNote()
         {
-            (double, ChartNote) noteToSpawn = GetNextAvailableNote();
+            if (!TryGetNextAvailableNote(out NextNote note))
+                return false;
 
-            if (noteToSpawn.Item2 == null)
-                return;
-
-            SpawnNote(noteToSpawn.Item2, noteToSpawn.Item1);
+            SpawnNote(ref note);
+            return true;
         }
 
-        private void SpawnNote(ChartNote note, double startTime)
+        private void SpawnNote(ref NextNote note)
         {
             GameObject noteToSpawn = Instantiate(_notePrefab, gameObject.transform);
             Note noteScript = noteToSpawn.GetComponent<Note>();
@@ -265,8 +269,8 @@ namespace DrumSmasher.Game
 
             noteScript.SetDefaultPosition();
 
-            NoteColor color = (NoteColor)note.Color;
-            NoteType type = note.BigNote ? NoteType.Big : NoteType.Small;
+            NoteColor color = (NoteColor)note.Note.Color;
+            NoteType type = note.Note.BigNote ? NoteType.Big : NoteType.Small;
 
             noteScript.SetNoteType(type, color);
             noteScript.AutoPlay = AutoPlay;
@@ -282,10 +286,22 @@ namespace DrumSmasher.Game
 
             noteScript.Speed = _speed;
             noteScript.Conductor = _conductor;
-            noteScript.StartTime = (float)startTime;
+            noteScript.StartTime = (float)note.SpawnTime;
 
             if (_notesIndex >= _notes.Count)
                 _lastNote = noteScript.gameObject;
+        }
+
+        struct NextNote
+        {
+            public double SpawnTime { get; }
+            public ChartNote Note { get; }
+
+            public NextNote(double spawnTime, ChartNote note) : this()
+            {
+                SpawnTime = spawnTime;
+                Note = note;
+            }
         }
     }
 }
