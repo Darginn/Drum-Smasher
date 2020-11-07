@@ -1,0 +1,8 @@
+D:\reposSSD\Drum-Smasher\obj\Debug\netcoreapp3.1\DSServerCommon.csprojAssemblyReference.cache
+D:\reposSSD\Drum-Smasher\obj\Debug\netcoreapp3.1\DSServerCommon.AssemblyInfoInputs.cache
+D:\reposSSD\Drum-Smasher\obj\Debug\netcoreapp3.1\DSServerCommon.AssemblyInfo.cs
+D:\reposSSD\Drum-Smasher\Assets\Plugins\netcoreapp3.1\DSServerCommon.deps.json
+D:\reposSSD\Drum-Smasher\Assets\Plugins\netcoreapp3.1\DSServerCommon.dll
+D:\reposSSD\Drum-Smasher\Assets\Plugins\netcoreapp3.1\DSServerCommon.pdb
+D:\reposSSD\Drum-Smasher\obj\Debug\netcoreapp3.1\DSServerCommon.dll
+D:\reposSSD\Drum-Smasher\obj\Debug\netcoreapp3.1\DSServerCommon.pdb
