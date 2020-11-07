@@ -1,0 +1,14 @@
+D:\DSServer\bin\Debug\netcoreapp3.1\DSServer.exe
+D:\DSServer\bin\Debug\netcoreapp3.1\DSServerDiscordCommands.deps.json
+D:\DSServer\bin\Debug\netcoreapp3.1\DSServerDiscordCommands.dll
+D:\DSServer\bin\Debug\netcoreapp3.1\DSServerDiscordCommands.pdb
+D:\reposSSD\DSNetwork\DSServerDiscordCommands\obj\Debug\netcoreapp3.1\DSServerDiscordCommands.csprojAssemblyReference.cache
+D:\reposSSD\DSNetwork\DSServerDiscordCommands\obj\Debug\netcoreapp3.1\DSServerDiscordCommands.AssemblyInfoInputs.cache
+D:\reposSSD\DSNetwork\DSServerDiscordCommands\obj\Debug\netcoreapp3.1\DSServerDiscordCommands.AssemblyInfo.cs
+D:\reposSSD\DSNetwork\DSServerDiscordCommands\obj\Debug\netcoreapp3.1\DSServerDiscordCommands.csproj.CopyComplete
+D:\reposSSD\DSNetwork\DSServerDiscordCommands\obj\Debug\netcoreapp3.1\DSServerDiscordCommands.dll
+D:\reposSSD\DSNetwork\DSServerDiscordCommands\obj\Debug\netcoreapp3.1\DSServerDiscordCommands.pdb
+D:\reposSSD\DSNetwork\DSServer\bin\Debug\netcoreapp3.1\DSServer.exe
+D:\reposSSD\DSNetwork\DSServer\bin\Debug\netcoreapp3.1\DSServerDiscordCommands.deps.json
+D:\reposSSD\DSNetwork\DSServer\bin\Debug\netcoreapp3.1\DSServerDiscordCommands.dll
+D:\reposSSD\DSNetwork\DSServer\bin\Debug\netcoreapp3.1\DSServerDiscordCommands.pdb
