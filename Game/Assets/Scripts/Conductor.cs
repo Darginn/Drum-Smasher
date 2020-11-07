@@ -44,11 +44,9 @@ namespace DrumSmasher
         void Update()
         {
             SongPosition = (float)(AudioSettings.dspTime - DspSongTime - Offset);
-            SongPositionInBeats = SongPosition / SecPerBeat;
-        }
 
-        void FixedUpdate()
-        {
+            SongPositionInBeats = SongPosition / SecPerBeat;
+
             if (MusicSource != null && _musicClip != null && MusicSource.time <= _musicClip.length)
             {
                 TimeSpan pos = TimeSpan.FromSeconds(MusicSource.time);
@@ -84,6 +82,8 @@ namespace DrumSmasher
             Logger.Log("Loading song " + file);
             StartCoroutine(LoadSongFromFile(file));
         }
+
+
 
         private IEnumerator LoadSongFromFile(string file)
         {
