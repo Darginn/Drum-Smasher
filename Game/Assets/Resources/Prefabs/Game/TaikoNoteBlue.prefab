@@ -176,15 +176,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1535823241492532706}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee04760d0f011334791b993844ded11f, type: 3}
+  m_Script: {fileID: 11500000, guid: af7980a4f56325d4aab4214d8217dee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NoteId: 0
   Speed: 3.4028235e+38
   StartTime: 3.4028235e+38
   AutoPlay: 1
   CanBeHit: 0
   HitRange: 2.13
   StatisticHandler: {fileID: 0}
+  NoteScroller: {fileID: 0}
   Renderer: {fileID: 1535823241492532710}
   OverlayRenderer: {fileID: 1535823241461338123}
   IgnoreColor: 0
@@ -195,6 +197,7 @@ MonoBehaviour:
   _noteBigScale: {x: 1.5, y: 1.5, z: 1}
   _noteColorRed: {r: 0.9843138, g: 0.35686275, b: 0.20392159, a: 1}
   _noteColorBlue: {r: 0.011764707, g: 0.7176471, b: 0.9843138, a: 1}
+  _noteColorYellow: {r: 0, g: 0, b: 0, a: 0}
 --- !u!82 &1172429345013681713
 AudioSource:
   m_ObjectHideFlags: 0
