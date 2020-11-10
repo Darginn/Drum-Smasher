@@ -17,7 +17,7 @@ namespace DrumSmasher.Assets.Scripts
         public GameObject ListContent;
         public GameObject ErrorPanel;
 
-        private bool _sceneActionActive; 
+        bool _sceneActionActive; 
 
         SongScanning _scan;
         public List<SongScanning.SongInfo> SongList;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DrumSmasher.Assets.Scripts.Game
+namespace DrumSmasher.Assets.Scripts.Game.Notes
 {
     public enum NoteType
     {

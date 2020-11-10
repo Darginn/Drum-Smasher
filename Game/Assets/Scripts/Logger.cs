@@ -10,7 +10,7 @@ namespace DrumSmasher.Assets.Scripts
 {
     public static class Logger
     {
-        private static DSServerCommon.Logger _logger;
+        static DSServerCommon.Logger _logger;
 
         public static ILogger GetLogger()
         {

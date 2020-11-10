@@ -6,18 +6,18 @@ namespace DrumSmasher.Assets.Scripts.Debug
 {
     public class FPSCounter : MonoBehaviour
     {
-        [SerializeField] private int _avgFrameRate;
-        [SerializeField] private int _maxFrameRate;
+        [SerializeField] int _avgFrameRate;
+        [SerializeField] int _maxFrameRate;
 
-        [SerializeField] private Text _avgFramerateText;
-        [SerializeField] private Text _maxFramerateText;
+        [SerializeField] Text _avgFramerateText;
+        [SerializeField] Text _maxFramerateText;
 
-        [SerializeField] private float _updateDelay = 0.25f;
+        [SerializeField] float _updateDelay = 0.25f;
 
-        private int _oldFramerate;
-        private int _oldMaxFramerate;
+        int _oldFramerate;
+        int _oldMaxFramerate;
 
-        private float _timeSinceLastUpdate;
+        float _timeSinceLastUpdate;
 
         void FixedUpdate()
         {

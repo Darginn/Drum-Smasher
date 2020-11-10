@@ -42,7 +42,7 @@ namespace SFB {
         }
 
         // EditorUtility.OpenFilePanelWithFilters extension filter format
-        private static string[] GetFilterFromFileExtensionList(ExtensionFilter[] extensions) {
+        static string[] GetFilterFromFileExtensionList(ExtensionFilter[] extensions) {
             var filters = new string[extensions.Length * 2];
             for (int i = 0; i < extensions.Length; i++) {
                 filters[(i * 2)] = extensions[i].Name;

@@ -12,8 +12,8 @@ namespace DrumSmasher.Assets.Scripts.Game.Mods
         public override string Name => _name;
         public override float Multiplier => _multiplier;
 
-        [SerializeField] private string _name = "IgnoreColorMod";
-        [SerializeField] private float _multiplier = 0.5f;
+        [SerializeField] string _name = "IgnoreColorMod";
+        [SerializeField] float _multiplier = 0.5f;
 
         public override void OnEnabled(NoteScroller scroller)
         {

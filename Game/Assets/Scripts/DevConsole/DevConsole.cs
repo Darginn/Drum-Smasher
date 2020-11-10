@@ -14,13 +14,13 @@ namespace DrumSmasher.Assets.Scripts.DevConsole
         public Text OutputText;
         public InputField InputField;
 
-        private List<string> _lines;
+        List<string> _lines;
 
 
-        private const int _maxLinesOnScreen = 26;
-        private const int _maxLineLength = 9999;
+        const int _maxLinesOnScreen = 26;
+        const int _maxLineLength = 9999;
         
-        private static List<ICommand> _commands = new List<ICommand>();
+        static List<ICommand> _commands = new List<ICommand>();
         public static List<ICommand> Commands => _commands;
 
         // Start is called before the first frame update
@@ -81,7 +81,7 @@ namespace DrumSmasher.Assets.Scripts.DevConsole
             RefreshLines();
         }
 
-        private void ParseCommand(string line)
+        void ParseCommand(string line)
         {
             if (line.StartsWith("exit", StringComparison.CurrentCultureIgnoreCase))
             {
@@ -126,7 +126,7 @@ namespace DrumSmasher.Assets.Scripts.DevConsole
             }
         }
 
-        private void RefreshLines()
+        void RefreshLines()
         {
             int max = Math.Min(_maxLinesOnScreen - 1, _lines.Count - 1);
             string toShow = _lines[max];

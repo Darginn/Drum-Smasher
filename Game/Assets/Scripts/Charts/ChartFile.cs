@@ -12,11 +12,11 @@ namespace DrumSmasher.Assets.Scripts.Charts
 {
     public static class ChartFile
     {
-        private const string SECTION_SETTINGS = "[settings]";
-        private const string SECTION_NOTES = "[notes]";
-        private const string SECTION_END = @"[/\]";
-        private const string COMMENT = "//";
-        private static readonly List<string> _pathFixList = new List<string>()
+        const string SECTION_SETTINGS = "[settings]";
+        const string SECTION_NOTES = "[notes]";
+        const string SECTION_END = @"[/\]";
+        const string COMMENT = "//";
+        static readonly List<string> _pathFixList = new List<string>()
         {
             "<", ">",
             "|",
@@ -513,11 +513,11 @@ namespace DrumSmasher.Assets.Scripts.Charts
             }
         }
         
-        private static string ToString(bool val)
+        static string ToString(bool val)
         {
             return val ? "1" : "0";
         }
-        private static bool ToBool(string val)
+        static bool ToBool(string val)
         {
             switch(val)
             {

@@ -11,7 +11,7 @@ namespace DrumSmasher.Assets.Scripts.Tools
     {
         public static List<int> TrackedInstances { get; } = new List<int>();
 
-        [SerializeField] private int _id;
+        [SerializeField] int _id;
 
         void Awake()
         {

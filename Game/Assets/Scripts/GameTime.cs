@@ -9,9 +9,9 @@ namespace DrumSmasher.Assets.Scripts
 {
     public class GameTime
     {
-        private Stopwatch _originalTime;
-        private double _timeOffsetMS;
-        private TimeSpan _elapsed => _originalTime.Elapsed;
+        Stopwatch _originalTime;
+        double _timeOffsetMS;
+        TimeSpan _elapsed => _originalTime.Elapsed;
 
         public bool Enabled
         {

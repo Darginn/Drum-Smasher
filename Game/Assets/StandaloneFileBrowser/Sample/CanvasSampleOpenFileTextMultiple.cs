@@ -16,7 +16,7 @@ public class CanvasSampleOpenFileTextMultiple : MonoBehaviour, IPointerDownHandl
     // WebGL
     //
     [DllImport("__Internal")]
-    private static extern void UploadFile(string gameObjectName, string methodName, string filter, bool multiple);
+    static extern void UploadFile(string gameObjectName, string methodName, string filter, bool multiple);
 
     public void OnPointerDown(PointerEventData eventData) {
         UploadFile(gameObject.name, "OnFileUpload", ".txt", true);
@@ -37,7 +37,7 @@ public class CanvasSampleOpenFileTextMultiple : MonoBehaviour, IPointerDownHandl
         button.onClick.AddListener(OnClick);
     }
 
-    private void OnClick() {
+    void OnClick() {
         // var paths = StandaloneFileBrowser.OpenFilePanel("Title", "", "txt", true);
         var paths = StandaloneFileBrowser.OpenFilePanel("Open File", "", "", true);
         if (paths.Length > 0) {
@@ -50,7 +50,7 @@ public class CanvasSampleOpenFileTextMultiple : MonoBehaviour, IPointerDownHandl
     }
 #endif
 
-    private IEnumerator OutputRoutine(string[] urlArr) {
+    IEnumerator OutputRoutine(string[] urlArr) {
         var outputText = "";
         for (int i = 0; i < urlArr.Length; i++) {
             var loader = new WWW(urlArr[i]);

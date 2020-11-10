@@ -10,7 +10,7 @@ namespace DrumSmasher.Assets.Scripts.Game.Mods
 {
     public class ModPanel : MonoBehaviour
     {
-        [SerializeField] private List<ModButton> _modButtons;
+        [SerializeField] List<ModButton> _modButtons;
 
         /// <summary>
         /// 

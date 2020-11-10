@@ -27,17 +27,17 @@ namespace DrumSmasher.Assets.Scripts.Game
         /// Current Playstate of the music
         /// </summary>
         public PlayState PlayState => _playState;
-        public bool LoadedMp3 { get; private set; }
+        public bool LoadedMp3 { get; set; }
 
-        [SerializeField] private AudioSource _musicSource;
-        [SerializeField] private double _dspSongTime;
-        [SerializeField] private double _currentTime;
-        [SerializeField] private PlayState _playState = PlayState.Stopped;
-        [SerializeField] private AudioSource _hitSoundNote;
-        [SerializeField] private StatisticHandler _statisticHandler;
+        [SerializeField] AudioSource _musicSource;
+        [SerializeField] double _dspSongTime;
+        [SerializeField] double _currentTime;
+        [SerializeField] PlayState _playState = PlayState.Stopped;
+        [SerializeField] AudioSource _hitSoundNote;
+        [SerializeField] StatisticHandler _statisticHandler;
 
-        private float _lastUpdated;
-        private const float _SOUND_OFFSET_UPDATE_DELAY = 0.1f;
+        float _lastUpdated;
+        const float _SOUND_OFFSET_UPDATE_DELAY = 0.1f;
 
         void Start()
         {
@@ -186,7 +186,7 @@ namespace DrumSmasher.Assets.Scripts.Game
         }
 
 
-        private byte[] LoadAudioBytes(string file)
+        byte[] LoadAudioBytes(string file)
         {
             using (FileStream fstream = File.OpenRead(file))
             {
@@ -198,7 +198,7 @@ namespace DrumSmasher.Assets.Scripts.Game
             }
         }
 
-        private WAV ConvertMP3DataToWAV(byte[] mp3Data)
+        WAV ConvertMP3DataToWAV(byte[] mp3Data)
         {
             using (MemoryStream mp3Stream = new MemoryStream(mp3Data))
             {
@@ -224,7 +224,7 @@ namespace DrumSmasher.Assets.Scripts.Game
             }
         }
 
-        private AudioClip ConvertWAVToAudioClip(WAV wav)
+        AudioClip ConvertWAVToAudioClip(WAV wav)
         {
             AudioClip result;
 

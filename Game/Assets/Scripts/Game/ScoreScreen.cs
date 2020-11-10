@@ -23,7 +23,7 @@ namespace DrumSmasher.Assets.Scripts.Game
 
         [SerializeField] GameObject _scoreScreen;
 
-        private CultureInfo _elGR = CultureInfo.CreateSpecificCulture("el-GR");
+        CultureInfo _elGR = CultureInfo.CreateSpecificCulture("el-GR");
 
         void Start()
         {

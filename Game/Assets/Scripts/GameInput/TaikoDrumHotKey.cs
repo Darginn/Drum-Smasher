@@ -14,13 +14,13 @@ namespace DrumSmasher.Assets.Scripts.GameInput
 
         public new KeyCode Key;
 
-        [SerializeField] private SpriteRenderer _renderer;
-        [SerializeField] private Sprite _triggerSprite;
-        [SerializeField] private Sprite _defaultSprite;
+        [SerializeField] SpriteRenderer _renderer;
+        [SerializeField] Sprite _triggerSprite;
+        [SerializeField] Sprite _defaultSprite;
 
-        [SerializeField] private float _timeSinceLastHit;
-        [SerializeField] private float _autoplayHitDuration;
-        [SerializeField] private AudioSource _hitSound;
+        [SerializeField] float _timeSinceLastHit;
+        [SerializeField] float _autoplayHitDuration;
+        [SerializeField] AudioSource _hitSound;
 
         protected override void Update()
         {

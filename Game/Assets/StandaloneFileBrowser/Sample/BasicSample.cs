@@ -3,7 +3,7 @@ using UnityEngine;
 using SFB;
 
 public class BasicSample : MonoBehaviour {
-    private string _path;
+    string _path;
 
     void OnGUI() {
         var guiScale = new Vector3(Screen.width / 800.0f, Screen.height / 600.0f, 1.0f);

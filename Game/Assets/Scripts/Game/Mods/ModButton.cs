@@ -10,13 +10,13 @@ namespace DrumSmasher.Assets.Scripts.Game.Mods
 {
     public class ModButton : MonoBehaviour
     {
-        public bool Enabled { get; private set; }
+        public bool Enabled { get; set; }
         public string ModName => _modName;
         public float Multiplier => _multiplier;
 
-        [SerializeField] private Image _image;
-        [SerializeField] private string _modName;
-        [SerializeField] private float _multiplier;
+        [SerializeField] Image _image;
+        [SerializeField] string _modName;
+        [SerializeField] float _multiplier;
 
         public void OnToggle()
         {

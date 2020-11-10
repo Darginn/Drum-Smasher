@@ -55,13 +55,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Resources\Prefabs\DevConsole\Commands\ActivateCommand.cs" />
-    <Compile Include="Assets\Resources\Prefabs\DevConsole\Commands\AutoplayCommand.cs" />
-    <Compile Include="Assets\Resources\Prefabs\DevConsole\Commands\BaseCommand.cs" />
-    <Compile Include="Assets\Resources\Prefabs\DevConsole\Commands\FPSCommand.cs" />
-    <Compile Include="Assets\Resources\Prefabs\DevConsole\Commands\ICommand.cs" />
-    <Compile Include="Assets\Resources\Prefabs\DevConsole\Commands\KeyCommand.cs" />
-    <Compile Include="Assets\Resources\Prefabs\DevConsole\DevConsole.cs" />
     <Compile Include="Assets\Scripts\CameraScreenResolution.cs" />
     <Compile Include="Assets\Scripts\Charts\Chart.cs" />
     <Compile Include="Assets\Scripts\Charts\ChartFile.cs" />
@@ -80,8 +73,6 @@
     <Compile Include="Assets\Scripts\DevConsole\DevConsole.cs" />
     <Compile Include="Assets\Scripts\Extensions\AutoInitAttribute.cs" />
     <Compile Include="Assets\Scripts\Extensions\Extensions.cs" />
-    <Compile Include="Assets\Scripts\Game\Notes\NoteHitBox.cs" />
-    <Compile Include="Assets\Scripts\Game\Notes\NoteHitType.cs" />
     <Compile Include="Assets\Scripts\Game\Mods\AutoPlayMod.cs" />
     <Compile Include="Assets\Scripts\Game\Mods\BaseMod.cs" />
     <Compile Include="Assets\Scripts\Game\Mods\FadeInMod.cs" />
@@ -91,10 +82,12 @@
     <Compile Include="Assets\Scripts\Game\Mods\ModButton.cs" />
     <Compile Include="Assets\Scripts\Game\Mods\ModController.cs" />
     <Compile Include="Assets\Scripts\Game\Mods\ModPanel.cs" />
-    <Compile Include="Assets\Scripts\Game\Notes\Note.cs" />
-    <Compile Include="Assets\Scripts\Game\NoteColor.cs" />
     <Compile Include="Assets\Scripts\Game\NoteScroller.cs" />
-    <Compile Include="Assets\Scripts\Game\NoteType.cs" />
+    <Compile Include="Assets\Scripts\Game\Notes\Note.cs" />
+    <Compile Include="Assets\Scripts\Game\Notes\NoteColor.cs" />
+    <Compile Include="Assets\Scripts\Game\Notes\NoteHitBox.cs" />
+    <Compile Include="Assets\Scripts\Game\Notes\NoteHitType.cs" />
+    <Compile Include="Assets\Scripts\Game\Notes\NoteType.cs" />
     <Compile Include="Assets\Scripts\Game\PlayState.cs" />
     <Compile Include="Assets\Scripts\Game\ScoreScreen.cs" />
     <Compile Include="Assets\Scripts\Game\SoundConductor.cs" />
@@ -127,14 +120,6 @@
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserLinux.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserMac.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserWindows.cs" />
-    <None Include="Assets\Scripts\DevConsole\Commands.meta" />
-    <None Include="Assets\Scripts\DevConsole\Commands\ActivateCommand.cs.meta" />
-    <None Include="Assets\Scripts\DevConsole\Commands\AutoplayCommand.cs.meta" />
-    <None Include="Assets\Scripts\DevConsole\Commands\BaseCommand.cs.meta" />
-    <None Include="Assets\Scripts\DevConsole\Commands\FPSCommand.cs.meta" />
-    <None Include="Assets\Scripts\DevConsole\Commands\ICommand.cs.meta" />
-    <None Include="Assets\Scripts\DevConsole\Commands\KeyCommand.cs.meta" />
-    <None Include="Assets\Scripts\DevConsole\DevConsole.cs.meta" />
     <None Include="Assets\Scripts\GameInput\XInput MITLicense.txt" />
     <None Include="Assets\link.xml" />
     <Reference Include="UnityEngine">
@@ -729,7 +714,13 @@
       <HintPath>D:/reposSSD/Drum-Smasher/Game/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{D8888F6A-ABE1-C49B-1A38-F65A81021668}</Project>
+      <Name>Assembly-CSharp-firstpass</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

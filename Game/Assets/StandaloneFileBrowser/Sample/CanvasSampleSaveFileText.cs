@@ -11,14 +11,14 @@ public class CanvasSampleSaveFileText : MonoBehaviour, IPointerDownHandler {
     public Text output;
 
     // Sample text data
-    private string _data = "Example text created by StandaloneFileBrowser";
+    string _data = "Example text created by StandaloneFileBrowser";
 
 #if UNITY_WEBGL && !UNITY_EDITOR
     //
     // WebGL
     //
     [DllImport("__Internal")]
-    private static extern void DownloadFile(string gameObjectName, string methodName, string filename, byte[] byteArray, int byteArraySize);
+    static extern void DownloadFile(string gameObjectName, string methodName, string filename, byte[] byteArray, int byteArraySize);
 
     // Broser plugin should be called in OnPointerDown.
     public void OnPointerDown(PointerEventData eventData) {

@@ -15,7 +15,7 @@ namespace DrumSmasher.Assets.Scripts.GameInput
         public KeyCode? Key;
 
         [SerializeField] protected bool _keyDown;
-        [SerializeField] private float _holdingSince;
+        [SerializeField] float _holdingSince;
 
         protected virtual void Start()
         {

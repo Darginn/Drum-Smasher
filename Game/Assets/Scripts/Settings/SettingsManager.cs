@@ -21,7 +21,7 @@ namespace DrumSmasher.Assets.Scripts.Settings
             }
         }
 
-        private static Dictionary<string, ISetting> _settings;
+        static Dictionary<string, ISetting> _settings;
 
         public static ISetting AddOrUpdate(ISetting setting)
         {
@@ -90,7 +90,7 @@ namespace DrumSmasher.Assets.Scripts.Settings
             SaveSettings();
         }
 
-        private class SaveData
+        class SaveData
         {
             public string Name { get; set; }
             public string Data { get; set; }

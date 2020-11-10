@@ -5,8 +5,8 @@ namespace DrumSmasher.Assets.Scripts.GameInput
 {
     public class XInput : MonoBehaviour
     {
-        private static XInput _instance;
-        private static XInput instance
+        static XInput _instance;
+        static XInput instance
         {
             get
             {
@@ -14,8 +14,8 @@ namespace DrumSmasher.Assets.Scripts.GameInput
                 return _instance;
             }
         }
-        private GamePadState[] previousState, currentState;
-        private int activePlayers = 4;
+        GamePadState[] previousState, currentState;
+        int activePlayers = 4;
         public enum Button
         {
             A = 1,
@@ -43,7 +43,7 @@ namespace DrumSmasher.Assets.Scripts.GameInput
             RT = 32
         }
 
-        private void Awake()
+        void Awake()
         {
             previousState = new GamePadState[4];
             currentState = new GamePadState[4];
@@ -83,7 +83,7 @@ namespace DrumSmasher.Assets.Scripts.GameInput
         {
             GamePad.SetVibration((PlayerIndex)player, vibration.x, vibration.y);
         }
-        private static float GetAxis(GamePadState state, Axis axis)
+        static float GetAxis(GamePadState state, Axis axis)
         {
             switch (axis)
             {
@@ -103,7 +103,7 @@ namespace DrumSmasher.Assets.Scripts.GameInput
                     return 0;
             }
         }
-        private static ButtonState GetButtonState(GamePadState state, Button button)
+        static ButtonState GetButtonState(GamePadState state, Button button)
         {
             switch (button)
             {
@@ -148,7 +148,7 @@ namespace DrumSmasher.Assets.Scripts.GameInput
                 currentState[i] = GamePad.GetState((PlayerIndex)i, GamePadDeadZone.None);
             }
         }
-        private void OnDestroy()
+        void OnDestroy()
         {
             for (int i = 0; i < 4; ++i) SetVibration(i, Vector2.zero);
         }

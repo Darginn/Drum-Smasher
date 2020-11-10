@@ -14,11 +14,11 @@ namespace DrumSmasher.Assets.Scripts.Game.Mods
         public override string Name => _name;
         public override float Multiplier => _multiplier;
 
-        [SerializeField] private string _name = "FadeOutMod";
-        [SerializeField] private float _multiplier = 1.125f;
-        [SerializeField] private Transform _end;
+        [SerializeField] string _name = "FadeOutMod";
+        [SerializeField] float _multiplier = 1.125f;
+        [SerializeField] Transform _end;
 
-        private float _distance;
+        float _distance;
 
         public override void OnEnabled(NoteScroller scroller)
         {
@@ -44,7 +44,7 @@ namespace DrumSmasher.Assets.Scripts.Game.Mods
             StartCoroutine(TurnInvisibleCoroutine(collider.gameObject));
         }
 
-        private IEnumerator TurnInvisibleCoroutine(GameObject obj)
+        IEnumerator TurnInvisibleCoroutine(GameObject obj)
         {
             Note n = obj.GetComponent<Note>();
 

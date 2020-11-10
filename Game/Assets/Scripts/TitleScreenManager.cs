@@ -19,7 +19,7 @@ namespace DrumSmasher.Assets.Scripts
     public class TitleScreenManager : MonoBehaviour
     {
         public Charts.Chart LoadedChart;
-        private bool _sceneActionActive;
+        bool _sceneActionActive;
         public GameObject PlayAlert;
         public GameObject FailAlert;
         public GameObject SettingsMenu;
@@ -30,14 +30,14 @@ namespace DrumSmasher.Assets.Scripts
         public Dropdown ResolutionDropdown;
 
         Resolution[] resolutions;
-        private ExtensionFilter _extChartFilter = new ExtensionFilter("Chart", "chart");
-        private ExtensionFilter _extOsuFilter = new ExtensionFilter("Osu difficulty", "osu");
-        private GameObject _devConsole;
+        ExtensionFilter _extChartFilter = new ExtensionFilter("Chart", "chart");
+        ExtensionFilter _extOsuFilter = new ExtensionFilter("Osu difficulty", "osu");
+        GameObject _devConsole;
 
-        [SerializeField] private Text key1Text;
-        [SerializeField] private Text key2Text;
-        [SerializeField] private Text key3Text;
-        [SerializeField] private Text key4Text;
+        [SerializeField] Text key1Text;
+        [SerializeField] Text key2Text;
+        [SerializeField] Text key3Text;
+        [SerializeField] Text key4Text;
         
         public void SetHotKey1()
         {
@@ -59,7 +59,7 @@ namespace DrumSmasher.Assets.Scripts
             StartCoroutine(SetHotKeyCoroutine(3));
         }
 
-        private IEnumerator SetHotKeyCoroutine(int value)
+        IEnumerator SetHotKeyCoroutine(int value)
         {
             KeyCode? key = null;
 
@@ -82,7 +82,7 @@ namespace DrumSmasher.Assets.Scripts
         }
 
         /// <param name="value">0-3</param>
-        private void SetHotKey(int value, KeyCode key)
+        void SetHotKey(int value, KeyCode key)
         {
             TaikoSettings ts = SettingsManager.SettingsStorage["Taiko"] as TaikoSettings;
 
@@ -187,7 +187,7 @@ namespace DrumSmasher.Assets.Scripts
         {
         }
 
-        private void CheckForInput()
+        void CheckForInput()
         {
             if (Input.GetKeyDown(KeyCode.KeypadMinus))
             {
@@ -347,7 +347,7 @@ namespace DrumSmasher.Assets.Scripts
 #endif
         }
         
-        private void OnApplicationQuit()
+        void OnApplicationQuit()
         {
             SettingsManager.Exit();
         }

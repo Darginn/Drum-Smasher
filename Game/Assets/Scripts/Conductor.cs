@@ -23,9 +23,9 @@ namespace DrumSmasher.Assets.Scripts
         public Text MusicPositionText;
         public AudioSource MusicSource;
 
-        private DateTime _nextTimeJump;
+        DateTime _nextTimeJump;
 
-        private AudioClip _musicClip
+        AudioClip _musicClip
         {
             get
             {
@@ -85,7 +85,7 @@ namespace DrumSmasher.Assets.Scripts
             StartCoroutine(LoadSongFromFile(file));
         }
 
-        private IEnumerator LoadSongFromFile(string file)
+        IEnumerator LoadSongFromFile(string file)
         {
             WWW www = new WWW(file);
 

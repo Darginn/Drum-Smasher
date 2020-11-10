@@ -9,10 +9,10 @@ public class CameraScreenResolution : MonoBehaviour
     [Range(-1,1)]
     public int AdaptPosition;
 
-    private float _defaultWidth;
-    private float _defaultHeight;
+    float _defaultWidth;
+    float _defaultHeight;
 
-    private Vector3 _cameraPos;
+    Vector3 _cameraPos;
     
     void Start()
     {

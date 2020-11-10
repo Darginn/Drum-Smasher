@@ -16,7 +16,7 @@ public class CanvasSampleOpenFileImage : MonoBehaviour, IPointerDownHandler {
     // WebGL
     //
     [DllImport("__Internal")]
-    private static extern void UploadFile(string gameObjectName, string methodName, string filter, bool multiple);
+    static extern void UploadFile(string gameObjectName, string methodName, string filter, bool multiple);
 
     public void OnPointerDown(PointerEventData eventData) {
         UploadFile(gameObject.name, "OnFileUpload", ".png, .jpg", false);
@@ -37,7 +37,7 @@ public class CanvasSampleOpenFileImage : MonoBehaviour, IPointerDownHandler {
         button.onClick.AddListener(OnClick);
     }
 
-    private void OnClick() {
+    void OnClick() {
         var paths = StandaloneFileBrowser.OpenFilePanel("Title", "", ".png", false);
         if (paths.Length > 0) {
             StartCoroutine(OutputRoutine(new System.Uri(paths[0]).AbsoluteUri));
@@ -45,7 +45,7 @@ public class CanvasSampleOpenFileImage : MonoBehaviour, IPointerDownHandler {
     }
 #endif
 
-    private IEnumerator OutputRoutine(string url) {
+    IEnumerator OutputRoutine(string url) {
         var loader = new WWW(url);
         yield return loader;
         output.texture = loader.texture;

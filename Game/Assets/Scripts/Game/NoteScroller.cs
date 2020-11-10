@@ -19,22 +19,22 @@ namespace DrumSmasher.Assets.Scripts.Game
     {
         public bool IgnoreColor;
 
-        private Chart _chart;
-        private List<ChartNote> _notes;
-        private int _notesIndex;
-        private bool _reachedEndOfChart;
+        Chart _chart;
+        List<ChartNote> _notes;
+        int _notesIndex;
+        bool _reachedEndOfChart;
 
-        [SerializeField] private SoundConductor _conductor;
-        [SerializeField] private float _speed;
-        [SerializeField] private float _defaultSpeed = 6f;
-        [SerializeField] private float _offset;
-        [SerializeField] private Vector3 _startPosition;
-        [SerializeField] private Vector3 _hitCirclePosition;
-        [SerializeField] private GameObject _notePrefab;
-        //[SerializeField] private ButtonController _key1Controller;
-        //[SerializeField] private ButtonController _key2Controller;
-        //[SerializeField] private ButtonController _key3Controller;
-        //[SerializeField] private ButtonController _key4Controller;
+        [SerializeField] SoundConductor _conductor;
+        [SerializeField] float _speed;
+        [SerializeField] float _defaultSpeed = 6f;
+        [SerializeField] float _offset;
+        [SerializeField] Vector3 _startPosition;
+        [SerializeField] Vector3 _hitCirclePosition;
+        [SerializeField] GameObject _notePrefab;
+        //[SerializeField] ButtonController _key1Controller;
+        //[SerializeField] ButtonController _key2Controller;
+        //[SerializeField] ButtonController _key3Controller;
+        //[SerializeField] ButtonController _key4Controller;
         [SerializeField] internal bool AutoPlay;
         [SerializeField] StatisticHandler _statisticHandler;
         [SerializeField] ScoreScreen _scoreScreen;
@@ -45,9 +45,9 @@ namespace DrumSmasher.Assets.Scripts.Game
         [SerializeField] TaikoDrumHotKey _hotkeyDrumInnerRight;
         [SerializeField] TaikoDrumHotKey _hotkeyDrumOuterRight;
 
-        private float _layer;
-        private DirectoryInfo _chartDirectory;
-        private GameObject _lastNote;
+        float _layer;
+        DirectoryInfo _chartDirectory;
+        GameObject _lastNote;
 
         void Start()
         {
@@ -94,7 +94,7 @@ namespace DrumSmasher.Assets.Scripts.Game
             SceneManager.LoadScene("TitleScreen");
         }
 
-        private void Reset()
+        void Reset()
         {
             _scoreScreen.Reset();
             _conductor.Stop();
@@ -227,7 +227,7 @@ namespace DrumSmasher.Assets.Scripts.Game
             _reachedEndOfChart = false;
         }
 
-        private bool TryGetNextAvailableNote(out NextNote note)
+        bool TryGetNextAvailableNote(out NextNote note)
         {
             if (_notes.Count <= _notesIndex)
             {
@@ -251,7 +251,7 @@ namespace DrumSmasher.Assets.Scripts.Game
             return true;
         }
 
-        private bool TrySpawnNote()
+        bool TrySpawnNote()
         {
             if (!TryGetNextAvailableNote(out NextNote note))
                 return false;
@@ -260,7 +260,7 @@ namespace DrumSmasher.Assets.Scripts.Game
             return true;
         }
 
-        private void SpawnNote(ref NextNote note)
+        void SpawnNote(ref NextNote note)
         {
             GameObject noteToSpawn = Instantiate(_notePrefab, gameObject.transform);
             Note noteScript = noteToSpawn.GetComponent<Note>();

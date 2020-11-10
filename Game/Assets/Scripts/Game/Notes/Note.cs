@@ -229,7 +229,7 @@ namespace DrumSmasher.Assets.Scripts.Game.Notes
             _startPosition.z = value;
         }
 
-        private void OnNoteHit(NoteHitType hit, TaikoDrumHotKey hotkey1, TaikoDrumHotKey hotKey2)
+        void OnNoteHit(NoteHitType hit, TaikoDrumHotKey hotkey1, TaikoDrumHotKey hotKey2)
         {
             if (hit == NoteHitType.Miss)
                 return;
@@ -292,7 +292,7 @@ namespace DrumSmasher.Assets.Scripts.Game.Notes
             }
         }
 
-        private IEnumerator ResetNoteHit(NoteColor color)
+        IEnumerator ResetNoteHit(NoteColor color)
         {
             yield return new WaitForEndOfFrame();
             switch(color)
@@ -309,12 +309,12 @@ namespace DrumSmasher.Assets.Scripts.Game.Notes
             Destroy(gameObject);
         }
 
-        private float GetDistanceByTime(float time, float speed)
+        float GetDistanceByTime(float time, float speed)
         {
             return speed * time;
         }
 
-        private float GetTimeByDistance(float distance, float speed)
+        float GetTimeByDistance(float distance, float speed)
         {
             return distance / speed;
         }

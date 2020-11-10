@@ -15,8 +15,8 @@ namespace DrumSmasher.Assets.Scripts.GameInput
         public int DelayKeyCheckMS;
         public bool KeyActive;
 
-        private DateTime _activationTime;
-        private DateTime _nextKeyCheck;
+        DateTime _activationTime;
+        DateTime _nextKeyCheck;
 
         public HotKey(KeyCode key, Action onHit, int delayedActivationMS = 0, int delayKeyCheckMS = 250)
         {

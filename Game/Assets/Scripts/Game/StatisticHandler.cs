@@ -22,24 +22,24 @@ namespace DrumSmasher.Assets.Scripts.Game
         [SerializeField] Text _key2Text;
         [SerializeField] Text _key3Text;
         [SerializeField] Text _key4Text;
-        private CultureInfo _elGR = CultureInfo.CreateSpecificCulture("el-GR");
+        CultureInfo _elGR = CultureInfo.CreateSpecificCulture("el-GR");
 
         public float Multiplier = 300f;
         
-        private ulong _currentScore;
-        private long _currentCombo;
-        private double _currentAccuracy;
-        private float _currentSoundOffset;
+        ulong _currentScore;
+        long _currentCombo;
+        double _currentAccuracy;
+        float _currentSoundOffset;
 
-        private long _currentKey1;
-        private long _currentKey2;
-        private long _currentKey3;
-        private long _currentKey4;
+        long _currentKey1;
+        long _currentKey2;
+        long _currentKey3;
+        long _currentKey4;
 
-        private ulong _misses;
-        private ulong _totalNotes;
-        private ulong _badHits;
-        private ulong _goodHits;
+        ulong _misses;
+        ulong _totalNotes;
+        ulong _badHits;
+        ulong _goodHits;
 
         public ScoreStatistic GetScoreStatistics()
         {
@@ -48,7 +48,7 @@ namespace DrumSmasher.Assets.Scripts.Game
                                       rank: GetRank());
         }
 
-        private string GetRank()
+        string GetRank()
         {
             string rank = "";
 
@@ -131,7 +131,7 @@ namespace DrumSmasher.Assets.Scripts.Game
             RefreshVisuals();
         }
 
-        private void RefreshVisuals()
+        void RefreshVisuals()
         {
             _comboText.text = $"{_currentCombo} x";
             _accuracyText.text = $"{Math.Round(_currentAccuracy, 2, MidpointRounding.AwayFromZero)}%";

@@ -10,7 +10,7 @@ using SFB;
 public class CanvasSampleSaveFileImage : MonoBehaviour, IPointerDownHandler {
     public Text output;
 
-    private byte[] _textureBytes;
+    byte[] _textureBytes;
 
     void Awake() {
         // Create red texture
@@ -32,7 +32,7 @@ public class CanvasSampleSaveFileImage : MonoBehaviour, IPointerDownHandler {
     // WebGL
     //
     [DllImport("__Internal")]
-    private static extern void DownloadFile(string gameObjectName, string methodName, string filename, byte[] byteArray, int byteArraySize);
+    static extern void DownloadFile(string gameObjectName, string methodName, string filename, byte[] byteArray, int byteArraySize);
 
     // Broser plugin should be called in OnPointerDown.
     public void OnPointerDown(PointerEventData eventData) {

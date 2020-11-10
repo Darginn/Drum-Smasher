@@ -10,7 +10,7 @@ namespace DrumSmasher.Assets.Scripts.Charts
     public class SongScanning : MonoBehaviour
     {
         public List<SongInfo> Songs;
-        private DirectoryInfo _songFolder;
+        DirectoryInfo _songFolder;
 
         public void Awake()
         {
@@ -30,7 +30,7 @@ namespace DrumSmasher.Assets.Scripts.Charts
             Songs = ScanForSongsRecursive(_songFolder).ToList();
         }
 
-        private IEnumerable<SongInfo> ScanForSongsRecursive(DirectoryInfo directory)
+        IEnumerable<SongInfo> ScanForSongsRecursive(DirectoryInfo directory)
         {
             List<FileInfo> chartFiles = directory.EnumerateFiles("*.chart", SearchOption.AllDirectories).ToList();
 

@@ -41,13 +41,13 @@ namespace DrumSmasher.Assets.Scripts.Chat
 
         public event EventHandler<string> OnNewUserMessage;
 
-        [SerializeField] private int _extraLinesOnCleanup = 50;
-        [SerializeField] private int _maxLines = 1000;
-        [SerializeField] private List<string> _lines { get; } = new List<string>();
-        [SerializeField] private InputField _inputText;
-        [SerializeField] private Text _chatText;
+        [SerializeField] int _extraLinesOnCleanup = 50;
+        [SerializeField] int _maxLines = 1000;
+        [SerializeField] List<string> _lines { get; } = new List<string>();
+        [SerializeField] InputField _inputText;
+        [SerializeField] Text _chatText;
 
-        private bool _refreshNextUpdate;
+        bool _refreshNextUpdate;
 
         public void ToggleHidden()
         {
@@ -92,7 +92,7 @@ namespace DrumSmasher.Assets.Scripts.Chat
             _inputText.text = "";
         }
 
-        private bool PressedEnter()
+        bool PressedEnter()
         {
             return Input.GetKeyDown(KeyCode.KeypadEnter) ||
                    Input.GetKeyDown(KeyCode.Return);
@@ -113,7 +113,7 @@ namespace DrumSmasher.Assets.Scripts.Chat
             _refreshNextUpdate = true;
         }
 
-        private void RefreshChat()
+        void RefreshChat()
         {
             lock(((ICollection)_lines).SyncRoot)
             {
@@ -125,12 +125,12 @@ namespace DrumSmasher.Assets.Scripts.Chat
             }
         }
 
-        private new void SendMessage(string message)
+        new void SendMessage(string message)
         {
             OnNewUserMessage?.Invoke(this, message);
         }
 
-        private void CleanupExtraLines()
+        void CleanupExtraLines()
         {
             lock (((ICollection)_lines).SyncRoot)
             {

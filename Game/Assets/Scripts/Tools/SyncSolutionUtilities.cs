@@ -11,13 +11,13 @@ namespace EditorUtilities.Solution
 {
 	public static class SyncSolutionUtilities
 	{
-		private static Type _syncVSType;
-		private static MethodInfo _syncSolutionMethodInfo;
+		static Type _syncVSType;
+		static MethodInfo _syncSolutionMethodInfo;
 
-		private static FieldInfo _synchronizerField;
-		private static object _synchronizerObject;
-		private static Type _synchronizerType;
-		private static MethodInfo _synchronizerSyncMethodInfo;
+		static FieldInfo _synchronizerField;
+		static object _synchronizerObject;
+		static Type _synchronizerType;
+		static MethodInfo _synchronizerSyncMethodInfo;
 		
 		static SyncSolutionUtilities()
 		{
@@ -43,7 +43,7 @@ namespace EditorUtilities.Solution
 			Call_SynchronizerSync(logsEnabled);
 		}
 
-		private static void CleanOldFiles(bool logsEnabled)
+		static void CleanOldFiles(bool logsEnabled)
 		{
 			DirectoryInfo assetsDirectoryInfo = new DirectoryInfo(Application.dataPath);
 			DirectoryInfo projectDirectoryInfo = assetsDirectoryInfo.Parent;
@@ -59,7 +59,7 @@ namespace EditorUtilities.Solution
 			}
 		}
 
-		private static void Call_SyncSolution(bool logsEnabled)
+		static void Call_SyncSolution(bool logsEnabled)
 		{
 			if(logsEnabled)
 			{
@@ -69,7 +69,7 @@ namespace EditorUtilities.Solution
 			_syncSolutionMethodInfo.Invoke(null, null);
 		}
 
-		private static void Call_SynchronizerSync(bool logsEnabled)
+		static void Call_SynchronizerSync(bool logsEnabled)
 		{
 			if(logsEnabled)
 			{
@@ -79,7 +79,7 @@ namespace EditorUtilities.Solution
 			_synchronizerSyncMethodInfo.Invoke(_synchronizerObject, null);
 		}
 
-		private static IEnumerable<FileInfo> GetFilesByExtensions(DirectoryInfo dir, params string[] extensions)
+		static IEnumerable<FileInfo> GetFilesByExtensions(DirectoryInfo dir, params string[] extensions)
 		{
 			extensions = extensions ?? new []{"*"};
 			IEnumerable<FileInfo> files = Enumerable.Empty<FileInfo>();

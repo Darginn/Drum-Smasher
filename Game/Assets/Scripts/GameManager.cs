@@ -25,7 +25,7 @@ namespace DrumSmasher.Assets.Scripts
                 return _random;
             }
         }
-        private static System.Random _random;
+        static System.Random _random;
 
         public bool StartPlaying;
         public int MultiplierValue;
@@ -39,11 +39,11 @@ namespace DrumSmasher.Assets.Scripts
         public GameObject DevConsolePrefab;
         public GameObject Canvas;
 
-        //private Charts.Chart _loadedChart;
+        //Charts.Chart _loadedChart;
 
-        private GameObject _devConsole;
+        GameObject _devConsole;
 
-        [SerializeField] private NoteScroller _scroller;
+        [SerializeField] NoteScroller _scroller;
 
         public static void OnSceneLoaded(Charts.Chart chart, DirectoryInfo chartDirectory, List<(string, float)> mods = null)
         {
@@ -66,7 +66,7 @@ namespace DrumSmasher.Assets.Scripts
             Instance = this;
         }
 
-        private void OnTitleScreenKey()
+        void OnTitleScreenKey()
         {
             Logger.Log("Switching to title screen");
             SceneManager.LoadScene("TitleScreen");
@@ -110,7 +110,7 @@ namespace DrumSmasher.Assets.Scripts
             }
         }
 
-        private void OnApplicationQuit()
+        void OnApplicationQuit()
         {
             SettingsManager.Exit();
         }
