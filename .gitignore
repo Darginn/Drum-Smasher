@@ -69,3 +69,7 @@ sysinfo.txt
 
 # Crashlytics generated file
 crashlytics-build.properties
+/Server/DSLauncher/obj
+/Server/DSPatcher/obj
+/Server/DSServer/obj
+/Server/DSServerDiscordCommands/obj
