@@ -102,17 +102,6 @@
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\GameTime.cs" />
     <Compile Include="Assets\Scripts\Logger.cs" />
-    <Compile Include="Assets\Scripts\Network\Account.cs" />
-    <Compile Include="Assets\Scripts\Network\ClientGameObject.cs" />
-    <Compile Include="Assets\Scripts\Network\ClientPacketHandler.cs" />
-    <Compile Include="Assets\Scripts\Network\Packets\AuthenticationPacket.cs" />
-    <Compile Include="Assets\Scripts\Network\Packets\EncryptionPacket.cs" />
-    <Compile Include="Assets\Scripts\Network\Packets\JoinChatPacket.cs" />
-    <Compile Include="Assets\Scripts\Network\Packets\MessagePacket.cs" />
-    <Compile Include="Assets\Scripts\Network\Packets\PartChatPacket.cs" />
-    <Compile Include="Assets\Scripts\Network\Packets\UserDataPacket.cs" />
-    <Compile Include="Assets\Scripts\Network\TCPClient.cs" />
-    <Compile Include="Assets\Scripts\Network\User.cs" />
     <Compile Include="Assets\Scripts\Settings\IDataStorage.cs" />
     <Compile Include="Assets\Scripts\Settings\SettingsManager.cs" />
     <Compile Include="Assets\Scripts\Settings\TaikoSettings.cs" />
