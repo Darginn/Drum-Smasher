@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DrumSmasher.Prefab.DevConsole.Commands
+namespace DrumSmasher.Assets.Scripts.DevConsole.Commands
 {
     public interface ICommand
     {

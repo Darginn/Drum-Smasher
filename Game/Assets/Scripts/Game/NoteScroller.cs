@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
-using DrumSmasher.Charts;
 using System.IO;
-using DrumSmasher.GameInput;
 using UnityEngine.SceneManagement;
 using System.Collections;
-using Assets.Scripts.Game.Mods;
 using DSServerCommon;
-using DrumSmasher.Game.Mods;
+using DrumSmasher.Assets.Scripts.Game.Notes;
+using DrumSmasher.Assets.Scripts.Game.Mods;
+using DrumSmasher.Assets.Scripts.GameInput;
+using DrumSmasher.Assets.Scripts.Charts;
 
-namespace DrumSmasher.Game
+namespace DrumSmasher.Assets.Scripts.Game
 {
     public class NoteScroller : MonoBehaviour 
     {

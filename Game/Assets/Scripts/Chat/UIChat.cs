@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.Chat
+namespace DrumSmasher.Assets.Scripts.Chat
 {
     public class UIChat : MonoBehaviour
     {

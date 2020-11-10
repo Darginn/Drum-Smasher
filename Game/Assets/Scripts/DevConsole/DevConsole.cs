@@ -1,5 +1,5 @@
-﻿using DrumSmasher.Prefab.DevConsole.Commands;
-using DrumSmasher.Settings;
+﻿using DrumSmasher.Assets.Scripts.DevConsole.Commands;
+using DrumSmasher.Assets.Scripts.Settings;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DrumSmasher.Prefab.DevConsole
+namespace DrumSmasher.Assets.Scripts.DevConsole
 {
     public class DevConsole : MonoBehaviour
     {

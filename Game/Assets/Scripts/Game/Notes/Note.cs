@@ -1,4 +1,4 @@
-﻿using DrumSmasher.GameInput;
+﻿using DrumSmasher.Assets.Scripts.GameInput;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace DrumSmasher.Game
+namespace DrumSmasher.Assets.Scripts.Game.Notes
 {
     public class Note : MonoBehaviour
     {
@@ -15,9 +15,6 @@ namespace DrumSmasher.Game
         public float Speed = float.MaxValue;
         public float StartTime = float.MaxValue;
         public bool AutoPlay = false;
-
-        private static bool _lastHitRed;
-        private static bool _lastHitBlue;
 
         public bool CanBeHit;
         public float HitRange;
@@ -35,23 +32,25 @@ namespace DrumSmasher.Game
         public TaikoDrumHotKey Key3Controller { get; set; }
         public TaikoDrumHotKey Key4Controller { get; set; }
 
-        private NoteType _noteType;
-        private NoteColor _noteColor;
-        private bool _missed;
-        private bool _canBeHitWasTrue;
+        static bool _autoPlaySwitch;
+        static bool _lastHitRed;
+        static bool _lastHitBlue;
 
-        [SerializeField] private Vector3 _startPosition;
-        [SerializeField] private Vector3 _hitCirclePosition;
-        [SerializeField] private Vector3 _endPosition;
-        [SerializeField] private Vector3 _noteSmallScale;
-        [SerializeField] private Vector3 _noteBigScale;
-        [SerializeField] private Color _noteColorRed;
-        [SerializeField] private Color _noteColorBlue;
-        [SerializeField] private Color _noteColorYellow;
+        bool _destroyThis = false;
+        NoteType _noteType;
+        NoteColor _noteColor;
+        bool _missed;
+        bool _canBeHitWasTrue;
 
-        private static bool _autoPlaySwitch;
+        [SerializeField] Vector3 _startPosition;
+        [SerializeField] Vector3 _hitCirclePosition;
+        [SerializeField] Vector3 _endPosition;
+        [SerializeField] Vector3 _noteSmallScale;
+        [SerializeField] Vector3 _noteBigScale;
+        [SerializeField] Color _noteColorRed;
+        [SerializeField] Color _noteColorBlue;
+        [SerializeField] Color _noteColorYellow;
 
-        private bool _destroyThis = false;
 
         void Start()
         {
@@ -77,7 +76,7 @@ namespace DrumSmasher.Game
             else if (!CanBeHit && _canBeHitWasTrue)
             {
                 _missed = true;
-                StatisticHandler.OnNoteHit(HitType.Miss, _noteType == NoteType.Big ? true : false);
+                StatisticHandler.OnNoteHit(NoteHitType.Miss, _noteType == NoteType.Big ? true : false);
                 return;
             }
 
@@ -147,7 +146,7 @@ namespace DrumSmasher.Game
                 if (AutoPlay)
                 {
                     if (transform.position.x <= _hitCirclePosition.x)
-                        OnNoteHit(HitType.GoodHit, hotkey1, hotkey2);
+                        OnNoteHit(NoteHitType.GoodHit, hotkey1, hotkey2);
                 }
                 else
                 {
@@ -157,10 +156,10 @@ namespace DrumSmasher.Game
                         {
                             default:
                             case 1:
-                                OnNoteHit(HitType.BadHit, hotkey1, hotkey2);
+                                OnNoteHit(NoteHitType.BadHit, hotkey1, hotkey2);
                                 break;
                             case 2:
-                                OnNoteHit(HitType.GoodHit, hotkey1, hotkey2);
+                                OnNoteHit(NoteHitType.GoodHit, hotkey1, hotkey2);
                                 break;
                         }
                     }
@@ -230,16 +229,16 @@ namespace DrumSmasher.Game
             _startPosition.z = value;
         }
 
-        private void OnNoteHit(HitType hit, TaikoDrumHotKey hotkey1, TaikoDrumHotKey hotKey2)
+        private void OnNoteHit(NoteHitType hit, TaikoDrumHotKey hotkey1, TaikoDrumHotKey hotKey2)
         {
-            if (hit == HitType.Miss)
+            if (hit == NoteHitType.Miss)
                 return;
             
             bool bignote = transform.localScale == _noteBigScale;
 
             if (AutoPlay)
             {
-                StatisticHandler.OnNoteHit(HitType.GoodHit, bignote);
+                StatisticHandler.OnNoteHit(NoteHitType.GoodHit, bignote);
 
                 if (bignote)
                 {
@@ -279,15 +278,15 @@ namespace DrumSmasher.Game
 
             switch (hit)
             {
-                case HitType.BadHit:
+                case NoteHitType.BadHit:
                     Conductor.PlayHitSound();
-                    StatisticHandler.OnNoteHit(HitType.BadHit, bignote);
+                    StatisticHandler.OnNoteHit(NoteHitType.BadHit, bignote);
                     StartCoroutine(ResetNoteHit(_noteColor));
                     return;
 
-                case HitType.GoodHit:
+                case NoteHitType.GoodHit:
                     Conductor.PlayHitSound();
-                    StatisticHandler.OnNoteHit(HitType.GoodHit, bignote);
+                    StatisticHandler.OnNoteHit(NoteHitType.GoodHit, bignote);
                     StartCoroutine(ResetNoteHit(_noteColor));
                     return;
             }

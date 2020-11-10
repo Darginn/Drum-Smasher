@@ -1,5 +1,6 @@
-﻿using DrumSmasher.Game;
-using DrumSmasher.Settings;
+﻿using DrumSmasher.Assets.Scripts.Game;
+using DrumSmasher.Assets.Scripts.GameInput;
+using DrumSmasher.Assets.Scripts.Settings;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace DrumSmasher
+namespace DrumSmasher.Assets.Scripts
 {
     public class GameManager : MonoBehaviour
     {

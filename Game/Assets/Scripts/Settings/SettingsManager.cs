@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace DrumSmasher.Settings
+namespace DrumSmasher.Assets.Scripts.Settings
 {
     public static class SettingsManager
     {

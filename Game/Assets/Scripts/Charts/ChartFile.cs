@@ -8,7 +8,7 @@ using System.Security.AccessControl;
 using System.Text;
 using UnityEngine;
 
-namespace DrumSmasher.Charts
+namespace DrumSmasher.Assets.Scripts.Charts
 {
     public static class ChartFile
     {

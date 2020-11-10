@@ -6,7 +6,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace DrumSmasher
+namespace DrumSmasher.Assets.Scripts
 {
     public static class Logger
     {

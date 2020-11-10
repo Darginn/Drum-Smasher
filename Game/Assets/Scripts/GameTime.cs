@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DrumSmasher
+namespace DrumSmasher.Assets.Scripts
 {
     public class GameTime
     {

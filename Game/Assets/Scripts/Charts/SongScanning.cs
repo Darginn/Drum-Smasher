@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using DrumSmasher.Charts;
 using System.Linq;
 using System;
 using DSServerCommon;
 
-namespace DrumSmasher
+namespace DrumSmasher.Assets.Scripts.Charts
 {
     public class SongScanning : MonoBehaviour
     {

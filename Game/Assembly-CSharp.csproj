@@ -71,11 +71,17 @@
     <Compile Include="Assets\Scripts\Chat\UIChat.cs" />
     <Compile Include="Assets\Scripts\Conductor.cs" />
     <Compile Include="Assets\Scripts\Debug\FPSCounter.cs" />
+    <Compile Include="Assets\Scripts\DevConsole\Commands\ActivateCommand.cs" />
+    <Compile Include="Assets\Scripts\DevConsole\Commands\AutoplayCommand.cs" />
+    <Compile Include="Assets\Scripts\DevConsole\Commands\BaseCommand.cs" />
+    <Compile Include="Assets\Scripts\DevConsole\Commands\FPSCommand.cs" />
+    <Compile Include="Assets\Scripts\DevConsole\Commands\ICommand.cs" />
+    <Compile Include="Assets\Scripts\DevConsole\Commands\KeyCommand.cs" />
+    <Compile Include="Assets\Scripts\DevConsole\DevConsole.cs" />
     <Compile Include="Assets\Scripts\Extensions\AutoInitAttribute.cs" />
     <Compile Include="Assets\Scripts\Extensions\Extensions.cs" />
-    <Compile Include="Assets\Scripts\Extensions\UnityMainThreadDispatcher.cs" />
-    <Compile Include="Assets\Scripts\Game\HitBox.cs" />
-    <Compile Include="Assets\Scripts\Game\HitType.cs" />
+    <Compile Include="Assets\Scripts\Game\Notes\NoteHitBox.cs" />
+    <Compile Include="Assets\Scripts\Game\Notes\NoteHitType.cs" />
     <Compile Include="Assets\Scripts\Game\Mods\AutoPlayMod.cs" />
     <Compile Include="Assets\Scripts\Game\Mods\BaseMod.cs" />
     <Compile Include="Assets\Scripts\Game\Mods\FadeInMod.cs" />
@@ -85,7 +91,7 @@
     <Compile Include="Assets\Scripts\Game\Mods\ModButton.cs" />
     <Compile Include="Assets\Scripts\Game\Mods\ModController.cs" />
     <Compile Include="Assets\Scripts\Game\Mods\ModPanel.cs" />
-    <Compile Include="Assets\Scripts\Game\Note.cs" />
+    <Compile Include="Assets\Scripts\Game\Notes\Note.cs" />
     <Compile Include="Assets\Scripts\Game\NoteColor.cs" />
     <Compile Include="Assets\Scripts\Game\NoteScroller.cs" />
     <Compile Include="Assets\Scripts\Game\NoteType.cs" />
@@ -121,6 +127,14 @@
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserLinux.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserMac.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserWindows.cs" />
+    <None Include="Assets\Scripts\DevConsole\Commands.meta" />
+    <None Include="Assets\Scripts\DevConsole\Commands\ActivateCommand.cs.meta" />
+    <None Include="Assets\Scripts\DevConsole\Commands\AutoplayCommand.cs.meta" />
+    <None Include="Assets\Scripts\DevConsole\Commands\BaseCommand.cs.meta" />
+    <None Include="Assets\Scripts\DevConsole\Commands\FPSCommand.cs.meta" />
+    <None Include="Assets\Scripts\DevConsole\Commands\ICommand.cs.meta" />
+    <None Include="Assets\Scripts\DevConsole\Commands\KeyCommand.cs.meta" />
+    <None Include="Assets\Scripts\DevConsole\DevConsole.cs.meta" />
     <None Include="Assets\Scripts\GameInput\XInput MITLicense.txt" />
     <None Include="Assets\link.xml" />
     <Reference Include="UnityEngine">
@@ -715,6 +729,7 @@
       <HintPath>D:/reposSSD/Drum-Smasher/Game/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

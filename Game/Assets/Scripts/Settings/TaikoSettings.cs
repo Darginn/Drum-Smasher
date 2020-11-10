@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DrumSmasher.Settings
+namespace DrumSmasher.Assets.Scripts.Settings
 {
     public class TaikoSettings : ISetting
     {

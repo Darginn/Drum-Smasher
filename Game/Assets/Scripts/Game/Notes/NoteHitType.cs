@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DrumSmasher.Game
+namespace DrumSmasher.Assets.Scripts.Game.Notes
 {
-    public enum HitType
+    public enum NoteHitType
     {
         None,
         GoodHit,

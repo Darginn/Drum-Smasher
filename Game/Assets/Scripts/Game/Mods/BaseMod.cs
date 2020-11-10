@@ -1,5 +1,4 @@
-﻿using DrumSmasher.Game;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DrumSmasher.Game.Mods
+namespace DrumSmasher.Assets.Scripts.Game.Mods
 {
     public class BaseMod : MonoBehaviour
     {

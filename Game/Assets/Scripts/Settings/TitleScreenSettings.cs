@@ -1,12 +1,11 @@
-﻿using DrumSmasher.GameInput;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace DrumSmasher.Settings
+namespace DrumSmasher.Assets.Scripts.Settings
 {
     public class TitleScreenSettings : ISetting
     {

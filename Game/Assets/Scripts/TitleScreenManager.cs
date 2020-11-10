@@ -10,11 +10,11 @@ using UnityEngine.SceneManagement;
 using SFB;
 using System.IO;
 using System.Collections;
-using DrumSmasher.Settings;
+using DrumSmasher.Assets.Scripts.Settings;
 using System.Threading;
 using DSServerCommon;
 
-namespace DrumSmasher
+namespace DrumSmasher.Assets.Scripts
 {
     public class TitleScreenManager : MonoBehaviour
     {

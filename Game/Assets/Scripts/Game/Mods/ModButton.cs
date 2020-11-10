@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DrumSmasher.Game.Mods
+namespace DrumSmasher.Assets.Scripts.Game.Mods
 {
     public class ModButton : MonoBehaviour
     {

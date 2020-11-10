@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets.Scripts.GameInput
+namespace DrumSmasher.Assets.Scripts.GameInput
 {
     //TODO: replace old hotkeys with KeyScanner
     /// <summary>

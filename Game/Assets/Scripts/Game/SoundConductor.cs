@@ -11,7 +11,7 @@ using System.Collections;
 using System.Diagnostics;
 #endif
 
-namespace DrumSmasher.Game
+namespace DrumSmasher.Assets.Scripts.Game
 {
     public class SoundConductor : MonoBehaviour
     {

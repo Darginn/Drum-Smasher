@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets.Scripts.Tools
+namespace DrumSmasher.Assets.Scripts.Tools
 {
     public class DontDestroyOnLoadScript : MonoBehaviour
     {

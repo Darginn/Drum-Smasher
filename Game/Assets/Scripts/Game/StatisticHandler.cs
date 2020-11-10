@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DrumSmasher.Assets.Scripts.Game.Notes;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DrumSmasher.Game
+namespace DrumSmasher.Assets.Scripts.Game
 {
     public class StatisticHandler : MonoBehaviour
     {
@@ -88,21 +89,21 @@ namespace DrumSmasher.Game
             _goodHits = 0u;
         }
 
-        public void OnNoteHit(HitType hitType, bool bigNote)
+        public void OnNoteHit(NoteHitType hitType, bool bigNote)
         {
             switch (hitType)
             {
                 default:
-                case HitType.None:
+                case NoteHitType.None:
                     return;
 
-                case HitType.Miss:
+                case NoteHitType.Miss:
                     _currentCombo = 0;
                     _misses++;
 
                     break;
 
-                case HitType.BadHit:
+                case NoteHitType.BadHit:
                     _badHits++;
                     _currentCombo++;
 
@@ -112,7 +113,7 @@ namespace DrumSmasher.Game
                         _currentScore += (ulong)((Math.Min((double)Math.Round(_currentCombo / 10.0, MidpointRounding.AwayFromZero), 10.0) * Math.Round(Multiplier, MidpointRounding.AwayFromZero))) * (ulong)Multiplier; ;
                     break;
 
-                case HitType.GoodHit:
+                case NoteHitType.GoodHit:
                     _goodHits++;
                     _currentCombo++;
 

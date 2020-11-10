@@ -1,7 +1,7 @@
 using UnityEngine;
 using XInputDotNetPure;
 
-namespace DrumSmasher.GameInput
+namespace DrumSmasher.Assets.Scripts.GameInput
 {
     public class XInput : MonoBehaviour
     {

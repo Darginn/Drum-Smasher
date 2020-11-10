@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace DrumSmasher.Game
+namespace DrumSmasher.Assets.Scripts.Game.Notes
 {
-    public class HitBox : MonoBehaviour
+    public class NoteHitBox : MonoBehaviour
     {
         void OnTriggerEnter2D(Collider2D collider)
         {

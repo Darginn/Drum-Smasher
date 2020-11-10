@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DrumSmasher.Charts
+namespace DrumSmasher.Assets.Scripts.Charts
 {
     public class ChartNote : IEquatable<ChartNote>
     {

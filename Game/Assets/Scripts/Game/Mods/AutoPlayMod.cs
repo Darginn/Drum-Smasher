@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace DrumSmasher.Game.Mods
+namespace DrumSmasher.Assets.Scripts.Game.Mods
 {
     public class AutoPlayMod : BaseMod
     {

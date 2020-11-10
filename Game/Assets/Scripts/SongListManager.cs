@@ -1,4 +1,6 @@
-﻿using DrumSmasher.Settings;
+﻿using DrumSmasher.Assets.Scripts.Charts;
+using DrumSmasher.Assets.Scripts.Game.Mods;
+using DrumSmasher.Assets.Scripts.Settings;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +8,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace DrumSmasher
+namespace DrumSmasher.Assets.Scripts
 {
     public class SongListManager : MonoBehaviour
     {
@@ -20,7 +22,7 @@ namespace DrumSmasher
         SongScanning _scan;
         public List<SongScanning.SongInfo> SongList;
 
-        [SerializeField] Game.Mods.ModPanel _modPanel;
+        [SerializeField] ModPanel _modPanel;
 
         public void Start()
         {
