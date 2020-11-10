@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>Assets/Plugins/</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>Assets/Plugins/</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Assets\**" />
+    <Compile Remove="Charts\**" />
+    <Compile Remove="Library\**" />
+    <Compile Remove="Logs\**" />
+    <Compile Remove="Network\**" />
+    <Compile Remove="Packages\**" />
+    <Compile Remove="ProjectSettings\**" />
+    <Compile Remove="Temp\**" />
+    <EmbeddedResource Remove="Assets\**" />
+    <EmbeddedResource Remove="Charts\**" />
+    <EmbeddedResource Remove="Library\**" />
+    <EmbeddedResource Remove="Logs\**" />
+    <EmbeddedResource Remove="Network\**" />
+    <EmbeddedResource Remove="Packages\**" />
+    <EmbeddedResource Remove="ProjectSettings\**" />
+    <EmbeddedResource Remove="Temp\**" />
+    <None Remove="Assets\**" />
+    <None Remove="Charts\**" />
+    <None Remove="Library\**" />
+    <None Remove="Logs\**" />
+    <None Remove="Network\**" />
+    <None Remove="Packages\**" />
+    <None Remove="ProjectSettings\**" />
+    <None Remove="Temp\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove=".collabignore" />
+    <None Remove=".gitattributes" />
+    <None Remove=".gitignore" />
+    <None Remove="fmod_editor.log" />
+    <None Remove="LICENSE" />
+    <None Remove="log.txt" />
+    <None Remove="log.txt1" />
+    <None Remove="README.md" />
+    <None Remove="upinfo.txt" />
+  </ItemGroup>
+
+</Project>
