@@ -144,6 +144,25 @@ namespace DrumSmasher.Assets.Scripts.Game
             _soundOffsetText.text = value.ToString("g", _elGR);
         }
 
+        //TODO: for segments: <149: 1/16, 150-199 : 1/12, 200-249 : 1/8, 250-300 : 1/6
+
+        /// <summary>
+        /// Calculates the max score a slider can have
+        /// </summary>
+        /// <param name="duration">Map duration in seconds</param>
+        /// <param name="totalNotes">Total Notes</param>
+        /// <param name="sliderDuration">Slider duration in seconds</param>
+        /// <param name="bpm">Beats per minute</param>
+        /// <returns>Slider score cap</returns>
+        public static double CalculateSliderScoreCap(double duration, int totalNotes, double sliderDuration, double bpm)
+        {
+            double t = duration / totalNotes;
+            double l = sliderDuration / t;
+            double x = bpm / 60.0;
+
+            return Math.Truncate(l * 10 * Math.Pow(10, t) * (Math.Pow(10, x / 10)) * 250);
+        }
+
         public void IncrementKey(int keyId)
         {
             switch(keyId)
