@@ -83,11 +83,11 @@ namespace DrumSmasher.Assets.Scripts.Game.Notes
             _sliderHitValue = (int)(scoreCap / segments);
 
             //Instantiate slider middle
-            for (int i = 1; i < segments - 1; i++)
+            for (int i = 1; i < segments; i++)
                 _ = CreateSegment(_prefabSegment, segmentLength * i);
 
             //Instantiate slider end
-            NoteSegment nseg = CreateSegment(_prefabSegmentEnd, segmentLength * (segments - 1));
+            NoteSegment nseg = CreateSegment(_prefabSegmentEnd, segmentLength * segments);
             nseg.IsSliderEnd = true;
             nseg.ChartEndX = _endPosition.x;
             nseg.Autoplay = AutoPlay;
