@@ -55,7 +55,12 @@ namespace DrumSmasher.Assets.Scripts.Game
             if (_currentAccuracy == 100.0)
                 return "SS";
             else if (_currentAccuracy > 95)
-                rank = "S";
+            {
+                if (_misses == 0)
+                    rank = "S";
+                else
+                    rank = "A";
+            }
             else if (_currentAccuracy > 90)
                 rank = "A";
             else if (_currentAccuracy > 85)
@@ -64,10 +69,7 @@ namespace DrumSmasher.Assets.Scripts.Game
                 rank = "C";
             else
                 rank = "D";
-
-            if (_misses > 0 && rank.Equals("S"))
-                rank = "A";
-
+            
             return rank;
         }
 
@@ -89,13 +91,13 @@ namespace DrumSmasher.Assets.Scripts.Game
             _goodHits = 0u;
         }
 
-        public void OnNoteHit(NoteHitType hitType, bool bigNote, bool isSegment = false, bool countAcc = true, int scorePerHit = 0)
+        public void OnNoteHit(NoteHitType hitType, bool bigNote, bool isSegment = false, int scorePerHit = 0)
         {
             if (isSegment)
             {
                 //This is the start of the slider
-                if (countAcc)
-                    _totalNotes++;
+                //if (countAcc)
+                //    _totalNotes++;
 
                 _currentScore += (uint)scorePerHit;
                 RefreshVisuals();
@@ -137,7 +139,7 @@ namespace DrumSmasher.Assets.Scripts.Game
             }
             _totalNotes++;
 
-            if (countAcc && _totalNotes > 0)
+            if (_totalNotes > 0)
                 _currentAccuracy = (100.0 / _totalNotes) * (_badHits + _goodHits);
 
             RefreshVisuals();

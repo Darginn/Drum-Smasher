@@ -80,7 +80,7 @@ namespace DrumSmasher.Assets.Scripts.Game.Notes
         void Hit()
         {
             HasBeenHit = true;
-            StatisticHandler.OnNoteHit(NoteHitType.GoodHit, BigNote, true, false, HitValue);
+            StatisticHandler.OnNoteHit(NoteHitType.GoodHit, BigNote, true, HitValue);
         }
 
         public void SetColor(Color c)

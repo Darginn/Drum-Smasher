@@ -92,7 +92,7 @@ namespace DrumSmasher.Assets.Scripts.Game.Notes
         {
             SliderDuration = sliderDuration;
             _dontDestroySlider = true;
-            SetNoteType(_noteType, NoteColor.Yellow);
+            SetNoteType(_noteType == NoteType.Big ? NoteType.BigLong : NoteType.SmallLong, NoteColor.Yellow);
 
             int segments = 6;
 
@@ -440,7 +440,7 @@ namespace DrumSmasher.Assets.Scripts.Game.Notes
             if (AutoPlay)
             {
                 if (_noteType == NoteType.BigLong || _noteType == NoteType.SmallLong)
-                    StatisticHandler.OnNoteHit(NoteHitType.GoodHit, bignote, true, true, _sliderHitValue);
+                    StatisticHandler.OnNoteHit(NoteHitType.GoodHit, bignote, true, _sliderHitValue);
                 else
                     StatisticHandler.OnNoteHit(NoteHitType.GoodHit, bignote);
 
@@ -461,6 +461,7 @@ namespace DrumSmasher.Assets.Scripts.Game.Notes
 
                 if (!_dontDestroySlider)
                     Destroy(gameObject);
+
                 return;
             }
 
@@ -487,9 +488,9 @@ namespace DrumSmasher.Assets.Scripts.Game.Notes
                     Conductor.PlayHitSound();
 
                     if (_noteType == NoteType.BigLong || _noteType == NoteType.SmallLong)
-                        StatisticHandler.OnNoteHit(NoteHitType.GoodHit, bignote, true, true, _sliderHitValue);
+                        StatisticHandler.OnNoteHit(NoteHitType.GoodHit, bignote, true, _sliderHitValue);
                     else
-                        StatisticHandler.OnNoteHit(NoteHitType.BadHit, bignote, true, true, _sliderHitValue);
+                        StatisticHandler.OnNoteHit(NoteHitType.BadHit, bignote, true, _sliderHitValue);
 
                     StartCoroutine(ResetNoteHit(_noteColor));
                     return;
@@ -498,9 +499,9 @@ namespace DrumSmasher.Assets.Scripts.Game.Notes
                     Conductor.PlayHitSound();
 
                     if (_noteType == NoteType.BigLong || _noteType == NoteType.SmallLong)
-                        StatisticHandler.OnNoteHit(NoteHitType.GoodHit, bignote, true, true, _sliderHitValue);
+                        StatisticHandler.OnNoteHit(NoteHitType.GoodHit, bignote, true, _sliderHitValue);
                     else
-                        StatisticHandler.OnNoteHit(NoteHitType.GoodHit, bignote, true, true, _sliderHitValue);
+                        StatisticHandler.OnNoteHit(NoteHitType.GoodHit, bignote, true, _sliderHitValue);
 
                     StartCoroutine(ResetNoteHit(_noteColor));
                     return;
