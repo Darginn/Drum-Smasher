@@ -60,7 +60,33 @@ namespace DrumSmasher.Assets.Scripts.Game.Notes
         [SerializeField] GameObject _prefabSegmentEnd;
         bool _dontDestroySlider;
         int _sliderHitValue;
+        #endregion
 
+
+        void Start()
+        {
+        }
+
+        void Update()
+        {
+            //Don't play if we haven't started playing the music yet
+            //Or haven't passed our start time
+            if (Conductor.PlayState != PlayState.Playing ||
+                StartTime > Conductor.CurrentTime)
+                return;
+
+            //Update our current position based on time
+            UpdatePosition();
+
+            //We reached our end
+            if (!_dontDestroySlider && (_destroyThis || gameObject.transform.position.x < _endPosition.x))
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            CheckForHit();
+        }
 
         public void ConvertToSlider(float sliderDuration, float bpm)
         {
@@ -122,30 +148,70 @@ namespace DrumSmasher.Assets.Scripts.Game.Notes
             }
         }
 
-        #endregion
-
-
-        void Start()
+        public void SetNoteType(NoteType type, NoteColor color)
         {
+            switch (type)
+            {
+                default:
+                case NoteType.Small:
+                    gameObject.transform.localScale = _noteSmallScale;
+                    break;
+
+                case NoteType.Big:
+                    gameObject.transform.localScale = _noteBigScale;
+                    break;
+
+                case NoteType.SmallLong:
+                    gameObject.transform.localScale = _noteSmallScale;
+                    break;
+
+                case NoteType.BigLong:
+                    gameObject.transform.localScale = _noteBigScale;
+                    break;
+
+            }
+
+            _noteType = type;
+
+            switch (color)
+            {
+                default:
+                case NoteColor.Red:
+                    gameObject.GetComponent<SpriteRenderer>().color = _noteColorRed;
+                    break;
+
+                case NoteColor.Blue:
+                    gameObject.GetComponent<SpriteRenderer>().color = _noteColorBlue;
+                    break;
+
+                case NoteColor.Yellow:
+                    gameObject.GetComponent<SpriteRenderer>().color = _noteColorYellow;
+                    break;
+            }
+
+            _noteColor = color;
         }
 
-        void Update()
+        public void UpdatePosition()
         {
-            //Don't play if we haven't started playing the music yet
-            //Or haven't passed our start time
-            if (Conductor.PlayState != PlayState.Playing ||
-                StartTime > Conductor.CurrentTime)
-                return;
+            float dist = GetDistanceByTime((float)(Conductor.CurrentTime - StartTime), Speed);
+            Vector3 newPos = new Vector3(_startPosition.x - dist, _startPosition.y, _startPosition.z);
 
-            //Update our current position based on time
-            UpdatePosition();
+            gameObject.transform.position = newPos;
+        }
 
-            //We reached our end
-            if (!_dontDestroySlider && (_destroyThis || gameObject.transform.position.x < _endPosition.x))
-            {
-                Destroy(gameObject);
-                return;
-            }
+        public void SetDefaultPosition()
+        {
+            gameObject.transform.position = _startPosition;
+        }
+
+        public void SetStartZ(float value)
+        {
+            _startPosition.z = value;
+        }
+
+        void CheckForHit()
+        {
 
             if (_missed)
                 return;
@@ -325,7 +391,7 @@ namespace DrumSmasher.Assets.Scripts.Game.Notes
                     {
                         int rnd = UnityEngine.Random.Range(0, 4);
 
-                        switch(rnd)
+                        switch (rnd)
                         {
                             default:
                             case 0:
@@ -359,68 +425,6 @@ namespace DrumSmasher.Assets.Scripts.Game.Notes
                     }
                 }
             }
-        }
-
-        public void SetNoteType(NoteType type, NoteColor color)
-        {
-            switch (type)
-            {
-                default:
-                case NoteType.Small:
-                    gameObject.transform.localScale = _noteSmallScale;
-                    break;
-
-                case NoteType.Big:
-                    gameObject.transform.localScale = _noteBigScale;
-                    break;
-
-                case NoteType.SmallLong:
-                    gameObject.transform.localScale = _noteSmallScale;
-                    break;
-
-                case NoteType.BigLong:
-                    gameObject.transform.localScale = _noteBigScale;
-                    break;
-
-            }
-
-            _noteType = type;
-
-            switch (color)
-            {
-                default:
-                case NoteColor.Red:
-                    gameObject.GetComponent<SpriteRenderer>().color = _noteColorRed;
-                    break;
-
-                case NoteColor.Blue:
-                    gameObject.GetComponent<SpriteRenderer>().color = _noteColorBlue;
-                    break;
-
-                case NoteColor.Yellow:
-                    gameObject.GetComponent<SpriteRenderer>().color = _noteColorYellow;
-                    break;
-            }
-
-            _noteColor = color;
-        }
-
-        public void UpdatePosition()
-        {
-            float dist = GetDistanceByTime((float)(Conductor.CurrentTime - StartTime), Speed);
-            Vector3 newPos = new Vector3(_startPosition.x - dist, _startPosition.y, _startPosition.z);
-
-            gameObject.transform.position = newPos;
-        }
-
-        public void SetDefaultPosition()
-        {
-            gameObject.transform.position = _startPosition;
-        }
-
-        public void SetStartZ(float value)
-        {
-            _startPosition.z = value;
         }
 
         void OnNoteHit(NoteHitType hit, TaikoDrumHotKey hotkey1, TaikoDrumHotKey hotKey2)
