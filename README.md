@@ -8,7 +8,3 @@ The first Alpha release was on the 2020.06.19
 Feel free to visit the [Roadmap](https://trello.com/b/26vG8T7M/project-drum-smasher "Project Drum Smasher on Trello") to see current progress.
 
 Join our new [Discord](https://discord.gg/eVdng2P "Official Project Drum Smasher Discord Server") Server!
-
-Update Repository: https://github.com/Blade12629/Drum-Smasher-Update/blob/master/README.md
-
-Network Repository (private for now): https://github.com/Blade12629/DSNetwork
