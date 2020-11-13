@@ -17,9 +17,17 @@ namespace DrumSmasher.Assets.Scripts.Game.Notes
             Note note = collider.gameObject.GetComponent<Note>();
 
             if (note == null)
-                return;
+            {
+                NoteSegment segment = collider.gameObject.GetComponent<NoteSegment>();
 
-            note.CanBeHit = true;
+                if (segment == null ||
+                    segment.HasBeenHit)
+                    return;
+
+                segment.CanBeHit = true;
+            }
+            else 
+                note.CanBeHit = true;
         }
 
         void OnTriggerExit2D(Collider2D collider)
@@ -30,7 +38,15 @@ namespace DrumSmasher.Assets.Scripts.Game.Notes
             Note note = collider.gameObject.GetComponent<Note>();
 
             if (note == null)
-                return;
+            {
+                NoteSegment segment = collider.gameObject.GetComponent<NoteSegment>();
+
+                if (segment == null ||
+                    segment.HasBeenHit)
+                    return;
+
+                segment.CanBeHit = false;
+            }
 
             note.CanBeHit = false;
         }

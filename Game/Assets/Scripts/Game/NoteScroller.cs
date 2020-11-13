@@ -17,7 +17,11 @@ namespace DrumSmasher.Assets.Scripts.Game
 {
     public class NoteScroller : MonoBehaviour 
     {
+        public static NoteScroller Instance;
+
         public bool IgnoreColor;
+        public Chart CurrentChart => _chart;
+        public GameObject NotePrefab => _notePrefab;
 
         Chart _chart;
         List<ChartNote> _notes;
@@ -45,13 +49,14 @@ namespace DrumSmasher.Assets.Scripts.Game
         [SerializeField] TaikoDrumHotKey _hotkeyDrumInnerRight;
         [SerializeField] TaikoDrumHotKey _hotkeyDrumOuterRight;
 
+        float _endTime;
         float _layer;
         DirectoryInfo _chartDirectory;
         GameObject _lastNote;
 
         void Start()
         {
-
+            Instance = this;
         }
 
         void Update()
@@ -59,12 +64,18 @@ namespace DrumSmasher.Assets.Scripts.Game
             if (_conductor.PlayState != PlayState.Playing || _reachedEndOfChart)
                 return;
 
-            TrySpawnNote();
+            if (!TrySpawnNote() && _endTime == 0 && _lastNote != null &&
+                _lastNote.GetComponent<Note>().IsSlider)
+            {
+                Note n = _lastNote.GetComponent<Note>();
+                _endTime = n.SliderDuration + n.StartTime + 2.5f;
+            }
         }
 
         void FixedUpdate()
         {
-            if (!_reachedEndOfChart || _lastNote != null || _notesIndex <= 0)
+            if (!_reachedEndOfChart || _lastNote != null || _notesIndex <= 0 ||
+                (_endTime != 0 && _conductor.CurrentTime < _endTime))
                 return;
 
             EnableScoreScreen();
@@ -277,19 +288,22 @@ namespace DrumSmasher.Assets.Scripts.Game
             noteScript.StatisticHandler = _statisticHandler;
             noteScript.NoteScroller = this;
 
-            noteScript.Key1Controller = _hotkeyDrumOuterLeft;
-            noteScript.Key2Controller = _hotkeyDrumInnerLeft;
-            noteScript.Key3Controller = _hotkeyDrumInnerRight;
-            noteScript.Key4Controller = _hotkeyDrumOuterRight;
+            noteScript.Key1 = _hotkeyDrumOuterLeft;
+            noteScript.Key2 = _hotkeyDrumInnerLeft;
+            noteScript.Key3 = _hotkeyDrumInnerRight;
+            noteScript.Key4 = _hotkeyDrumOuterRight;
 
             noteScript.IgnoreColor = IgnoreColor;
 
             noteScript.Speed = _speed;
             noteScript.Conductor = _conductor;
             noteScript.StartTime = (float)note.SpawnTime;
-
+            
             if (_notesIndex >= _notes.Count)
                 _lastNote = noteScript.gameObject;
+
+            if (note.Note.IsSlider)
+                noteScript.ConvertToSlider((float)note.Note.SliderDuration.TotalSeconds, CurrentChart.BPM);
         }
 
         struct NextNote

@@ -197,7 +197,11 @@ MonoBehaviour:
   _noteBigScale: {x: 1.5, y: 1.5, z: 1}
   _noteColorRed: {r: 0.9843138, g: 0.35686275, b: 0.20392159, a: 1}
   _noteColorBlue: {r: 0.011764707, g: 0.7176471, b: 0.9843138, a: 1}
-  _noteColorYellow: {r: 0, g: 0, b: 0, a: 0}
+  _noteColorYellow: {r: 0.9975581, g: 1, b: 0.023584902, a: 1}
+  _prefabSegment: {fileID: 8833741023060788037, guid: 714ff490603855a4da93ab1cad0438ba,
+    type: 3}
+  _prefabSegmentEnd: {fileID: 2169902961588619629, guid: 016522edd47a4d84db3d791f17eb137b,
+    type: 3}
 --- !u!82 &1172429345013681713
 AudioSource:
   m_ObjectHideFlags: 0

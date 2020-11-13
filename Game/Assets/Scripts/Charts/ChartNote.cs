@@ -9,6 +9,8 @@ namespace DrumSmasher.Assets.Scripts.Charts
         public TimeSpan Time { get; set; }
         public bool BigNote { get; set; }
         public short Color { get; set; }
+        public bool IsSlider { get; set; }
+        public TimeSpan SliderDuration { get; set; }
 
         public ChartNote(TimeSpan time, bool bigNote, short color)
         {

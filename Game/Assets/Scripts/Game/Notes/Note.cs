@@ -26,11 +26,15 @@ namespace DrumSmasher.Assets.Scripts.Game.Notes
 
         public bool IgnoreColor;
 
+        public bool HasBeenHit { get; private set; }
+        public float SliderDuration { get; private set; }
+        public bool IsSlider => _noteType == NoteType.BigLong || _noteType == NoteType.SmallLong;
+
         public SoundConductor Conductor { get; set; }
-        public TaikoDrumHotKey Key1Controller { get; set; }
-        public TaikoDrumHotKey Key2Controller { get; set; }
-        public TaikoDrumHotKey Key3Controller { get; set; }
-        public TaikoDrumHotKey Key4Controller { get; set; }
+        public TaikoDrumHotKey Key1 { get; set; }
+        public TaikoDrumHotKey Key2 { get; set; }
+        public TaikoDrumHotKey Key3 { get; set; }
+        public TaikoDrumHotKey Key4 { get; set; }
 
         static bool _autoPlaySwitch;
         static bool _lastHitRed;
@@ -51,6 +55,75 @@ namespace DrumSmasher.Assets.Scripts.Game.Notes
         [SerializeField] Color _noteColorBlue;
         [SerializeField] Color _noteColorYellow;
 
+        #region Slider
+        [SerializeField] GameObject _prefabSegment;
+        [SerializeField] GameObject _prefabSegmentEnd;
+        bool _dontDestroySlider;
+        int _sliderHitValue;
+
+
+        public void ConvertToSlider(float sliderDuration, float bpm)
+        {
+            SliderDuration = sliderDuration;
+            _dontDestroySlider = true;
+            SetNoteType(_noteType, NoteColor.Yellow);
+
+            int segments = 6;
+
+            if (bpm < 150)
+                segments = 16;
+            else if (bpm < 200)
+                segments = 12;
+            else if (bpm < 250)
+                segments = 8;
+
+            float length = GetDistanceByTime(sliderDuration, Speed);
+            float segmentLength = length / segments;
+            float scoreCap = (float)StatisticHandler.CalculateSliderScoreCap(Conductor.Length, NoteScroller.Instance.CurrentChart.Notes.Count, sliderDuration, bpm);
+            _sliderHitValue = (int)(scoreCap / segments);
+
+            //Instantiate slider middle
+            for (int i = 1; i < segments - 1; i++)
+                _ = CreateSegment(_prefabSegment, segmentLength * i);
+
+            //Instantiate slider end
+            NoteSegment nseg = CreateSegment(_prefabSegmentEnd, segmentLength * (segments - 1));
+            nseg.IsSliderEnd = true;
+            nseg.ChartEndX = _endPosition.x;
+            nseg.Autoplay = AutoPlay;
+            //Create filler object between object 0 and 1
+            nseg = CreateSegment(_prefabSegment, 0);
+            nseg.enabled = false;
+            nseg.GetComponent<BoxCollider2D>().enabled = false;
+            nseg.transform.localScale = new Vector3(nseg.transform.localScale.x / 2f, nseg.transform.localScale.y, nseg.transform.localScale.z);
+            nseg.transform.localPosition = new Vector3(nseg.transform.localScale.x / 2f, nseg.transform.localPosition.y, nseg.transform.localPosition.z);
+
+
+            NoteSegment CreateSegment(GameObject prefab, float x)
+            {
+                GameObject seg = Instantiate(prefab, transform);
+                NoteSegment ns = seg.GetComponent<NoteSegment>();
+
+                seg.transform.localPosition = new Vector3(x, 0f, -0.5f);
+                seg.transform.localScale = new Vector3(segmentLength, transform.localScale.y, transform.localScale.z);
+
+                ns.HitValue = _sliderHitValue;
+                ns.StatisticHandler = StatisticHandler;
+                ns.BigNote = _noteType == NoteType.Big || _noteType == NoteType.BigLong;
+                ns.Autoplay = AutoPlay;
+                ns.SetColor(_noteColorYellow);
+
+                ns.Key1 = Key1;
+                ns.Key2 = Key2;
+                ns.Key3 = Key3;
+                ns.Key4 = Key4;
+
+                return ns;
+            }
+        }
+
+        #endregion
+
 
         void Start()
         {
@@ -68,19 +141,21 @@ namespace DrumSmasher.Assets.Scripts.Game.Notes
             UpdatePosition();
 
             //We reached our end
-            if (_destroyThis || gameObject.transform.position.x < _endPosition.x)
+            if (!_dontDestroySlider && (_destroyThis || gameObject.transform.position.x < _endPosition.x))
+            {
                 Destroy(gameObject);
+                return;
+            }
 
             if (_missed)
                 return;
-            else if (!CanBeHit && _canBeHitWasTrue)
+            else if (!CanBeHit && !HasBeenHit && _canBeHitWasTrue)
             {
                 _missed = true;
                 StatisticHandler.OnNoteHit(NoteHitType.Miss, _noteType == NoteType.Big ? true : false);
                 return;
             }
-
-            if (CanBeHit)
+            else if (CanBeHit)
             {
                 if (!_canBeHitWasTrue)
                     _canBeHitWasTrue = true;
@@ -88,30 +163,128 @@ namespace DrumSmasher.Assets.Scripts.Game.Notes
                 TaikoDrumHotKey hotkey1 = null;
                 TaikoDrumHotKey hotkey2 = null;
                 int hitValue = 0;
+                int hv = 0;
 
                 switch (_noteColor)
                 {
+                    case NoteColor.Yellow:
+                        switch (_noteType)
+                        {
+                            case NoteType.BigLong:
+                            case NoteType.Big:
+                                if (Key1.IsKeyDown && Key1.HoldingSince == 0f)
+                                {
+                                    hv++;
+
+                                    if (hotkey1 == null)
+                                        hotkey1 = Key1;
+                                    else if (hotkey2 == null)
+                                        hotkey2 = Key1;
+                                }
+                                if (Key2.IsKeyDown && Key2.HoldingSince == 0f)
+                                {
+                                    hv++;
+
+                                    if (hotkey1 == null)
+                                        hotkey1 = Key2;
+                                    else if (hotkey2 == null)
+                                        hotkey2 = Key2;
+                                }
+                                if (Key3.IsKeyDown && Key3.HoldingSince == 0f)
+                                {
+                                    hv++;
+
+                                    if (hotkey1 == null)
+                                        hotkey1 = Key3;
+                                    else if (hotkey2 == null)
+                                        hotkey2 = Key3;
+                                }
+                                if (Key4.IsKeyDown && Key4.HoldingSince == 0f)
+                                {
+                                    hv++;
+
+                                    if (hotkey1 == null)
+                                        hotkey1 = Key4;
+                                    else if (hotkey2 == null)
+                                        hotkey2 = Key4;
+                                }
+
+                                if (hv > 2)
+                                    hitValue = 2;
+                                else
+                                    hitValue = hv;
+                                break;
+
+                            case NoteType.SmallLong:
+                            case NoteType.Small:
+                                if (Key1.IsKeyDown && Key1.HoldingSince == 0f)
+                                {
+                                    hv++;
+
+                                    if (hotkey1 == null)
+                                        hotkey1 = Key1;
+                                    else if (hotkey2 == null)
+                                        hotkey2 = Key1;
+                                }
+                                if (Key2.IsKeyDown && Key2.HoldingSince == 0f)
+                                {
+                                    hv++;
+
+                                    if (hotkey1 == null)
+                                        hotkey1 = Key2;
+                                    else if (hotkey2 == null)
+                                        hotkey2 = Key2;
+                                }
+                                if (Key3.IsKeyDown && Key3.HoldingSince == 0f)
+                                {
+                                    hv++;
+
+                                    if (hotkey1 == null)
+                                        hotkey1 = Key3;
+                                    else if (hotkey2 == null)
+                                        hotkey2 = Key3;
+                                }
+                                if (Key4.IsKeyDown && Key4.HoldingSince == 0f)
+                                {
+                                    hv++;
+
+                                    if (hotkey1 == null)
+                                        hotkey1 = Key4;
+                                    else if (hotkey2 == null)
+                                        hotkey2 = Key4;
+                                }
+
+                                if (hv >= 1)
+                                    hitValue = 2;
+                                else
+                                    hitValue = hv;
+                                break;
+                        }
+                        break;
+
                     case NoteColor.Red:
                         switch (_noteType)
                         {
+                            case NoteType.BigLong:
                             case NoteType.Big:
-                                if (Key2Controller.IsKeyDown && Key2Controller.HoldingSince == 0f)
+                                if (Key2.IsKeyDown && Key2.HoldingSince == 0f)
                                     hitValue++;
 
-                                if (Key3Controller.IsKeyDown && Key3Controller.HoldingSince == 0f)
+                                if (Key3.IsKeyDown && Key3.HoldingSince == 0f)
                                     hitValue++;
 
-                                hotkey1 = Key2Controller;
-                                hotkey2 = Key3Controller;
+                                hotkey1 = Key2;
+                                hotkey2 = Key3;
                                 break;
 
+                            case NoteType.SmallLong:
                             case NoteType.Small:
-                                if ((Key2Controller.IsKeyDown && Key2Controller.HoldingSince == 0f) ||
-                                    (Key3Controller.IsKeyDown && Key3Controller.HoldingSince == 0f))
+                                if ((Key2.IsKeyDown && Key2.HoldingSince == 0f) ||
+                                    (Key3.IsKeyDown && Key3.HoldingSince == 0f))
                                     hitValue += 2;
 
-                                hotkey1 = Key2Controller;
-                                hotkey2 = Key3Controller;
+                                hotkey1 = Key2;
+                                hotkey2 = Key3;
                                 break;
                         }
                         break;
@@ -119,25 +292,27 @@ namespace DrumSmasher.Assets.Scripts.Game.Notes
                     case NoteColor.Blue:
                         switch (_noteType)
                         {
+                            case NoteType.BigLong:
                             case NoteType.Big:
 
-                                if (Key1Controller.IsKeyDown && Key1Controller.HoldingSince == 0f)
+                                if (Key1.IsKeyDown && Key1.HoldingSince == 0f)
                                     hitValue++;
 
-                                if (Key4Controller.IsKeyDown && Key4Controller.HoldingSince == 0f)
+                                if (Key4.IsKeyDown && Key4.HoldingSince == 0f)
                                     hitValue++;
 
-                                hotkey1 = Key1Controller;
-                                hotkey2 = Key4Controller;
+                                hotkey1 = Key1;
+                                hotkey2 = Key4;
                                 break;
 
+                            case NoteType.SmallLong:
                             case NoteType.Small:
-                                if ((Key1Controller.IsKeyDown && Key1Controller.HoldingSince == 0f) ||
-                                    (Key4Controller.IsKeyDown && Key4Controller.HoldingSince == 0f))
+                                if ((Key1.IsKeyDown && Key1.HoldingSince == 0f) ||
+                                    (Key4.IsKeyDown && Key4.HoldingSince == 0f))
                                     hitValue += 2;
 
-                                hotkey1 = Key1Controller;
-                                hotkey2 = Key4Controller;
+                                hotkey1 = Key1;
+                                hotkey2 = Key4;
                                 break;
                         }
                         break;
@@ -145,8 +320,27 @@ namespace DrumSmasher.Assets.Scripts.Game.Notes
 
                 if (AutoPlay)
                 {
+
+                    TaikoDrumHotKey GetRandomKey()
+                    {
+                        int rnd = UnityEngine.Random.Range(0, 4);
+
+                        switch(rnd)
+                        {
+                            default:
+                            case 0:
+                                return Key1;
+                            case 1:
+                                return Key2;
+                            case 2:
+                                return Key3;
+                            case 3:
+                                return Key4;
+                        }
+                    }
+
                     if (transform.position.x <= _hitCirclePosition.x)
-                        OnNoteHit(NoteHitType.GoodHit, hotkey1, hotkey2);
+                        OnNoteHit(NoteHitType.GoodHit, GetRandomKey(), GetRandomKey());
                 }
                 else
                 {
@@ -231,14 +425,20 @@ namespace DrumSmasher.Assets.Scripts.Game.Notes
 
         void OnNoteHit(NoteHitType hit, TaikoDrumHotKey hotkey1, TaikoDrumHotKey hotKey2)
         {
-            if (hit == NoteHitType.Miss)
+            if (hit == NoteHitType.Miss ||
+                HasBeenHit)
                 return;
+
+            HasBeenHit = true;
             
             bool bignote = transform.localScale == _noteBigScale;
 
             if (AutoPlay)
             {
-                StatisticHandler.OnNoteHit(NoteHitType.GoodHit, bignote);
+                if (_noteType == NoteType.BigLong || _noteType == NoteType.SmallLong)
+                    StatisticHandler.OnNoteHit(NoteHitType.GoodHit, bignote, true, true, _sliderHitValue);
+                else
+                    StatisticHandler.OnNoteHit(NoteHitType.GoodHit, bignote);
 
                 if (bignote)
                 {
@@ -255,7 +455,8 @@ namespace DrumSmasher.Assets.Scripts.Game.Notes
                     _autoPlaySwitch = !_autoPlaySwitch;
                 }
 
-                Destroy(gameObject);
+                if (!_dontDestroySlider)
+                    Destroy(gameObject);
                 return;
             }
 
@@ -280,13 +481,23 @@ namespace DrumSmasher.Assets.Scripts.Game.Notes
             {
                 case NoteHitType.BadHit:
                     Conductor.PlayHitSound();
-                    StatisticHandler.OnNoteHit(NoteHitType.BadHit, bignote);
+
+                    if (_noteType == NoteType.BigLong || _noteType == NoteType.SmallLong)
+                        StatisticHandler.OnNoteHit(NoteHitType.GoodHit, bignote, true, true, _sliderHitValue);
+                    else
+                        StatisticHandler.OnNoteHit(NoteHitType.BadHit, bignote, true, true, _sliderHitValue);
+
                     StartCoroutine(ResetNoteHit(_noteColor));
                     return;
 
                 case NoteHitType.GoodHit:
                     Conductor.PlayHitSound();
-                    StatisticHandler.OnNoteHit(NoteHitType.GoodHit, bignote);
+
+                    if (_noteType == NoteType.BigLong || _noteType == NoteType.SmallLong)
+                        StatisticHandler.OnNoteHit(NoteHitType.GoodHit, bignote, true, true, _sliderHitValue);
+                    else
+                        StatisticHandler.OnNoteHit(NoteHitType.GoodHit, bignote, true, true, _sliderHitValue);
+
                     StartCoroutine(ResetNoteHit(_noteColor));
                     return;
             }
@@ -306,7 +517,8 @@ namespace DrumSmasher.Assets.Scripts.Game.Notes
                     break;
             }
 
-            Destroy(gameObject);
+            if (!_dontDestroySlider)
+                Destroy(gameObject);
         }
 
         float GetDistanceByTime(float time, float speed)

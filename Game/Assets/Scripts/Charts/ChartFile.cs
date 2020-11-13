@@ -115,7 +115,11 @@ namespace DrumSmasher.Assets.Scripts.Charts
                 swriter.WriteLine(SECTION_NOTES);
                 foreach (ChartNote note in chart.Notes)
                 {
-                    line = ToString(note.BigNote) + "=" + note.Time.TotalMilliseconds.ToString() + "=" + note.Color.ToString();
+                    line = ToString(note.BigNote) + "=" + note.Time.TotalMilliseconds.ToString() + "=" + note.Color.ToString() + "=" + note.IsSlider;
+
+                    if (note.IsSlider)
+                        line += $"={note.SliderDuration.TotalMilliseconds}";
+
                     swriter.WriteLine(line);
                 }
                 swriter.Flush();
@@ -220,6 +224,20 @@ namespace DrumSmasher.Assets.Scripts.Charts
                             if (long.TryParse(lineSplit[1], out long ms) && short.TryParse(lineSplit[2], out short color))
                             {
                                 cn = new ChartNote(TimeSpan.FromMilliseconds(ms), ToBool(lineSplit[0]), color);
+                             
+                                if (lineSplit.Length > 4 && bool.TryParse(lineSplit[3], out bool isSlider) && isSlider)
+                                {
+                                    cn.IsSlider = isSlider;
+
+                                    if (double.TryParse(lineSplit[4], out double sliderDuration))
+                                        cn.SliderDuration = TimeSpan.FromMilliseconds(sliderDuration);
+                                    else
+                                    {
+                                        Logger.Log("Unable to parse slider duration", LogLevel.Error);
+                                        throw new Exception("Unable to parse slider duration");
+                                    }
+                                }
+
                                 c.Notes.Add(cn);
                             }
                             else

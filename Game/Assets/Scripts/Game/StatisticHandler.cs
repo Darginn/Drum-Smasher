@@ -89,8 +89,20 @@ namespace DrumSmasher.Assets.Scripts.Game
             _goodHits = 0u;
         }
 
-        public void OnNoteHit(NoteHitType hitType, bool bigNote)
+        public void OnNoteHit(NoteHitType hitType, bool bigNote, bool isSegment = false, bool countAcc = true, int scorePerHit = 0)
         {
+            if (isSegment)
+            {
+                //This is the start of the slider
+                if (countAcc)
+                    _totalNotes++;
+
+                _currentScore += (uint)scorePerHit;
+                RefreshVisuals();
+
+                return;
+            }
+
             switch (hitType)
             {
                 default:
@@ -125,7 +137,7 @@ namespace DrumSmasher.Assets.Scripts.Game
             }
             _totalNotes++;
 
-            if (_totalNotes > 0)
+            if (countAcc && _totalNotes > 0)
                 _currentAccuracy = (100.0 / _totalNotes) * (_badHits + _goodHits);
 
             RefreshVisuals();
@@ -160,7 +172,7 @@ namespace DrumSmasher.Assets.Scripts.Game
             double l = sliderDuration / t;
             double x = bpm / 60.0;
 
-            return Math.Truncate(l * 10 * Math.Pow(10, t) * (Math.Pow(10, x / 10)) * 250);
+            return Math.Truncate(l * Math.Pow(t, 10) * Math.Pow(x / 100, 10) / 15);
         }
 
         public void IncrementKey(int keyId)

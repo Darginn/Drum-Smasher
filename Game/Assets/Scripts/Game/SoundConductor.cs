@@ -28,6 +28,7 @@ namespace DrumSmasher.Assets.Scripts.Game
         /// </summary>
         public PlayState PlayState => _playState;
         public bool LoadedMp3 { get; set; }
+        public float Length => _musicSource.clip.length;
 
         [SerializeField] AudioSource _musicSource;
         [SerializeField] double _dspSongTime;

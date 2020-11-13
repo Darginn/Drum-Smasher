@@ -698,10 +698,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28c881c7049bae041a8ad3841e637a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _accountName: {fileID: 1366906393}
-  _accountPass: {fileID: 893711243}
-  _serverIP: 94.130.68.58
-  _serverPort: 40020
 --- !u!4 &334814939
 Transform:
   m_ObjectHideFlags: 0
