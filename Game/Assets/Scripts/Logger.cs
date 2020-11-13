@@ -47,7 +47,7 @@ namespace DrumSmasher.Assets.Scripts
 
         public static void Dispose()
         {
-            _logger.Dispose();
+            _logger?.Dispose();
             _logger = null;
         }
     }
