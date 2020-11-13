@@ -131,7 +131,7 @@ namespace DrumSmasher.Assets.Scripts.Game.Notes
                 NoteSegment ns = seg.GetComponent<NoteSegment>();
 
                 seg.transform.localPosition = new Vector3(x, 0f, -0.5f);
-                seg.transform.localScale = new Vector3(segmentLength, transform.localScale.y, transform.localScale.z);
+                seg.transform.localScale = new Vector3(segmentLength, seg.transform.localScale.y, seg.transform.localScale.z);
 
                 ns.HitValue = _sliderHitValue;
                 ns.StatisticHandler = StatisticHandler;
