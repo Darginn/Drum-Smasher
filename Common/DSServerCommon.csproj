@@ -17,7 +17,6 @@
     <Compile Remove="Charts\**" />
     <Compile Remove="Library\**" />
     <Compile Remove="Logs\**" />
-    <Compile Remove="Network\**" />
     <Compile Remove="Packages\**" />
     <Compile Remove="ProjectSettings\**" />
     <Compile Remove="Temp\**" />
@@ -25,7 +24,6 @@
     <EmbeddedResource Remove="Charts\**" />
     <EmbeddedResource Remove="Library\**" />
     <EmbeddedResource Remove="Logs\**" />
-    <EmbeddedResource Remove="Network\**" />
     <EmbeddedResource Remove="Packages\**" />
     <EmbeddedResource Remove="ProjectSettings\**" />
     <EmbeddedResource Remove="Temp\**" />
@@ -33,7 +31,6 @@
     <None Remove="Charts\**" />
     <None Remove="Library\**" />
     <None Remove="Logs\**" />
-    <None Remove="Network\**" />
     <None Remove="Packages\**" />
     <None Remove="ProjectSettings\**" />
     <None Remove="Temp\**" />
