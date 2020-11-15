@@ -176,17 +176,17 @@ namespace DrumSmasher.Assets.Scripts.Game
             if (!Enum.TryParse(settings.Data.Key1.ToUpper(), out KeyCode k1))
                 Logger.Log($"Could not parse key {settings.Data.Key1}", LogLevel.Error);
             else
-                _hotkeyDrumOuterLeft.Key = k1;
+                _hotkeyDrumInnerLeft.Key = k1;
 
             if (!Enum.TryParse(settings.Data.Key2.ToUpper(), out KeyCode k2))
                 Logger.Log($"Could not parse key {settings.Data.Key2}", LogLevel.Error);
             else
-                _hotkeyDrumInnerLeft.Key = k2;
+                _hotkeyDrumInnerRight.Key = k2;
 
             if (!Enum.TryParse(settings.Data.Key3.ToUpper(), out KeyCode k3))
                 Logger.Log($"Could not parse key {settings.Data.Key3}", LogLevel.Error);
             else
-                _hotkeyDrumInnerRight.Key = k3;
+                _hotkeyDrumOuterLeft.Key = k3;
 
             if (!Enum.TryParse(settings.Data.Key4.ToUpper(), out KeyCode k4))
                 Logger.Log($"Could not parse key {settings.Data.Key4}", LogLevel.Error);
