@@ -2,6 +2,7 @@
 using DSServerCommon.Network;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DSServer.Network
@@ -10,7 +11,6 @@ namespace DSServer.Network
     {
         public Server(string host, int port) : base(host, port)
         {
-
         }
 
         public void Start()

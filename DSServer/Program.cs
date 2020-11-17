@@ -20,6 +20,8 @@ namespace DSServer
 
                 _server = new Network.Server(System.Net.IPAddress.Any.ToString(), SERVER_PORT);
                 _server.Start();
+
+                Discord.DClient.InitializeDiscord();
             }
             catch (Exception ex)
             {
