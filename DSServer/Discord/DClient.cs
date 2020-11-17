@@ -27,6 +27,7 @@ namespace DSServer.Discord
             _client.MessageCreated += (s, e) => Task.Run(async () => await OnMessageCreated(e));
         }
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         private static async Task OnMessageCreated(MessageCreateEventArgs e)
         {
             //Ignore our own messages
@@ -37,6 +38,7 @@ namespace DSServer.Discord
         private static async Task OnReady(ReadyEventArgs e)
         {
         }
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
 
         static string LoadSecret(string file)
         {
