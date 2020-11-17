@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using DSServer.Network.Packets;
 using DSServerCommon.Network.Packets;
 using System.Diagnostics;
+using System.Linq;
 
 namespace DSServer.Network
 {
@@ -29,10 +30,62 @@ namespace DSServer.Network
 
         public bool Authenticate(string user, string pass)
         {
-            //TODO: do authentication
-            Authenticated = false;
+            using DB db = new DB();
+            var acc = db.Accounts.FirstOrDefault(acc => acc.AccountName.Equals(user, StringComparison.CurrentCultureIgnoreCase));
 
+            if (acc == null || acc.IsBanned)
+                return false;
+
+            byte[] passBytes = Encoding.UTF8.GetBytes(pass);
+            byte[] hashedPass = HashPass(ref passBytes, acc.Salt);
+
+            Authenticated = CompareByteArrays(hashedPass, acc.PasswordHash);
+
+            if (Authenticated)
+                DBId = acc.Id;
+            
             return Authenticated;
+        }
+
+        /// <summary>
+        /// Hashes a password
+        /// <para>
+        /// Credits: https://stackoverflow.com/a/2138588 </para>
+        /// </summary>
+        static byte[] HashPass(ref byte[] pass, byte[] salt)
+        {
+            System.Security.Cryptography.HashAlgorithm algorithm = new System.Security.Cryptography.SHA256Managed();
+
+            byte[] passHash = new byte[pass.Length + salt.Length];
+
+            for (int i = 0; i < pass.Length; i++)
+                passHash[i] = pass[i];
+
+            for (int i = 0; i < salt.Length; i++)
+                passHash[pass.Length + i] = salt[i];
+
+            return algorithm.ComputeHash(passHash);
+        }
+
+        /// <summary>
+        /// Credits: https://stackoverflow.com/a/2138588
+        /// </summary>
+        static bool CompareByteArrays(byte[] array1, byte[] array2)
+        {
+            if (array1.Length != array2.Length)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < array1.Length; i++)
+            {
+                if (array1[i] != array2[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private void OnDisconnect(object sender, Guid e)
@@ -104,10 +157,11 @@ namespace DSServer.Network
 
         void LoadClient(NetState state)
         {
-            //TODO: load access level from db
+            using DB db = new DB();
+            var acc = db.Accounts.First(acc => acc.Id == DBId);
 
-            Access = AccessLevel.User;
-            LoadChatUser();
+            Access = (AccessLevel)acc.AccessLevel;
+            LoadChatUser(acc);
 
             if (ChatUser != null)
             {
@@ -117,11 +171,9 @@ namespace DSServer.Network
             }
         }
 
-        void LoadChatUser()
+        void LoadChatUser(Database.Models.Account acc)
         {
-            //TODO: load chat identity + db id from db
-            DBId = 0;
-            ChatUser = new ChatUser(Id, "", this);
+            ChatUser = new ChatUser(Id, acc.DisplayName, this);
             IdentityManager.AddIdentity(ChatUser);
         }
     }
