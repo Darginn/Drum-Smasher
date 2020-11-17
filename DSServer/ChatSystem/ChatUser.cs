@@ -1,4 +1,5 @@
 ﻿using DSServer.Network;
+using DSServer.Network.Packets;
 using DSServerCommon.ChatSystem;
 using System;
 using System.Collections.Generic;
@@ -39,20 +40,22 @@ namespace DSServer.ChatSystem
             dest.OnChatMessage(new ChatMessage(this, dest, message));
         }
 
-        //TODO: ChatUser network part
         public override void OnChatExit(ChatIdentity user, ChatIdentity chat)
         {
-            //Send data to client
+            ChatExitPacket cep = new ChatExitPacket(user, chat);
+            Client.Write(cep);
         }
 
         public override void OnChatJoin(ChatIdentity user, ChatIdentity chat)
         {
-            //Send data to client
+            ChatJoinPacket cjp = new ChatJoinPacket(user, chat);
+            Client.Write(cjp);
         }
 
         public override void OnChatMessage(ChatMessage message)
         {
-            //Send data to client
+            ChatMessagePacket cmp = new ChatMessagePacket(message.Sender, message.Receiver, message.Message);
+            Client.Write(cmp);
         }
     }
 }

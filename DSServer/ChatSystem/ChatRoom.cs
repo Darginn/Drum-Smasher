@@ -37,11 +37,13 @@ namespace DSServer.ChatSystem
         {
             lock(_usersLock)
             {
-                foreach (var user in _users.Values)
-                    if (user.Id != identity.Id)
-                        user.OnChatJoin(identity, this);
+                if (_users.ContainsKey(identity))
+                    return;
 
-                _ = _users.TryAdd(identity.Id, identity);
+                foreach (var user in _users.Values)
+                    user.OnChatJoin(identity, this);
+
+                _ = _users.TryAdd(identity, identity);
             }
         }
 
@@ -52,11 +54,13 @@ namespace DSServer.ChatSystem
         {
             lock (_usersLock)
             {
-                foreach (var user in _users.Values)
-                    if (user.Id != identity.Id)
-                        user.OnChatExit(identity, this);
+                if (!_users.ContainsKey(identity))
+                    return;
 
-                _ = _users.Remove(identity.Id);
+                _ = _users.Remove(identity);
+
+                foreach (var user in _users.Values)
+                    user.OnChatExit(identity, this);
             }
         }
 

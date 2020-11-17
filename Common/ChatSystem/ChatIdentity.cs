@@ -41,13 +41,6 @@ namespace DSServerCommon.ChatSystem
             IsSystemIdentity = isSystemIdentity;
         }
 
-        public static bool TryGetIdentity(Guid id, out ChatIdentity identity)
-        {
-            //TODO: TryGetIdentity
-            identity = null;
-            return false;
-        }
-
         /// <summary>
         /// A message has been sent to this identity
         /// </summary>
@@ -79,6 +72,16 @@ namespace DSServerCommon.ChatSystem
         public void SendMessage(ChatIdentity sender, string message)
         {
             OnChatMessage(new ChatMessage(sender, this, message));
+        }
+
+        public static implicit operator Guid(ChatIdentity identity)
+        {
+            return identity.Id;
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

@@ -6,9 +6,9 @@ namespace DSServer.Network.Packets
 {
     public enum PacketId
     {
-        //TODO: implement authenticate and all the other packets
-        Authenticate = 1,
-
-        ChatMessage
+        ChatMessage = 1,
+        ChatJoin,
+        ChatExit,
+        RequestCredents
     }
 }

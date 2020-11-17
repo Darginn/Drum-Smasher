@@ -89,6 +89,11 @@ namespace DSServerCommon.Network.Packets
             return result;
         }
 
+        protected Guid ReadGuid()
+        {
+            return new Guid(ReadBytes(16));
+        }
+
         protected short ReadShort()
         {
             return BitConverter.ToInt16(ReadBytes(2), 0);
@@ -140,6 +145,11 @@ namespace DSServerCommon.Network.Packets
         protected void Write(short v)
         {
             Write(BitConverter.GetBytes(v));
+        }
+
+        protected void Write(Guid v)
+        {
+            Write(v.ToByteArray());
         }
 
         protected void Write(int v)

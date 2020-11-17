@@ -1,4 +1,5 @@
-﻿using DSServerCommon.Network;
+﻿using DSServer.Network.Packets;
+using DSServerCommon.Network;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -21,6 +22,11 @@ namespace DSServer.Network
         void RegisterPackets()
         {
             PacketHandler.Initialize();
+
+            PacketHandler.Packets.Add((int)PacketId.ChatMessage, typeof(ChatMessagePacket));
+            PacketHandler.Packets.Add((int)PacketId.ChatJoin, typeof(ChatJoinPacket));
+            PacketHandler.Packets.Add((int)PacketId.ChatExit, typeof(ChatExitPacket));
+            PacketHandler.Packets.Add((int)PacketId.RequestCredents, typeof(RequestCredentsPacket));
         }
     }
 }

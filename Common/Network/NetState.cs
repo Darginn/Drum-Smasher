@@ -93,7 +93,7 @@ namespace DSServerCommon.Network
 
                 _keepAlive = false;
 
-                _ = TryDisconnect();
+                Task.Run(TryDisconnectAsync).ConfigureAwait(false).GetAwaiter().GetResult();
 
                 _readerSource.Cancel();
                 _writerSource.Cancel();
@@ -103,10 +103,13 @@ namespace DSServerCommon.Network
             }
         }
 
-        public bool TryDisconnect()
+        public async Task<bool> TryDisconnectAsync()
         {
             try
             {
+                while (_writerQueue.Count > 0)
+                    await Task.Delay(25).ConfigureAwait(false);
+
                 _client.Disconnect(false);
             }
             catch (Exception ex)
@@ -122,6 +125,9 @@ namespace DSServerCommon.Network
 
         public void Write(Packet p)
         {
+            if (!_keepAlive)
+                return;
+
             _writerQueue.Enqueue(p);
         }
 
@@ -151,7 +157,7 @@ namespace DSServerCommon.Network
             catch (Exception ex)
             {
                 OnException?.Invoke(this, ex);
-                _ = TryDisconnect();
+                Task.Run(TryDisconnectAsync).ConfigureAwait(false);
             }
         }
 
@@ -178,7 +184,7 @@ namespace DSServerCommon.Network
             catch (Exception ex)
             {
                 OnException?.Invoke(this, ex);
-                _ = TryDisconnect();
+                Task.Run(TryDisconnectAsync).ConfigureAwait(false);
             }
         }
 
@@ -188,6 +194,9 @@ namespace DSServerCommon.Network
             {
                 try
                 {
+                    if (!_keepAlive)
+                        return;
+
                     int length = _client.EndReceive(ar);
 
                     if (length <= 0)
@@ -214,7 +223,7 @@ namespace DSServerCommon.Network
                 catch (Exception ex)
                 {
                     OnException?.Invoke(this, ex);
-                    _ = TryDisconnect();
+                    Task.Run(TryDisconnectAsync);
                 }
 
                 _readerHandle.Set();
@@ -227,8 +236,6 @@ namespace DSServerCommon.Network
             {
                 int id = BitConverter.ToInt32(packet, 0);
 
-                PacketId pkId = (PacketId)id;
-
                 if (!PacketHandler.Packets.ContainsKey(id))
                     return;
                 else if (!UseEncryption &&
@@ -239,12 +246,28 @@ namespace DSServerCommon.Network
                 Type type = PacketHandler.Packets[id];
                 Packet p = Activator.CreateInstance(type, new object[] { packet, this }) as Packet;
 
-                p.InvokePacket(this);
+
+                switch(id)
+                {
+                    case (int)PacketId.CEncrypt:
+                    case (int)PacketId.SEncrypt:
+                        p.InvokePacket(this);
+                        break;
+
+                    default:
+                        ExecutePacket(p.Id, p);
+                        break;
+                }
             }
             catch (Exception ex)
             {
                 OnException?.Invoke(this, ex);
             }
+        }
+
+        protected virtual void ExecutePacket(int packetId, Packet packet)
+        {
+            packet.InvokePacket(this);
         }
 
         bool IsPacketEnding(ref byte[] data, int pos)
