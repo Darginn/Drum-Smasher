@@ -18,6 +18,12 @@ namespace DSServer.ChatSystem
             _users = new Dictionary<Guid, ChatIdentity>();
         }
 
+        public static void InitializeChatRooms()
+        {
+            ChatRoom defaultRoom = new ChatRoom("#General");
+            IdentityManager.AddIdentity(defaultRoom);
+        }
+
         /// <summary>
         /// A message has been sent to this channel
         /// </summary>
