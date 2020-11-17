@@ -164,17 +164,36 @@ namespace DSServer.Network
             LoadChatUser(acc);
 
             if (ChatUser != null)
-            {
                 IdentityManager.AddIdentity(ChatUser);
-
-                //TODO: join default chat rooms
-            }
         }
 
         void LoadChatUser(Database.Models.Account acc)
         {
             ChatUser = new ChatUser(Id, acc.DisplayName, this);
             IdentityManager.AddIdentity(ChatUser);
+        }
+
+        public void Ban(string reason)
+        {
+            using DB db = new DB();
+            var acc = db.Accounts.First(acc => acc.Id == DBId);
+
+            acc.IsBanned = true;
+
+            db.Accounts.Update(acc);
+            db.SaveChanges();
+
+            KickPacket kp = new KickPacket(reason, true);
+            Write(kp);
+
+            TryDisconnectAsync().ConfigureAwait(false);
+        }
+
+        public void Kick(string reason)
+        {
+            KickPacket kp = new KickPacket(reason, false);
+            Write(kp);
+            TryDisconnectAsync().ConfigureAwait(false);
         }
     }
 }

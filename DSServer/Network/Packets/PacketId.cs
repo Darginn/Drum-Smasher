@@ -9,6 +9,7 @@ namespace DSServer.Network.Packets
         ChatMessage = 1,
         ChatJoin,
         ChatExit,
-        RequestCredents
+        RequestCredents,
+        Kick
     }
 }
