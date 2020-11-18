@@ -10,7 +10,7 @@ namespace DSServerCommon.ChatSystem
     public class ChatIdentity
     {
         //TODO: find a custom name for Chat System Identity
-        public static ChatIdentity System => new ChatIdentity("SYSTEM", true);
+        public static ChatIdentity System => new ChatIdentity("Rin", true);
 
         public Guid Id { get; private set; }
         public string Name { get; protected set; }
