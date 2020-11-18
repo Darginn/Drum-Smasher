@@ -19,7 +19,7 @@ namespace DSServer.Users
             byte[] passBytes = Encoding.UTF8.GetBytes(pass);
             byte[] hashedPass = HashPass(ref passBytes, salt);
 
-            db.Accounts.Add(new Account(user, hashedPass, salt, 0, false, user, false));
+            db.Accounts.Add(new Account(user, hashedPass, salt, 0, false, user, false, DateTime.MinValue));
             db.SaveChanges();
             return true;
         }
@@ -36,7 +36,13 @@ namespace DSServer.Users
             byte[] hashedPass = HashPass(ref passBytes, acc.Salt);
 
             if (CompareByteArrays(hashedPass, acc.PasswordHash))
+            {
+                acc.LastLogin = DateTime.UtcNow;
+                db.Accounts.Update(acc);
+                db.SaveChanges();
+
                 return acc;
+            }
 
             return null;
         }

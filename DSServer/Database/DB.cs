@@ -43,7 +43,6 @@ public class DB : DbContext
               .HasColumnName("account_name")
               .HasColumnType("longtext");
             
-            //TODO: is "blob" the right type name?
             en.Property(e => e.PasswordHash)
               .HasColumnName("password_hash")
               .HasColumnType("blob");
@@ -67,6 +66,10 @@ public class DB : DbContext
             en.Property(e => e.IsSilenced)
               .HasColumnName("is_silenced")
               .HasColumnType("tinyint(1)");
+
+            en.Property(e => e.LastLogin)
+              .HasColumnName("last_login")
+              .HasColumnType("datetime");
         });
 
         builder.Entity<Warning>(en =>
