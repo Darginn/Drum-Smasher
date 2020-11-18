@@ -40,8 +40,32 @@ namespace DSServer.Network
             DBId = acc.Id;
             return true;
         }
+        /// <summary>
+        /// Reloads all client data, such as IsSilenced or AccessLevel
+        /// </summary>
+        public void ReloadClient()
+        {
+            LoadClient(this);
+        }
 
-        private void OnDisconnect(object sender, Guid e)
+        public void Ban(string reason)
+        {
+            AccountManager.Ban(DBId);
+
+            KickPacket kp = new KickPacket(reason, true);
+            Write(kp);
+
+            TryDisconnectAsync().ConfigureAwait(false);
+        }
+
+        public void Kick(string reason)
+        {
+            KickPacket kp = new KickPacket(reason, false);
+            Write(kp);
+            TryDisconnectAsync().ConfigureAwait(false);
+        }
+
+        void OnDisconnect(object sender, Guid e)
         {
             List<ChatRoom> rooms = IdentityManager.GetAllChatRooms();
 
@@ -124,23 +148,6 @@ namespace DSServer.Network
         {
             ChatUser = new ChatUser(Id, acc.DisplayName, this);
             IdentityManager.AddIdentity(ChatUser);
-        }
-
-        public void Ban(string reason)
-        {
-            AccountManager.Ban(DBId);
-
-            KickPacket kp = new KickPacket(reason, true);
-            Write(kp);
-
-            TryDisconnectAsync().ConfigureAwait(false);
-        }
-
-        public void Kick(string reason)
-        {
-            KickPacket kp = new KickPacket(reason, false);
-            Write(kp);
-            TryDisconnectAsync().ConfigureAwait(false);
         }
     }
 }
