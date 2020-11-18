@@ -8,6 +8,7 @@ namespace DSServer
     {
         public const int SERVER_PORT = 40010;
         public static bool Debug { get; private set; }
+        public static Random Random { get; } = new Random();
 
         static Network.Server _server;
 

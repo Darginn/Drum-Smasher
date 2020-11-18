@@ -1,5 +1,6 @@
 ﻿using DSServer.Network;
 using DSServer.Network.Packets;
+using DSServer.Users;
 using DSServerCommon.ChatSystem;
 using System;
 using System.Collections.Generic;
@@ -63,27 +64,13 @@ namespace DSServer.ChatSystem
         public void Silence()
         {
             IsSilenced = true;
-            
-            using DB db = new DB();
-            var acc = db.Accounts.First(acc => acc.Id == Client.DBId);
-
-            acc.IsSilenced = true;
-
-            db.Accounts.Update(acc);
-            db.SaveChanges();
+            AccountManager.Silence(Client.DBId);
         }
 
         public void DeSilence()
         {
             IsSilenced = false;
-
-            using DB db = new DB();
-            var acc = db.Accounts.First(acc => acc.Id == Client.DBId);
-
-            acc.IsSilenced = false;
-
-            db.Accounts.Update(acc);
-            db.SaveChanges();
+            AccountManager.Unsilence(Client.DBId);
         }
     }
 }
