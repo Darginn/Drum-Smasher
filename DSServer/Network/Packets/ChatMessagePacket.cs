@@ -1,4 +1,5 @@
 ﻿using DSServer.ChatSystem;
+using DSServer.Users;
 using DSServerCommon.ChatSystem;
 using DSServerCommon.Network;
 using DSServerCommon.Network.Packets;

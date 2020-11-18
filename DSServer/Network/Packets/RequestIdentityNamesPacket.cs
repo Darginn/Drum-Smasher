@@ -1,4 +1,5 @@
 ﻿using DSServer.ChatSystem;
+using DSServer.Users;
 using DSServerCommon.ChatSystem;
 using DSServerCommon.Network;
 using DSServerCommon.Network.Packets;
@@ -41,7 +42,7 @@ namespace DSServer.Network.Packets
                 if (IdentityManager.TryGetIdentity(id, out ChatIdentity identity))
                     identities.Add(id, identity.Name);
                 else
-                    identities.Add(id, "");
+                    identities.Add(id, string.Empty);
             }
 
             RequestIdentityNamesPacket rcrnp = new RequestIdentityNamesPacket(identities);

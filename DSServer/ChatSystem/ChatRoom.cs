@@ -1,4 +1,5 @@
-﻿using DSServerCommon.ChatSystem;
+﻿using DSServer.Users;
+using DSServerCommon.ChatSystem;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;

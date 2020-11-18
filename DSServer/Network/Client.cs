@@ -9,6 +9,7 @@ using DSServer.Network.Packets;
 using DSServerCommon.Network.Packets;
 using System.Diagnostics;
 using System.Linq;
+using DSServer.Users;
 
 namespace DSServer.Network
 {

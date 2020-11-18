@@ -1,10 +1,11 @@
-﻿using DSServerCommon.ChatSystem;
+﻿using DSServer.ChatSystem;
+using DSServerCommon.ChatSystem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace DSServer.ChatSystem
+namespace DSServer.Users
 {
     public static class IdentityManager
     {
