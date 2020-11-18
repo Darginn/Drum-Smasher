@@ -189,6 +189,19 @@ namespace DSServer.Network
             TryDisconnectAsync().ConfigureAwait(false);
         }
 
+        public static void Unban(long accId)
+        {
+            using DB db = new DB();
+            var acc = db.Accounts.FirstOrDefault(acc => acc.Id == accId);
+
+            if (acc == null)
+                return;
+
+            acc.IsBanned = false;
+            db.Accounts.Update(acc);
+            db.SaveChanges();
+        }
+
         public void Kick(string reason)
         {
             KickPacket kp = new KickPacket(reason, false);
