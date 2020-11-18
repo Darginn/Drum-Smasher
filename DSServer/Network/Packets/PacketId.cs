@@ -10,6 +10,7 @@ namespace DSServer.Network.Packets
         ChatJoin,
         ChatExit,
         RequestCredents,
-        Kick
+        Kick,
+        RequestIdentityNames
     }
 }

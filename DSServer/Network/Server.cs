@@ -27,6 +27,8 @@ namespace DSServer.Network
             PacketHandler.Packets.Add((int)PacketId.ChatJoin, typeof(ChatJoinPacket));
             PacketHandler.Packets.Add((int)PacketId.ChatExit, typeof(ChatExitPacket));
             PacketHandler.Packets.Add((int)PacketId.RequestCredents, typeof(RequestCredentsPacket));
+            PacketHandler.Packets.Add((int)PacketId.Kick, typeof(KickPacket));
+            PacketHandler.Packets.Add((int)PacketId.RequestIdentityNames, typeof(RequestIdentityNamesPacket));
         }
     }
 }
