@@ -52,6 +52,8 @@ namespace DSServerCommon
                 _logFile = logFile;
                 _queue = new ConcurrentQueue<(DateTime, string, LogLevel, string)>();
 
+                Console.ForegroundColor = ConsoleColor.Cyan;
+
                 if (logToFile)
                 {
                     if (!File.Exists(logFile))
@@ -68,7 +70,7 @@ namespace DSServerCommon
             }
         }
 
-        public void Log(string message, LogLevel level, [CallerMemberName] string callerName = "")
+        public void Log(string message, LogLevel level, string callerName = "")
         {
             _queue.Enqueue((DateTime.UtcNow, message, level, callerName));
             ThreadPool.QueueUserWorkItem(new WaitCallback(o => LogNext()));
@@ -97,6 +99,12 @@ namespace DSServerCommon
                         case LogLevel.Warning:
                             colorChanged = true;
                             Console.ForegroundColor = ConsoleColor.Yellow;
+                            break;
+
+                        case LogLevel.Debug:
+                        case LogLevel.Trace:
+                            colorChanged = true;
+                            Console.ForegroundColor = ConsoleColor.Green;
                             break;
                     }
 

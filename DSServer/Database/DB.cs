@@ -1,4 +1,5 @@
-﻿using DSServer.Database.Models;
+﻿using DSServer;
+using DSServer.Database.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -88,7 +89,7 @@ public class DB : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        string connectionString = LoadConnectionString(_CONSTR_LOC);
+        string connectionString = Config.DBConnectionString;
 
         if (!optionsBuilder.IsConfigured)
         {
@@ -96,21 +97,11 @@ public class DB : DbContext
             {
                 builder.EnableRetryOnFailure(25, TimeSpan.FromSeconds(2), null);
 
-                if (_USE_MARIADB)
+                if (Config.UseMariaDB)
                     builder.ServerVersion(new Version(10, 1, 41), Pomelo.EntityFrameworkCore.MySql.Infrastructure.ServerType.MariaDb);
             }).EnableSensitiveDataLogging();
 
             base.OnConfiguring(optionsBuilder);
         }
-    }
-
-    string LoadConnectionString(string file)
-    {
-        if (string.IsNullOrEmpty(file))
-            throw new ArgumentNullException(nameof(file));
-        else if (!System.IO.File.Exists(file))
-            throw new System.IO.FileNotFoundException("File not found", file);
-
-        return System.IO.File.ReadAllText(file);
     }
 }

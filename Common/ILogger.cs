@@ -7,6 +7,6 @@ namespace DSServerCommon
 {
     public interface ILogger
     {
-        void Log(string message, LogLevel level = LogLevel.Info, [CallerMemberName] string callerName = "");
+        void Log(string message, LogLevel level = LogLevel.Info, string callerName = "");
     }
 }

@@ -11,13 +11,11 @@ namespace DSServer.Discord
     public static class DClient
     {
         public const char INVISIBLE_CHAR = '‎';
-        const string _DSECRET_FILE = "discord.secret";
-
         static DiscordClient _client;
 
         public static void InitializeDiscord()
         {
-            string secret = LoadSecret(_DSECRET_FILE);
+            string secret = Config.DiscordSecret;
             _client = new DiscordClient(new DiscordConfiguration()
             {
                 Token = secret,
@@ -202,15 +200,5 @@ namespace DSServer.Discord
         {
         }
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
-
-        static string LoadSecret(string file)
-        {
-            if (string.IsNullOrEmpty(file))
-                throw new ArgumentNullException(nameof(file));
-            else if (!System.IO.File.Exists(file))
-                throw new System.IO.FileNotFoundException("File not found", file);
-
-            return System.IO.File.ReadAllText(file);
-        }
     }
 }
