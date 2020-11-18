@@ -3,6 +3,7 @@ using DSServer.Network.Packets;
 using DSServerCommon.ChatSystem;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DSServer.ChatSystem
@@ -10,6 +11,7 @@ namespace DSServer.ChatSystem
     public class ChatUser : ChatIdentity
     {
         public Client Client { get; }
+        public bool IsSilenced { get; private set; }
 
         public ChatUser(Guid id, string name, Client client) : base(id, name)
         {
@@ -56,6 +58,32 @@ namespace DSServer.ChatSystem
         {
             ChatMessagePacket cmp = new ChatMessagePacket(message.Sender, message.Receiver, message.Message);
             Client.Write(cmp);
+        }
+
+        public void Silence()
+        {
+            IsSilenced = true;
+            
+            using DB db = new DB();
+            var acc = db.Accounts.First(acc => acc.Id == Client.DBId);
+
+            acc.IsSilenced = true;
+
+            db.Accounts.Update(acc);
+            db.SaveChanges();
+        }
+
+        public void DeSilence()
+        {
+            IsSilenced = false;
+
+            using DB db = new DB();
+            var acc = db.Accounts.First(acc => acc.Id == Client.DBId);
+
+            acc.IsSilenced = false;
+
+            db.Accounts.Update(acc);
+            db.SaveChanges();
         }
     }
 }

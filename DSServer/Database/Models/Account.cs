@@ -15,9 +15,11 @@ namespace DSServer.Database.Models
         public int AccessLevel { get; set; }
         public string DisplayName { get; set; }
         public bool IsBanned { get; set; }
+        public bool IsSilenced { get; set; }
 
         public Account(string accountName, byte[] passwordHash, byte[] salt, 
-                       int accessLevel, bool isBanned, string displayName)
+                       int accessLevel, bool isBanned, string displayName,
+                       bool isSilenced)
         {
             AccountName = accountName;
             PasswordHash = passwordHash;
@@ -25,6 +27,7 @@ namespace DSServer.Database.Models
             AccessLevel = accessLevel;
             IsBanned = isBanned;
             DisplayName = displayName;
+            IsSilenced = isSilenced;
         }
 
         public Account()

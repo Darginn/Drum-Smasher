@@ -26,6 +26,9 @@ namespace DSServer.Network.Packets
 
         public override void InvokePacket(NetState state)
         {
+            if ((state as Client).ChatUser.IsSilenced)
+                return;
+
             if (IdentityManager.TryGetIdentity(_destId, out ChatIdentity identity))
                 identity.SendMessage((state as Client).ChatUser, _msg);
         }

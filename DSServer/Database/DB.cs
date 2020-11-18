@@ -62,6 +62,10 @@ public class DB : DbContext
             en.Property(e => e.IsBanned)
               .HasColumnName("is_banned")
               .HasColumnType("tinyint(1)");
+
+            en.Property(e => e.IsSilenced)
+              .HasColumnName("is_silenced")
+              .HasColumnType("tinyint(1)");
         });
 
         builder.Entity<Warning>(en =>
