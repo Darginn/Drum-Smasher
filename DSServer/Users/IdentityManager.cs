@@ -58,6 +58,26 @@ namespace DSServer.Users
             }
         }
 
+        public static bool TryGetIdentity(Func<ChatIdentity, ChatIdentity> idFunc, out ChatIdentity identity)
+        {
+            lock (_idLock)
+            {
+                for (int i = 0; i < _identities.Count; i++)
+                {
+                    ChatIdentity id = idFunc(_identities.Values.ElementAt(i));
+
+                    if (id != null)
+                    {
+                        identity = id;
+                        return true;
+                    }
+                }
+
+                identity = null;
+                return false;
+            }
+        }
+
         public static bool TryGetChatUser(Guid id, out ChatUser user)
         {
             if (TryGetIdentity(id, out ChatIdentity identity))
