@@ -13,11 +13,6 @@ namespace Drum_Smasher_Mono.DSGame.Screens
 
         }
 
-        public override void Destroy()
-        {
-
-        }
-
         public override void Load()
         {
 

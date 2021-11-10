@@ -53,6 +53,7 @@ namespace Drum_Smasher_Mono.DSGame.Screens
                 return;
 
             OnUpdate(time);
+            Entities.UpdateEntities(time);
         }
 
         public void Draw(GameTime time)
@@ -63,6 +64,7 @@ namespace Drum_Smasher_Mono.DSGame.Screens
 
             Graphics.Clear(ClearColor);
             OnDraw(time);
+            Entities.DrawEntities(time);
         }
 
         /// <summary>
@@ -81,7 +83,10 @@ namespace Drum_Smasher_Mono.DSGame.Screens
         /// <summary>
         /// Destroy/Unload the screen
         /// </summary>
-        public abstract void Destroy();
+        public virtual void Destroy()
+        {
+            Entities.DestroyAllEntities();
+        }
 
         /// <summary>
         /// Called when the screen is updated
