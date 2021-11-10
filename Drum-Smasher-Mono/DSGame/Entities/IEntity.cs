@@ -18,7 +18,7 @@ namespace Drum_Smasher_Mono.DSGame.Entities
 
         public void Load();
 
-        public void Unload()
+        public virtual void Unload()
         {
             EntityManager?.DeregisterEntity(this);
         }
