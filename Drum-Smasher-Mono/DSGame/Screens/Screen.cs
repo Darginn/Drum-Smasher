@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Drum_Smasher_Mono.DSGame.Entities;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace Drum_Smasher_Mono.DSGame.Screens
         public Guid Id { get; }
         public SpriteBatch Sprites { get; set; }
         public GraphicsDevice Graphics { get; set; }
+        public EntityManager Entities { get; }
 
         /// <summary>
         /// If true does not call <see cref="OnUpdate(GameTime)"/>
@@ -34,6 +36,7 @@ namespace Drum_Smasher_Mono.DSGame.Screens
             Id = Guid.NewGuid();
             Sprites = sprites;
             Graphics = graphics;
+            Entities = new EntityManager();
         }
 
         /// <summary>
