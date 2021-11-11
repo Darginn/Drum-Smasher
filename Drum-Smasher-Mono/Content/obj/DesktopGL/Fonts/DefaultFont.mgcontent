@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>D:/reposSSD/Drum-Smasher/Drum-Smasher-Mono/Content/Fonts/DefaultFont.spritefont</SourceFile>
-  <SourceTime>2020-08-10T16:17:28+02:00</SourceTime>
+  <SourceTime>2021-11-11T19:46:58.5937127+01:00</SourceTime>
   <DestFile>D:/reposSSD/Drum-Smasher/Drum-Smasher-Mono/Content/bin/DesktopGL/Fonts/DefaultFont.xnb</DestFile>
-  <DestTime>2021-11-10T09:05:45.0333323+01:00</DestTime>
+  <DestTime>2021-11-11T19:47:04.0290235+01:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2020-08-10T16:17:54+02:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>

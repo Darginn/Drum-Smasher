@@ -8,6 +8,8 @@ namespace Drum_Smasher_Mono.DSGame.Screens
 {
     public class MenuScreen : Screen
     {
+        SpriteFont _defaultFont;
+
         public MenuScreen(SpriteBatch sprites, GraphicsDevice graphics) : base(sprites, graphics)
         {
 
@@ -15,7 +17,7 @@ namespace Drum_Smasher_Mono.DSGame.Screens
 
         public override void Load()
         {
-
+            _defaultFont = GameClient.Instance.Content.Load<SpriteFont>("Fonts/DefaultFont");
         }
 
         protected override void OnDraw(GameTime time)

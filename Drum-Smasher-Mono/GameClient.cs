@@ -100,7 +100,7 @@ namespace Drum_Smasher_Mono
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            ScreenManager.SwitchScreen(new MenuScreen(Sprites, Graphics));
+            ScreenManager.SwitchScreen(new MenuScreen(Sprites, Graphics), false, true);
             base.LoadContent();
         }
 
@@ -125,7 +125,12 @@ namespace Drum_Smasher_Mono
 
         protected override void Draw(GameTime gameTime)
         {
+            Sprites.Begin(SpriteSortMode.BackToFront);
+
             ScreenManager.Draw(gameTime);
+
+            Sprites.End();
+            
             base.Draw(gameTime);
         }
     }
