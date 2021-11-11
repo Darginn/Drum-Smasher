@@ -4,29 +4,29 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>D:/reposSSD/Drum-Smasher/Drum-Smasher-Mono/Content/Fonts/DefaultFont.spritefont</File>
-    <File>D:/reposSSD/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/hitcircle.png</File>
-    <File>D:/reposSSD/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/hitcircleoverlay.png</File>
-    <File>D:/reposSSD/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/line.png</File>
-    <File>D:/reposSSD/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taiko-bad.png</File>
-    <File>D:/reposSSD/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taiko-bar.png</File>
-    <File>D:/reposSSD/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taiko-bignote.png</File>
-    <File>D:/reposSSD/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taiko-bignote-overlay.png</File>
-    <File>D:/reposSSD/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taiko-drum.png</File>
-    <File>D:/reposSSD/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taiko-good.png</File>
-    <File>D:/reposSSD/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taiko-hit0.png</File>
-    <File>D:/reposSSD/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taiko-hit100.png</File>
-    <File>D:/reposSSD/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taikoInnerLeft.png</File>
-    <File>D:/reposSSD/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taikoInnerLeftPress.png</File>
-    <File>D:/reposSSD/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taiko-miss.png</File>
-    <File>D:/reposSSD/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taiko-note.png</File>
-    <File>D:/reposSSD/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taiko-note-overlay.png</File>
-    <File>D:/reposSSD/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taikoOuterRight.png</File>
-    <File>D:/reposSSD/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/TaikoOuterRightPress.png</File>
-    <File>D:/reposSSD/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taiko-roll-end@2x.png</File>
-    <File>D:/reposSSD/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taiko-roll-middle@2x.png</File>
-    <File>D:/reposSSD/Drum-Smasher/Drum-Smasher-Mono/Content/Menu/PanelBG1.png</File>
-    <File>D:/reposSSD/Drum-Smasher/Drum-Smasher-Mono/Content/PDS.png</File>
+    <File>C:/Users/Jb112/Documents/Games/Drum-Smasher/Drum-Smasher-Mono/Content/Fonts/DefaultFont.spritefont</File>
+    <File>C:/Users/Jb112/Documents/Games/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/hitcircle.png</File>
+    <File>C:/Users/Jb112/Documents/Games/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/hitcircleoverlay.png</File>
+    <File>C:/Users/Jb112/Documents/Games/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/line.png</File>
+    <File>C:/Users/Jb112/Documents/Games/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taiko-bad.png</File>
+    <File>C:/Users/Jb112/Documents/Games/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taiko-bar.png</File>
+    <File>C:/Users/Jb112/Documents/Games/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taiko-bignote.png</File>
+    <File>C:/Users/Jb112/Documents/Games/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taiko-bignote-overlay.png</File>
+    <File>C:/Users/Jb112/Documents/Games/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taiko-drum.png</File>
+    <File>C:/Users/Jb112/Documents/Games/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taiko-good.png</File>
+    <File>C:/Users/Jb112/Documents/Games/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taiko-hit0.png</File>
+    <File>C:/Users/Jb112/Documents/Games/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taiko-hit100.png</File>
+    <File>C:/Users/Jb112/Documents/Games/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taikoInnerLeft.png</File>
+    <File>C:/Users/Jb112/Documents/Games/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taikoInnerLeftPress.png</File>
+    <File>C:/Users/Jb112/Documents/Games/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taiko-miss.png</File>
+    <File>C:/Users/Jb112/Documents/Games/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taiko-note.png</File>
+    <File>C:/Users/Jb112/Documents/Games/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taiko-note-overlay.png</File>
+    <File>C:/Users/Jb112/Documents/Games/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taikoOuterRight.png</File>
+    <File>C:/Users/Jb112/Documents/Games/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/TaikoOuterRightPress.png</File>
+    <File>C:/Users/Jb112/Documents/Games/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taiko-roll-end@2x.png</File>
+    <File>C:/Users/Jb112/Documents/Games/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taiko-roll-middle@2x.png</File>
+    <File>C:/Users/Jb112/Documents/Games/Drum-Smasher/Drum-Smasher-Mono/Content/Menu/PanelBG1.png</File>
+    <File>C:/Users/Jb112/Documents/Games/Drum-Smasher/Drum-Smasher-Mono/Content/PDS.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />

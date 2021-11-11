@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>D:/reposSSD/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taikoInnerLeft.png</SourceFile>
-  <SourceTime>2021-11-10T07:34:02.6876161+01:00</SourceTime>
-  <DestFile>D:/reposSSD/Drum-Smasher/Drum-Smasher-Mono/Content/bin/DesktopGL/Content/Gameplay/taikoInnerLeft.xnb</DestFile>
-  <DestTime>2021-11-10T09:03:13.0766409+01:00</DestTime>
+  <SourceFile>C:/Users/Jb112/Documents/Games/Drum-Smasher/Drum-Smasher-Mono/Content/Gameplay/taikoInnerLeft.png</SourceFile>
+  <SourceTime>2021-11-10T17:53:59.2564826-06:00</SourceTime>
+  <DestFile>C:/Users/Jb112/Documents/Games/Drum-Smasher/Drum-Smasher-Mono/Content/bin/DesktopGL/Content/Gameplay/taikoInnerLeft.xnb</DestFile>
+  <DestTime>2021-11-10T19:51:15.9844151-06:00</DestTime>
   <Importer>TextureImporter</Importer>
-  <ImporterTime>2020-08-10T16:17:54+02:00</ImporterTime>
+  <ImporterTime>2020-08-10T11:17:54-05:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
-  <ProcessorTime>2020-08-10T16:17:54+02:00</ProcessorTime>
+  <ProcessorTime>2020-08-10T11:17:54-05:00</ProcessorTime>
   <Parameters>
     <Key>ColorKeyColor</Key>
     <Value>255,0,255,255</Value>
