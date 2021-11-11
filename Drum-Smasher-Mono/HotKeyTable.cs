@@ -19,6 +19,9 @@ namespace Drum_Smasher_Mono
 
     public static class HotKeyTable
     {
+        /// <summary>
+        /// Contains all registered hotkeys
+        /// </summary>
         public static readonly Dictionary<HotKey, (Keys, Keys?)> Table = new Dictionary<HotKey, (Keys, Keys?)>()
         {
             // Client Controls (always active, checked inside of GameClient.Update)
@@ -34,11 +37,20 @@ namespace Drum_Smasher_Mono
             { HotKey.PauseGame, (Keys.Escape, null) }
         };
 
+        /// <summary>
+        /// Registers a hotkey with the specified keys, you can only have one combination at a time and setting a new one will override the old hotkey
+        /// </summary>
         public static void RegisterHotKey(HotKey key, Keys key1)
         {
             RegisterHotKey(key, key1, null);
         }
-        
+
+        /// <summary>
+        /// Registers a hotkey with the specified keys, you can only have one combination at a time and setting a new one will override the old hotkey
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="key1">If you are using 2 keys use this for the shift/ctrl key</param>
+        /// <param name="key2">Only used if <paramref name="key1"/> is shift/ctrl</param>
         public static void RegisterHotKey(HotKey key, Keys key1, Keys? key2)
         {
             if (key2.HasValue)
@@ -59,17 +71,27 @@ namespace Drum_Smasher_Mono
             Table[key] = (key1, key2);
         }
 
+        /// <summary>
+        /// Deletes/Unsets a hotkey
+        /// </summary>
+        /// <param name="key"></param>
         public static void DeleteHotKey(HotKey key)
         {
             Table.Remove(key);
         }
 
+        /// <summary>
+        /// Checks if a hotkey is currently pressed
+        /// </summary>
         public static bool IsKeyDown(HotKey key)
         {
             KeyboardState kstate = Keyboard.GetState();
             return IsKeyDown(key, ref kstate);
         }
 
+        /// <summary>
+        /// Checks if a hotkey is currently pressed
+        /// </summary>
         public static bool IsKeyDown(HotKey key, ref KeyboardState kstate)
         {
             bool lctrl = kstate.IsKeyDown(Keys.LeftControl);
@@ -123,12 +145,18 @@ namespace Drum_Smasher_Mono
             return false;
         }
 
+        /// <summary>
+        /// Checks if a hotkey is currently not pressed
+        /// </summary>
         public static bool IsKeyUp(HotKey key)
         {
             KeyboardState kstate = Keyboard.GetState();
             return IsKeyUp(key, ref kstate);
         }
 
+        /// <summary>
+        /// Checks if a hotkey is currently not pressed
+        /// </summary>
         public static bool IsKeyUp(HotKey key, ref KeyboardState kstate)
         {
             bool lctrl = kstate.IsKeyUp(Keys.LeftControl);
