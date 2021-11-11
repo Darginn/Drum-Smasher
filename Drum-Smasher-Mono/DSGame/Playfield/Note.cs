@@ -6,38 +6,27 @@ using System.Text;
 
 namespace Drum_Smasher_Mono.DSGame.Playfield
 {
-    public class Note : IEntity
+    public class Note : Entity
     {
-        public Guid Id { get; }
+        public NoteState State { get; private set; }
+        public HitType HitType { get; private set; }
 
-        public bool CanUpdate { get; set; }
-        public bool CanDraw { get; set; }
-        public bool IsDisabled { get; set; }
-
-        public EntityManager EntityManager { get; }
-
-        public Note(EntityManager manager)
-        {
-            Id = Guid.NewGuid();
-            EntityManager = manager;
-        }
-
-        public void Draw(GameTime time)
+        public Note(EntityManager entityManager) : base(entityManager)
         {
 
         }
 
-        public void Load()
+        public override void Draw(GameTime time)
         {
-
+            throw new NotImplementedException();
         }
 
-        public void Unload()
+        public override void Load()
         {
-            ((IEntity)this).Unload();
+            throw new NotImplementedException();
         }
 
-        public void Update(GameTime time)
+        public override void Update(GameTime time)
         {
             throw new NotImplementedException();
         }

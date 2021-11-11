@@ -9,6 +9,7 @@ namespace Drum_Smasher_Mono.DSGame.Sound
     public class SoundConductor
     {
         public TimeSpan CurrentPosition => _mp3reader?.CurrentTime ?? TimeSpan.Zero;
+        public TimeSpan Length => _mp3reader.TotalTime;
 
         Mp3FileReader _mp3reader;
         WaveOut _mp3out;
