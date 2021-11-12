@@ -22,7 +22,6 @@ namespace Drum_Smasher_Mono.DSGame.Config.Bindable
         /// <summary>
         /// The value of the BindableDouble
         /// </summary>
-        double _value;
         public new double Value
         {
             get => _value;
@@ -43,6 +42,8 @@ namespace Drum_Smasher_Mono.DSGame.Config.Bindable
                     ValueChanged?.Invoke(this, new BindableValueChangedEventArgs<double>(_value, previousVal));
             }
         }
+
+        double _value;
 
         /// <inheritdoc/>
         /// <summary>

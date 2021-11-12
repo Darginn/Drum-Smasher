@@ -25,7 +25,6 @@ namespace Drum_Smasher_Mono.DSGame.Config.Bindable
         /// <summary>
         /// The value of the BindableFloat
         /// </summary>
-        float _value;
         public new float Value
         {
             get => _value;
@@ -39,6 +38,8 @@ namespace Drum_Smasher_Mono.DSGame.Config.Bindable
                     ValueChanged?.Invoke(this, new BindableValueChangedEventArgs<float>(_value, previousVal));
             }
         }
+
+        float _value;
 
         /// <inheritdoc/>
         /// <summary>
