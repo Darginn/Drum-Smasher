@@ -99,6 +99,7 @@ namespace Drum_Smasher_Mono
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            Myra.MyraEnvironment.Game = this;
 
             ScreenManager.SwitchScreen(new MenuScreen(Sprites, Graphics), false, true);
             base.LoadContent();
