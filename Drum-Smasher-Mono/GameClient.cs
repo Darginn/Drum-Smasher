@@ -43,7 +43,7 @@ namespace Drum_Smasher_Mono
         /// <summary>
         /// The amount of time the game has been running, as a double so it doesn't break above 1000 FPS and maintains precision.
         /// </summary>
-        private static double TimeRunningPrecise { get; set; }
+        static double TimeRunningPrecise { get; set; }
 
         /// <summary>
         /// The amount of time the game has been running.
@@ -133,5 +133,6 @@ namespace Drum_Smasher_Mono
             
             base.Draw(gameTime);
         }
+
     }
 }

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>D:/reposSSD/Drum-Smasher/Drum-Smasher-Mono/Content/Fonts/DefaultFont.spritefont</SourceFile>
-  <SourceTime>2021-11-11T19:46:58.5937127+01:00</SourceTime>
-  <DestFile>D:/reposSSD/Drum-Smasher/Drum-Smasher-Mono/Content/bin/DesktopGL/Content/Fonts/DefaultFont.xnb</DestFile>
-  <DestTime>2021-11-11T19:47:07.2862098+01:00</DestTime>
+  <SourceFile>C:/Users/Jb112/Documents/Games/Drum-Smasher/Drum-Smasher-Mono/Content/Fonts/DefaultFont.spritefont</SourceFile>
+  <SourceTime>2021-11-11T23:41:01.8813206-06:00</SourceTime>
+  <DestFile>C:/Users/Jb112/Documents/Games/Drum-Smasher/Drum-Smasher-Mono/Content/bin/DesktopGL/Content/Fonts/DefaultFont.xnb</DestFile>
+  <DestTime>2021-11-12T01:48:50.0355745-06:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
-  <ImporterTime>2020-08-10T16:17:54+02:00</ImporterTime>
+  <ImporterTime>2020-08-10T11:17:54-05:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>
-  <ProcessorTime>2020-08-10T16:17:54+02:00</ProcessorTime>
+  <ProcessorTime>2020-08-10T11:17:54-05:00</ProcessorTime>
   <Parameters>
     <Key>PremultiplyAlpha</Key>
     <Value>True</Value>

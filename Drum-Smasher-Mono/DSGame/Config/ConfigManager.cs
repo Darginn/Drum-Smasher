@@ -18,25 +18,25 @@ namespace Drum_Smasher_Mono.DSGame.Config
         /// <summary>
         /// The game directory
         /// </summary>
-        private static string _gameDirectory;
+        static string _gameDirectory;
         internal static Bindable<string> GameDirectory { get; private set; }
 
         /// <summary>
         /// Debug log directory
         /// </summary>
-        private static string _logsDirectory;
+        static string _logsDirectory;
         internal static Bindable<string> LogsDirectory { get; private set; }
 
         /// <summary>
         /// The data directory
         /// </summary>
-        private static string _dataDirectory;
+        static string _dataDirectory;
         internal static Bindable<string> DataDirectory { get; private set; }
 
         /// <summary>
         /// The song directory
         /// </summary>
-        private static string _songDirectory;
+        static string _songDirectory;
         internal static Bindable<string> SongDirectory { get; private set; }
 
         /// <summary>
@@ -131,12 +131,12 @@ namespace Drum_Smasher_Mono.DSGame.Config
         /// Dictates whether or not this is the first write of the file for the current game session.
         /// (Not saved in Config)
         /// </summary>
-        private static bool FirstWrite { get; set; }
+        static bool FirstWrite { get; set; }
 
         /// <summary>
         /// The last time we've wrote config.
         /// </summary>
-        private static long LastWrite { get; set; }
+        static long LastWrite { get; set; }
 
         /// <summary>
         /// Important!
@@ -168,7 +168,7 @@ namespace Drum_Smasher_Mono.DSGame.Config
         /// Reads a dsgame.cfg file and sets all of the successfully read values.
         /// At the end of reading, we write the config file, changing any invalid data/
         /// </summary>
-        private static void ReadConfigFile()
+        static void ReadConfigFile()
         {
             // We'll want to write a dsgame.cfg file if it doesn't already exist.
             // There's no need to read the config file afterwards, since we already have
@@ -246,7 +246,7 @@ namespace Drum_Smasher_Mono.DSGame.Config
         /// Reads a Bindable<T>. Works on all types.
         /// </summary>
         /// <returns></returns>
-        private static Bindable<T> ReadValue<T>(string name, T defaultVal, KeyDataCollection ini)
+        static Bindable<T> ReadValue<T>(string name, T defaultVal, KeyDataCollection ini)
         {
             var binded = new Bindable<T>(name, defaultVal);
             var converter = TypeDescriptor.GetConverter(typeof(T));
@@ -273,7 +273,7 @@ namespace Drum_Smasher_Mono.DSGame.Config
         /// <param name="max"></param>
         /// <param name="ini"></param>
         /// <returns></returns>
-        private static BindableInt ReadInt(string name, int defaultVal, int min, int max, KeyDataCollection ini)
+        static BindableInt ReadInt(string name, int defaultVal, int min, int max, KeyDataCollection ini)
         {
             var binded = new BindableInt(name, defaultVal, min, max);
 
@@ -295,7 +295,7 @@ namespace Drum_Smasher_Mono.DSGame.Config
         /// certain way.
         /// </summary>
         /// <returns></returns>
-        private static Bindable<string> ReadSpecialConfigType(SpecialConfigType type, string name, string defaultVal, KeyDataCollection ini)
+        static Bindable<string> ReadSpecialConfigType(SpecialConfigType type, string name, string defaultVal, KeyDataCollection ini)
         {
             var binded = new Bindable<string>(name, defaultVal);
 
@@ -340,7 +340,7 @@ namespace Drum_Smasher_Mono.DSGame.Config
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="d"></param>
-        private static void AutoSaveConfiguration<T>(object sender, BindableValueChangedEventArgs<T> d)
+        static void AutoSaveConfiguration<T>(object sender, BindableValueChangedEventArgs<T> d)
         {
             // ReSharper disable once ArrangeMethodOrOperatorBody
             CommonTaskScheduler.Add(CommonTask.WriteConfig);

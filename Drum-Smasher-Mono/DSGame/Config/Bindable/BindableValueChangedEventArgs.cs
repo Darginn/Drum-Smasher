@@ -15,7 +15,6 @@ namespace Drum_Smasher_Mono.DSGame.Config.Bindable
     {
         /// <inheritdoc/>
         /// <summary>
-        /// Ctor -
         /// </summary>
         /// <param name="value">The new value of the bindable</param>
         /// <param name="oldValue">The old value of the bindable</param>

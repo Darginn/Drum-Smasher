@@ -30,7 +30,6 @@ namespace Drum_Smasher_Mono.DSGame.Config.Bindable
         /// <summary>
         /// The containing binded value.
         /// </summary>
-        private T _value;
         public T Value
         {
             get => _value;
@@ -43,6 +42,7 @@ namespace Drum_Smasher_Mono.DSGame.Config.Bindable
             }
         }
 
+        T _value;
         /// <summary>
         /// </summary>
         /// <param name="defaultVal"></param>

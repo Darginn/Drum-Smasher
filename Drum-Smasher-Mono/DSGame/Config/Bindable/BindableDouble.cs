@@ -22,7 +22,7 @@ namespace Drum_Smasher_Mono.DSGame.Config.Bindable
         /// <summary>
         /// The value of the BindableDouble
         /// </summary>
-        private double _value;
+        double _value;
         public new double Value
         {
             get => _value;
