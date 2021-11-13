@@ -1,17 +1,15 @@
 ﻿using Drum_Smasher_Mono.DSGame.Config;
-using Drum_Smasher_Mono.DSGame.Screens;
 using Drum_Smasher_Mono.DSGame.Sound;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Reflection;
+using Nez;
 
 namespace Drum_Smasher_Mono
 {
-    public class GameClient : Game
+    public class GameClient : Core
     {
-        public static GameClient Instance { get; private set; }
-        public static ScreenManager ScreenManager { get; private set; }
         public static SoundConductor Sound { get; private set; }
 
         /// <summary>
@@ -50,59 +48,23 @@ namespace Drum_Smasher_Mono
         /// </summary>
         public static long TimeRunning => (long)TimeRunningPrecise;
 
-
-
-
-        public GraphicsDevice Graphics => GraphicsDevice;
-        public SpriteBatch Sprites => _spriteBatch;
-
-        GraphicsDeviceManager _graphics;
-        SpriteBatch _spriteBatch;
-         
         public GameClient()
         {
-            Instance = this;
-            _graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
-            IsMouseVisible = true;
-        }
-
-        /// <summary>
-        /// Toggles fullscreen, do not call this inside the constructor
-        /// </summary>
-        public void ToggleFullScreen()
-        {
-            _graphics.IsFullScreen = !_graphics.IsFullScreen;
-            _graphics.ApplyChanges();
-        }
-
-        /// <summary>
-        /// Resizes the screen, do not call this inside the constructor
-        /// </summary>
-        public void ResizeScreen(int width, int height)
-        {
-            _graphics.PreferredBackBufferWidth = width;
-            _graphics.PreferredBackBufferHeight = height;
-            _graphics.ApplyChanges();
         }
 
         protected override void Initialize()
         {
-            ScreenManager = new ScreenManager();
-            Sound = new SoundConductor();
-
-            ConfigManager.Initialize();
-
             base.Initialize();
+
+            Sound = new SoundConductor();
+            ConfigManager.Initialize();
+            Scene = new Scenes.MenuScene();
         }
 
         protected override void LoadContent()
         {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
-            Myra.MyraEnvironment.Game = this;
-
-            ScreenManager.SwitchScreen(new MenuScreen(Sprites, Graphics), false, true);
             base.LoadContent();
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -115,25 +77,8 @@ namespace Drum_Smasher_Mono
                 Exit();
                 return;
             }
-            else if (HotKeyTable.IsKeyDown(HotKey.FullScreen))
-            {
-                ToggleFullScreen();
-            }
 
-            ScreenManager.Update(gameTime);
             base.Update(gameTime);
         }
-
-        protected override void Draw(GameTime gameTime)
-        {
-            Sprites.Begin(SpriteSortMode.BackToFront);
-
-            ScreenManager.Draw(gameTime);
-
-            Sprites.End();
-            
-            base.Draw(gameTime);
-        }
-
     }
 }

@@ -16,5 +16,10 @@ namespace Drum_Smasher_Mono
 
             return tempB;
         }
+
+        public static int PercentageOf(this int a, double percentage)
+        {
+            return (int)(a / 100.0 * percentage);
+        }
     }
 }
