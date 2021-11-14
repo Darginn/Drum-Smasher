@@ -1,25 +1,55 @@
-[settings]
-ID=0
-Artist=SliderTests
-Title=Devourer of Gods Compilation
-Album=
-Year=0
-Difficulty=Devourer of Onis
-Creator=Stefan
-Tags=calamity mod theme scourge servants of the universe universal collapse dog mountaindrew re-logic cave story arranged last battle ballos mix thenutritiousguy tng
-Genre=0
-Source=Terraria
-Offset=182
-PreviewStart=73429
-PreviewEnd=0
-BPM=190
-SoundFile=audio.mp3
-Speed=23
-[/\]
-[notes]
-0=3600=0=true=350
-1=4200=1=true=350
-0=4800=1=true=350
-1=5400=1
-0=6000=1
-[/\]
+{
+  "ID": 0,
+  "Artist": "SliderTests",
+  "Title": "Devourer of Gods Compilation",
+  "Album": "",
+  "Year": 0,
+  "Difficulty": "Devourer of Onis",
+  "Creator": "Stefan",
+  "Tags": "calamity mod theme scourge servants of the universe universal collapse dog mountaindrew re-logic cave story arranged last battle ballos mix thenutritiousguy tng",
+  "Genre": "0",
+  "Source": "Terraria",
+  "Offset": 182,
+  "PreviewStart": 73429,
+  "PreviewEnd": 0,
+  "Speed": 23,
+  "BPM": 190.0,
+  "SoundFile": "audio.mp3",
+  "Notes": [
+    {
+      "HitTime": "00:00:03.6000000",
+      "SliderDuration": "00:00:00.3500000",
+      "Color": 0,
+      "IsSlider": true,
+      "IsBigNote": false
+    },
+    {
+      "HitTime": "00:00:04.2000000",
+      "SliderDuration": "00:00:00.3500000",
+      "Color": 1,
+      "IsSlider": true,
+      "IsBigNote": true
+    },
+    {
+      "HitTime": "00:00:04.8000000",
+      "SliderDuration": "00:00:00.3500000",
+      "Color": 1,
+      "IsSlider": true,
+      "IsBigNote": false
+    },
+    {
+      "HitTime": "00:00:05.4000000",
+      "SliderDuration": "00:00:00",
+      "Color": 1,
+      "IsSlider": false,
+      "IsBigNote": true
+    },
+    {
+      "HitTime": "00:00:06",
+      "SliderDuration": "00:00:00",
+      "Color": 1,
+      "IsSlider": false,
+      "IsBigNote": false
+    }
+  ]
+}

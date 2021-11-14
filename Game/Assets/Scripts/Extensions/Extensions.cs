@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace DrumSmasher.Assets.Scripts
+namespace Assets.Scripts
 {
     public static class Extensions
     {

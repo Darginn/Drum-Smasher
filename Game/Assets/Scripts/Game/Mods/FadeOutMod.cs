@@ -1,4 +1,4 @@
-﻿using DrumSmasher.Assets.Scripts.Game.Notes;
+﻿using Assets.Scripts.Game.Notes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace DrumSmasher.Assets.Scripts.Game.Mods
+namespace Assets.Scripts.Game.Mods
 {
     public class FadeOutMod : BaseMod
     {

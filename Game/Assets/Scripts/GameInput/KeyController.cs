@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace DrumSmasher.Assets.Scripts.GameInput
+namespace Assets.Scripts.GameInput
 {
     public class KeyController : MonoBehaviour
     {

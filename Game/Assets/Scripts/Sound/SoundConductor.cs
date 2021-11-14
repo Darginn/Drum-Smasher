@@ -9,7 +9,7 @@ using UnityEngine.UI;
 using NAudio;
 using NAudio.Wave;
 
-namespace DrumSmasher.Assets.Scripts.Sound
+namespace Assets.Scripts.Sound
 {
     public class SoundConductor : MonoBehaviour
     {

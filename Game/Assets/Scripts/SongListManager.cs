@@ -1,6 +1,6 @@
-﻿using DrumSmasher.Assets.Scripts.Charts;
-using DrumSmasher.Assets.Scripts.Game.Mods;
-using DrumSmasher.Assets.Scripts.Settings;
+﻿using Assets.Scripts.IO.Charts;
+using Assets.Scripts.Game.Mods;
+using Assets.Scripts.Settings;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +8,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace DrumSmasher.Assets.Scripts
+namespace Assets.Scripts
 {
     public class SongListManager : MonoBehaviour
     {
-        public Charts.Chart LoadedChart;
+        public ChartFile LoadedChart;
 
         public GameObject ListContent;
         public GameObject ErrorPanel;
@@ -50,7 +50,7 @@ namespace DrumSmasher.Assets.Scripts
             Logger.Log($"Set FPS limit to {Application.targetFrameRate} and VSYNC {(QualitySettings.vSyncCount <= 0 ? "false" : "true")}");
         }
 
-        public void InstantiatePrefab(string display, Charts.Chart chart, System.IO.DirectoryInfo chartDirectory)
+        public void InstantiatePrefab(string display, ChartFile chart, System.IO.DirectoryInfo chartDirectory)
         {
             GameObject songButton = Instantiate(Resources.Load ("Prefabs/SongListButton")) as GameObject;
             songButton.transform.SetParent(ListContent.transform, false);
@@ -58,7 +58,7 @@ namespace DrumSmasher.Assets.Scripts
             songButton.GetComponent<Button>().onClick.AddListener(() => LoadMap(chart, chartDirectory));
         }
 
-        public void LoadMap(Charts.Chart chart, System.IO.DirectoryInfo chartDirectory)
+        public void LoadMap(ChartFile chart, System.IO.DirectoryInfo chartDirectory)
         {
             if (_sceneActionActive)
                 return;

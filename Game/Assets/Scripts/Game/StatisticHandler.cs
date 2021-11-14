@@ -1,4 +1,4 @@
-﻿using DrumSmasher.Assets.Scripts.Game.Notes;
+﻿using Assets.Scripts.Game.Notes;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DrumSmasher.Assets.Scripts.Game
+namespace Assets.Scripts.Game
 {
     public class StatisticHandler : MonoBehaviour
     {

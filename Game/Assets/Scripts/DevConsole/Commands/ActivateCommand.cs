@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace DrumSmasher.Assets.Scripts.DevConsole.Commands
+namespace Assets.Scripts.DevConsole.Commands
 {
     public class ActivateCommand : BaseCommand
     {

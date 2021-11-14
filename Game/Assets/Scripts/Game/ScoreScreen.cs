@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-namespace DrumSmasher.Assets.Scripts.Game
+namespace Assets.Scripts.Game
 {
     public class ScoreScreen : MonoBehaviour
     {

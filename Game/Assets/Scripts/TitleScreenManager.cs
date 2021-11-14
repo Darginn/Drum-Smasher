@@ -10,15 +10,15 @@ using UnityEngine.SceneManagement;
 using SFB;
 using System.IO;
 using System.Collections;
-using DrumSmasher.Assets.Scripts.Settings;
+using Assets.Scripts.Settings;
 using System.Threading;
-using DSServerCommon;
+using Assets.Scripts.IO.Charts;
 
-namespace DrumSmasher.Assets.Scripts
+namespace Assets.Scripts
 {
     public class TitleScreenManager : MonoBehaviour
     {
-        public Charts.Chart LoadedChart;
+        public ChartFile LoadedChart;
         bool _sceneActionActive;
         public GameObject PlayAlert;
         public GameObject FailAlert;
@@ -151,8 +151,6 @@ namespace DrumSmasher.Assets.Scripts
             //Initialize static AutoInit Attributes
             System.Reflection.Assembly.GetExecutingAssembly().ActivateAttributeMethods<AutoInitAttribute>();
 
-            SettingsManager.OnExit += (s, e) => Logger.Dispose();
-
             resolutions = Screen.resolutions;
 
             ResolutionDropdown.ClearOptions();
@@ -279,18 +277,16 @@ namespace DrumSmasher.Assets.Scripts
                 return;
             }
             
-            var chart = Charts.ChartFile.ConvertOsuFile(path);
-            string artist = Charts.ChartFile.FixPath(chart.Artist);
-            string title = Charts.ChartFile.FixPath(chart.Title);
-            string creator = Charts.ChartFile.FixPath(chart.Creator);
+            var chart = ChartFile.ConvertOsuFile(path);
+            string artist = ChartFile.FixPath(chart.Artist);
+            string title = ChartFile.FixPath(chart.Title);
+            string creator = ChartFile.FixPath(chart.Creator);
 
             TitleScreenSettings tss = SettingsManager.SettingsStorage["TitleScreen"] as TitleScreenSettings;
 
             DirectoryInfo chartPath = new DirectoryInfo(tss.Data.ChartPath + $"/{artist} - {title} ({creator})/");
-
             chart.Speed = 23;
-
-            Charts.ChartFile.Save(chart, chartPath);
+            chart.Save(Path.Combine(chartPath.FullName, $"{artist} - {title} ({creator}) [{chart.Difficulty}]"));
             
             FileInfo audio = new FileInfo(Path.Combine(chartPath.FullName, chart.SoundFile));
 
@@ -341,7 +337,6 @@ namespace DrumSmasher.Assets.Scripts
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
             SettingsManager.SaveSettings();
-            Logger.Dispose();
 #else
             Application.Quit();
 #endif

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DrumSmasher.Assets.Scripts.Game
+namespace Assets.Scripts.Game
 {
     public enum PlayState
     {

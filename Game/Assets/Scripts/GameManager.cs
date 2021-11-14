@@ -1,6 +1,7 @@
-﻿using DrumSmasher.Assets.Scripts.Game;
-using DrumSmasher.Assets.Scripts.GameInput;
-using DrumSmasher.Assets.Scripts.Settings;
+﻿using Assets.Scripts.Game;
+using Assets.Scripts.GameInput;
+using Assets.Scripts.IO.Charts;
+using Assets.Scripts.Settings;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace DrumSmasher.Assets.Scripts
+namespace Assets.Scripts
 {
     public class GameManager : MonoBehaviour
     {
@@ -39,13 +40,13 @@ namespace DrumSmasher.Assets.Scripts
         public GameObject DevConsolePrefab;
         public GameObject Canvas;
 
-        //Charts.Chart _loadedChart;
+        //ChartFile _loadedChart;
 
         GameObject _devConsole;
 
         [SerializeField] NoteScroller _scroller;
 
-        public static void OnSceneLoaded(Charts.Chart chart, DirectoryInfo chartDirectory, List<(string, float)> mods = null)
+        public static void OnSceneLoaded(ChartFile chart, DirectoryInfo chartDirectory, List<(string, float)> mods = null)
         {
             Scene scene = SceneManager.GetActiveScene();
             GameObject[] objs = scene.GetRootGameObjects();

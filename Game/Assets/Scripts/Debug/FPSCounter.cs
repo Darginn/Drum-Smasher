@@ -2,7 +2,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace DrumSmasher.Assets.Scripts.Debug
+namespace Assets.Scripts.Debug
 {
     public class FPSCounter : MonoBehaviour
     {

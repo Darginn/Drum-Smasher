@@ -7,23 +7,22 @@ using UnityEngine;
 using System.IO;
 using UnityEngine.SceneManagement;
 using System.Collections;
-using DSServerCommon;
-using DrumSmasher.Assets.Scripts.Game.Notes;
-using DrumSmasher.Assets.Scripts.Game.Mods;
-using DrumSmasher.Assets.Scripts.GameInput;
-using DrumSmasher.Assets.Scripts.Charts;
+using Assets.Scripts.Game.Notes;
+using Assets.Scripts.Game.Mods;
+using Assets.Scripts.GameInput;
+using Assets.Scripts.IO.Charts;
 
-namespace DrumSmasher.Assets.Scripts.Game
+namespace Assets.Scripts.Game
 {
     public class NoteScroller : MonoBehaviour 
     {
         public static NoteScroller Instance;
 
         public bool IgnoreColor;
-        public Chart CurrentChart => _chart;
+        public ChartFile CurrentChart => _chart;
         public GameObject NotePrefab => _notePrefab;
 
-        Chart _chart;
+        ChartFile _chart;
         List<ChartNote> _notes;
         int _notesIndex;
         bool _reachedEndOfChart;
@@ -135,7 +134,7 @@ namespace DrumSmasher.Assets.Scripts.Game
         /// Loads a chart
         /// </summary>
         /// <param name="chart">chart to load</param>
-        public void LoadChart(Chart chart, DirectoryInfo chartDirectory, bool startPlaying = false, 
+        public void LoadChart(ChartFile chart, DirectoryInfo chartDirectory, bool startPlaying = false, 
                               List<(string, float)> mods = null)
         {
             Reset();
@@ -247,7 +246,7 @@ namespace DrumSmasher.Assets.Scripts.Game
                 return false;
             }
 
-            double spawnTime = _notes[_notesIndex].Time.TotalSeconds - _offset;
+            double spawnTime = _notes[_notesIndex].HitTime.TotalSeconds - _offset;
 
             if (spawnTime > _conductor.CurrentTime)
             {
@@ -281,7 +280,7 @@ namespace DrumSmasher.Assets.Scripts.Game
             noteScript.SetDefaultPosition();
 
             NoteColor color = (NoteColor)note.Note.Color;
-            NoteType type = note.Note.BigNote ? NoteType.Big : NoteType.Small;
+            NoteType type = note.Note.IsBigNote ? NoteType.Big : NoteType.Small;
 
             noteScript.SetNoteType(type, color);
             noteScript.AutoPlay = AutoPlay;

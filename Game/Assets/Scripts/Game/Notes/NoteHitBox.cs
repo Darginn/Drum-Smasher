@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace DrumSmasher.Assets.Scripts.Game.Notes
+namespace Assets.Scripts.Game.Notes
 {
     public class NoteHitBox : MonoBehaviour
     {

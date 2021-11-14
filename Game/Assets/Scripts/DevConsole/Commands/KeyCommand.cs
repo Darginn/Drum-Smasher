@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DrumSmasher.Assets.Scripts.DevConsole.Commands
+namespace Assets.Scripts.DevConsole.Commands
 {
     public class KeyCommand : BaseCommand
     {

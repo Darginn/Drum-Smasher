@@ -1,4 +1,4 @@
-﻿using DrumSmasher.Assets.Scripts.GameInput;
+﻿using Assets.Scripts.GameInput;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace DrumSmasher.Assets.Scripts.Game.Notes
+namespace Assets.Scripts.Game.Notes
 {
     public class Note : MonoBehaviour
     {

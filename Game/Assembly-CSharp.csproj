@@ -1,15 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{DDFBC18F-9396-3137-9CFE-DEB2CDB74636}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -54,73 +53,76 @@
     <UnityVersion>2021.1.22f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\GameInput\KeyScanner.cs" />
-    <Compile Include="Assets\Scripts\DevConsole\Commands\AutoplayCommand.cs" />
-    <Compile Include="Assets\Scripts\Game\Mods\IgnoreColorMod.cs" />
-    <Compile Include="Assets\Scripts\Tools\DontDestroyOnLoadScript.cs" />
-    <Compile Include="Assets\StandaloneFileBrowser\Sample\BasicSample.cs" />
-    <Compile Include="Assets\Scripts\GameInput\TaikoDrumHotKey.cs" />
-    <Compile Include="Assets\Scripts\Game\Mods\ModController.cs" />
-    <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserEditor.cs" />
-    <Compile Include="Assets\Scripts\Game\PlayState.cs" />
-    <Compile Include="Assets\Scripts\Game\NoteScroller.cs" />
-    <Compile Include="Assets\Scripts\Game\Mods\ModPanel.cs" />
-    <Compile Include="Assets\Scripts\Settings\TaikoSettings.cs" />
-    <Compile Include="Assets\Scripts\Sound\SoundConductor.cs" />
-    <Compile Include="Assets\Scripts\Game\Mods\ModButton.cs" />
-    <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserWindows.cs" />
-    <Compile Include="Assets\Scripts\GameTime.cs" />
-    <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleOpenFileTextMultiple.cs" />
-    <Compile Include="Assets\Scripts\DevConsole\Commands\ActivateCommand.cs" />
-    <Compile Include="Assets\Scripts\DevConsole\Commands\BaseCommand.cs" />
-    <Compile Include="Assets\StandaloneFileBrowser\IStandaloneFileBrowser.cs" />
-    <Compile Include="Assets\Scripts\Chat\UIChat.cs" />
-    <Compile Include="Assets\Scripts\Game\Mods\AutoPlayMod.cs" />
-    <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleOpenFileText.cs" />
-    <Compile Include="Assets\Scripts\Charts\ChartNote.cs" />
-    <Compile Include="Assets\Scripts\Settings\TitleScreenSettings.cs" />
-    <Compile Include="Assets\Scripts\GameInput\HotKey.cs" />
-    <Compile Include="Assets\Scripts\Charts\SongScanning.cs" />
-    <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowser.cs" />
-    <Compile Include="Assets\Scripts\Game\Mods\BaseMod.cs" />
-    <Compile Include="Assets\Scripts\CameraScreenResolution.cs" />
-    <Compile Include="Assets\Scripts\Game\Mods\FadeOutMod.cs" />
-    <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleSaveFileText.cs" />
-    <Compile Include="Assets\Scripts\Game\Notes\NoteHitType.cs" />
-    <Compile Include="Assets\Scripts\DevConsole\Commands\ICommand.cs" />
-    <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserLinux.cs" />
-    <Compile Include="Assets\Scripts\GameInput\KeyController.cs" />
+    <Analyzer Include="D:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Assets\Scripts\Tools\SyncSolutionUtilities.cs" />
     <Compile Include="Assets\Scripts\TitleScreenManager.cs" />
+    <Compile Include="Assets\Scripts\GameInput\KeyScanner.cs" />
     <Compile Include="Assets\Scripts\SongListManager.cs" />
     <Compile Include="Assets\Scripts\Game\Mods\FadeInMod.cs" />
+    <Compile Include="Assets\Scripts\DevConsole\Commands\AutoplayCommand.cs" />
     <Compile Include="Assets\Scripts\Game\SoundConductor.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleSaveFileImage.cs" />
+    <Compile Include="Assets\Scripts\Game\Mods\IgnoreColorMod.cs" />
+    <Compile Include="Assets\Scripts\Tools\DontDestroyOnLoadScript.cs" />
     <Compile Include="Assets\Scripts\Debug\FPSCounter.cs" />
+    <Compile Include="Assets\StandaloneFileBrowser\Sample\BasicSample.cs" />
+    <Compile Include="Assets\Scripts\GameInput\TaikoDrumHotKey.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Game\Mods\ModController.cs" />
     <Compile Include="Assets\Scripts\Logger.cs" />
     <Compile Include="Assets\Scripts\DevConsole\Commands\KeyCommand.cs" />
     <Compile Include="Assets\Scripts\Game\Notes\NoteSegment.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleOpenFileImage.cs" />
+    <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserEditor.cs" />
+    <Compile Include="Assets\Scripts\Game\PlayState.cs" />
+    <Compile Include="Assets\Scripts\IO\Charts\ChartFile.cs" />
+    <Compile Include="Assets\Scripts\Game\NoteScroller.cs" />
     <Compile Include="Assets\Scripts\Game\ScoreScreen.cs" />
     <Compile Include="Assets\Scripts\Game\Notes\NoteHitBox.cs" />
     <Compile Include="Assets\Scripts\Game\Notes\NoteColor.cs" />
+    <Compile Include="Assets\Scripts\Game\Mods\ModPanel.cs" />
+    <Compile Include="Assets\Scripts\Settings\TaikoSettings.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserMac.cs" />
+    <Compile Include="Assets\Scripts\Sound\SoundConductor.cs" />
     <Compile Include="Assets\Scripts\Game\StatisticHandler.cs" />
     <Compile Include="Assets\Scripts\GameInput\XInput.cs" />
     <Compile Include="Assets\Scripts\Extensions\Extensions.cs" />
+    <Compile Include="Assets\Scripts\Game\Mods\ModButton.cs" />
+    <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserWindows.cs" />
+    <Compile Include="Assets\Scripts\GameTime.cs" />
     <Compile Include="Assets\Scripts\DevConsole\Commands\FPSCommand.cs" />
+    <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleOpenFileTextMultiple.cs" />
     <Compile Include="Assets\Scripts\Settings\IDataStorage.cs" />
+    <Compile Include="Assets\Scripts\DevConsole\Commands\ActivateCommand.cs" />
+    <Compile Include="Assets\Scripts\DevConsole\Commands\BaseCommand.cs" />
+    <Compile Include="Assets\StandaloneFileBrowser\IStandaloneFileBrowser.cs" />
     <Compile Include="Assets\Scripts\Settings\SettingsManager.cs" />
+    <Compile Include="Assets\Scripts\Chat\UIChat.cs" />
     <Compile Include="Assets\Scripts\Game\Notes\NoteType.cs" />
-    <Compile Include="Assets\Scripts\Charts\Chart.cs" />
+    <Compile Include="Assets\Scripts\Game\Mods\AutoPlayMod.cs" />
     <Compile Include="Assets\Scripts\Game\Notes\Note.cs" />
     <Compile Include="Assets\Scripts\Game\Mods\FadeInStart.cs" />
     <Compile Include="Assets\Scripts\Extensions\AutoInitAttribute.cs" />
-    <Compile Include="Assets\Scripts\DevConsole\DevConsole.cs" />
-    <Compile Include="Assets\Scripts\Charts\Enums.cs" />
-    <Compile Include="Assets\Scripts\Charts\ChartFile.cs" />
+    <Compile Include="Assets\Scripts\IO\JsonFile.cs" />
+    <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleOpenFileText.cs" />
+    <Compile Include="Assets\Scripts\Settings\TitleScreenSettings.cs" />
+    <Compile Include="Assets\Scripts\GameInput\HotKey.cs" />
+    <Compile Include="Assets\Scripts\IO\Charts\SongScanning.cs" />
     <Compile Include="Assets\Scripts\Sound\NAudioPlayer.cs" />
+    <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowser.cs" />
+    <Compile Include="Assets\Scripts\Game\Mods\BaseMod.cs" />
+    <Compile Include="Assets\Scripts\CameraScreenResolution.cs" />
+    <Compile Include="Assets\Scripts\IO\BaseFile.cs" />
+    <Compile Include="Assets\Scripts\Game\Mods\FadeOutMod.cs" />
+    <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleSaveFileText.cs" />
+    <Compile Include="Assets\Scripts\Game\Notes\NoteHitType.cs" />
+    <Compile Include="Assets\Scripts\DevConsole\Commands\ICommand.cs" />
+    <Compile Include="Assets\Scripts\DevConsole\DevConsole.cs" />
+    <Compile Include="Assets\Scripts\IO\Charts\ChartNote.cs" />
+    <Compile Include="Assets\Scripts\GameInput\KeyController.cs" />
+    <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserLinux.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Packages\NAudio.Wasapi.2.0.0\lib\netstandard2.0\NAudio.Wasapi.dll" />
@@ -372,38 +374,35 @@
     <Reference Include="UnityEditor.UnityConnectModule">
       <HintPath>D:\reposSSD\Unity\2021.1.22f1\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
-    <Reference Include="DSServerCommon">
-      <HintPath>Assets\Plugins\netstandard2.1\DSServerCommon.dll</HintPath>
+    <Reference Include="NAudio">
+      <HintPath>Assets\Packages\NAudio.2.0.1\lib\netstandard2.0\NAudio.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Assets\Packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Ookii.Dialogs">
       <HintPath>Assets\StandaloneFileBrowser\Plugins\Ookii.Dialogs.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.Wasapi">
+      <HintPath>Assets\Packages\NAudio.Wasapi.2.0.0\lib\netstandard2.0\NAudio.Wasapi.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.Asio">
+      <HintPath>Assets\Packages\NAudio.Asio.2.0.0\lib\netstandard2.0\NAudio.Asio.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.WinMM">
+      <HintPath>Assets\Packages\NAudio.WinMM.2.0.1\lib\netstandard2.0\NAudio.WinMM.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.Midi">
+      <HintPath>Assets\Packages\NAudio.Midi.2.0.1\lib\netstandard2.0\NAudio.Midi.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.Core">
+      <HintPath>Assets\Packages\NAudio.Core.2.0.0\lib\netstandard2.0\NAudio.Core.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Forms">
       <HintPath>Assets\StandaloneFileBrowser\Plugins\System.Windows.Forms.dll</HintPath>
     </Reference>
     <Reference Include="XInputDotNetPure">
       <HintPath>Assets\Scripts\GameInput\Plugins\XInputDotNetPure.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio.Core">
-      <HintPath>Assets\Packages\NAudio.Core.2.0.0\lib\netstandard2.0\NAudio.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio.Asio">
-      <HintPath>Assets\Packages\NAudio.Asio.2.0.0\lib\netstandard2.0\NAudio.Asio.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio.Midi">
-      <HintPath>Assets\Packages\NAudio.Midi.2.0.1\lib\netstandard2.0\NAudio.Midi.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio.Wasapi">
-      <HintPath>Assets\Packages\NAudio.Wasapi.2.0.0\lib\netstandard2.0\NAudio.Wasapi.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio.WinMM">
-      <HintPath>Assets\Packages\NAudio.WinMM.2.0.1\lib\netstandard2.0\NAudio.WinMM.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio">
-      <HintPath>Assets\Packages\NAudio.2.0.1\lib\netstandard2.0\NAudio.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>Assets\Packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>D:\reposSSD\Unity\2021.1.22f1\Editor\Data\PlaybackEngines\AppleTVSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
@@ -803,7 +802,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets\Scripts\GameRework\Notes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

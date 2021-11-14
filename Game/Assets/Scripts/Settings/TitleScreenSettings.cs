@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace DrumSmasher.Assets.Scripts.Settings
+namespace Assets.Scripts.Settings
 {
     public class TitleScreenSettings : ISetting
     {
