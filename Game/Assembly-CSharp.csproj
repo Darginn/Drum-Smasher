@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{DDFBC18F-9396-3137-9CFE-DEB2CDB74636}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -47,7 +48,7 @@
   <PropertyGroup>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <UnityProjectGenerator>Package</UnityProjectGenerator>
-    <UnityProjectGeneratorVersion>2.0.11</UnityProjectGeneratorVersion>
+    <UnityProjectGeneratorVersion>2.0.12</UnityProjectGeneratorVersion>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2021.1.22f1</UnityVersion>
@@ -59,6 +60,7 @@
     <Compile Include="Assets\Scripts\GameInput\KeyScanner.cs" />
     <Compile Include="Assets\Scripts\DevConsole\Commands\AutoplayCommand.cs" />
     <Compile Include="Assets\Scripts\Game\Mods\IgnoreColorMod.cs" />
+    <Compile Include="Assets\Scripts\Sound\NAudioPlayer.cs" />
     <Compile Include="Assets\Scripts\Tools\DontDestroyOnLoadScript.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\BasicSample.cs" />
     <Compile Include="Assets\Scripts\GameInput\TaikoDrumHotKey.cs" />
@@ -68,7 +70,7 @@
     <Compile Include="Assets\Scripts\Game\NoteScroller.cs" />
     <Compile Include="Assets\Scripts\Game\Mods\ModPanel.cs" />
     <Compile Include="Assets\Scripts\Settings\TaikoSettings.cs" />
-    <Compile Include="Assets\Scripts\Conductor.cs" />
+    <Compile Include="Assets\Scripts\Sound\SoundConductor.cs" />
     <Compile Include="Assets\Scripts\Game\Mods\ModButton.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserWindows.cs" />
     <Compile Include="Assets\Scripts\GameTime.cs" />
@@ -124,12 +126,22 @@
     <Compile Include="Assets\Scripts\Charts\ChartFile.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Packages\NAudio.Wasapi.2.0.0\lib\netstandard2.0\NAudio.Wasapi.dll" />
+    <None Include="Assets\Packages\NAudio.Asio.2.0.0\lib\netstandard2.0\NAudio.Asio.dll" />
     <None Include="Assets\Scripts\GameInput\Plugins\XInputDotNetPure.dll" />
     <None Include="Assets\Scripts\GameInput\XInput MITLicense.txt" />
+    <None Include="Assets\Packages\NAudio.2.0.1\lib\netstandard2.0\NAudio.dll" />
+    <None Include="Assets\Packages\NAudio.2.0.1\lib\netstandard2.0\NAudio.xml" />
+    <None Include="Assets\Packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll" />
     <None Include="Assets\StandaloneFileBrowser\Plugins\Ookii.Dialogs.dll" />
     <None Include="Assets\Scripts\GameInput\Plugins\XInputInterface.dll" />
+    <None Include="Assets\Packages\NAudio.Midi.2.0.1\lib\netstandard2.0\NAudio.Midi.dll" />
+    <None Include="Assets\Packages\NAudio.Core.2.0.0\lib\netstandard2.0\NAudio.Core.dll" />
     <None Include="Assets\link.xml" />
+    <None Include="Assets\Packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.xml" />
+    <None Include="Assets\Packages\NAudio.WinMM.2.0.1\lib\netstandard2.0\NAudio.WinMM.dll" />
     <None Include="Assets\StandaloneFileBrowser\Plugins\System.Windows.Forms.dll" />
+    <None Include="Assets\Packages\NAudio.2.0.1\license.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -366,12 +378,6 @@
     <Reference Include="DSServerCommon">
       <HintPath>Assets\Plugins\netstandard2.1\DSServerCommon.dll</HintPath>
     </Reference>
-    <Reference Include="NAudio">
-      <HintPath>Assets\Plugins\NAudio.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>Assets\Plugins\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="Ookii.Dialogs">
       <HintPath>Assets\StandaloneFileBrowser\Plugins\Ookii.Dialogs.dll</HintPath>
     </Reference>
@@ -380,6 +386,27 @@
     </Reference>
     <Reference Include="XInputDotNetPure">
       <HintPath>Assets\Scripts\GameInput\Plugins\XInputDotNetPure.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.Core">
+      <HintPath>Assets\Packages\NAudio.Core.2.0.0\lib\netstandard2.0\NAudio.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.Asio">
+      <HintPath>Assets\Packages\NAudio.Asio.2.0.0\lib\netstandard2.0\NAudio.Asio.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.Midi">
+      <HintPath>Assets\Packages\NAudio.Midi.2.0.1\lib\netstandard2.0\NAudio.Midi.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.Wasapi">
+      <HintPath>Assets\Packages\NAudio.Wasapi.2.0.0\lib\netstandard2.0\NAudio.Wasapi.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.WinMM">
+      <HintPath>Assets\Packages\NAudio.WinMM.2.0.1\lib\netstandard2.0\NAudio.WinMM.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio">
+      <HintPath>Assets\Packages\NAudio.2.0.1\lib\netstandard2.0\NAudio.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Assets\Packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>D:\reposSSD\Unity\2021.1.22f1\Editor\Data\PlaybackEngines\AppleTVSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
@@ -747,6 +774,12 @@
     <Reference Include="Unity.VisualStudio.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Sysroot.Linux_x86_64">
+      <HintPath>Library\ScriptAssemblies\Unity.Sysroot.Linux_x86_64.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Toolchain.Win-x86_64-Linux-x86_64">
+      <HintPath>Library\ScriptAssemblies\Unity.Toolchain.Win-x86_64-Linux-x86_64.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
     </Reference>
@@ -771,13 +804,11 @@
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.SysrootPackage.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.SysrootPackage.Editor.dll</HintPath>
+    </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{D8888F6A-ABE1-C49B-1A38-F65A81021668}</Project>
-      <Name>Assembly-CSharp-firstpass</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
