@@ -8,8 +8,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{DDFBC18F-9396-3137-9CFE-DEB2CDB74636}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -96,7 +95,6 @@
     <Compile Include="Assets\Scripts\DevConsole\Commands\FPSCommand.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleOpenFileTextMultiple.cs" />
     <Compile Include="Assets\Scripts\Settings\IDataStorage.cs" />
-    <Compile Include="Assets\Scripts\DevConsole\Commands\ActivateCommand.cs" />
     <Compile Include="Assets\Scripts\DevConsole\Commands\BaseCommand.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\IStandaloneFileBrowser.cs" />
     <Compile Include="Assets\Scripts\Settings\SettingsManager.cs" />
@@ -116,6 +114,7 @@
     <Compile Include="Assets\Scripts\CameraScreenResolution.cs" />
     <Compile Include="Assets\Scripts\IO\BaseFile.cs" />
     <Compile Include="Assets\Scripts\Game\Mods\FadeOutMod.cs" />
+    <Compile Include="Assets\Scripts\DevConsole\Commands\HelpCommand.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleSaveFileText.cs" />
     <Compile Include="Assets\Scripts\Game\Notes\NoteHitType.cs" />
     <Compile Include="Assets\Scripts\DevConsole\Commands\ICommand.cs" />

@@ -95,11 +95,9 @@
     <Compile Include="Assets\Scripts\DevConsole\Commands\FPSCommand.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleOpenFileTextMultiple.cs" />
     <Compile Include="Assets\Scripts\Settings\IDataStorage.cs" />
-    <Compile Include="Assets\Scripts\DevConsole\Commands\ActivateCommand.cs" />
     <Compile Include="Assets\Scripts\DevConsole\Commands\BaseCommand.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\IStandaloneFileBrowser.cs" />
     <Compile Include="Assets\Scripts\Settings\SettingsManager.cs" />
-    <Compile Include="Assets\Scripts\Chat\UIChat.cs" />
     <Compile Include="Assets\Scripts\Game\Notes\NoteType.cs" />
     <Compile Include="Assets\Scripts\Game\Mods\AutoPlayMod.cs" />
     <Compile Include="Assets\Scripts\Game\Notes\Note.cs" />
@@ -116,6 +114,7 @@
     <Compile Include="Assets\Scripts\CameraScreenResolution.cs" />
     <Compile Include="Assets\Scripts\IO\BaseFile.cs" />
     <Compile Include="Assets\Scripts\Game\Mods\FadeOutMod.cs" />
+    <Compile Include="Assets\Scripts\DevConsole\Commands\HelpCommand.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleSaveFileText.cs" />
     <Compile Include="Assets\Scripts\Game\Notes\NoteHitType.cs" />
     <Compile Include="Assets\Scripts\DevConsole\Commands\ICommand.cs" />

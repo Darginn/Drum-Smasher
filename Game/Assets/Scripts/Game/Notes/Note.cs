@@ -14,7 +14,6 @@ namespace Assets.Scripts.Game.Notes
         public int NoteId;
         public float Speed = float.MaxValue;
         public float StartTime = float.MaxValue;
-        public bool AutoPlay = false;
 
         public bool CanBeHit;
         public float HitRange;
@@ -116,7 +115,6 @@ namespace Assets.Scripts.Game.Notes
             NoteSegment nseg = CreateSegment(_prefabSegmentEnd, segmentLength * segments);
             nseg.IsSliderEnd = true;
             nseg.ChartEndX = _endPosition.x;
-            nseg.Autoplay = AutoPlay;
             //Create filler object between object 0 and 1
             nseg = CreateSegment(_prefabSegment, 0);
             nseg.enabled = false;
@@ -136,7 +134,6 @@ namespace Assets.Scripts.Game.Notes
                 ns.HitValue = _sliderHitValue;
                 ns.StatisticHandler = StatisticHandler;
                 ns.BigNote = _noteType == NoteType.Big || _noteType == NoteType.BigLong;
-                ns.Autoplay = AutoPlay;
                 ns.SetColor(_noteColorYellow);
 
                 ns.Key1 = Key1;
@@ -384,9 +381,8 @@ namespace Assets.Scripts.Game.Notes
                         break;
                 }
 
-                if (AutoPlay)
+                if (NoteScroller.AutoPlay)
                 {
-
                     TaikoDrumHotKey GetRandomKey()
                     {
                         int rnd = UnityEngine.Random.Range(0, 4);
@@ -437,7 +433,7 @@ namespace Assets.Scripts.Game.Notes
             
             bool bignote = transform.localScale == _noteBigScale;
 
-            if (AutoPlay)
+            if (NoteScroller.AutoPlay)
             {
                 if (_noteType == NoteType.BigLong || _noteType == NoteType.SmallLong)
                     StatisticHandler.OnNoteHit(NoteHitType.GoodHit, bignote, true, _sliderHitValue);
@@ -468,14 +464,14 @@ namespace Assets.Scripts.Game.Notes
             switch (_noteColor)
             {
                 case NoteColor.Red:
-                    if (!AutoPlay && _lastHitRed)
+                    if (!NoteScroller.AutoPlay && _lastHitRed)
                         return;
 
                     _lastHitRed = true;
                     break;
 
                 case NoteColor.Blue:
-                    if (!AutoPlay && _lastHitBlue)
+                    if (!NoteScroller.AutoPlay && _lastHitBlue)
                         return;
 
                     _lastHitBlue = true;

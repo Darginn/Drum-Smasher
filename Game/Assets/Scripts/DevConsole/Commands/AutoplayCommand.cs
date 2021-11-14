@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Assets.Scripts.Game;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Scripts.DevConsole.Commands
 {
@@ -33,7 +35,7 @@ namespace Assets.Scripts.DevConsole.Commands
             }
 
             bool oldAP = taiko.Data.Autoplay;
-            taiko.Data.Autoplay = newAP;
+            NoteScroller.Instance.SetAutoPlay(newAP);
 
             taiko.Save();
 

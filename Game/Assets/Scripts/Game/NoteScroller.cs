@@ -34,10 +34,6 @@ namespace Assets.Scripts.Game
         [SerializeField] Vector3 _startPosition;
         [SerializeField] Vector3 _hitCirclePosition;
         [SerializeField] GameObject _notePrefab;
-        //[SerializeField] ButtonController _key1Controller;
-        //[SerializeField] ButtonController _key2Controller;
-        //[SerializeField] ButtonController _key3Controller;
-        //[SerializeField] ButtonController _key4Controller;
         [SerializeField] internal bool AutoPlay;
         [SerializeField] StatisticHandler _statisticHandler;
         [SerializeField] ScoreScreen _scoreScreen;
@@ -102,16 +98,6 @@ namespace Assets.Scripts.Game
         public void Exit()
         {
             SceneManager.LoadScene("TitleScreen");
-        }
-
-        void Reset()
-        {
-            _scoreScreen.Reset();
-            _conductor.Stop();
-            _layer = 0f;
-            _statisticHandler.Reset();
-            _reachedEndOfChart = false;
-            _notesIndex = 0;
         }
 
         /// <summary>
@@ -283,7 +269,6 @@ namespace Assets.Scripts.Game
             NoteType type = note.Note.IsBigNote ? NoteType.Big : NoteType.Small;
 
             noteScript.SetNoteType(type, color);
-            noteScript.AutoPlay = AutoPlay;
             noteScript.StatisticHandler = _statisticHandler;
             noteScript.NoteScroller = this;
 
@@ -303,6 +288,16 @@ namespace Assets.Scripts.Game
 
             if (note.Note.IsSlider)
                 noteScript.ConvertToSlider((float)note.Note.SliderDuration.TotalSeconds, CurrentChart.BPM);
+        }
+
+        void Reset()
+        {
+            _scoreScreen.Reset();
+            _conductor.Stop();
+            _layer = 0f;
+            _statisticHandler.Reset();
+            _reachedEndOfChart = false;
+            _notesIndex = 0;
         }
 
         struct NextNote

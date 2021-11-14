@@ -13,7 +13,6 @@ namespace Assets.Scripts.Game.Notes
         public bool CanBeHit { get; set; }
         public bool HasBeenHit { get; set; }
         public bool BigNote { get; set; }
-        public bool Autoplay { get; set; }
         public float AutoplayTriggerX { get; set; }
 
         public int HitValue { get; set; }
@@ -39,7 +38,7 @@ namespace Assets.Scripts.Game.Notes
             if (HasBeenHit || !CanBeHit)
                 return;
 
-            if (Autoplay)
+            if (NoteScroller.Instance.AutoPlay)
             {
                 if (transform.position.x <= AutoplayTriggerX)
                 {

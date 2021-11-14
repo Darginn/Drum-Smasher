@@ -89,7 +89,7 @@ namespace Assets.Scripts
 
             TitleScreenKey.CheckKey();
 
-            if (Input.GetKeyDown(KeyCode.KeypadMinus))
+            if (Input.GetKey(KeyCode.KeypadMinus))
             {
                 if (_devConsole != null)
                 {
