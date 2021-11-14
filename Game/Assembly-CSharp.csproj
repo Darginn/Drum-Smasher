@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{DDFBC18F-9396-3137-9CFE-DEB2CDB74636}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -99,7 +100,6 @@
     <Compile Include="Assets\Scripts\DevConsole\Commands\BaseCommand.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\IStandaloneFileBrowser.cs" />
     <Compile Include="Assets\Scripts\Settings\SettingsManager.cs" />
-    <Compile Include="Assets\Scripts\Chat\UIChat.cs" />
     <Compile Include="Assets\Scripts\Game\Notes\NoteType.cs" />
     <Compile Include="Assets\Scripts\Game\Mods\AutoPlayMod.cs" />
     <Compile Include="Assets\Scripts\Game\Notes\Note.cs" />
