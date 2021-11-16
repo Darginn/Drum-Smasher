@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using UnityEngine;
 
 public enum LogLevel
 {
@@ -83,5 +84,10 @@ public static class Logger
             Level = level;
             Message = message;
         }
+    }
+
+    internal static void Log(Exception e, LogType exception)
+    {
+        throw new NotImplementedException();
     }
 }

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using YamlDotNet.Serialization;
 
 namespace Assets.Scripts.IO.Charts
 {
@@ -30,6 +31,11 @@ namespace Assets.Scripts.IO.Charts
         public string SoundFile { get; set; }
 
         public List<ChartNote> Notes { get; set; }
+
+        /// <summary>
+        /// The absolute path of the chart's file.
+        /// </summary>
+        public string FilePath;
 
         static readonly List<string> _pathFixList = new List<string>()
         {
@@ -244,6 +250,66 @@ namespace Assets.Scripts.IO.Charts
                 p = p.Replace(str, "");
 
             return p;
+        }
+
+        /// <summary>
+        /// Takes in a path to a chart file and attempts to parse it.
+        /// Will throw an error if unable to be parsed.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="checkValidity"></param>
+        public static ChartFile Parse(string path, bool checkValidity = true)
+        {
+            ChartFile chart;
+
+            using (var file = File.OpenText(path))
+            {
+                var deserializer = new DeserializerBuilder();
+                deserializer.IgnoreUnmatchedProperties();
+                chart = (ChartFile)deserializer.Build().Deserialize(file, typeof(ChartFile));
+                chart.FilePath = path;
+
+                RestoreDefaultValues(chart);
+            }
+
+            AfterLoad(chart, checkValidity);
+
+            return chart;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="chart"></param>
+        public static void RestoreDefaultValues(ChartFile chart)
+        {
+            // use this space to test for blank values/properties and fill them
+        }
+
+        /// <summary>
+        /// Does some sorting of the ChartFile
+        /// </summary>
+        public void Sort()
+        {
+            // not sure if sorting is needed but it exists
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="chart"></param>
+        /// <param name="checkValidity"></param>
+        /// <exception cref="ArgumentException"></exception>
+        static void AfterLoad(ChartFile chart, bool checkValidity)
+        {
+            if (checkValidity && !chart.IsValid())
+                throw new ArgumentException("The chart file is invalid.");
+
+            // Try to sort the ChartFile before returning.
+            chart.Sort();
+        }
+
+        private bool IsValid()
+        {
+            return true; // maybe test if valid if necessary
         }
 
         #region Osu file
