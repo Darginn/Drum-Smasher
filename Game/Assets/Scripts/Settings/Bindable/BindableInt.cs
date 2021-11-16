@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-namespace Assets.Settings.Bindable
+namespace Assets.Scripts.Settings.Bindable
 {
     /// <inheritdoc/>
     /// <summary>

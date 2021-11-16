@@ -1,4 +1,4 @@
-﻿using Assets.Settings.Bindable;
+﻿using Assets.Scripts.Settings.Bindable;
 using System;
 using System.Linq;
 using System.Collections;

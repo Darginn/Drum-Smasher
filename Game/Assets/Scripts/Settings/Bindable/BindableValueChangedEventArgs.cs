@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Settings.Bindable
+namespace Assets.Scripts.Settings.Bindable
 {
     /// <inheritdoc/>
     /// <summary>

@@ -17,11 +17,11 @@ MonoBehaviour:
     x: 0
     y: 43
     width: 1920
-    height: 1007
+    height: 997
   m_ShowMode: 4
-  m_Title: Hierarchy
+  m_Title: Console
   m_RootView: {fileID: 2}
-  m_MinSize: {x: 875, y: 542}
+  m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 1
 --- !u!114 &2
@@ -45,8 +45,8 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 1920
-    height: 1007
-  m_MinSize: {x: 875, y: 542}
+    height: 997
+  m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_UseTopView: 1
   m_TopViewHeight: 30
@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 987
+    y: 977
     width: 1920
     height: 20
   m_MinSize: {x: 0, y: 0}
@@ -115,11 +115,11 @@ MonoBehaviour:
     x: 0
     y: 30
     width: 1920
-    height: 957
-  m_MinSize: {x: 578, y: 342}
-  m_MaxSize: {x: 12003, y: 8042}
+    height: 947
+  m_MinSize: {x: 679, y: 342}
+  m_MaxSize: {x: 12004, y: 8042}
   vertical: 0
-  controlID: 170
+  controlID: 15
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -140,11 +140,11 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 1589
-    height: 957
-  m_MinSize: {x: 303, y: 342}
+    height: 947
+  m_MinSize: {x: 403, y: 342}
   m_MaxSize: {x: 8003, y: 8042}
   vertical: 1
-  controlID: 171
+  controlID: 16
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -165,11 +165,11 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 1589
-    height: 623
-  m_MinSize: {x: 303, y: 221}
+    height: 616
+  m_MinSize: {x: 403, y: 221}
   m_MaxSize: {x: 8003, y: 4021}
   vertical: 0
-  controlID: 172
+  controlID: 17
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -188,13 +188,12 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 317
-    height: 623
+    height: 616
   m_MinSize: {x: 201, y: 221}
   m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 14}
+  m_ActualView: {fileID: 13}
   m_Panes:
-  - {fileID: 14}
-  - {fileID: 12}
+  - {fileID: 13}
   m_Selected: 0
   m_LastSelected: 1
 --- !u!114 &9
@@ -207,7 +206,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: GameView
+  m_Name: SceneView
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -215,16 +214,16 @@ MonoBehaviour:
     x: 317
     y: 0
     width: 1272
-    height: 623
-  m_MinSize: {x: 102, y: 121}
+    height: 616
+  m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 13}
+  m_ActualView: {fileID: 14}
   m_Panes:
+  - {fileID: 14}
+  - {fileID: 12}
   - {fileID: 15}
-  - {fileID: 13}
-  - {fileID: 16}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -241,16 +240,16 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 623
+    y: 616
     width: 1589
-    height: 334
+    height: 331
   m_MinSize: {x: 101, y: 121}
   m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 18}
+  m_ActualView: {fileID: 17}
   m_Panes:
-  - {fileID: 17}
-  - {fileID: 19}
+  - {fileID: 16}
   - {fileID: 18}
+  - {fileID: 17}
   m_Selected: 2
   m_LastSelected: 0
 --- !u!114 &11
@@ -271,655 +270,16 @@ MonoBehaviour:
     x: 1589
     y: 0
     width: 331
-    height: 957
-  m_MinSize: {x: 275, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_ActualView: {fileID: 21}
+    height: 947
+  m_MinSize: {x: 276, y: 121}
+  m_MaxSize: {x: 4001, y: 4021}
+  m_ActualView: {fileID: 20}
   m_Panes:
+  - {fileID: 19}
   - {fileID: 20}
-  - {fileID: 21}
   m_Selected: 1
   m_LastSelected: 0
 --- !u!114 &12
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 139222468, guid: 8dc1be91775c4bb469f6b74cef450eaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_TitleContent:
-    m_Text: NuGet
-    m_Image: {fileID: 0}
-    m_Tooltip: 
-  m_Pos:
-    serializedVersion: 2
-    x: 0
-    y: 73
-    width: 579
-    height: 602
-  m_ViewDataDictionary: {fileID: 0}
-  hasRefreshed: 1
-  availablePackages:
-  - Id: sqlite-net
-    Version: 1.6.292
-    Title: sqlite-net
-    Description: sqlite-net is an open source, minimal library to allow .NET and
-      Mono applications to store data in SQLite databases. It is written in C# 3.0
-      and is meant to be simply compiled in with your projects. It was first designed
-      to work with MonoTouch on the iPhone, but should work in any other CLI environment.
-    Summary: A .NET client library to access SQLite embedded database files in a
-      LINQ manner.
-    ReleaseNotes: See project page
-    LicenseUrl: https://raw.githubusercontent.com/praeclarum/sqlite-net/master/LICENSE
-    DownloadUrl: https://www.nuget.org/api/v2/package/sqlite-net/1.6.292
-    DownloadCount: 514269
-    Authors: Frank Krueger
-    Icon: {fileID: 0}
-    ProjectUrl: https://github.com/praeclarum/sqlite-net
-    RepositoryUrl: 
-    RepositoryType: 0
-    RepositoryBranch: 
-    RepositoryCommit: 
-  - Id: SQLitePCLRaw.lib.e_sqlite3.osx
-    Version: 1.1.14
-    Title: Native code only (e_sqlite3, osx) for SQLitePCLRaw
-    Description: This package contains a platform-specific native code build of SQLite
-      for use with SQLitePCL.raw.  To use this, you need SQLitePCLRaw.core as well
-      as SQLitePCLRaw.provider.e_sqlite3.net45 or similar.  Convenience packages
-      are named SQLitePCLRaw.bundle_*.
-    Summary: A Portable Class Library (PCL) for low-level (raw) access to SQLite
-    ReleaseNotes: '1.1.14:  update e_sqlite3 builds to 3.28.0.  fix packaging issue
-      with bundle_zetetic and UWP.  1.1.13:  fix problems with unofficial sqlcipher
-      builds for Android and iOS.  use new license tag for nuspecs.  1.1.12:  update
-      e_sqlite3 builds to 3.26.0.  bug fix for bundle_zetetic on iOS.  1.1.11:  put
-      a copy of alpine-x64/e_sqlite3 into linux-musl-x64, for .NET Core 2.1.  1.1.10: 
-      improve bundle_zetetic.  update e_sqlite3 to 3.22.0 and turn on FTS5.  fix
-      bundled sqlcipher build for UWP.  AssemblyVersion now being updated properly. 
-      attempt fix crash involving CLR finalizer.  add e_sqlite3 builds for linux-arm64
-      and alpine-x64.  change generic Windows builds to use win-foo instead of win7-foo. 
-      add support for SQLITE_DETERMINISTIC.  added sqlite3_blob_open overload to
-      support higher perf in certain cases.  fix problem with Mac-but-not-Xamarin
-      and targets file.   1.1.9:  bug fixes for Xamarin.Mac.  add a sqlcipher build
-      for UWP.  1.1.8:  SQLite builds for .NET Core ARM, linux and Windows IoT. 
-      Finalizers.  Fix Xam.Mac issue with bundle_green.  Fix edge case in one of
-      the sqlite3_column_blob() overloads.  New ''bundle_zetetic'' for use with official
-      SQLCipher builds from Zetetic.  1.1.7:  Drop SQLite down to 3.18.2.  1.1.6: 
-      AssetTargetFallback fixes.  update sqlite builds to 3.19.3.  1.1.5:  bug fix
-      path in lib.foo.linux targets file.  1.1.4:  tweak use of nuget .targets files
-      for compat with .NET Core.  1.1.3:  add SQLITE_CHECKPOINT_TRUNCATE symbol definition. 
-      add new blob overloads to enable better performance in certain cases.  chg
-      winsqlite3 to use StdCall.  fix targets files for better compat with VS 2017
-      nuget pack.  add 32-bit linux build for e_sqlite3.  update to latest libcrypto
-      builds from couchbase folks.  1.1.2:  ability to FreezeProvider().  update
-      e_sqlite3 builds to 3.16.1.  1.1.1:  add support for config_log.  update e_sqlite3
-      builds to 3.15.2.  fix possible memory corruption when using prepare_v2() with
-      multiple statements.  better errmsg from ugly.step().  add win8 dep groups
-      in bundles.  fix batteries_v2.Init() to be ''last call wins'' like the v1 version
-      is.  chg raw.SetProvider() to avoid calling sqlite3_initialize() so that sqlite3_config()
-      can be used.  better support for Xamarin.Mac.  1.1.0:  fix problem with winsqlite3
-      on UWP.  remove iOS Classic support.  add sqlite3_enable_load_extension.  add
-      sqlite3_config/initialize/shutdown.  add Batteries_V2.Init().  1.0.1:  fix
-      problem with bundle_e_sqlite3 on iOS.  fix issues with .NET Core.  add bundle_sqlcipher. 
-      1.0.0 release:  Contains minor breaking changes since 0.9.x.  All package names
-      now begin with SQLitePCLRaw.  Now supports netstandard.  Fixes for UWP and
-      Android N.  Change all unit tests to xunit.  Support for winsqlite3.dll and
-      custom SQLite builds.'
-    LicenseUrl: https://www.nuget.org/packages/SQLitePCLRaw.lib.e_sqlite3.osx/1.1.14/license
-    DownloadUrl: https://www.nuget.org/api/v2/package/SQLitePCLRaw.lib.e_sqlite3.osx/1.1.14
-    DownloadCount: 25803748
-    Authors: Eric Sink, D. Richard Hipp, et al
-    Icon: {fileID: 0}
-    ProjectUrl: https://github.com/ericsink/SQLitePCL.raw
-    RepositoryUrl: 
-    RepositoryType: 0
-    RepositoryBranch: 
-    RepositoryCommit: 
-  - Id: sqlite-net-pcl
-    Version: 1.8.116
-    Title: sqlite-net-pcl
-    Description: "SQLite-net is an open source and light weight library providing
-      easy SQLite database storage for .NET, Mono, and Xamarin applications.\n     
-      This version uses SQLitePCLRaw to provide platform independent versions of
-      SQLite."
-    Summary: 
-    ReleaseNotes: 
-    LicenseUrl: https://www.nuget.org/packages/sqlite-net-pcl/1.8.116/license
-    DownloadUrl: https://www.nuget.org/api/v2/package/sqlite-net-pcl/1.8.116
-    DownloadCount: 7001653
-    Authors: SQLite-net
-    Icon: {fileID: 0}
-    ProjectUrl: https://github.com/praeclarum/sqlite-net
-    RepositoryUrl: 
-    RepositoryType: 0
-    RepositoryBranch: 
-    RepositoryCommit: 
-  - Id: SQLitePCLRaw.lib.e_sqlite3.v110_xp
-    Version: 1.1.14
-    Title: SQLitePCLRaw.lib.e_sqlite3.v110_xp
-    Description: This package contains a platform-specific native code build of SQLite
-      for use with SQLitePCL.raw.  To use this, you need SQLitePCLRaw.core as well
-      as SQLitePCLRaw.provider.e_sqlite3.net45 or similar.  Convenience packages
-      are named SQLitePCLRaw.bundle_*.
-    Summary: A Portable Class Library (PCL) for low-level (raw) access to SQLite
-    ReleaseNotes: '1.1.14:  update e_sqlite3 builds to 3.28.0.  fix packaging issue
-      with bundle_zetetic and UWP.  1.1.13:  fix problems with unofficial sqlcipher
-      builds for Android and iOS.  use new license tag for nuspecs.  1.1.12:  update
-      e_sqlite3 builds to 3.26.0.  bug fix for bundle_zetetic on iOS.  1.1.11:  put
-      a copy of alpine-x64/e_sqlite3 into linux-musl-x64, for .NET Core 2.1.  1.1.10: 
-      improve bundle_zetetic.  update e_sqlite3 to 3.22.0 and turn on FTS5.  fix
-      bundled sqlcipher build for UWP.  AssemblyVersion now being updated properly. 
-      attempt fix crash involving CLR finalizer.  add e_sqlite3 builds for linux-arm64
-      and alpine-x64.  change generic Windows builds to use win-foo instead of win7-foo. 
-      add support for SQLITE_DETERMINISTIC.  added sqlite3_blob_open overload to
-      support higher perf in certain cases.  fix problem with Mac-but-not-Xamarin
-      and targets file.   1.1.9:  bug fixes for Xamarin.Mac.  add a sqlcipher build
-      for UWP.  1.1.8:  SQLite builds for .NET Core ARM, linux and Windows IoT. 
-      Finalizers.  Fix Xam.Mac issue with bundle_green.  Fix edge case in one of
-      the sqlite3_column_blob() overloads.  New ''bundle_zetetic'' for use with official
-      SQLCipher builds from Zetetic.  1.1.7:  Drop SQLite down to 3.18.2.  1.1.6: 
-      AssetTargetFallback fixes.  update sqlite builds to 3.19.3.  1.1.5:  bug fix
-      path in lib.foo.linux targets file.  1.1.4:  tweak use of nuget .targets files
-      for compat with .NET Core.  1.1.3:  add SQLITE_CHECKPOINT_TRUNCATE symbol definition. 
-      add new blob overloads to enable better performance in certain cases.  chg
-      winsqlite3 to use StdCall.  fix targets files for better compat with VS 2017
-      nuget pack.  add 32-bit linux build for e_sqlite3.  update to latest libcrypto
-      builds from couchbase folks.  1.1.2:  ability to FreezeProvider().  update
-      e_sqlite3 builds to 3.16.1.  1.1.1:  add support for config_log.  update e_sqlite3
-      builds to 3.15.2.  fix possible memory corruption when using prepare_v2() with
-      multiple statements.  better errmsg from ugly.step().  add win8 dep groups
-      in bundles.  fix batteries_v2.Init() to be ''last call wins'' like the v1 version
-      is.  chg raw.SetProvider() to avoid calling sqlite3_initialize() so that sqlite3_config()
-      can be used.  better support for Xamarin.Mac.  1.1.0:  fix problem with winsqlite3
-      on UWP.  remove iOS Classic support.  add sqlite3_enable_load_extension.  add
-      sqlite3_config/initialize/shutdown.  add Batteries_V2.Init().  1.0.1:  fix
-      problem with bundle_e_sqlite3 on iOS.  fix issues with .NET Core.  add bundle_sqlcipher. 
-      1.0.0 release:  Contains minor breaking changes since 0.9.x.  All package names
-      now begin with SQLitePCLRaw.  Now supports netstandard.  Fixes for UWP and
-      Android N.  Change all unit tests to xunit.  Support for winsqlite3.dll and
-      custom SQLite builds.'
-    LicenseUrl: https://www.nuget.org/packages/SQLitePCLRaw.lib.e_sqlite3.v110_xp/1.1.14/license
-    DownloadUrl: https://www.nuget.org/api/v2/package/SQLitePCLRaw.lib.e_sqlite3.v110_xp/1.1.14
-    DownloadCount: 25813409
-    Authors: Eric Sink, D. Richard Hipp, et al
-    Icon: {fileID: 0}
-    ProjectUrl: https://github.com/ericsink/SQLitePCL.raw
-    RepositoryUrl: 
-    RepositoryType: 0
-    RepositoryBranch: 
-    RepositoryCommit: 
-  - Id: Microsoft.Data.Sqlite.Core
-    Version: 6.0.0
-    Title: Microsoft.Data.Sqlite.Core
-    Description: 'Microsoft.Data.Sqlite is a lightweight ADO.NET provider for SQLite.
-      This package does not include a copy of the native SQLite library.
-
-
-      Commonly
-      Used Types:
-
-      Microsoft.Data.Sqlite.SqliteCommand
-
-      Microsoft.Data.Sqlite.SqliteConnection
-
-      Microsoft.Data.Sqlite.SqliteConnectionStringBuilder
-
-      Microsoft.Data.Sqlite.SqliteDataReader
-
-      Microsoft.Data.Sqlite.SqliteException
-
-      Microsoft.Data.Sqlite.SqliteFactory
-
-      Microsoft.Data.Sqlite.SqliteParameter
-
-      Microsoft.Data.Sqlite.SqliteTransaction'
-    Summary: 
-    ReleaseNotes: 
-    LicenseUrl: https://www.nuget.org/packages/Microsoft.Data.Sqlite.Core/6.0.0/license
-    DownloadUrl: https://www.nuget.org/api/v2/package/Microsoft.Data.Sqlite.Core/6.0.0
-    DownloadCount: 56612613
-    Authors: Microsoft
-    Icon: {fileID: 0}
-    ProjectUrl: https://docs.microsoft.com/dotnet/standard/data/sqlite/
-    RepositoryUrl: 
-    RepositoryType: 0
-    RepositoryBranch: 
-    RepositoryCommit: 
-  - Id: SQLitePCLRaw.lib.e_sqlite3.linux
-    Version: 1.1.14
-    Title: Native code only (e_sqlite3, linux) for SQLitePCLRaw
-    Description: This package contains a platform-specific native code build of SQLite
-      for use with SQLitePCL.raw.  To use this, you need SQLitePCLRaw.core as well
-      as SQLitePCLRaw.provider.e_sqlite3.net45 or similar.  Convenience packages
-      are named SQLitePCLRaw.bundle_*.
-    Summary: A Portable Class Library (PCL) for low-level (raw) access to SQLite
-    ReleaseNotes: '1.1.14:  update e_sqlite3 builds to 3.28.0.  fix packaging issue
-      with bundle_zetetic and UWP.  1.1.13:  fix problems with unofficial sqlcipher
-      builds for Android and iOS.  use new license tag for nuspecs.  1.1.12:  update
-      e_sqlite3 builds to 3.26.0.  bug fix for bundle_zetetic on iOS.  1.1.11:  put
-      a copy of alpine-x64/e_sqlite3 into linux-musl-x64, for .NET Core 2.1.  1.1.10: 
-      improve bundle_zetetic.  update e_sqlite3 to 3.22.0 and turn on FTS5.  fix
-      bundled sqlcipher build for UWP.  AssemblyVersion now being updated properly. 
-      attempt fix crash involving CLR finalizer.  add e_sqlite3 builds for linux-arm64
-      and alpine-x64.  change generic Windows builds to use win-foo instead of win7-foo. 
-      add support for SQLITE_DETERMINISTIC.  added sqlite3_blob_open overload to
-      support higher perf in certain cases.  fix problem with Mac-but-not-Xamarin
-      and targets file.   1.1.9:  bug fixes for Xamarin.Mac.  add a sqlcipher build
-      for UWP.  1.1.8:  SQLite builds for .NET Core ARM, linux and Windows IoT. 
-      Finalizers.  Fix Xam.Mac issue with bundle_green.  Fix edge case in one of
-      the sqlite3_column_blob() overloads.  New ''bundle_zetetic'' for use with official
-      SQLCipher builds from Zetetic.  1.1.7:  Drop SQLite down to 3.18.2.  1.1.6: 
-      AssetTargetFallback fixes.  update sqlite builds to 3.19.3.  1.1.5:  bug fix
-      path in lib.foo.linux targets file.  1.1.4:  tweak use of nuget .targets files
-      for compat with .NET Core.  1.1.3:  add SQLITE_CHECKPOINT_TRUNCATE symbol definition. 
-      add new blob overloads to enable better performance in certain cases.  chg
-      winsqlite3 to use StdCall.  fix targets files for better compat with VS 2017
-      nuget pack.  add 32-bit linux build for e_sqlite3.  update to latest libcrypto
-      builds from couchbase folks.  1.1.2:  ability to FreezeProvider().  update
-      e_sqlite3 builds to 3.16.1.  1.1.1:  add support for config_log.  update e_sqlite3
-      builds to 3.15.2.  fix possible memory corruption when using prepare_v2() with
-      multiple statements.  better errmsg from ugly.step().  add win8 dep groups
-      in bundles.  fix batteries_v2.Init() to be ''last call wins'' like the v1 version
-      is.  chg raw.SetProvider() to avoid calling sqlite3_initialize() so that sqlite3_config()
-      can be used.  better support for Xamarin.Mac.  1.1.0:  fix problem with winsqlite3
-      on UWP.  remove iOS Classic support.  add sqlite3_enable_load_extension.  add
-      sqlite3_config/initialize/shutdown.  add Batteries_V2.Init().  1.0.1:  fix
-      problem with bundle_e_sqlite3 on iOS.  fix issues with .NET Core.  add bundle_sqlcipher. 
-      1.0.0 release:  Contains minor breaking changes since 0.9.x.  All package names
-      now begin with SQLitePCLRaw.  Now supports netstandard.  Fixes for UWP and
-      Android N.  Change all unit tests to xunit.  Support for winsqlite3.dll and
-      custom SQLite builds.'
-    LicenseUrl: https://www.nuget.org/packages/SQLitePCLRaw.lib.e_sqlite3.linux/1.1.14/license
-    DownloadUrl: https://www.nuget.org/api/v2/package/SQLitePCLRaw.lib.e_sqlite3.linux/1.1.14
-    DownloadCount: 25765075
-    Authors: Eric Sink, D. Richard Hipp, et al
-    Icon: {fileID: 0}
-    ProjectUrl: https://github.com/ericsink/SQLitePCL.raw
-    RepositoryUrl: 
-    RepositoryType: 0
-    RepositoryBranch: 
-    RepositoryCommit: 
-  - Id: Microsoft.Data.Sqlite
-    Version: 6.0.0
-    Title: Microsoft.Data.Sqlite
-    Description: 'Microsoft.Data.Sqlite is a lightweight ADO.NET provider for SQLite.
-
-
-      Commonly
-      Used Types:
-
-      Microsoft.Data.Sqlite.SqliteCommand
-
-      Microsoft.Data.Sqlite.SqliteConnection
-
-      Microsoft.Data.Sqlite.SqliteConnectionStringBuilder
-
-      Microsoft.Data.Sqlite.SqliteDataReader
-
-      Microsoft.Data.Sqlite.SqliteException
-
-      Microsoft.Data.Sqlite.SqliteFactory
-
-      Microsoft.Data.Sqlite.SqliteParameter
-
-      Microsoft.Data.Sqlite.SqliteTransaction'
-    Summary: 
-    ReleaseNotes: 
-    LicenseUrl: https://www.nuget.org/packages/Microsoft.Data.Sqlite/6.0.0/license
-    DownloadUrl: https://www.nuget.org/api/v2/package/Microsoft.Data.Sqlite/6.0.0
-    DownloadCount: 25339032
-    Authors: Microsoft
-    Icon: {fileID: 0}
-    ProjectUrl: https://docs.microsoft.com/dotnet/standard/data/sqlite/
-    RepositoryUrl: 
-    RepositoryType: 0
-    RepositoryBranch: 
-    RepositoryCommit: 
-  - Id: System.Data.SQLite.Core
-    Version: 1.0.115.5
-    Title: System.Data.SQLite Core (x86/x64)
-    Description: The official SQLite database engine for both x86 and x64 along with
-      the ADO.NET provider.
-    Summary: 
-    ReleaseNotes: 
-    LicenseUrl: https://www.sqlite.org/copyright.html
-    DownloadUrl: https://www.nuget.org/api/v2/package/System.Data.SQLite.Core/1.0.115.5
-    DownloadCount: 16245708
-    Authors: SQLite Development Team
-    Icon: {fileID: 0}
-    ProjectUrl: https://system.data.sqlite.org/
-    RepositoryUrl: 
-    RepositoryType: 0
-    RepositoryBranch: 
-    RepositoryCommit: 
-  - Id: SQLitePCLRaw.provider.e_sqlite3.netstandard11
-    Version: 1.1.14
-    Title: SQLitePCLRaw.provider.e_sqlite3.netstandard11
-    Description: A SQLitePCL.raw 'provider' bridges the gap between SQLitePCLRaw.core
-      and a particular instance of the native SQLite library.  Install this package
-      in your app project and call SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_e_sqlite3()); 
-      Depending on the platform, you may also need to add one of the SQLitePCLRaw.lib.*
-      packages.  Convenience packages are named SQLitePCLRaw.bundle_*.
-    Summary: A Portable Class Library (PCL) for low-level (raw) access to SQLite
-    ReleaseNotes: '1.1.14:  update e_sqlite3 builds to 3.28.0.  fix packaging issue
-      with bundle_zetetic and UWP.  1.1.13:  fix problems with unofficial sqlcipher
-      builds for Android and iOS.  use new license tag for nuspecs.  1.1.12:  update
-      e_sqlite3 builds to 3.26.0.  bug fix for bundle_zetetic on iOS.  1.1.11:  put
-      a copy of alpine-x64/e_sqlite3 into linux-musl-x64, for .NET Core 2.1.  1.1.10: 
-      improve bundle_zetetic.  update e_sqlite3 to 3.22.0 and turn on FTS5.  fix
-      bundled sqlcipher build for UWP.  AssemblyVersion now being updated properly. 
-      attempt fix crash involving CLR finalizer.  add e_sqlite3 builds for linux-arm64
-      and alpine-x64.  change generic Windows builds to use win-foo instead of win7-foo. 
-      add support for SQLITE_DETERMINISTIC.  added sqlite3_blob_open overload to
-      support higher perf in certain cases.  fix problem with Mac-but-not-Xamarin
-      and targets file.   1.1.9:  bug fixes for Xamarin.Mac.  add a sqlcipher build
-      for UWP.  1.1.8:  SQLite builds for .NET Core ARM, linux and Windows IoT. 
-      Finalizers.  Fix Xam.Mac issue with bundle_green.  Fix edge case in one of
-      the sqlite3_column_blob() overloads.  New ''bundle_zetetic'' for use with official
-      SQLCipher builds from Zetetic.  1.1.7:  Drop SQLite down to 3.18.2.  1.1.6: 
-      AssetTargetFallback fixes.  update sqlite builds to 3.19.3.  1.1.5:  bug fix
-      path in lib.foo.linux targets file.  1.1.4:  tweak use of nuget .targets files
-      for compat with .NET Core.  1.1.3:  add SQLITE_CHECKPOINT_TRUNCATE symbol definition. 
-      add new blob overloads to enable better performance in certain cases.  chg
-      winsqlite3 to use StdCall.  fix targets files for better compat with VS 2017
-      nuget pack.  add 32-bit linux build for e_sqlite3.  update to latest libcrypto
-      builds from couchbase folks.  1.1.2:  ability to FreezeProvider().  update
-      e_sqlite3 builds to 3.16.1.  1.1.1:  add support for config_log.  update e_sqlite3
-      builds to 3.15.2.  fix possible memory corruption when using prepare_v2() with
-      multiple statements.  better errmsg from ugly.step().  add win8 dep groups
-      in bundles.  fix batteries_v2.Init() to be ''last call wins'' like the v1 version
-      is.  chg raw.SetProvider() to avoid calling sqlite3_initialize() so that sqlite3_config()
-      can be used.  better support for Xamarin.Mac.  1.1.0:  fix problem with winsqlite3
-      on UWP.  remove iOS Classic support.  add sqlite3_enable_load_extension.  add
-      sqlite3_config/initialize/shutdown.  add Batteries_V2.Init().  1.0.1:  fix
-      problem with bundle_e_sqlite3 on iOS.  fix issues with .NET Core.  add bundle_sqlcipher. 
-      1.0.0 release:  Contains minor breaking changes since 0.9.x.  All package names
-      now begin with SQLitePCLRaw.  Now supports netstandard.  Fixes for UWP and
-      Android N.  Change all unit tests to xunit.  Support for winsqlite3.dll and
-      custom SQLite builds.'
-    LicenseUrl: https://www.nuget.org/packages/SQLitePCLRaw.provider.e_sqlite3.netstandard11/1.1.14/license
-    DownloadUrl: https://www.nuget.org/api/v2/package/SQLitePCLRaw.provider.e_sqlite3.netstandard11/1.1.14
-    DownloadCount: 21425783
-    Authors: Eric Sink, et al
-    Icon: {fileID: 0}
-    ProjectUrl: https://github.com/ericsink/SQLitePCL.raw
-    RepositoryUrl: 
-    RepositoryType: 0
-    RepositoryBranch: 
-    RepositoryCommit: 
-  - Id: System.Data.SQLite
-    Version: 1.0.115.5
-    Title: System.Data.SQLite (x86/x64)
-    Description: The official SQLite database engine for both x86 and x64 along with
-      the ADO.NET provider.  This package includes support for LINQ and Entity Framework
-      6.
-    Summary: 
-    ReleaseNotes: 
-    LicenseUrl: https://www.sqlite.org/copyright.html
-    DownloadUrl: https://www.nuget.org/api/v2/package/System.Data.SQLite/1.0.115.5
-    DownloadCount: 8955650
-    Authors: SQLite Development Team
-    Icon: {fileID: 0}
-    ProjectUrl: https://system.data.sqlite.org/
-    RepositoryUrl: 
-    RepositoryType: 0
-    RepositoryBranch: 
-    RepositoryCommit: 
-  - Id: SQLitePCLRaw.provider.e_sqlite3.net45
-    Version: 1.1.14
-    Title: SQLitePCLRaw.provider.e_sqlite3.net45
-    Description: A SQLitePCL.raw 'provider' bridges the gap between SQLitePCLRaw.core
-      and a particular instance of the native SQLite library.  Install this package
-      in your app project and call SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_e_sqlite3()); 
-      Depending on the platform, you may also need to add one of the SQLitePCLRaw.lib.*
-      packages.  Convenience packages are named SQLitePCLRaw.bundle_*.
-    Summary: A Portable Class Library (PCL) for low-level (raw) access to SQLite
-    ReleaseNotes: '1.1.14:  update e_sqlite3 builds to 3.28.0.  fix packaging issue
-      with bundle_zetetic and UWP.  1.1.13:  fix problems with unofficial sqlcipher
-      builds for Android and iOS.  use new license tag for nuspecs.  1.1.12:  update
-      e_sqlite3 builds to 3.26.0.  bug fix for bundle_zetetic on iOS.  1.1.11:  put
-      a copy of alpine-x64/e_sqlite3 into linux-musl-x64, for .NET Core 2.1.  1.1.10: 
-      improve bundle_zetetic.  update e_sqlite3 to 3.22.0 and turn on FTS5.  fix
-      bundled sqlcipher build for UWP.  AssemblyVersion now being updated properly. 
-      attempt fix crash involving CLR finalizer.  add e_sqlite3 builds for linux-arm64
-      and alpine-x64.  change generic Windows builds to use win-foo instead of win7-foo. 
-      add support for SQLITE_DETERMINISTIC.  added sqlite3_blob_open overload to
-      support higher perf in certain cases.  fix problem with Mac-but-not-Xamarin
-      and targets file.   1.1.9:  bug fixes for Xamarin.Mac.  add a sqlcipher build
-      for UWP.  1.1.8:  SQLite builds for .NET Core ARM, linux and Windows IoT. 
-      Finalizers.  Fix Xam.Mac issue with bundle_green.  Fix edge case in one of
-      the sqlite3_column_blob() overloads.  New ''bundle_zetetic'' for use with official
-      SQLCipher builds from Zetetic.  1.1.7:  Drop SQLite down to 3.18.2.  1.1.6: 
-      AssetTargetFallback fixes.  update sqlite builds to 3.19.3.  1.1.5:  bug fix
-      path in lib.foo.linux targets file.  1.1.4:  tweak use of nuget .targets files
-      for compat with .NET Core.  1.1.3:  add SQLITE_CHECKPOINT_TRUNCATE symbol definition. 
-      add new blob overloads to enable better performance in certain cases.  chg
-      winsqlite3 to use StdCall.  fix targets files for better compat with VS 2017
-      nuget pack.  add 32-bit linux build for e_sqlite3.  update to latest libcrypto
-      builds from couchbase folks.  1.1.2:  ability to FreezeProvider().  update
-      e_sqlite3 builds to 3.16.1.  1.1.1:  add support for config_log.  update e_sqlite3
-      builds to 3.15.2.  fix possible memory corruption when using prepare_v2() with
-      multiple statements.  better errmsg from ugly.step().  add win8 dep groups
-      in bundles.  fix batteries_v2.Init() to be ''last call wins'' like the v1 version
-      is.  chg raw.SetProvider() to avoid calling sqlite3_initialize() so that sqlite3_config()
-      can be used.  better support for Xamarin.Mac.  1.1.0:  fix problem with winsqlite3
-      on UWP.  remove iOS Classic support.  add sqlite3_enable_load_extension.  add
-      sqlite3_config/initialize/shutdown.  add Batteries_V2.Init().  1.0.1:  fix
-      problem with bundle_e_sqlite3 on iOS.  fix issues with .NET Core.  add bundle_sqlcipher. 
-      1.0.0 release:  Contains minor breaking changes since 0.9.x.  All package names
-      now begin with SQLitePCLRaw.  Now supports netstandard.  Fixes for UWP and
-      Android N.  Change all unit tests to xunit.  Support for winsqlite3.dll and
-      custom SQLite builds.'
-    LicenseUrl: https://www.nuget.org/packages/SQLitePCLRaw.provider.e_sqlite3.net45/1.1.14/license
-    DownloadUrl: https://www.nuget.org/api/v2/package/SQLitePCLRaw.provider.e_sqlite3.net45/1.1.14
-    DownloadCount: 5366582
-    Authors: Eric Sink, et al
-    Icon: {fileID: 0}
-    ProjectUrl: https://github.com/ericsink/SQLitePCL.raw
-    RepositoryUrl: 
-    RepositoryType: 0
-    RepositoryBranch: 
-    RepositoryCommit: 
-  - Id: SQLitePCLRaw.lib.e_sqlite3.v140
-    Version: 1.1.14
-    Title: SQLitePCLRaw.lib.e_sqlite3.v140
-    Description: This package contains a platform-specific native code build of SQLite
-      for use with SQLitePCL.raw.  To use this, you need SQLitePCLRaw.core as well
-      as SQLitePCLRaw.provider.e_sqlite3.net45 or similar.  Convenience packages
-      are named SQLitePCLRaw.bundle_*.
-    Summary: A Portable Class Library (PCL) for low-level (raw) access to SQLite
-    ReleaseNotes: '1.1.14:  update e_sqlite3 builds to 3.28.0.  fix packaging issue
-      with bundle_zetetic and UWP.  1.1.13:  fix problems with unofficial sqlcipher
-      builds for Android and iOS.  use new license tag for nuspecs.  1.1.12:  update
-      e_sqlite3 builds to 3.26.0.  bug fix for bundle_zetetic on iOS.  1.1.11:  put
-      a copy of alpine-x64/e_sqlite3 into linux-musl-x64, for .NET Core 2.1.  1.1.10: 
-      improve bundle_zetetic.  update e_sqlite3 to 3.22.0 and turn on FTS5.  fix
-      bundled sqlcipher build for UWP.  AssemblyVersion now being updated properly. 
-      attempt fix crash involving CLR finalizer.  add e_sqlite3 builds for linux-arm64
-      and alpine-x64.  change generic Windows builds to use win-foo instead of win7-foo. 
-      add support for SQLITE_DETERMINISTIC.  added sqlite3_blob_open overload to
-      support higher perf in certain cases.  fix problem with Mac-but-not-Xamarin
-      and targets file.   1.1.9:  bug fixes for Xamarin.Mac.  add a sqlcipher build
-      for UWP.  1.1.8:  SQLite builds for .NET Core ARM, linux and Windows IoT. 
-      Finalizers.  Fix Xam.Mac issue with bundle_green.  Fix edge case in one of
-      the sqlite3_column_blob() overloads.  New ''bundle_zetetic'' for use with official
-      SQLCipher builds from Zetetic.  1.1.7:  Drop SQLite down to 3.18.2.  1.1.6: 
-      AssetTargetFallback fixes.  update sqlite builds to 3.19.3.  1.1.5:  bug fix
-      path in lib.foo.linux targets file.  1.1.4:  tweak use of nuget .targets files
-      for compat with .NET Core.  1.1.3:  add SQLITE_CHECKPOINT_TRUNCATE symbol definition. 
-      add new blob overloads to enable better performance in certain cases.  chg
-      winsqlite3 to use StdCall.  fix targets files for better compat with VS 2017
-      nuget pack.  add 32-bit linux build for e_sqlite3.  update to latest libcrypto
-      builds from couchbase folks.  1.1.2:  ability to FreezeProvider().  update
-      e_sqlite3 builds to 3.16.1.  1.1.1:  add support for config_log.  update e_sqlite3
-      builds to 3.15.2.  fix possible memory corruption when using prepare_v2() with
-      multiple statements.  better errmsg from ugly.step().  add win8 dep groups
-      in bundles.  fix batteries_v2.Init() to be ''last call wins'' like the v1 version
-      is.  chg raw.SetProvider() to avoid calling sqlite3_initialize() so that sqlite3_config()
-      can be used.  better support for Xamarin.Mac.  1.1.0:  fix problem with winsqlite3
-      on UWP.  remove iOS Classic support.  add sqlite3_enable_load_extension.  add
-      sqlite3_config/initialize/shutdown.  add Batteries_V2.Init().  1.0.1:  fix
-      problem with bundle_e_sqlite3 on iOS.  fix issues with .NET Core.  add bundle_sqlcipher. 
-      1.0.0 release:  Contains minor breaking changes since 0.9.x.  All package names
-      now begin with SQLitePCLRaw.  Now supports netstandard.  Fixes for UWP and
-      Android N.  Change all unit tests to xunit.  Support for winsqlite3.dll and
-      custom SQLite builds.'
-    LicenseUrl: https://www.nuget.org/packages/SQLitePCLRaw.lib.e_sqlite3.v140/1.1.14/license
-    DownloadUrl: https://www.nuget.org/api/v2/package/SQLitePCLRaw.lib.e_sqlite3.v140/1.1.14
-    DownloadCount: 2249208
-    Authors: Eric Sink, D. Richard Hipp, et al
-    Icon: {fileID: 0}
-    ProjectUrl: https://github.com/ericsink/SQLitePCL.raw
-    RepositoryUrl: 
-    RepositoryType: 0
-    RepositoryBranch: 
-    RepositoryCommit: 
-  - Id: sqlite-net-sqlcipher
-    Version: 1.8.116
-    Title: sqlite-net-sqlcipher
-    Description: "SQLite-net is an open source and light weight library providing
-      easy SQLite database storage for .NET, Mono, and Xamarin applications.\n     
-      This version uses SQLitePCLRaw to provide platform independent versions of
-      SQLite with the SQLCipher extension.\n      This enables secure access to the
-      database with password (key) access."
-    Summary: 
-    ReleaseNotes: 
-    LicenseUrl: https://www.nuget.org/packages/sqlite-net-sqlcipher/1.8.116/license
-    DownloadUrl: https://www.nuget.org/api/v2/package/sqlite-net-sqlcipher/1.8.116
-    DownloadCount: 424589
-    Authors: SQLite-net
-    Icon: {fileID: 0}
-    ProjectUrl: https://github.com/praeclarum/sqlite-net
-    RepositoryUrl: 
-    RepositoryType: 0
-    RepositoryBranch: 
-    RepositoryCommit: 
-  - Id: Stub.System.Data.SQLite.Core.NetStandard
-    Version: 1.0.115.5
-    Title: System.Data.SQLite Core for the .NET Standard 2.x (x86/x64)
-    Description: The official SQLite database engine for both x86 and x64 along with
-      the ADO.NET provider.
-    Summary: 
-    ReleaseNotes: 
-    LicenseUrl: https://www.sqlite.org/copyright.html
-    DownloadUrl: https://www.nuget.org/api/v2/package/Stub.System.Data.SQLite.Core.NetStandard/1.0.115.5
-    DownloadCount: 1423764
-    Authors: SQLite Development Team
-    Icon: {fileID: 0}
-    ProjectUrl: https://system.data.sqlite.org/
-    RepositoryUrl: 
-    RepositoryType: 0
-    RepositoryBranch: 
-    RepositoryCommit: 
-  - Id: FluentMigrator.Runner.SQLite
-    Version: 3.3.1
-    Title: FluentMigrator.Runner.SQLite
-    Description: FluentMigrator is a database migration framework for .NET written
-      in C#. The basic idea is that you can create migrations which are simply classes
-      that derive from the Migration base class and have a Migration attribute with
-      a unique version number attached to them. Upon executing FluentMigrator, you
-      tell it which version to migrate to and it will run all necessary migrations
-      in order to bring your database up to that version. In addition to forward
-      migration support, FluentMigrator also supports different ways to execute the
-      migrations along with selective migrations called profiles and executing arbitrary
-      SQL.
-    Summary: 
-    ReleaseNotes: 'Use of standard dependency injection, configuration and logging
-      libraries.
-
-      Simplification of in-process runner configuration and instantiation.
-
-      dotnet-fm
-      is now a global .NET Core 2.1 tool.
-
-      Minimum .NET Framework version is
-      4.6.1.
-
-
-      Details: https://github.com/fluentmigrator/fluentmigrator/releases'
-    LicenseUrl: https://github.com/fluentmigrator/fluentmigrator/blob/master/LICENSE.txt
-    DownloadUrl: https://www.nuget.org/api/v2/package/FluentMigrator.Runner.SQLite/3.3.1
-    DownloadCount: 4616559
-    Authors: Sean Chambers,Josh Coffman,Tom Marien,Mark Junker
-    Icon: {fileID: 0}
-    ProjectUrl: https://github.com/fluentmigrator/fluentmigrator/wiki
-    RepositoryUrl: 
-    RepositoryType: 0
-    RepositoryBranch: 
-    RepositoryCommit: 
-  updatePackages:
-  - Id: System.Buffers
-    Version: 4.5.1
-    Title: System.Buffers
-    Description: "Provides resource pooling of any type for performance-critical
-      applications that allocate and deallocate objects frequently.\n\nCommonly Used
-      Types:\nSystem.Buffers.ArrayPool<T>\n \n7601f4f6225089ffb291dc7d58293c7bbf5c5d4f
-      \nWhen using NuGet 3.x this package requires at least version 3.4."
-    Summary: 
-    ReleaseNotes: https://go.microsoft.com/fwlink/?LinkID=799421
-    LicenseUrl: https://github.com/dotnet/corefx/blob/master/LICENSE.TXT
-    DownloadUrl: https://www.nuget.org/api/v2/package/System.Buffers/4.5.1
-    DownloadCount: 829226390
-    Authors: Microsoft
-    Icon: {fileID: 0}
-    ProjectUrl: https://dot.net/
-    RepositoryUrl: 
-    RepositoryType: 0
-    RepositoryBranch: 
-    RepositoryCommit: 
-  - Id: System.Memory
-    Version: 4.5.4
-    Title: System.Memory
-    Description: "Provides types for efficient representation and pooling of managed,
-      stack, and native memory segments and sequences of such segments, along with
-      primitives to parse and format UTF-8 encoded text stored in those memory segments.\n\nCommonly
-      Used Types:\nSystem.Span\nSystem.ReadOnlySpan\nSystem.Memory\nSystem.ReadOnlyMemory\nSystem.Buffers.MemoryPool\nSystem.Buffers.ReadOnlySequence\nSystem.Buffers.Text.Utf8Parser\nSystem.Buffers.Text.Utf8Formatter\n
-      \n7601f4f6225089ffb291dc7d58293c7bbf5c5d4f \nWhen using NuGet 3.x this package
-      requires at least version 3.4."
-    Summary: 
-    ReleaseNotes: https://go.microsoft.com/fwlink/?LinkID=799421
-    LicenseUrl: https://github.com/dotnet/corefx/blob/master/LICENSE.TXT
-    DownloadUrl: https://www.nuget.org/api/v2/package/System.Memory/4.5.4
-    DownloadCount: 751652505
-    Authors: Microsoft
-    Icon: {fileID: 0}
-    ProjectUrl: https://dot.net/
-    RepositoryUrl: 
-    RepositoryType: 0
-    RepositoryBranch: 
-    RepositoryCommit: 
-  - Id: System.Runtime.CompilerServices.Unsafe
-    Version: 6.0.0
-    Title: System.Runtime.CompilerServices.Unsafe
-    Description: 'Provides the System.Runtime.CompilerServices.Unsafe class, which
-      provides generic, low-level functionality for manipulating pointers.
-
-
-      Commonly
-      Used Types:
-
-      System.Runtime.CompilerServices.Unsafe'
-    Summary: 
-    ReleaseNotes: https://go.microsoft.com/fwlink/?LinkID=799421
-    LicenseUrl: https://licenses.nuget.org/MIT
-    DownloadUrl: https://www.nuget.org/api/v2/package/System.Runtime.CompilerServices.Unsafe/6.0.0
-    DownloadCount: 1089163278
-    Authors: Microsoft
-    Icon: {fileID: 0}
-    ProjectUrl: https://dot.net/
-    RepositoryUrl: 
-    RepositoryType: 0
-    RepositoryBranch: 
-    RepositoryCommit: 
-  numberToSkip: 0
-  defaultIcon: {fileID: 2800000, guid: eec19781926cd2248b7c9abfde8db555, type: 3}
---- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -943,7 +303,7 @@ MonoBehaviour:
     x: 317
     y: 73
     width: 1270
-    height: 602
+    height: 595
   m_ViewDataDictionary: {fileID: 0}
   m_SerializedViewNames: []
   m_SerializedViewValues: []
@@ -951,7 +311,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 1920, y: 1080}
+  m_TargetSize: {x: 3840, y: 2160}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -960,16 +320,16 @@ MonoBehaviour:
   m_VSyncEnabled: 0
   m_Gizmos: 0
   m_Stats: 0
-  m_SelectedSizes: 07000000000000000000000000000000000000000000000000000000000000000000000000000000
+  m_SelectedSizes: 06000000000000000000000000000000000000000000000000000000000000000000000000000000
   m_ZoomArea:
     m_HRangeLocked: 0
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -960
-    m_HBaseRangeMax: 960
-    m_VBaseRangeMin: -540
-    m_VBaseRangeMax: 540
+    m_HBaseRangeMin: -1920
+    m_HBaseRangeMax: 1920
+    m_VBaseRangeMin: -1080
+    m_VBaseRangeMax: 1080
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -988,28 +348,28 @@ MonoBehaviour:
       x: 0
       y: 21
       width: 1270
-      height: 581
-    m_Scale: {x: 0.6744629, y: 0.674463}
-    m_Translation: {x: 635, y: 289.135}
+      height: 574
+    m_Scale: {x: 1, y: 1}
+    m_Translation: {x: 813.2025, y: 314.08655}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -941.48987
-      y: -428.68924
-      width: 1882.9797
-      height: 861.4261
+      x: -813.2025
+      y: -314.08655
+      width: 1270
+      height: 574
     m_MinimalGUI: 1
-  m_defaultScale: 0.537963
-  m_LastWindowPixelSize: {x: 1270, y: 602}
+  m_defaultScale: 0.26574075
+  m_LastWindowPixelSize: {x: 1270, y: 595}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
   m_XRRenderMode: 0
   m_RenderTexture: {fileID: 0}
---- !u!114 &14
+--- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1033,14 +393,14 @@ MonoBehaviour:
     x: 0
     y: 73
     width: 316
-    height: 602
+    height: 595
   m_ViewDataDictionary: {fileID: 0}
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 52eaffff
+      m_ExpandedIDs: 0aebffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1064,7 +424,7 @@ MonoBehaviour:
       m_IsLocked: 0
     m_CurrentSortingName: TransformSorting
   m_WindowGUID: 2b17e7a5d802bcd49a977297aa46f9f1
---- !u!114 &15
+--- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1085,10 +445,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 301
+    x: 317
     y: 73
-    width: 1286
-    height: 602
+    width: 1270
+    height: 595
   m_ViewDataDictionary: {fileID: 0}
   m_ShowContextualTools: 0
   m_WindowGUID: d54fc1d4679654349804211df9d42fa8
@@ -1101,9 +461,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 1074.8331, y: 572.91187, z: -283.5163}
+    m_Target: {x: 471.06274, y: 291.76083, z: -549.86975}
     speed: 2
-    m_Value: {x: 1074.8331, y: 572.91187, z: -283.5163}
+    m_Value: {x: 471.06274, y: 291.76083, z: -549.86975}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1154,9 +514,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 649.4604
+    m_Target: 295.52768
     speed: 2
-    m_Value: 649.4604
+    m_Value: 295.52768
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1181,7 +541,7 @@ MonoBehaviour:
   m_SceneVisActive: 1
   m_LastLockedObject: {fileID: 0}
   m_ViewIsLockedToObject: 0
---- !u!114 &16
+--- !u!114 &15
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1207,7 +567,7 @@ MonoBehaviour:
     width: 1149
     height: 543
   m_ViewDataDictionary: {fileID: 0}
---- !u!114 &17
+--- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1261,7 +621,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 180}
     m_SelectedIDs: 545b0000
     m_LastClickedID: 23380
-    m_ExpandedIDs: 00000000684f00006a4f00006c4f0000f25a0000265b0000e25b0000e65b0000f65b0000fa5b0000105c0000125c000000ca9a3b
+    m_ExpandedIDs: 0000000026580000285800002a5800002c5800002e58000030580000325800003458000036580000385800003a580000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1289,7 +649,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000684f000000ca9a3b
+    m_ExpandedIDs: 0000000026580000285800002a5800002c5800002e58000030580000325800003458000036580000385800003a580000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1345,7 +705,7 @@ MonoBehaviour:
     m_GridSize: 64
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 347
---- !u!114 &18
+--- !u!114 &17
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1367,11 +727,11 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 696
+    y: 689
     width: 1588
-    height: 313
+    height: 310
   m_ViewDataDictionary: {fileID: 0}
---- !u!114 &19
+--- !u!114 &18
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1400,7 +760,7 @@ MonoBehaviour:
   m_LockTracker:
     m_IsLocked: 0
   m_LastSelectedObjectID: -61532
---- !u!114 &20
+--- !u!114 &19
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1426,7 +786,7 @@ MonoBehaviour:
     width: 329
     height: 936
   m_ViewDataDictionary: {fileID: 0}
---- !u!114 &21
+--- !u!114 &20
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1450,7 +810,7 @@ MonoBehaviour:
     x: 1589
     y: 73
     width: 330
-    height: 936
+    height: 926
   m_ViewDataDictionary: {fileID: 0}
   m_ObjectsLockedBeforeSerialization: []
   m_InstanceIDsLockedBeforeSerialization: 

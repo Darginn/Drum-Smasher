@@ -1,14 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{DDFBC18F-9396-3137-9CFE-DEB2CDB74636}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -53,6 +54,10 @@
     <UnityVersion>2021.1.22f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\Packages\sqlite-net.1.6.292\content\SQLiteAsync.cs" />
     <Compile Include="Assets\Scripts\Tools\SyncSolutionUtilities.cs" />
     <Compile Include="Assets\Scripts\TitleScreenManager.cs" />
     <Compile Include="Assets\Scripts\GameInput\KeyScanner.cs" />
@@ -131,10 +136,9 @@
     <Compile Include="Assets\Scripts\DevConsole\Commands\ICommand.cs" />
     <Compile Include="Assets\Scripts\DevConsole\DevConsole.cs" />
     <Compile Include="Assets\Scripts\IO\Charts\ChartNote.cs" />
+    <Compile Include="Assets\Packages\sqlite-net.1.6.292\content\SQLite.cs" />
     <Compile Include="Assets\Scripts\GameInput\KeyController.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserLinux.cs" />
-    <Compile Include="Assets\Packages\sqlite-net.1.6.292\content\SQLite.cs" />
-    <Compile Include="Assets\Packages\sqlite-net.1.6.292\content\SQLiteAsync.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Packages\System.Buffers.4.4.0\version.txt" />
@@ -448,12 +452,6 @@
     </Reference>
     <Reference Include="XInputDotNetPure">
       <HintPath>Assets\Scripts\GameInput\Plugins\XInputDotNetPure.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.1.22f1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Common">
-      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.1.22f1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Common.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2021.1.22f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll</HintPath>

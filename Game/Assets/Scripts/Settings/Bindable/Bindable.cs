@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Assets.Settings.Bindable
+namespace Assets.Scripts.Settings.Bindable
 {
     /// <inheritdoc/>
     /// <summary>
