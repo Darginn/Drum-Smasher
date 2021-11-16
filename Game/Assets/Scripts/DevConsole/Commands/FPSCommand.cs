@@ -1,10 +1,11 @@
-﻿using Assets.Scripts.Settings;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using Assets.Scripts.Configs;
+using Assets.Scripts.Configs.GameConfigs;
 
 namespace Assets.Scripts.DevConsole.Commands
 {
@@ -20,11 +21,12 @@ namespace Assets.Scripts.DevConsole.Commands
 
         public override void Execute(params string[] args)
         {
-            TitleScreenSettings tss = (TitleScreenSettings)SettingsManager.SettingsStorage["TitleScreen"];
+            TitleScreenConfig tss = (TitleScreenConfig)ConfigManager.GetOrLoadOrAdd<TitleScreenConfig>();
+            //TitleScreenSettings tss = (TitleScreenSettings)SettingsManager.SettingsStorage["TitleScreen"];
 
             if (args == null || args.Length < 2)
             {
-                DevConsole.WriteLine($"FPS Menu {tss.Data.FPSMenu} Game {tss.Data.FPSInGame}");
+                DevConsole.WriteLine($"FPS Menu {tss.FPSMenu} Game {tss.FPSInGame}");
                 DevConsole.WriteLine("fps menu/game/current IntValue");
                 return;
             }
@@ -39,22 +41,22 @@ namespace Assets.Scripts.DevConsole.Commands
 
             if (args[0].Equals("menu", StringComparison.CurrentCultureIgnoreCase))
             {
-                tss.Data.FPSMenu = value;
+                tss.FPSMenu = value;
 
                 DevConsole.WriteLine("Updated menu fps");
             }
             else if (args[0].Equals("game", StringComparison.CurrentCultureIgnoreCase))
             {
-                tss.Data.FPSInGame = value;
+                tss.FPSInGame = value;
 
                 DevConsole.WriteLine("Updated game fps");
             }
             else if (args[0].Equals("current", StringComparison.CurrentCultureIgnoreCase))
             {
-                if (tss.Data.FPSMenu == Application.targetFrameRate)
-                    tss.Data.FPSMenu = value;
+                if (tss.FPSMenu == Application.targetFrameRate)
+                    tss.FPSMenu = value;
                 else
-                    tss.Data.FPSInGame = value;
+                    tss.FPSInGame = value;
 
                 Application.targetFrameRate = value;
 

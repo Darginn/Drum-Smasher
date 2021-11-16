@@ -10,9 +10,11 @@ using UnityEngine.SceneManagement;
 using SFB;
 using System.IO;
 using System.Collections;
-using Assets.Scripts.Settings;
+//using Assets.Scripts.Settings;
 using System.Threading;
 using Assets.Scripts.IO.Charts;
+using Assets.Scripts.Configs.GameConfigs;
+using Assets.Scripts.Configs;
 
 namespace Assets.Scripts
 {
@@ -84,67 +86,44 @@ namespace Assets.Scripts
         /// <param name="value">0-3</param>
         void SetHotKey(int value, KeyCode key)
         {
-            TaikoSettings ts = SettingsManager.SettingsStorage["Taiko"] as TaikoSettings;
+            TaikoConfig ts = (TaikoConfig)ConfigManager.GetOrLoadOrAdd<TaikoConfig>();
 
-            switch(value)
+            switch (value)
             {
                 default:
                 case 0:
                     key1Text.text = key.ToString();
-                    ts.Data.Key1 = key1Text.text;
+                    ts.Key1 = key1Text.text;
                     break;
 
                 case 1:
                     key2Text.text = key.ToString();
-                    ts.Data.Key2 = key2Text.text;
+                    ts.Key2 = key2Text.text;
                     break;
 
                 case 2:
                     key3Text.text = key.ToString();
-                    ts.Data.Key3 = key3Text.text;
+                    ts.Key3 = key3Text.text;
                     break;
 
                 case 3:
                     key4Text.text = key.ToString();
-                    ts.Data.Key4 = key4Text.text;
+                    ts.Key4 = key4Text.text;
                     break;
             }
-
-            SettingsManager.AddOrUpdate(ts);
         }
 
         void Start()
         {
-            TitleScreenSettings tss = null;
+            TitleScreenConfig tss = (TitleScreenConfig)ConfigManager.GetOrLoadOrAdd<TitleScreenConfig>();
+            TaikoConfig ts = (TaikoConfig)ConfigManager.GetOrLoadOrAdd<TaikoConfig>();
 
-            if (!SettingsManager.SettingsStorage.ContainsKey("TitleScreen"))
-            {
-                tss = new TitleScreenSettings();
-                SettingsManager.AddOrUpdate(tss);
+            key1Text.text = ts.Key1;
+            key2Text.text = ts.Key2;
+            key3Text.text = ts.Key3;
+            key4Text.text = ts.Key4;
 
-                tss.Load();
-            }
-            else
-                tss = SettingsManager.SettingsStorage["TitleScreen"] as TitleScreenSettings;
-
-
-            TaikoSettings ts = null;
-            if (!SettingsManager.SettingsStorage.ContainsKey("Taiko"))
-            {
-                ts = new TaikoSettings();
-                SettingsManager.AddOrUpdate(ts);
-
-                ts.Load();
-            }
-            else
-                ts = SettingsManager.SettingsStorage["Taiko"] as TaikoSettings;
-
-            key1Text.text = ts.Data.Key1;
-            key2Text.text = ts.Data.Key2;
-            key3Text.text = ts.Data.Key3;
-            key4Text.text = ts.Data.Key4;
-
-            Application.targetFrameRate = tss.Data.FPSMenu;
+            Application.targetFrameRate = tss.FPSMenu;
             QualitySettings.vSyncCount = 0;
             Logger.Log($"Set FPS limit to {Application.targetFrameRate} and VSYNC {(QualitySettings.vSyncCount <= 0 ? "false" : "true")}");
 
@@ -172,8 +151,8 @@ namespace Assets.Scripts
             ResolutionDropdown.value = currentResolutionIndex;
             ResolutionDropdown.RefreshShownValue();
 
-            SetFullscreen(tss.Data.Fullscreen);
-            SetResolution(tss.Data.ScreenWidth, tss.Data.ScreenHeight, tss.Data.RefreshRate);
+            SetFullscreen(tss.Fullscreen);
+            SetResolution(tss.ScreenWidth, tss.ScreenHeight, tss.RefreshRate);
         }
 
         void Update()
@@ -282,9 +261,9 @@ namespace Assets.Scripts
             string title = ChartFile.FixPath(chart.Title);
             string creator = ChartFile.FixPath(chart.Creator);
 
-            TitleScreenSettings tss = SettingsManager.SettingsStorage["TitleScreen"] as TitleScreenSettings;
+            TitleScreenConfig tss = (TitleScreenConfig)ConfigManager.GetOrLoadOrAdd<TitleScreenConfig>();
 
-            DirectoryInfo chartPath = new DirectoryInfo(tss.Data.ChartPath + $"/{artist} - {title} ({creator})/");
+            DirectoryInfo chartPath = new DirectoryInfo(tss.ChartPath + $"/{artist} - {title} ({creator})/");
             chart.Speed = 23;
             chart.Save(Path.Combine(chartPath.FullName, $"{artist} - {title} ({creator}) [{chart.Difficulty}]"));
             
@@ -296,11 +275,11 @@ namespace Assets.Scripts
 
         public void SetFullscreen(bool isFullscreen)
         {
-            TitleScreenSettings tss = SettingsManager.SettingsStorage["TitleScreen"] as TitleScreenSettings;
-            tss.Data.Fullscreen = isFullscreen;
+            TitleScreenConfig tss = (TitleScreenConfig)ConfigManager.GetOrLoadOrAdd<TitleScreenConfig>();
+            tss.Fullscreen = isFullscreen;
 
-            Screen.fullScreen = tss.Data.Fullscreen;
-            FullscreenToggle.isOn = tss.Data.Fullscreen;
+            Screen.fullScreen = tss.Fullscreen;
+            FullscreenToggle.isOn = tss.Fullscreen;
         }
 
         public void SetResolution(int resolutionIndex)
@@ -311,13 +290,13 @@ namespace Assets.Scripts
 
         public void SetResolution(int width, int height, int refreshRate)
         {
-            TitleScreenSettings tss = SettingsManager.SettingsStorage["TitleScreen"] as TitleScreenSettings;
+            TitleScreenConfig tss = (TitleScreenConfig)ConfigManager.GetOrLoadOrAdd<TitleScreenConfig>();
 
-            tss.Data.ScreenWidth = width;
-            tss.Data.ScreenHeight = height;
-            tss.Data.RefreshRate = refreshRate;
+            tss.ScreenWidth = width;
+            tss.ScreenHeight = height;
+            tss.RefreshRate = refreshRate;
             
-            Screen.SetResolution(width, height, tss.Data.Fullscreen);
+            Screen.SetResolution(width, height, tss.Fullscreen);
             string optionStr = $"{width} x {height} {refreshRate} hz";
             int option = ResolutionDropdown.options.FindIndex(o => o.text.Equals(optionStr));
 
@@ -336,7 +315,7 @@ namespace Assets.Scripts
         {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
-            SettingsManager.SaveSettings();
+            ConfigManager.SaveConfigs();
 #else
             Application.Quit();
 #endif
@@ -344,7 +323,7 @@ namespace Assets.Scripts
         
         void OnApplicationQuit()
         {
-            SettingsManager.Exit();
+            ConfigManager.SaveConfigs();
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Assets.Scripts.Database.Scores;
 using Assets.Scripts.Enums;
 using Assets.Scripts.IO.Charts;
-using Assets.Scripts.Settings.Bindable;
+using Assets.Scripts.Configs.Bindable;
 using SQLite;
 using System;
 using System.Collections.Generic;

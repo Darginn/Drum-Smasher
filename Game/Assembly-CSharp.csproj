@@ -1,15 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{DDFBC18F-9396-3137-9CFE-DEB2CDB74636}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -54,9 +53,6 @@
     <UnityVersion>2021.1.22f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Assets\Packages\sqlite-net.1.6.292\content\SQLiteAsync.cs" />
     <Compile Include="Assets\Scripts\Tools\SyncSolutionUtilities.cs" />
     <Compile Include="Assets\Scripts\TitleScreenManager.cs" />
@@ -90,8 +86,7 @@
     <Compile Include="Assets\Scripts\Game\Mods\ModPanel.cs" />
     <Compile Include="Assets\Scripts\Database\Maps\Mapset.cs" />
     <Compile Include="Assets\Scripts\Database\Maps\MapsetUpdatedEventArgs.cs" />
-    <Compile Include="Assets\Scripts\Settings\TaikoSettings.cs" />
-    <Compile Include="Assets\Scripts\Settings\Bindable\Bindable.cs" />
+    <Compile Include="Assets\Scripts\Configs\Bindable\Bindable.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserMac.cs" />
     <Compile Include="Assets\Scripts\Enums\Grade.cs" />
     <Compile Include="Assets\Scripts\Sound\SoundConductor.cs" />
@@ -100,45 +95,47 @@
     <Compile Include="Assets\Scripts\Extensions\Extensions.cs" />
     <Compile Include="Assets\Scripts\Game\Mods\ModButton.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserWindows.cs" />
-    <Compile Include="Assets\Scripts\Settings\Bindable\BindableValueChangedEventArgs.cs" />
+    <Compile Include="Assets\Scripts\Configs\Bindable\BindableValueChangedEventArgs.cs" />
     <Compile Include="Assets\Scripts\GameTime.cs" />
     <Compile Include="Assets\Scripts\DevConsole\Commands\FPSCommand.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleOpenFileTextMultiple.cs" />
-    <Compile Include="Assets\Scripts\Settings\IDataStorage.cs" />
     <Compile Include="Assets\Scripts\DevConsole\Commands\BaseCommand.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\IStandaloneFileBrowser.cs" />
     <Compile Include="Assets\Scripts\Database\DatabaseManager.cs" />
-    <Compile Include="Assets\Scripts\Settings\SettingsManager.cs" />
     <Compile Include="Assets\Scripts\Game\Notes\NoteType.cs" />
     <Compile Include="Assets\Scripts\Game\Mods\AutoPlayMod.cs" />
     <Compile Include="Assets\Scripts\Game\Notes\Note.cs" />
     <Compile Include="Assets\Scripts\Game\Mods\FadeInStart.cs" />
-    <Compile Include="Assets\Scripts\Settings\Bindable\BindableInt.cs" />
+    <Compile Include="Assets\Scripts\Configs\Bindable\BindableInt.cs" />
     <Compile Include="Assets\Scripts\Extensions\AutoInitAttribute.cs" />
     <Compile Include="Assets\Scripts\IO\JsonFile.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleOpenFileText.cs" />
     <Compile Include="Assets\Scripts\Database\Maps\MapDeletedEventArgs.cs" />
-    <Compile Include="Assets\Scripts\Settings\TitleScreenSettings.cs" />
     <Compile Include="Assets\Scripts\Database\Maps\MapManager.cs" />
     <Compile Include="Assets\Scripts\GameInput\HotKey.cs" />
     <Compile Include="Assets\Scripts\IO\Charts\SongScanning.cs" />
     <Compile Include="Assets\Scripts\Sound\NAudioPlayer.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowser.cs" />
     <Compile Include="Assets\Scripts\Game\Mods\BaseMod.cs" />
-    <Compile Include="Assets\Scripts\Settings\Bindable\BindableFloat.cs" />
+    <Compile Include="Assets\Scripts\Configs\Bindable\BindableFloat.cs" />
     <Compile Include="Assets\Scripts\CameraScreenResolution.cs" />
     <Compile Include="Assets\Scripts\IO\BaseFile.cs" />
     <Compile Include="Assets\Scripts\Game\Mods\FadeOutMod.cs" />
     <Compile Include="Assets\Scripts\DevConsole\Commands\HelpCommand.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleSaveFileText.cs" />
     <Compile Include="Assets\Scripts\Game\Notes\NoteHitType.cs" />
-    <Compile Include="Assets\Scripts\Settings\Bindable\BindableDouble.cs" />
+    <Compile Include="Assets\Scripts\Configs\Bindable\BindableDouble.cs" />
     <Compile Include="Assets\Scripts\DevConsole\Commands\ICommand.cs" />
     <Compile Include="Assets\Scripts\DevConsole\DevConsole.cs" />
     <Compile Include="Assets\Scripts\IO\Charts\ChartNote.cs" />
     <Compile Include="Assets\Packages\sqlite-net.1.6.292\content\SQLite.cs" />
     <Compile Include="Assets\Scripts\GameInput\KeyController.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserLinux.cs" />
+    <Compile Include="Assets\Scripts\Configs\BaseConfig.cs" />
+    <Compile Include="Assets\Scripts\Configs\ConfigManager.cs" />
+    <Compile Include="Assets\Scripts\Configs\IConfig.cs" />
+    <Compile Include="Assets\Scripts\Configs\GameConfigs\TaikoConfig.cs" />
+    <Compile Include="Assets\Scripts\Configs\GameConfigs\TitleScreenConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Packages\System.Buffers.4.4.0\version.txt" />

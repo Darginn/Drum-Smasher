@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Configs;
+using Assets.Scripts.Configs.GameConfigs;
 
 namespace Assets.Scripts.DevConsole.Commands
 {
@@ -24,8 +26,8 @@ namespace Assets.Scripts.DevConsole.Commands
                 return;
             }
 
-            Settings.TaikoSettings taiko = Settings.SettingsManager.SettingsStorage["Taiko"] as Settings.TaikoSettings;
-
+            TaikoConfig taiko = (TaikoConfig)ConfigManager.GetOrLoadOrAdd<TaikoConfig>();
+            
             if (!int.TryParse(args[0], out int keyId))
             {
                 DevConsole.WriteLine($"Could not parse key id {args[0]}");
@@ -39,16 +41,16 @@ namespace Assets.Scripts.DevConsole.Commands
                     goto case 1;
 
                 case 1:
-                    taiko.Data.Key1 = args[1];
+                    taiko.Key1 = args[1];
                     break;
                 case 2:
-                    taiko.Data.Key2 = args[1];
+                    taiko.Key2 = args[1];
                     break;
                 case 3:
-                    taiko.Data.Key3 = args[1];
+                    taiko.Key3 = args[1];
                     break;
                 case 4:
-                    taiko.Data.Key4 = args[1];
+                    taiko.Key4 = args[1];
                     break;
             }
 

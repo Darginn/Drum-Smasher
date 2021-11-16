@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using Assets.Scripts.Configs;
+using Assets.Scripts.Configs.GameConfigs;
 
 namespace Assets.Scripts.DevConsole.Commands
 {
@@ -20,11 +22,11 @@ namespace Assets.Scripts.DevConsole.Commands
 
         public override void Execute(params string[] args)
         {
-            Settings.TaikoSettings taiko = Settings.SettingsManager.SettingsStorage["Taiko"] as Settings.TaikoSettings;
+            TaikoConfig taiko = (TaikoConfig)ConfigManager.GetOrLoadOrAdd<TaikoConfig>();
 
             if (args == null || args.Length == 0)
             {
-                DevConsole.WriteLine("Autoplay: " + taiko.Data.Autoplay);
+                DevConsole.WriteLine("Autoplay: " + taiko.Autoplay);
                 return;
             }
 
@@ -34,7 +36,7 @@ namespace Assets.Scripts.DevConsole.Commands
                 return;
             }
 
-            bool oldAP = taiko.Data.Autoplay;
+            bool oldAP = taiko.Autoplay;
             NoteScroller.Instance.SetAutoPlay(newAP);
 
             taiko.Save();

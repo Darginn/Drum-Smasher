@@ -11,6 +11,8 @@ using Assets.Scripts.Game.Notes;
 using Assets.Scripts.Game.Mods;
 using Assets.Scripts.GameInput;
 using Assets.Scripts.IO.Charts;
+using Assets.Scripts.Configs.GameConfigs;
+using Assets.Scripts.Configs;
 
 namespace Assets.Scripts.Game
 {
@@ -153,28 +155,28 @@ namespace Assets.Scripts.Game
         {
             Logger.Log("Loading Taiko Settings");
 
-            Settings.TaikoSettings settings = (Settings.TaikoSettings)Settings.SettingsManager.SettingsStorage["Taiko"];
-
-            if (settings.Data.Autoplay)
+            TaikoConfig settings = (TaikoConfig)ConfigManager.GetOrLoadOrAdd<TaikoConfig>();
+            
+            if (settings.Autoplay)
                 SetAutoPlay(true);
 
-            if (!Enum.TryParse(settings.Data.Key1.ToUpper(), out KeyCode k1))
-                Logger.Log($"Could not parse key {settings.Data.Key1}", LogLevel.Error);
+            if (!Enum.TryParse(settings.Key1.ToUpper(), out KeyCode k1))
+                Logger.Log($"Could not parse key {settings.Key1}", LogLevel.Error);
             else
                 _hotkeyDrumInnerLeft.Key = k1;
 
-            if (!Enum.TryParse(settings.Data.Key2.ToUpper(), out KeyCode k2))
-                Logger.Log($"Could not parse key {settings.Data.Key2}", LogLevel.Error);
+            if (!Enum.TryParse(settings.Key2.ToUpper(), out KeyCode k2))
+                Logger.Log($"Could not parse key {settings.Key2}", LogLevel.Error);
             else
                 _hotkeyDrumInnerRight.Key = k2;
 
-            if (!Enum.TryParse(settings.Data.Key3.ToUpper(), out KeyCode k3))
-                Logger.Log($"Could not parse key {settings.Data.Key3}", LogLevel.Error);
+            if (!Enum.TryParse(settings.Key3.ToUpper(), out KeyCode k3))
+                Logger.Log($"Could not parse key {settings.Key3}", LogLevel.Error);
             else
                 _hotkeyDrumOuterLeft.Key = k3;
 
-            if (!Enum.TryParse(settings.Data.Key4.ToUpper(), out KeyCode k4))
-                Logger.Log($"Could not parse key {settings.Data.Key4}", LogLevel.Error);
+            if (!Enum.TryParse(settings.Key4.ToUpper(), out KeyCode k4))
+                Logger.Log($"Could not parse key {settings.Key4}", LogLevel.Error);
             else
                 _hotkeyDrumOuterRight.Key = k4;
 

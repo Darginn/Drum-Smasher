@@ -1,12 +1,13 @@
 ﻿using Assets.Scripts.IO.Charts;
 using Assets.Scripts.Game.Mods;
-using Assets.Scripts.Settings;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Assets.Scripts.Configs.GameConfigs;
+using Assets.Scripts.Configs;
 
 namespace Assets.Scripts
 {
@@ -44,8 +45,8 @@ namespace Assets.Scripts
                 InstantiatePrefab(SongList[i].DisplayName, SongList[i].chart, SongList[i].ChartDirectory);
             }
 
-            TitleScreenSettings tss = (TitleScreenSettings)SettingsManager.SettingsStorage["TitleScreen"];
-            Application.targetFrameRate = tss.Data.FPSMenu;
+            TitleScreenConfig tss = (TitleScreenConfig)ConfigManager.GetOrLoadOrAdd<TitleScreenConfig>();
+            Application.targetFrameRate = tss.FPSMenu;
             QualitySettings.vSyncCount = 0;
             Logger.Log($"Set FPS limit to {Application.targetFrameRate} and VSYNC {(QualitySettings.vSyncCount <= 0 ? "false" : "true")}");
         }

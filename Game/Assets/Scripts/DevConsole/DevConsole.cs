@@ -1,11 +1,12 @@
 ﻿using Assets.Scripts.DevConsole.Commands;
-using Assets.Scripts.Settings;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using Assets.Scripts.Configs;
+using Assets.Scripts.Configs.GameConfigs;
 
 namespace Assets.Scripts.DevConsole
 {
@@ -27,10 +28,10 @@ namespace Assets.Scripts.DevConsole
         void Start()
         {
             _lines = new List<string>();
-            TitleScreenSettings tss = SettingsManager.SettingsStorage["TitleScreen"] as TitleScreenSettings;
+            TitleScreenConfig tss = (TitleScreenConfig)ConfigManager.GetOrLoadOrAdd<TitleScreenConfig>();
 
-            if (tss.Data.DefaultConsoleMessage != null)
-                WriteLine(tss.Data.DefaultConsoleMessage);
+            if (tss.DefaultConsoleMessage != null)
+                WriteLine(tss.DefaultConsoleMessage);
         }
 
         // Update is called once per frame

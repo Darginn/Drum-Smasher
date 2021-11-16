@@ -16,6 +16,11 @@ namespace Assets.Scripts.IO
             if (File.Exists(file))
                 File.Delete(file);
 
+            FileInfo fi = new FileInfo(file);
+
+            if (!fi.Directory.Exists)
+                fi.Directory.Create();
+
             File.WriteAllText(file, json);
         }
 
