@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,7 @@ namespace Assets.Scripts.Configs.GameConfigs
         public bool Vsync { get; set; }
         public int ResolutionIndex { get; set; }
         public string SongDirectory { get; set; }
+        public OrderMapsetsBy SelectOrderMapsetsBy { get; set; }
         public string GameDirectory { get; set; }
         public int FPSMenu { get; set; }
         public int FPSInGame { get; set; }
@@ -33,6 +35,7 @@ namespace Assets.Scripts.Configs.GameConfigs
             Vsync = false;
             ResolutionIndex = 0;
             SongDirectory = Application.dataPath + "/../Charts";
+            SelectOrderMapsetsBy = OrderMapsetsBy.Title;
             GameDirectory = Application.dataPath;
 
             FPSMenu = 0;

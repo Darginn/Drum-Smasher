@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Assets.Scripts.Configs;
+using Assets.Scripts.Configs.GameConfigs;
+using Assets.Scripts.Enums;
+using Assets.Scripts.Game.Mods;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -89,9 +93,12 @@ namespace Assets.Scripts.Database.Maps
         /// <param name="mapsets"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        internal static List<Mapset> OrderMapsetsByValue(IEnumerable<Mapset> mapsets)
+
+
+        internal static List<Mapset> OrderMapsetsByConfigValue(IEnumerable<Mapset> mapsets)
         {
-            switch (ConfigManager.SelectOrderMapsetsBy.Value)
+            GlobalConfig gc = (GlobalConfig)ConfigManager.GetOrLoadOrAdd<GlobalConfig>();
+            switch (gc.SelectOrderMapsetsBy)
             {
                 case OrderMapsetsBy.Artist:
                     return OrderMapsetsByArtist(mapsets);
@@ -104,9 +111,11 @@ namespace Assets.Scripts.Database.Maps
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        
         }
+        
         /// <summary>
-        ///     Orders the map's mapsets by date added
+        /// Orders the map's mapsets by date added
         /// </summary>
         /// <param name="mapsets"></param>
         /// <returns></returns>
@@ -114,14 +123,14 @@ namespace Assets.Scripts.Database.Maps
             => mapsets.OrderByDescending(x => x.Maps.First().DateAdded).ThenBy(x => x.Maps.First().Artist).ThenBy(x => x.Maps.First().Title).ToList();
 
         /// <summary>
-        ///     Orders the map's mapsets by difficulty.
+        /// Orders the map's mapsets by difficulty.
         /// </summary>
         /// <param name="mapsets"></param>
         /// <returns></returns>
+        [Obsolete("Need Difficulty Calculation implementation first")]
         internal static List<Mapset> OrderMapsByDifficulty(List<Mapset> mapsets)
         {
-            mapsets.ForEach(x => x.Maps = x.Maps.OrderBy(y => y.Difficulty10X).ToList());
-            return mapsets;
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -130,6 +139,8 @@ namespace Assets.Scripts.Database.Maps
         /// <param name="mapsets"></param>
         /// <param name="query></param>
         /// <returns></returns>
+         
+        [Obsolete("Needs fixing before use")]
         internal static List<Mapset> SearchMapsets(IEnumerable<Mapset> mapsets, string query)
         {
             var sets = new List<Mapset>();
@@ -157,9 +168,7 @@ namespace Assets.Scripts.Database.Maps
                 { SearchFilterOption.BPM,        ("b", "bpm") },
                 { SearchFilterOption.Difficulty, ("d", "difficulty") },
                 { SearchFilterOption.Length,     ("l", "length") },
-                { SearchFilterOption.Keys,       ("k", "keys") },
-                { SearchFilterOption.Status,     ("s", "status") },
-                { SearchFilterOption.LNs,        ("ln", "lns") },
+                { SearchFilterOption.Status,     ("s", "status") }
             };
 
             // Stores a dictionary of the found pairs in the search query
@@ -170,6 +179,8 @@ namespace Assets.Scripts.Database.Maps
 
             // Get a list of all the matching search filters.
             // All matched filters are removed from the list of terms.
+
+
             for (var i = terms.Count - 1; i >= 0; i--)
             {
                 var term = terms[i];
@@ -183,22 +194,24 @@ namespace Assets.Scripts.Database.Maps
                     var searchOption = match.Groups[1].Value;
                     var val = match.Groups[2].Value;
 
-                    foreach (var (option, (shortest, longest)) in options)
-                    {
-                        if (longest.StartsWith(searchOption) && searchOption.StartsWith(shortest))
-                        {
-                            foundSearchFilters.Add(new SearchFilter
-                            {
-                                Option = option,
-                                Value = val,
-                                Operator = op,
-                            });
+                    //TODO: Fix SearchMapsets method
 
-                            // Remove it from the search terms.
-                            terms.RemoveAt(i);
-                            break;
-                        }
-                    }
+                    //foreach (var (option, (shortest, longest)) in options)
+                    //{
+                    //    if (longest.StartsWith(searchOption) && searchOption.StartsWith(shortest))
+                    //    {
+                    //        foundSearchFilters.Add(new SearchFilter
+                    //        {
+                    //            Option = option,
+                    //            Value = val,
+                    //            Operator = op,
+                    //        });
+
+                    //        // Remove it from the search terms.
+                    //        terms.RemoveAt(i);
+                    //        break;
+                    //    }
+                    //}
                 }
             }
 
@@ -224,86 +237,16 @@ namespace Assets.Scripts.Database.Maps
                                 if (!float.TryParse(searchQuery.Value, out var valDiff))
                                     exitLoop = true;
 
-                                if (!CompareValues(map.DifficultyFromMods(ModManager.Mods), valDiff, searchQuery.Operator))
-                                    exitLoop = true;
+
+                              if (!CompareValues(map.DifficultyFromMods(ModManager.Mods), valDiff, searchQuery.Operator))
+                                  exitLoop = true;
+
                                 break;
                             case SearchFilterOption.Length:
                                 if (!float.TryParse(searchQuery.Value, out var valLength))
                                     exitLoop = true;
 
                                 if (!CompareValues(map.SongLength, valLength, searchQuery.Operator))
-                                    exitLoop = true;
-                                break;
-                            case SearchFilterOption.Keys:
-                                switch (map.Mode)
-                                {
-                                    case GameMode.Keys4:
-                                        if (!float.TryParse(searchQuery.Value, out var val4k))
-                                            exitLoop = true;
-
-                                        if (!CompareValues(4, val4k, searchQuery.Operator))
-                                            exitLoop = true;
-                                        break;
-                                    case GameMode.Keys7:
-                                        if (!float.TryParse(searchQuery.Value, out var val7k))
-                                            exitLoop = true;
-
-                                        if (!CompareValues(7, val7k, searchQuery.Operator))
-                                            exitLoop = true;
-                                        break;
-                                    default:
-                                        throw new ArgumentOutOfRangeException();
-                                }
-                                break;
-                            case SearchFilterOption.Status:
-                                if (!(searchQuery.Operator.Equals(operators[2]) ||
-                                    searchQuery.Operator.Equals(operators[6])))
-                                    exitLoop = true;
-
-                                switch (map.RankedStatus)
-                                {
-                                    case RankedStatus.DanCourse:
-                                        if (!CompareValues("dan", searchQuery.Value, searchQuery.Operator))
-                                            exitLoop = true;
-                                        break;
-                                    case RankedStatus.NotSubmitted:
-                                        if (!CompareValues("notsubmitted", searchQuery.Value, searchQuery.Operator))
-                                            exitLoop = true;
-                                        break;
-                                    case RankedStatus.Ranked:
-                                        if (!CompareValues("ranked", searchQuery.Value, searchQuery.Operator))
-                                            exitLoop = true;
-                                        break;
-                                    case RankedStatus.Unranked:
-                                        if (!CompareValues("unranked", searchQuery.Value, searchQuery.Operator))
-                                            exitLoop = true;
-                                        break;
-                                    default:
-                                        throw new ArgumentOutOfRangeException();
-                                }
-                                break;
-                            case SearchFilterOption.LNs:
-                                var valueToCompareTo = 0;
-                                var stringToParse = "";
-
-                                if (searchQuery.Value.Last() == '%')
-                                {
-                                    stringToParse = searchQuery.Value.Substring(0, searchQuery.Value.Length - 1);
-                                    valueToCompareTo = (int)map.LNPercentage;
-                                }
-                                else
-                                {
-                                    stringToParse = searchQuery.Value;
-                                    valueToCompareTo = map.LongNoteCount;
-                                }
-
-                                if (!int.TryParse(stringToParse, out var value))
-                                {
-                                    exitLoop = true;
-                                    break;
-                                }
-
-                                if (!CompareValues(valueToCompareTo, value, searchQuery.Operator))
                                     exitLoop = true;
 
                                 break;
@@ -421,34 +364,23 @@ namespace Assets.Scripts.Database.Maps
     public enum SearchFilterOption
     {
         /// <summary>
-        ///     BPM.
+        /// BPM.
         /// </summary>
         BPM,
 
         /// <summary>
-        ///     Difficulty rating.
+        /// Difficulty rating.
         /// </summary>
         Difficulty,
 
         /// <summary>
-        ///     Length in seconds.
+        /// Length in seconds.
         /// </summary>
         Length,
-
-        /// <summary>
-        ///     Key count.
-        /// </summary>
-        Keys,
 
         /// <summary>
         ///     Status (ranked, not submitted, etc.)
         /// </summary>
         Status,
-
-        /// <summary>
-        ///     LN count or percentage.
-        /// </summary>
-        LNs,
     }
-}
 }

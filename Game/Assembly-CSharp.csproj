@@ -61,18 +61,15 @@
     <Compile Include="Assets\Scripts\TitleScreenManager.cs" />
     <Compile Include="Assets\Scripts\GameInput\KeyScanner.cs" />
     <Compile Include="Assets\Scripts\SongListManager.cs" />
-    <Compile Include="Assets\Scripts\Game\Mods\FadeInMod.cs" />
     <Compile Include="Assets\Scripts\DevConsole\Commands\AutoplayCommand.cs" />
     <Compile Include="Assets\Scripts\Game\SoundConductor.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleSaveFileImage.cs" />
-    <Compile Include="Assets\Scripts\Game\Mods\IgnoreColorMod.cs" />
     <Compile Include="Assets\Scripts\Database\Maps\MapsetDeletedEventArgs.cs" />
     <Compile Include="Assets\Scripts\Tools\DontDestroyOnLoadScript.cs" />
     <Compile Include="Assets\Scripts\Debug\FPSCounter.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\BasicSample.cs" />
     <Compile Include="Assets\Scripts\GameInput\TaikoDrumHotKey.cs" />
     <Compile Include="Assets\Scripts\TaikoManager.cs" />
-    <Compile Include="Assets\Scripts\Game\Mods\ModController.cs" />
     <Compile Include="Assets\Scripts\Logger.cs" />
     <Compile Include="Assets\Scripts\DevConsole\Commands\KeyCommand.cs" />
     <Compile Include="Assets\Scripts\Database\Scores\Score.cs" />
@@ -86,7 +83,6 @@
     <Compile Include="Assets\Scripts\Game\ScoreScreen.cs" />
     <Compile Include="Assets\Scripts\Game\Notes\NoteHitBox.cs" />
     <Compile Include="Assets\Scripts\Game\Notes\NoteColor.cs" />
-    <Compile Include="Assets\Scripts\Game\Mods\ModPanel.cs" />
     <Compile Include="Assets\Scripts\Database\Maps\Mapset.cs" />
     <Compile Include="Assets\Scripts\Database\Maps\MapsetUpdatedEventArgs.cs" />
     <Compile Include="Assets\Scripts\Configs\Bindable\Bindable.cs" />
@@ -96,7 +92,6 @@
     <Compile Include="Assets\Scripts\Game\StatisticHandler.cs" />
     <Compile Include="Assets\Scripts\GameInput\XInput.cs" />
     <Compile Include="Assets\Scripts\Extensions\Extensions.cs" />
-    <Compile Include="Assets\Scripts\Game\Mods\ModButton.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserWindows.cs" />
     <Compile Include="Assets\Scripts\Configs\Bindable\BindableValueChangedEventArgs.cs" />
     <Compile Include="Assets\Scripts\GameTime.cs" />
@@ -107,9 +102,7 @@
     <Compile Include="Assets\Scripts\Configs\ConfigManager.cs" />
     <Compile Include="Assets\Scripts\Database\DatabaseManager.cs" />
     <Compile Include="Assets\Scripts\Game\Notes\NoteType.cs" />
-    <Compile Include="Assets\Scripts\Game\Mods\AutoPlayMod.cs" />
     <Compile Include="Assets\Scripts\Game\Notes\Note.cs" />
-    <Compile Include="Assets\Scripts\Game\Mods\FadeInStart.cs" />
     <Compile Include="Assets\Scripts\Configs\Bindable\BindableInt.cs" />
     <Compile Include="Assets\Scripts\Extensions\AutoInitAttribute.cs" />
     <Compile Include="Assets\Scripts\IO\JsonFile.cs" />
@@ -123,11 +116,9 @@
     <Compile Include="Assets\Scripts\Sound\NAudioPlayer.cs" />
     <Compile Include="Assets\Scripts\Configs\BaseConfig.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowser.cs" />
-    <Compile Include="Assets\Scripts\Game\Mods\BaseMod.cs" />
     <Compile Include="Assets\Scripts\Configs\Bindable\BindableFloat.cs" />
     <Compile Include="Assets\Scripts\CameraScreenResolution.cs" />
     <Compile Include="Assets\Scripts\IO\BaseFile.cs" />
-    <Compile Include="Assets\Scripts\Game\Mods\FadeOutMod.cs" />
     <Compile Include="Assets\Scripts\DevConsole\Commands\HelpCommand.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleSaveFileText.cs" />
     <Compile Include="Assets\Scripts\Game\Notes\NoteHitType.cs" />
@@ -141,6 +132,14 @@
     <Compile Include="Assets\Scripts\Database\Maps\MapDatabaseCache.cs" />
     <Compile Include="Assets\Scripts\Configs\GameConfigs\GlobalConfig.cs" />
     <Compile Include="Assets\Scripts\Database\Maps\MapsetHelper.cs" />
+    <Compile Include="Assets\Scripts\Enums\OrderMapsetsBy.cs" />
+    <Compile Include="Assets\Scripts\Game\Modifiers\ModManager.cs" />
+    <Compile Include="Assets\Scripts\Game\Modifiers\ModType.cs" />
+    <Compile Include="Assets\Scripts\Game\Modifiers\IGameplayModifier.cs" />
+    <Compile Include="Assets\Scripts\Game\Modifiers\ModsChangedEventArgs.cs" />
+    <Compile Include="Assets\Scripts\Enums\ModIdentifier.cs" />
+    <Compile Include="Assets\Scripts\Enums\MapGame.cs" />
+    <Compile Include="Assets\Scripts\Game\Modifiers\Mods\ModAutoplay.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Packages\System.Buffers.4.4.0\version.txt" />

@@ -23,8 +23,6 @@ namespace Assets.Scripts
         SongScanning _scan;
         public List<SongScanning.SongInfo> SongList;
 
-        [SerializeField] ModPanel _modPanel;
-
         public void Start()
         {
             _scan = FindObjectOfType<SongScanning>();
@@ -117,7 +115,6 @@ namespace Assets.Scripts
             loadAO.completed += ao =>
             {
                 _sceneActionActive = false;
-                TaikoManager.OnSceneLoaded(LoadedChart, chartDirectory, _modPanel.GetMods());
             };
         }
     }

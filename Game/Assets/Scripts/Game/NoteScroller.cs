@@ -190,34 +190,6 @@ namespace Assets.Scripts.Game
         {
             bool autoplay = false;
 
-            if (mods != null)
-            {
-                if (mods.Any(m => m.Item1.Equals("AutoPlayMod", StringComparison.CurrentCultureIgnoreCase)))
-                    autoplay = true;
-
-                GameObject modPanel = GameObject.Find("Mods");
-                ModController[] modControllers = modPanel.GetComponentsInChildren<ModController>();
-                Logger.Log(modControllers.Length.ToString());
-
-                for (int i = 0; i < modControllers.Length; i++)
-                    Logger.Log(modControllers[i].Name);
-
-                for (int i = 0; i < mods.Count; i++)
-                {
-                    ModController controller = modControllers.First(mc => mc.Name.Equals(mods[i].Item1, StringComparison.CurrentCultureIgnoreCase));
-                    
-                    controller.ModObject.SetActive(true);
-                    _statisticHandler.Multiplier += controller.BaseMod.Multiplier - 1f;
-
-                    BaseMod bm = controller.ModObject.GetComponentInChildren<BaseMod>();
-                    bm.OnEnabled(this);
-
-                    Logger.Log($"Enabled mod {mods[i]} {i + 1}/{mods.Count}");
-                }
-
-                _currentMods = mods;
-            }
-
             if (autoplay)
                 SetAutoPlay(true);
 

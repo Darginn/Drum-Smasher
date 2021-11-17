@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using Assets.Scripts.Enums;
 
 namespace Assets.Scripts.Database.Maps
 {
@@ -163,85 +164,6 @@ namespace Assets.Scripts.Database.Maps
             }
         }
 
-        /// <summary>
-        /// Deletes a map from the game
-        /// </summary>
-        /// <param name="map"></param>
-        /// <param name="index"></param>
-        public static void Delete(Map map, int index)
-        {
-            if (map.Game != MapGame.DrumSmasher)
-            {
-                return; //TODO: Method for deleting maps from other games
-            }
-
-            try
-            {
-                throw new NotImplementedException();
-            }
-            catch (Exception e)
-            {
-                Logger.Log(e, LogLevel.Exception);
-            }
-
-            map.Mapset.Maps.Remove(map);
-
-            // Delete the mapset entirely if there are no more maps left.
-            if (map.Mapset.Maps.Count == 0)
-                Mapsets.Remove(map.Mapset);
-
-            //TODO: PlaylistManager Database Class
-            //PlaylistManager.RemoveMapFromAllPlaylists(map);
-
-            // Raise an event with the deleted map
-            MapDeleted?.Invoke(typeof(MapManager), new MapDeletedEventArgs(map, index));
-        }
-
-        /// <summary>
-        /// Deletes the mapset from the game
-        /// </summary>
-        public static void Delete(Mapset mapset, int index)
-        {
-            if (mapset.Maps.Count == 0)
-                return;
-
-            if (mapset.Maps.First().Game != MapGame.DrumSmasher)
-            {
-                return; //TODO: Method for deleting mapsets from other games
-            }
-
-            // TODO: Dispose of the playing track, so it can be deleted
-            // assuming the song is playing when the delete method is called
-            if (mapset.Maps.Contains(Selected.Value))
-            {
-                
-            }
-
-            try
-            {
-                Directory.Delete(mapset.Directory, true);
-            }
-            catch (Exception e)
-            {
-                Logger.Log(e, LogLevel.Exception);
-            }
-
-            try
-            {
-                // mapset.Maps.ForEach(MapDatabaseCache.RemoveMap);             --- MapDatabaseCache class fucking hates me ~Dargin
-            }
-            catch (Exception e)
-            {
-                Logger.Log(e, LogLevel.Exception);
-            }
-
-            Mapsets.Remove(mapset);
-
-            // Raise an event letting subscribers know a mapset has been deleted
-            MapsetDeleted?.Invoke(typeof(MapManager), new MapsetDeletedEventArgs(mapset, index));
-
-            // TODO: Dispose and delete the mapset's background if it exists
-        }
 
     }
 }

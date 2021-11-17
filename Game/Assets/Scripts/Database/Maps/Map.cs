@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
+using Assets.Scripts.Configs.GameConfigs;
 
 namespace Assets.Scripts.Database.Maps
 {
@@ -60,6 +61,11 @@ namespace Assets.Scripts.Database.Maps
         /// The difficulty name of the map
         /// </summary>
         public string DifficultyName { get; set; }
+
+        /// <summary>
+        ///     The highest rank that the player has gotten on the map.
+        /// </summary>
+        public Grade HighestRank { get; set; }
 
         /// <summary>
         /// The last time the user has played the map.
@@ -190,14 +196,112 @@ namespace Assets.Scripts.Database.Maps
         [Ignore]
         public Bindable<List<Score>> Scores { get; } = new Bindable<List<Score>>(null);
 
+        /// <summary>
+        ///     Responsible for converting a ChartFile object, to a Map object
+        ///     a Map object is one that is stored in the db.
+        /// </summary>
+        /// <param name="chart"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static Map FromChart(ChartFile chart, string path, bool skipPathSetting = false)
+        {
+            var map = new Map
+            {
+                Artist = chart.Artist,
+                Title = chart.Title,
+                HighestRank = Grade.None,
+                AudioPath = chart.SoundFile,
+                AudioPreviewTime = chart.PreviewStart,
+                BackgroundPath = "",
+                Description = "",
+                MapId = chart.ID,
+                MapSetId = 0,
+                Creator = chart.Creator,
+                DifficultyName = chart.Difficulty,
+                Source = chart.Source,
+                Tags = chart.Tags,
+                SongLength = 0,
+                NoteCount = 0,
+                SliderCount = 0,
+                SpinnerCount = 0
+            };
 
-    }
-    /// <summary>
-    /// Determining what game the map belongs to
-    /// </summary>
-    public enum MapGame
-    {
-        DrumSmasher,
-        Osu,
+            if (!skipPathSetting)
+            {
+                try
+                {
+                    map.Md5Checksum = MapsetHelper.GetMd5Checksum(path);
+                    map.Directory = new DirectoryInfo(System.IO.Path.GetDirectoryName(path) ?? throw new InvalidOperationException()).Name.Replace("\\", "/");
+                    map.Path = System.IO.Path.GetFileName(path)?.Replace("\\", "/");
+                    map.LastFileWrite = File.GetLastWriteTimeUtc(map.Path);
+                }
+                // ReSharper disable once EmptyGeneralCatchClause
+                catch (Exception)
+                {
+
+                }
+            }
+
+            try
+            {
+                map.Bpm = chart.BPM;
+            }
+            catch (Exception)
+            {
+                map.Bpm = 0;
+            }
+
+            map.DateAdded = DateTime.Now;
+            return map;
+        }
+
+        /// <summary>
+        ///     Loads the .chart, .osu or .sm file for a map.
+        ///
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        public ChartFile LoadChart(bool checkValidity = true)
+        {
+            // Reference to the parsed .chart file
+            ChartFile chart;
+
+            // Handle osu! maps as well
+            switch (Game)
+            {
+                case MapGame.DrumSmasher:
+                    var chartPath = $"{GlobalConfig.Load().SongDirectory}/{Directory}/{Path}";
+                    chart = ChartFile.Parse(chartPath, checkValidity);
+                    break;
+                case MapGame.Osu:
+                    chart = null; //TODO: Load osu chart file
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException();
+            }
+
+            return chart;
+        }
+
+        /// <summary>
+        /// Calculates the difficulty of the entire map
+        /// </summary>
+        public void CalculateDifficulties()
+        {
+            var chart = LoadChart(false);
+
+            //TODO: Difficulty Rating Calculation
+        }
+
+        /// <summary>
+        /// Retrieve the map's difficulty rating from given mods
+        /// </summary>
+        /// <returns></returns>
+        [Obsolete("Not yet Implemented")]
+        public double DifficultyFromMods(ModIdentifier mods)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

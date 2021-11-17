@@ -262,7 +262,7 @@ namespace Assets.Scripts
 
             GlobalConfig tss = (GlobalConfig)ConfigManager.GetOrLoadOrAdd<GlobalConfig>();
 
-            DirectoryInfo chartPath = new DirectoryInfo(tss.ChartPath + $"/{artist} - {title} ({creator})/");
+            DirectoryInfo chartPath = new DirectoryInfo(tss.SongDirectory + $"/{artist} - {title} ({creator})/");
             chart.Speed = 23;
             chart.Save(Path.Combine(chartPath.FullName, $"{artist} - {title} ({creator}) [{chart.Difficulty}]"));
             
