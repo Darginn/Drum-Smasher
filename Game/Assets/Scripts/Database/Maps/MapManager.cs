@@ -3,8 +3,8 @@ using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.IO;
+using UnityEngine;
 
 namespace Assets.Scripts.Database.Maps
 {
@@ -172,7 +172,7 @@ namespace Assets.Scripts.Database.Maps
         {
             if (map.Game != MapGame.DrumSmasher)
             {
-                throw new NotImplementedException("You cannot delete a map loaded from another game yet");
+                return; //TODO: Method for deleting maps from other games
             }
 
             try
@@ -181,7 +181,7 @@ namespace Assets.Scripts.Database.Maps
             }
             catch (Exception e)
             {
-                Logger.Log(e, LogType.Exception);
+                Logger.Log(e, LogLevel.Exception);
             }
 
             map.Mapset.Maps.Remove(map);
@@ -190,6 +190,7 @@ namespace Assets.Scripts.Database.Maps
             if (map.Mapset.Maps.Count == 0)
                 Mapsets.Remove(map.Mapset);
 
+            //TODO: PlaylistManager Database Class
             //PlaylistManager.RemoveMapFromAllPlaylists(map);
 
             // Raise an event with the deleted map
@@ -206,13 +207,14 @@ namespace Assets.Scripts.Database.Maps
 
             if (mapset.Maps.First().Game != MapGame.DrumSmasher)
             {
-                throw new NotImplementedException("You cannot delete a map loaded from another game yet");
+                return; //TODO: Method for deleting mapsets from other games
             }
 
-            // Dispose of the playing track, so it can be deleted
+            // TODO: Dispose of the playing track, so it can be deleted
             // assuming the song is playing when the delete method is called
             if (mapset.Maps.Contains(Selected.Value))
             {
+                
             }
 
             try
@@ -221,7 +223,7 @@ namespace Assets.Scripts.Database.Maps
             }
             catch (Exception e)
             {
-                Logger.Log(e, LogType.Exception);
+                Logger.Log(e, LogLevel.Exception);
             }
 
             try
@@ -230,7 +232,7 @@ namespace Assets.Scripts.Database.Maps
             }
             catch (Exception e)
             {
-                Logger.Log(e, LogType.Exception);
+                Logger.Log(e, LogLevel.Exception);
             }
 
             Mapsets.Remove(mapset);
@@ -238,9 +240,7 @@ namespace Assets.Scripts.Database.Maps
             // Raise an event letting subscribers know a mapset has been deleted
             MapsetDeleted?.Invoke(typeof(MapManager), new MapsetDeletedEventArgs(mapset, index));
 
-            // Dispose and delete the mapset's background if it exists
-
-            // background stuff
+            // TODO: Dispose and delete the mapset's background if it exists
         }
 
     }

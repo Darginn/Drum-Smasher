@@ -10,7 +10,6 @@ using UnityEngine.SceneManagement;
 using SFB;
 using System.IO;
 using System.Collections;
-//using Assets.Scripts.Settings;
 using System.Threading;
 using Assets.Scripts.IO.Charts;
 using Assets.Scripts.Configs.GameConfigs;
@@ -115,7 +114,7 @@ namespace Assets.Scripts
 
         void Start()
         {
-            TitleScreenConfig tss = (TitleScreenConfig)ConfigManager.GetOrLoadOrAdd<TitleScreenConfig>();
+            GlobalConfig tss = (GlobalConfig)ConfigManager.GetOrLoadOrAdd<GlobalConfig>();
             TaikoConfig ts = (TaikoConfig)ConfigManager.GetOrLoadOrAdd<TaikoConfig>();
 
             key1Text.text = ts.Key1;
@@ -261,7 +260,7 @@ namespace Assets.Scripts
             string title = ChartFile.FixPath(chart.Title);
             string creator = ChartFile.FixPath(chart.Creator);
 
-            TitleScreenConfig tss = (TitleScreenConfig)ConfigManager.GetOrLoadOrAdd<TitleScreenConfig>();
+            GlobalConfig tss = (GlobalConfig)ConfigManager.GetOrLoadOrAdd<GlobalConfig>();
 
             DirectoryInfo chartPath = new DirectoryInfo(tss.ChartPath + $"/{artist} - {title} ({creator})/");
             chart.Speed = 23;
@@ -275,7 +274,7 @@ namespace Assets.Scripts
 
         public void SetFullscreen(bool isFullscreen)
         {
-            TitleScreenConfig tss = (TitleScreenConfig)ConfigManager.GetOrLoadOrAdd<TitleScreenConfig>();
+            GlobalConfig tss = (GlobalConfig)ConfigManager.GetOrLoadOrAdd<GlobalConfig>();
             tss.Fullscreen = isFullscreen;
 
             Screen.fullScreen = tss.Fullscreen;
@@ -290,7 +289,7 @@ namespace Assets.Scripts
 
         public void SetResolution(int width, int height, int refreshRate)
         {
-            TitleScreenConfig tss = (TitleScreenConfig)ConfigManager.GetOrLoadOrAdd<TitleScreenConfig>();
+            GlobalConfig tss = (GlobalConfig)ConfigManager.GetOrLoadOrAdd<GlobalConfig>();
 
             tss.ScreenWidth = width;
             tss.ScreenHeight = height;

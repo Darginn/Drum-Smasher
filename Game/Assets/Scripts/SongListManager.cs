@@ -45,7 +45,7 @@ namespace Assets.Scripts
                 InstantiatePrefab(SongList[i].DisplayName, SongList[i].chart, SongList[i].ChartDirectory);
             }
 
-            TitleScreenConfig tss = (TitleScreenConfig)ConfigManager.GetOrLoadOrAdd<TitleScreenConfig>();
+            GlobalConfig tss = (GlobalConfig)ConfigManager.GetOrLoadOrAdd<GlobalConfig>();
             Application.targetFrameRate = tss.FPSMenu;
             QualitySettings.vSyncCount = 0;
             Logger.Log($"Set FPS limit to {Application.targetFrameRate} and VSYNC {(QualitySettings.vSyncCount <= 0 ? "false" : "true")}");
@@ -117,7 +117,7 @@ namespace Assets.Scripts
             loadAO.completed += ao =>
             {
                 _sceneActionActive = false;
-                GameManager.OnSceneLoaded(LoadedChart, chartDirectory, _modPanel.GetMods());
+                TaikoManager.OnSceneLoaded(LoadedChart, chartDirectory, _modPanel.GetMods());
             };
         }
     }

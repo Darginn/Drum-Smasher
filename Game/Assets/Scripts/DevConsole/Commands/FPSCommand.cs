@@ -21,7 +21,7 @@ namespace Assets.Scripts.DevConsole.Commands
 
         public override void Execute(params string[] args)
         {
-            TitleScreenConfig tss = (TitleScreenConfig)ConfigManager.GetOrLoadOrAdd<TitleScreenConfig>();
+            GlobalConfig tss = (GlobalConfig)ConfigManager.GetOrLoadOrAdd<GlobalConfig>();
             //TitleScreenSettings tss = (TitleScreenSettings)SettingsManager.SettingsStorage["TitleScreen"];
 
             if (args == null || args.Length < 2)

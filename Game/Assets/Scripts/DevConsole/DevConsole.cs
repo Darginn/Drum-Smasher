@@ -28,7 +28,7 @@ namespace Assets.Scripts.DevConsole
         void Start()
         {
             _lines = new List<string>();
-            TitleScreenConfig tss = (TitleScreenConfig)ConfigManager.GetOrLoadOrAdd<TitleScreenConfig>();
+            GlobalConfig tss = (GlobalConfig)ConfigManager.GetOrLoadOrAdd<GlobalConfig>();
 
             if (tss.DefaultConsoleMessage != null)
                 WriteLine(tss.DefaultConsoleMessage);

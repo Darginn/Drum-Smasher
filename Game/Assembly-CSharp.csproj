@@ -71,7 +71,7 @@
     <Compile Include="Assets\Scripts\Debug\FPSCounter.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\BasicSample.cs" />
     <Compile Include="Assets\Scripts\GameInput\TaikoDrumHotKey.cs" />
-    <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\TaikoManager.cs" />
     <Compile Include="Assets\Scripts\Game\Mods\ModController.cs" />
     <Compile Include="Assets\Scripts\Logger.cs" />
     <Compile Include="Assets\Scripts\DevConsole\Commands\KeyCommand.cs" />
@@ -85,7 +85,6 @@
     <Compile Include="Assets\Scripts\Game\NoteScroller.cs" />
     <Compile Include="Assets\Scripts\Game\ScoreScreen.cs" />
     <Compile Include="Assets\Scripts\Game\Notes\NoteHitBox.cs" />
-    <Compile Include="Assets\Scripts\Configs\GameConfigs\TitleScreenConfig.cs" />
     <Compile Include="Assets\Scripts\Game\Notes\NoteColor.cs" />
     <Compile Include="Assets\Scripts\Game\Mods\ModPanel.cs" />
     <Compile Include="Assets\Scripts\Database\Maps\Mapset.cs" />
@@ -139,6 +138,9 @@
     <Compile Include="Assets\Packages\sqlite-net.1.6.292\content\SQLite.cs" />
     <Compile Include="Assets\Scripts\GameInput\KeyController.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserLinux.cs" />
+    <Compile Include="Assets\Scripts\Database\Maps\MapDatabaseCache.cs" />
+    <Compile Include="Assets\Scripts\Configs\GameConfigs\GlobalConfig.cs" />
+    <Compile Include="Assets\Scripts\Database\Maps\MapsetHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Packages\System.Buffers.4.4.0\version.txt" />

@@ -12,7 +12,8 @@ public enum LogLevel
     Info,
     Trace,
     Warning,
-    Error
+    Error,
+    Exception
 }
 
 public static class Logger
@@ -36,6 +37,17 @@ public static class Logger
         {
             string toLog = $"{DateTime.UtcNow}\t[{level}] ({line}) {caller}:\t{message}\n";
             _logQueue.Enqueue(new LogArgs(level, toLog));
+        });
+    }
+
+    public static void Log(Exception e, LogLevel level = LogLevel.Trace, [CallerMemberName] string caller = "", [CallerLineNumber] int line = 0)
+    {
+        string message = e.ToString();
+
+        Task.Run(() =>
+        {
+            string toLog = $"{DateTime.UtcNow}\t[{level}] ({line}) {caller}:\t{message}\n";
+            _logQueue.Enqueue(new LogArgs(level, e));
         });
     }
 
@@ -64,6 +76,10 @@ public static class Logger
                         UnityEngine.Debug.LogWarning(args.Message);
                         break;
 
+                    case LogLevel.Exception:
+                        UnityEngine.Debug.LogException(args.Exception);
+                        break;
+
                     default:
                         UnityEngine.Debug.Log(args.Message);
                         break;
@@ -78,16 +94,18 @@ public static class Logger
     {
         public LogLevel Level { get; }
         public string Message { get; }
+        public Exception Exception { get; }
 
         public LogArgs(LogLevel level, string message)
         {
             Level = level;
             Message = message;
         }
-    }
+        public LogArgs(LogLevel level, Exception e)
+        {
+            Level = level;
+            Exception = e;
+        }
 
-    internal static void Log(Exception e, LogType exception)
-    {
-        throw new NotImplementedException();
     }
 }

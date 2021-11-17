@@ -93,7 +93,7 @@ namespace Assets.Scripts.Game
             AsyncOperation loadAO = SceneManager.LoadSceneAsync("Main");
             loadAO.completed += ao =>
             {
-                GameManager.OnSceneLoaded(_chart, _chartDirectory, _currentMods);
+                TaikoManager.OnSceneLoaded(_chart, _chartDirectory, _currentMods);
             };
         }
 
