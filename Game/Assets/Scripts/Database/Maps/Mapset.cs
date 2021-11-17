@@ -32,7 +32,11 @@ namespace Assets.Scripts.Database.Maps
         /// <summary>
         /// Exports the entire mapset to a zip (maybe .taiko or .ds??) file.
         /// </summary>
-        public string ExportToZip(bool openInExplorer = true) { throw new NotImplementedException(); }
+        [Obsolete("To be implemented")]
+        public string ExportToZip(bool openInExplorer = true)
+        {
+            return null;
+        }
 
     }
 }

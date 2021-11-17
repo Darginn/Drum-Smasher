@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using YamlDotNet.Serialization;
 
 namespace Assets.Scripts.IO.Charts
 {
@@ -179,19 +178,21 @@ namespace Assets.Scripts.IO.Charts
             OsuSection general = osuFile.Sections["General"];
             OsuSection metadata = osuFile.Sections["Metadata"];
 
-            ChartFile ch = new ChartFile();
-            ch.ID = 0;
-            ch.Artist = (string)metadata.Properties["Artist"].Value;
-            ch.Title = (string)metadata.Properties["Title"].Value;
-            ch.Tags = (string)metadata.Properties["Tags"].Value;
-            ch.Difficulty = (string)metadata.Properties["Version"].Value;
-            ch.Creator = (string)metadata.Properties["Creator"].Value;
-            ch.Source = (string)metadata.Properties["Source"].Value;
-            ch.PreviewStart = (long)(float)general.Properties["PreviewTime"].Value;
-            ch.Offset = osuFile.Offset;
-            ch.SoundFile = ((string)general.Properties["AudioFilename"].Value).TrimStart(' ');
+            ChartFile ch = new ChartFile
+            {
+                ID = 0,
+                Artist = (string)metadata.Properties["Artist"].Value,
+                Title = (string)metadata.Properties["Title"].Value,
+                Tags = (string)metadata.Properties["Tags"].Value,
+                Difficulty = (string)metadata.Properties["Version"].Value,
+                Creator = (string)metadata.Properties["Creator"].Value,
+                Source = (string)metadata.Properties["Source"].Value,
+                PreviewStart = (long)(float)general.Properties["PreviewTime"].Value,
+                Offset = osuFile.Offset,
+                SoundFile = ((string)general.Properties["AudioFilename"].Value).TrimStart(' '),
 
-            ch.Notes = new List<ChartNote>();
+                Notes = new List<ChartNote>()
+            };
             OsuSection snote = osuFile.Sections["HitObjects"];
 
             ChartNote cn;
@@ -264,12 +265,8 @@ namespace Assets.Scripts.IO.Charts
 
             using (var file = File.OpenText(path))
             {
-                var deserializer = new DeserializerBuilder();
-                deserializer.IgnoreUnmatchedProperties();
-                chart = (ChartFile)deserializer.Build().Deserialize(file, typeof(ChartFile));
+                chart = Load(path);
                 chart.FilePath = path;
-
-                RestoreDefaultValues(chart);
             }
 
             AfterLoad(chart, checkValidity);
@@ -278,19 +275,11 @@ namespace Assets.Scripts.IO.Charts
         }
 
         /// <summary>
-        /// </summary>
-        /// <param name="chart"></param>
-        public static void RestoreDefaultValues(ChartFile chart)
-        {
-            // use this space to test for blank values/properties and fill them
-        }
-
-        /// <summary>
         /// Does some sorting of the ChartFile
         /// </summary>
         public void Sort()
         {
-            // not sure if sorting is needed but it exists
+            // sort notes by time (ms) ascending
         }
 
         /// <summary>

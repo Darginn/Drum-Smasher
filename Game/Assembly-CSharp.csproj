@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,6 +53,9 @@
     <UnityVersion>2021.1.22f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Assets\Packages\sqlite-net.1.6.292\content\SQLiteAsync.cs" />
     <Compile Include="Assets\Scripts\Tools\SyncSolutionUtilities.cs" />
     <Compile Include="Assets\Scripts\TitleScreenManager.cs" />
@@ -82,6 +85,7 @@
     <Compile Include="Assets\Scripts\Game\NoteScroller.cs" />
     <Compile Include="Assets\Scripts\Game\ScoreScreen.cs" />
     <Compile Include="Assets\Scripts\Game\Notes\NoteHitBox.cs" />
+    <Compile Include="Assets\Scripts\Configs\GameConfigs\TitleScreenConfig.cs" />
     <Compile Include="Assets\Scripts\Game\Notes\NoteColor.cs" />
     <Compile Include="Assets\Scripts\Game\Mods\ModPanel.cs" />
     <Compile Include="Assets\Scripts\Database\Maps\Mapset.cs" />
@@ -101,6 +105,7 @@
     <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleOpenFileTextMultiple.cs" />
     <Compile Include="Assets\Scripts\DevConsole\Commands\BaseCommand.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\IStandaloneFileBrowser.cs" />
+    <Compile Include="Assets\Scripts\Configs\ConfigManager.cs" />
     <Compile Include="Assets\Scripts\Database\DatabaseManager.cs" />
     <Compile Include="Assets\Scripts\Game\Notes\NoteType.cs" />
     <Compile Include="Assets\Scripts\Game\Mods\AutoPlayMod.cs" />
@@ -110,11 +115,14 @@
     <Compile Include="Assets\Scripts\Extensions\AutoInitAttribute.cs" />
     <Compile Include="Assets\Scripts\IO\JsonFile.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleOpenFileText.cs" />
+    <Compile Include="Assets\Scripts\Configs\IConfig.cs" />
     <Compile Include="Assets\Scripts\Database\Maps\MapDeletedEventArgs.cs" />
     <Compile Include="Assets\Scripts\Database\Maps\MapManager.cs" />
     <Compile Include="Assets\Scripts\GameInput\HotKey.cs" />
+    <Compile Include="Assets\Scripts\Configs\GameConfigs\TaikoConfig.cs" />
     <Compile Include="Assets\Scripts\IO\Charts\SongScanning.cs" />
     <Compile Include="Assets\Scripts\Sound\NAudioPlayer.cs" />
+    <Compile Include="Assets\Scripts\Configs\BaseConfig.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowser.cs" />
     <Compile Include="Assets\Scripts\Game\Mods\BaseMod.cs" />
     <Compile Include="Assets\Scripts\Configs\Bindable\BindableFloat.cs" />
@@ -131,11 +139,6 @@
     <Compile Include="Assets\Packages\sqlite-net.1.6.292\content\SQLite.cs" />
     <Compile Include="Assets\Scripts\GameInput\KeyController.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserLinux.cs" />
-    <Compile Include="Assets\Scripts\Configs\BaseConfig.cs" />
-    <Compile Include="Assets\Scripts\Configs\ConfigManager.cs" />
-    <Compile Include="Assets\Scripts\Configs\IConfig.cs" />
-    <Compile Include="Assets\Scripts\Configs\GameConfigs\TaikoConfig.cs" />
-    <Compile Include="Assets\Scripts\Configs\GameConfigs\TitleScreenConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Packages\System.Buffers.4.4.0\version.txt" />
@@ -449,6 +452,12 @@
     </Reference>
     <Reference Include="XInputDotNetPure">
       <HintPath>Assets\Scripts\GameInput\Plugins\XInputDotNetPure.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.1.22f1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.1.22f1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Common.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2021.1.22f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll</HintPath>
