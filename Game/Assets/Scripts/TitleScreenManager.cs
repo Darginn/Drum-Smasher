@@ -169,6 +169,11 @@ namespace Assets.Scripts
 
         void OnDevConsoleHotkey()
         {
+            GlobalConfig cfg = (GlobalConfig)ConfigManager.GetOrLoadOrAdd<GlobalConfig>();
+
+            if (!cfg.IsDeveloperMode)
+                return;
+
             Logger.Log("Toggling Console");
 
             if (_devConsole != null)

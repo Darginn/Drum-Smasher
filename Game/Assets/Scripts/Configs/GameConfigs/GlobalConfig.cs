@@ -23,6 +23,7 @@ namespace Assets.Scripts.Configs.GameConfigs
         public string GameDirectory { get; set; }
         public int FPSMenu { get; set; }
         public int FPSInGame { get; set; }
+        public bool IsDeveloperMode { get; set; }
 
         public GlobalConfig()
         {
@@ -37,6 +38,12 @@ namespace Assets.Scripts.Configs.GameConfigs
             SongDirectory = Application.dataPath + "/../Charts";
             SelectOrderMapsetsBy = OrderMapsetsBy.Title;
             GameDirectory = Application.dataPath;
+
+#if UNITY_EDITOR
+            IsDeveloperMode = true;
+#else
+            IsDeveloperMode = false;
+#endif
 
             FPSMenu = 0;
             FPSInGame = 0;

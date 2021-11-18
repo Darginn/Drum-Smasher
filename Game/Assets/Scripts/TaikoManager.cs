@@ -82,6 +82,11 @@ namespace Assets.Scripts
 
         void OnDevConsoleKey()
         {
+            GlobalConfig cfg = (GlobalConfig)ConfigManager.GetOrLoadOrAdd<GlobalConfig>();
+
+            if (!cfg.IsDeveloperMode)
+                return;
+
             Logger.Log("Opening dev console");
             if (_devConsole != null)
             {
