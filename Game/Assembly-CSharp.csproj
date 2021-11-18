@@ -8,8 +8,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{DDFBC18F-9396-3137-9CFE-DEB2CDB74636}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -57,16 +56,19 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Database\Maps\MapsetHelper.cs" />
     <Compile Include="Assets\Packages\sqlite-net.1.6.292\content\SQLiteAsync.cs" />
-    <Compile Include="Assets\Scripts\Hotkeys.cs" />
     <Compile Include="Assets\Scripts\Tools\SyncSolutionUtilities.cs" />
     <Compile Include="Assets\Scripts\TitleScreenManager.cs" />
     <Compile Include="Assets\Scripts\GameInput\KeyScanner.cs" />
     <Compile Include="Assets\Scripts\SongListManager.cs" />
+    <Compile Include="Assets\Scripts\Database\Maps\MapDatabaseCache.cs" />
     <Compile Include="Assets\Scripts\DevConsole\Commands\AutoplayCommand.cs" />
     <Compile Include="Assets\Scripts\Game\SoundConductor.cs" />
+    <Compile Include="Assets\Scripts\Game\Modifiers\ModType.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleSaveFileImage.cs" />
     <Compile Include="Assets\Scripts\Database\Maps\MapsetDeletedEventArgs.cs" />
+    <Compile Include="Assets\Scripts\Enums\ModIdentifier.cs" />
     <Compile Include="Assets\Scripts\Tools\DontDestroyOnLoadScript.cs" />
     <Compile Include="Assets\Scripts\Debug\FPSCounter.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\BasicSample.cs" />
@@ -77,10 +79,12 @@
     <Compile Include="Assets\Scripts\Database\Scores\Score.cs" />
     <Compile Include="Assets\Scripts\Database\Maps\Map.cs" />
     <Compile Include="Assets\Scripts\Game\Notes\NoteSegment.cs" />
+    <Compile Include="Assets\Scripts\Controls\Hotkey.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleOpenFileImage.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserEditor.cs" />
     <Compile Include="Assets\Scripts\Game\PlayState.cs" />
     <Compile Include="Assets\Scripts\IO\Charts\ChartFile.cs" />
+    <Compile Include="Assets\Scripts\Configs\GameConfigs\GlobalConfig.cs" />
     <Compile Include="Assets\Scripts\Game\NoteScroller.cs" />
     <Compile Include="Assets\Scripts\Game\ScoreScreen.cs" />
     <Compile Include="Assets\Scripts\Game\Notes\NoteHitBox.cs" />
@@ -94,6 +98,7 @@
     <Compile Include="Assets\Scripts\Game\StatisticHandler.cs" />
     <Compile Include="Assets\Scripts\GameInput\XInput.cs" />
     <Compile Include="Assets\Scripts\Extensions\Extensions.cs" />
+    <Compile Include="Assets\Scripts\Controls\HotkeyAlreadyRegisteredException.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserWindows.cs" />
     <Compile Include="Assets\Scripts\Configs\Bindable\BindableValueChangedEventArgs.cs" />
     <Compile Include="Assets\Scripts\GameTime.cs" />
@@ -104,6 +109,8 @@
     <Compile Include="Assets\Scripts\Configs\ConfigManager.cs" />
     <Compile Include="Assets\Scripts\Database\DatabaseManager.cs" />
     <Compile Include="Assets\Scripts\Game\Notes\NoteType.cs" />
+    <Compile Include="Assets\Scripts\Game\Modifiers\Mods\ModAutoplay.cs" />
+    <Compile Include="Assets\Scripts\Game\Modifiers\ModsChangedEventArgs.cs" />
     <Compile Include="Assets\Scripts\Game\Notes\Note.cs" />
     <Compile Include="Assets\Scripts\Configs\Bindable\BindableInt.cs" />
     <Compile Include="Assets\Scripts\Extensions\AutoInitAttribute.cs" />
@@ -121,27 +128,22 @@
     <Compile Include="Assets\Scripts\Configs\Bindable\BindableFloat.cs" />
     <Compile Include="Assets\Scripts\CameraScreenResolution.cs" />
     <Compile Include="Assets\Scripts\IO\BaseFile.cs" />
+    <Compile Include="Assets\Scripts\Controls\HotkeyType.cs" />
+    <Compile Include="Assets\Scripts\Enums\OrderMapsetsBy.cs" />
     <Compile Include="Assets\Scripts\DevConsole\Commands\HelpCommand.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleSaveFileText.cs" />
+    <Compile Include="Assets\Scripts\Game\Modifiers\ModManager.cs" />
     <Compile Include="Assets\Scripts\Game\Notes\NoteHitType.cs" />
     <Compile Include="Assets\Scripts\Configs\Bindable\BindableDouble.cs" />
     <Compile Include="Assets\Scripts\DevConsole\Commands\ICommand.cs" />
     <Compile Include="Assets\Scripts\DevConsole\DevConsole.cs" />
+    <Compile Include="Assets\Scripts\Enums\MapGame.cs" />
     <Compile Include="Assets\Scripts\IO\Charts\ChartNote.cs" />
     <Compile Include="Assets\Packages\sqlite-net.1.6.292\content\SQLite.cs" />
     <Compile Include="Assets\Scripts\GameInput\KeyController.cs" />
+    <Compile Include="Assets\Scripts\Controls\Hotkeys.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserLinux.cs" />
-    <Compile Include="Assets\Scripts\Database\Maps\MapDatabaseCache.cs" />
-    <Compile Include="Assets\Scripts\Configs\GameConfigs\GlobalConfig.cs" />
-    <Compile Include="Assets\Scripts\Database\Maps\MapsetHelper.cs" />
-    <Compile Include="Assets\Scripts\Enums\OrderMapsetsBy.cs" />
-    <Compile Include="Assets\Scripts\Game\Modifiers\ModManager.cs" />
-    <Compile Include="Assets\Scripts\Game\Modifiers\ModType.cs" />
     <Compile Include="Assets\Scripts\Game\Modifiers\IGameplayModifier.cs" />
-    <Compile Include="Assets\Scripts\Game\Modifiers\ModsChangedEventArgs.cs" />
-    <Compile Include="Assets\Scripts\Enums\ModIdentifier.cs" />
-    <Compile Include="Assets\Scripts\Enums\MapGame.cs" />
-    <Compile Include="Assets\Scripts\Game\Modifiers\Mods\ModAutoplay.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Packages\System.Buffers.4.4.0\version.txt" />
@@ -455,12 +457,6 @@
     </Reference>
     <Reference Include="XInputDotNetPure">
       <HintPath>Assets\Scripts\GameInput\Plugins\XInputDotNetPure.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.1.22f1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Common">
-      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.1.22f1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Common.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2021.1.22f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll</HintPath>

@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Configs;
 using Assets.Scripts.Configs.GameConfigs;
+using Assets.Scripts.Controls;
 using Assets.Scripts.Game;
 using Assets.Scripts.GameInput;
 using Assets.Scripts.IO.Charts;
@@ -68,7 +69,8 @@ namespace Assets.Scripts
         {
             Instance = this;
             TitleScreenKey = new HotKey(KeyCode.Escape, new Action(OnTitleScreenKey), EscapeCheckDelayMS);
-            Hotkeys.RegisterKey(new Hotkey(HotkeyList.ToggleDevConsole, OnDevConsoleKey, KeyCode.KeypadMinus));
+            Hotkeys.RegisterKey(new Hotkey(HotkeyType.ToggleDevConsole, KeyCode.KeypadMinus))
+                   .OnCheckedDown += hk => OnDevConsoleKey();
             QualitySettings.vSyncCount = 0;
         }
 
@@ -104,7 +106,7 @@ namespace Assets.Scripts
         void Update()
         {
             TitleScreenKey.CheckKey();
-            Hotkeys.CheckKey(HotkeyList.ToggleDevConsole);
+            Hotkeys.InvokeCheckKeyDown(HotkeyType.ToggleDevConsole);
         }
 
         void OnApplicationQuit()

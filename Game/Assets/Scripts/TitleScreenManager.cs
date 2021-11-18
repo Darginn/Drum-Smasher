@@ -14,7 +14,7 @@ using System.Threading;
 using Assets.Scripts.IO.Charts;
 using Assets.Scripts.Configs.GameConfigs;
 using Assets.Scripts.Configs;
-using Assets.Scripts.GameInput;
+using Assets.Scripts.Controls;
 
 namespace Assets.Scripts
 {
@@ -118,7 +118,8 @@ namespace Assets.Scripts
             GlobalConfig tss = (GlobalConfig)ConfigManager.GetOrLoadOrAdd<GlobalConfig>();
             TaikoConfig ts = (TaikoConfig)ConfigManager.GetOrLoadOrAdd<TaikoConfig>();
 
-            Hotkeys.RegisterKey(new Hotkey(HotkeyList.ToggleDevConsole, OnDevConsoleHotkey, KeyCode.KeypadMinus));
+            Hotkey key = Hotkeys.RegisterKey(new Hotkey(HotkeyType.ToggleDevConsole, KeyCode.KeypadMinus));
+            key.OnCheckedDown += hk => OnDevConsoleHotkey();
 
             key1Text.text = ts.Key1;
             key2Text.text = ts.Key2;
@@ -159,7 +160,7 @@ namespace Assets.Scripts
 
         void Update()
         {
-            Hotkeys.CheckKeyDown(HotkeyList.ToggleDevConsole);
+            Hotkeys.InvokeCheckKeyDown(HotkeyType.ToggleDevConsole);
         }
 
         void FixedUpdate()

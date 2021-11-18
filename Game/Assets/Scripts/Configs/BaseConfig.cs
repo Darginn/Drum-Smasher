@@ -11,7 +11,7 @@ namespace Assets.Scripts.Configs
 {
     public abstract class BaseConfig<T> : JsonFile<T>, IConfig where T : class
     {
-        public static string ConfigName => nameof(T);
+        public static string ConfigName => typeof(T).Name;
         public static string ConfigFileName => $"{ConfigName}.cfg";
         public static string ConfigFilePath => Path.Combine(Environment.CurrentDirectory, "Configs", ConfigFileName);
 
