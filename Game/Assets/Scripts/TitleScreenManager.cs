@@ -14,6 +14,7 @@ using System.Threading;
 using Assets.Scripts.IO.Charts;
 using Assets.Scripts.Configs.GameConfigs;
 using Assets.Scripts.Configs;
+using Assets.Scripts.GameInput;
 
 namespace Assets.Scripts
 {
@@ -39,6 +40,8 @@ namespace Assets.Scripts
         [SerializeField] Text key2Text;
         [SerializeField] Text key3Text;
         [SerializeField] Text key4Text;
+
+        HotKey _devConsoleHotkey;
         
         public void SetHotKey1()
         {
@@ -152,6 +155,8 @@ namespace Assets.Scripts
 
             SetFullscreen(tss.Fullscreen);
             SetResolution(tss.ScreenWidth, tss.ScreenHeight, tss.RefreshRate);
+
+            _devConsoleHotkey = new HotKey(KeyCode.KeypadMinus, );
         }
 
         void Update()
@@ -165,31 +170,7 @@ namespace Assets.Scripts
 
         void CheckForInput()
         {
-            if (Input.GetKeyDown(KeyCode.KeypadMinus))
-            {
-                Logger.Log("Toggling Console");
-
-                if (_devConsole != null)
-                {
-                    if (_devConsole.activeSelf)
-                        _devConsole.SetActive(false);
-                    else
-                        _devConsole.SetActive(true);
-
-                    Logger.Log("Toggled Console");
-                }
-                else
-                {
-                    _devConsole = Instantiate(DevConsolePrefab);
-                    _devConsole.transform.SetParent(Canvas.transform);
-
-                    RectTransform rt = _devConsole.GetComponent<RectTransform>();
-                    rt.anchoredPosition3D = new Vector3(950, 347, 1.5f);
-
-                    StartCoroutine(rt.MoveOverSeconds(rt.anchoredPosition3D, new Vector3(950, -383, 1.5f), 0.5f, true));
-                    Logger.Log("Toggled Console");
-                }
-            }
+            _devConsoleHotkey.CheckKey();
 
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
@@ -216,6 +197,32 @@ namespace Assets.Scripts
                 Vector3 old = _devConsole.transform.position;
                 Vector3 oldLocal = _devConsole.transform.localPosition;
                 _devConsole.transform.position -= new Vector3(0, 5, 0);
+            }
+        }
+
+        void OnDevConsoleHotkey()
+        {
+            Logger.Log("Toggling Console");
+
+            if (_devConsole != null)
+            {
+                if (_devConsole.activeSelf)
+                    _devConsole.SetActive(false);
+                else
+                    _devConsole.SetActive(true);
+
+                Logger.Log("Toggled Console");
+            }
+            else
+            {
+                _devConsole = Instantiate(DevConsolePrefab);
+                _devConsole.transform.SetParent(Canvas.transform);
+
+                RectTransform rt = _devConsole.GetComponent<RectTransform>();
+                rt.anchoredPosition3D = new Vector3(950, 347, 1.5f);
+
+                StartCoroutine(rt.MoveOverSeconds(rt.anchoredPosition3D, new Vector3(950, -383, 1.5f), 0.5f, true));
+                Logger.Log("Toggled Console");
             }
         }
 

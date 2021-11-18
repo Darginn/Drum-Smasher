@@ -66,6 +66,7 @@ public static class Logger
                 byte[] toWrite = Encoding.UTF8.GetBytes(args.Message);
                 _logStream.Write(toWrite, 0, toWrite.Length);
 
+#if UNITY_EDITOR
                 switch(args.Level)
                 {
                     case LogLevel.Error:
@@ -84,6 +85,7 @@ public static class Logger
                         UnityEngine.Debug.Log(args.Message);
                         break;
                 }
+#endif
             }
 
             _logStream.Flush();
