@@ -41,8 +41,6 @@ namespace Assets.Scripts
         [SerializeField] Text key3Text;
         [SerializeField] Text key4Text;
 
-        HotKey _devConsoleHotkey;
-        
         public void SetHotKey1()
         {
             StartCoroutine(SetHotKeyCoroutine(0));
@@ -120,6 +118,8 @@ namespace Assets.Scripts
             GlobalConfig tss = (GlobalConfig)ConfigManager.GetOrLoadOrAdd<GlobalConfig>();
             TaikoConfig ts = (TaikoConfig)ConfigManager.GetOrLoadOrAdd<TaikoConfig>();
 
+            Hotkeys.RegisterKey(new Hotkey(HotkeyList.ToggleDevConsole, OnDevConsoleHotkey, KeyCode.KeypadMinus));
+
             key1Text.text = ts.Key1;
             key2Text.text = ts.Key2;
             key3Text.text = ts.Key3;
@@ -155,49 +155,15 @@ namespace Assets.Scripts
 
             SetFullscreen(tss.Fullscreen);
             SetResolution(tss.ScreenWidth, tss.ScreenHeight, tss.RefreshRate);
-
-            _devConsoleHotkey = new HotKey(KeyCode.KeypadMinus, );
         }
 
         void Update()
         {
-            CheckForInput();
+            Hotkeys.CheckKeyDown(HotkeyList.ToggleDevConsole);
         }
 
         void FixedUpdate()
         {
-        }
-
-        void CheckForInput()
-        {
-            _devConsoleHotkey.CheckKey();
-
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                Vector3 old = _devConsole.transform.position;
-                Vector3 oldLocal = _devConsole.transform.localPosition;
-                _devConsole.transform.position -= new Vector3(5, 0, 0);
-            }
-
-            else if (Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                Vector3 old = _devConsole.transform.position;
-                Vector3 oldLocal = _devConsole.transform.localPosition;
-                _devConsole.transform.position += new Vector3(5, 0, 0);
-            }
-
-            if (Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                Vector3 old = _devConsole.transform.position;
-                Vector3 oldLocal = _devConsole.transform.localPosition;
-                _devConsole.transform.position += new Vector3(0, 5, 0);
-            }
-            if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                Vector3 old = _devConsole.transform.position;
-                Vector3 oldLocal = _devConsole.transform.localPosition;
-                _devConsole.transform.position -= new Vector3(0, 5, 0);
-            }
         }
 
         void OnDevConsoleHotkey()

@@ -68,7 +68,7 @@ namespace Assets.Scripts
         {
             Instance = this;
             TitleScreenKey = new HotKey(KeyCode.Escape, new Action(OnTitleScreenKey), EscapeCheckDelayMS);
-            DevConsoleKey = new HotKey(KeyCode.KeypadMinus, new Action(OnDevConsoleKey));
+            Hotkeys.RegisterKey(new Hotkey(HotkeyList.ToggleDevConsole, OnDevConsoleKey, KeyCode.KeypadMinus));
             QualitySettings.vSyncCount = 0;
         }
 
@@ -104,6 +104,7 @@ namespace Assets.Scripts
         void Update()
         {
             TitleScreenKey.CheckKey();
+            Hotkeys.CheckKey(HotkeyList.ToggleDevConsole);
         }
 
         void OnApplicationQuit()

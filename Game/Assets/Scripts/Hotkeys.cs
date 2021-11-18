@@ -8,15 +8,29 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
+    public static class HotkeyList
+    {
+        public static readonly string ToggleDevConsole = "DevConsoleT";
+        public static readonly string ReturnToTitleScreen = "TSReturn";
+
+        public static readonly string TaikoOuterLeft = "TKOL";
+        public static readonly string TaikoInnerLeft = "TKIL";
+        public static readonly string TaikoInnerRight = "TKIR";
+        public static readonly string TaikoOuterRight = "TKOR";
+    }
+
     public static class Hotkeys
     {
-        public static readonly string DevConsoleId = "DevConsole";
-
         static readonly Dictionary<string, Hotkey> _registeredKeys;
 
         static Hotkeys()
         {
             _registeredKeys = new Dictionary<string, Hotkey>();
+        }
+
+        public static void RegisterKey(Hotkey key)
+        {
+            RegisterKey(key, false);
         }
 
         public static void RegisterKey(Hotkey key, bool throwIfExists)
@@ -87,8 +101,6 @@ namespace Assets.Scripts
         {
             return key.CheckKeyUp();
         }
-
-        public static bool 
     }
     public class Hotkey
     {
