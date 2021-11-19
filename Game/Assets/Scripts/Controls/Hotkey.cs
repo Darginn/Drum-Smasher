@@ -119,17 +119,26 @@ namespace Assets.Scripts.Controls
         KeyCode _sk1;
         KeyCode _sk2;
 
+        /// <param name="type"><see cref="Hotkey.Type"/></param>
+        /// <param name="key"><see cref="Hotkey.Key"/></param>
         public Hotkey(HotkeyType type, KeyCode key)
         {
             Type = type;
             Key = key;
         }
 
+        /// <param name="type"><see cref="Hotkey.Type"/></param>
+        /// <param name="specialKey1"><see cref="Hotkey.SpecialKey1"/></param>
+        /// <param name="key"><see cref="Hotkey.Key"/></param>
         public Hotkey(HotkeyType type, KeyCode specialKey1, KeyCode key) : this(type, key)
         {
             SpecialKey1 = specialKey1;
         }
 
+        /// <param name="type"><see cref="Hotkey.Type"/></param>
+        /// <param name="specialKey1"><see cref="Hotkey.SpecialKey1"/></param>
+        /// <param name="specialKey2"><see cref="Hotkey.SpecialKey2"/></param>
+        /// <param name="key"><see cref="Hotkey.Key"/></param>
         public Hotkey(HotkeyType type, KeyCode specialKey1, KeyCode specialKey2, KeyCode key) : this(type, specialKey1, key)
         {
             SpecialKey2 = specialKey2;
