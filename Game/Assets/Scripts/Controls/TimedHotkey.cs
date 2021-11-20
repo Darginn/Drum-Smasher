@@ -17,17 +17,20 @@ namespace Assets.Scripts.Controls
         float _timePressed;
         bool _isPressed;
 
+        /// <param name="triggerDelay"><see cref="TriggerDelay"/></param>
         public TimedHotkey(HotkeyType type, KeyCode key, TimeSpan triggerDelay) : base(type, key)
         {
             TriggerDelay = triggerDelay;
         }
 
 
+        /// <param name="triggerDelay"><see cref="TriggerDelay"/></param>
         public TimedHotkey(HotkeyType type, KeyCode specialKey1, KeyCode key, TimeSpan triggerDelay) : base(type, specialKey1, key)
         {
             TriggerDelay = triggerDelay;
         }
 
+        /// <param name="triggerDelay"><see cref="TriggerDelay"/></param>
         public TimedHotkey(HotkeyType type, KeyCode specialKey1, KeyCode specialKey2, KeyCode key, TimeSpan triggerDelay) : base(type, specialKey1, specialKey2, key)
         {
             TriggerDelay = triggerDelay;

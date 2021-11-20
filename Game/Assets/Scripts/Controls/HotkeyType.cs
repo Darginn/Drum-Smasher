@@ -18,5 +18,7 @@ namespace Assets.Scripts.Controls
         TaikoOuterRight,
 
         ExitGame,
+
+        Test
     }
 }

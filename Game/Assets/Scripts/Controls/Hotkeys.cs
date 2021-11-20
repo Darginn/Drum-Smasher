@@ -61,6 +61,15 @@ namespace Assets.Scripts.Controls
         }
 
         /// <summary>
+        /// Checks if a specified key is registered
+        /// </summary>
+        public static bool IsKeyRegistered(HotkeyType type)
+        {
+            return _registeredKeys.ContainsKey(type);
+        }
+
+
+        /// <summary>
         /// Gets a specific <see cref="Hotkey"/>
         /// </summary>
         /// <returns>Returns the <see cref="Hotkey"/> or null if not found</returns>
@@ -142,6 +151,25 @@ namespace Assets.Scripts.Controls
                 return false;
 
             return key.InvokeCheckKeyUp();
+        }
+
+        /// <summary>
+        /// <inheritdoc cref="TimedHotkey.InvokeKeyCheckTimed"/>
+        /// <para>If the registered key is not a <see cref="TimedHotkey"/> this will always return false and never invoke it</para>
+        /// </summary>
+        public static bool InvokeKeyCheckTimed(HotkeyType keyType)
+        {
+            Hotkey key = GetKey(keyType);
+
+            if (key == null)
+                return false;
+
+            TimedHotkey tkey = key as TimedHotkey;
+
+            if (key == null)
+                return false;
+
+            return tkey.InvokeKeyCheckTimed();
         }
     }
 

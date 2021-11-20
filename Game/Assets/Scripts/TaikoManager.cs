@@ -37,9 +37,6 @@ namespace Assets.Scripts
 
         public int TargetFPS = 1000; // Placeholder value (0 = unlimited)
 
-        public HotKey TitleScreenKey;
-        public HotKey DevConsoleKey;
-
         public GameObject DevConsolePrefab;
         public GameObject Canvas;
 
@@ -68,9 +65,12 @@ namespace Assets.Scripts
         void Start()
         {
             Instance = this;
-            TitleScreenKey = new HotKey(KeyCode.Escape, new Action(OnTitleScreenKey), EscapeCheckDelayMS);
+
+            Hotkeys.RegisterKey(new TimedHotkey(HotkeyType.ReturnToTitleScreen, KeyCode.Escape, TimeSpan.FromMilliseconds(EscapeCheckDelayMS)))
+                   .OnChecked += hk => OnTitleScreenKey();
             Hotkeys.RegisterKey(new Hotkey(HotkeyType.ToggleDevConsole, KeyCode.KeypadMinus))
                    .OnCheckedDown += hk => OnDevConsoleKey();
+
             QualitySettings.vSyncCount = 0;
         }
 
@@ -110,7 +110,7 @@ namespace Assets.Scripts
         // Update is called once per frame
         void Update()
         {
-            TitleScreenKey.CheckKey();
+            Hotkeys.InvokeKeyCheckTimed(HotkeyType.ReturnToTitleScreen);
             Hotkeys.InvokeCheckKeyDown(HotkeyType.ToggleDevConsole);
         }
 
