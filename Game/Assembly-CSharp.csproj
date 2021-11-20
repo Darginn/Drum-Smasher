@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{DDFBC18F-9396-3137-9CFE-DEB2CDB74636}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -55,6 +56,14 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Database\Maps\MapsetHelper.cs" />
     <Compile Include="Assets\Packages\sqlite-net.1.6.292\content\SQLiteAsync.cs" />
+    <Compile Include="Assets\Scripts\TaikoGame\ActiveTaikoSettings.cs" />
+    <Compile Include="Assets\Scripts\TaikoGame\NoteScroller.cs" />
+    <Compile Include="Assets\Scripts\TaikoGame\Notes\Note.cs" />
+    <Compile Include="Assets\Scripts\TaikoGame\Notes\NoteColor.cs" />
+    <Compile Include="Assets\Scripts\TaikoGame\Notes\NotePool.cs" />
+    <Compile Include="Assets\Scripts\TaikoGame\Notes\NoteState.cs" />
+    <Compile Include="Assets\Scripts\TaikoGame\PlayState.cs" />
+    <Compile Include="Assets\Scripts\TaikoGame\SoundConductor.cs" />
     <Compile Include="Assets\Scripts\Tools\SyncSolutionUtilities.cs" />
     <Compile Include="Assets\Scripts\TitleScreenManager.cs" />
     <Compile Include="Assets\Scripts\GameInput\KeyScanner.cs" />
@@ -91,7 +100,6 @@
     <Compile Include="Assets\Scripts\Configs\Bindable\Bindable.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserMac.cs" />
     <Compile Include="Assets\Scripts\Enums\Grade.cs" />
-    <Compile Include="Assets\Scripts\Sound\SoundConductor.cs" />
     <Compile Include="Assets\Scripts\Game\StatisticHandler.cs" />
     <Compile Include="Assets\Scripts\GameInput\XInput.cs" />
     <Compile Include="Assets\Scripts\Extensions\Extensions.cs" />
