@@ -115,6 +115,7 @@ namespace Assets.Scripts
             loadAO.completed += ao =>
             {
                 _sceneActionActive = false;
+                TaikoManager.OnSceneLoaded(LoadedChart, chartDirectory, null);
             };
         }
     }
