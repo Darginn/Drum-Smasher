@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Assets.Scripts.Configs;
 using Assets.Scripts.Configs.GameConfigs;
+using Assets.Scripts.TaikoGame;
 
 namespace Assets.Scripts.DevConsole.Commands
 {
@@ -37,8 +38,7 @@ namespace Assets.Scripts.DevConsole.Commands
             }
 
             bool oldAP = taiko.Autoplay;
-            NoteScroller.Instance.SetAutoPlay(newAP);
-
+            ActiveTaikoSettings.IsAutoplayActive = newAP;
             taiko.Save();
 
             DevConsole.WriteLine($"Changed Autoplay from {oldAP} to {newAP}");

@@ -36,12 +36,18 @@ namespace Assets.Scripts.TaikoGame.Notes
             NotesInUse--;
         }
 
+        public static void ClearPool()
+        {
+            _pool.Clear();
+        }
+
         static void Grow(int count)
         {
             for (int i = 0; i < count; i++)
             {
                 GameObject nobj = new GameObject();
                 Note n = nobj.AddComponent<Note>();
+                nobj.AddComponent<SpriteRenderer>();
 
                 nobj.SetActive(false);
                 _pool.Enqueue(n);

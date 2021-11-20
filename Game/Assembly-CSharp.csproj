@@ -1,15 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{DDFBC18F-9396-3137-9CFE-DEB2CDB74636}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -54,54 +53,43 @@
     <UnityVersion>2021.1.22f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="D:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Assets\Scripts\Database\Maps\MapsetHelper.cs" />
     <Compile Include="Assets\Packages\sqlite-net.1.6.292\content\SQLiteAsync.cs" />
-    <Compile Include="Assets\Scripts\TaikoGame\ActiveTaikoSettings.cs" />
-    <Compile Include="Assets\Scripts\TaikoGame\NoteScroller.cs" />
-    <Compile Include="Assets\Scripts\TaikoGame\Notes\Note.cs" />
-    <Compile Include="Assets\Scripts\TaikoGame\Notes\NoteColor.cs" />
-    <Compile Include="Assets\Scripts\TaikoGame\Notes\NotePool.cs" />
-    <Compile Include="Assets\Scripts\TaikoGame\Notes\NoteState.cs" />
-    <Compile Include="Assets\Scripts\TaikoGame\PlayState.cs" />
     <Compile Include="Assets\Scripts\TaikoGame\SoundConductor.cs" />
     <Compile Include="Assets\Scripts\Tools\SyncSolutionUtilities.cs" />
     <Compile Include="Assets\Scripts\TitleScreenManager.cs" />
-    <Compile Include="Assets\Scripts\GameInput\KeyScanner.cs" />
     <Compile Include="Assets\Scripts\SongListManager.cs" />
     <Compile Include="Assets\Scripts\Database\Maps\MapDatabaseCache.cs" />
     <Compile Include="Assets\Scripts\DevConsole\Commands\AutoplayCommand.cs" />
-    <Compile Include="Assets\Scripts\Game\SoundConductor.cs" />
-    <Compile Include="Assets\Scripts\Game\Modifiers\ModType.cs" />
+    <Compile Include="Assets\Scripts\TaikoGame\Modifiers\ModType.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleSaveFileImage.cs" />
     <Compile Include="Assets\Scripts\Database\Maps\MapsetDeletedEventArgs.cs" />
     <Compile Include="Assets\Scripts\Enums\ModIdentifier.cs" />
+    <Compile Include="Assets\Scripts\TaikoGame\PlayState.cs" />
     <Compile Include="Assets\Scripts\Tools\DontDestroyOnLoadScript.cs" />
     <Compile Include="Assets\Scripts\Debug\FPSCounter.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\BasicSample.cs" />
-    <Compile Include="Assets\Scripts\GameInput\TaikoDrumHotKey.cs" />
     <Compile Include="Assets\Scripts\TaikoManager.cs" />
     <Compile Include="Assets\Scripts\Logger.cs" />
     <Compile Include="Assets\Scripts\DevConsole\Commands\KeyCommand.cs" />
     <Compile Include="Assets\Scripts\Database\Scores\Score.cs" />
     <Compile Include="Assets\Scripts\Database\Maps\Map.cs" />
-    <Compile Include="Assets\Scripts\Game\Notes\NoteSegment.cs" />
     <Compile Include="Assets\Scripts\Controls\Hotkey.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleOpenFileImage.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserEditor.cs" />
-    <Compile Include="Assets\Scripts\Game\PlayState.cs" />
     <Compile Include="Assets\Scripts\IO\Charts\ChartFile.cs" />
     <Compile Include="Assets\Scripts\Configs\GameConfigs\GlobalConfig.cs" />
-    <Compile Include="Assets\Scripts\Game\NoteScroller.cs" />
-    <Compile Include="Assets\Scripts\Game\ScoreScreen.cs" />
-    <Compile Include="Assets\Scripts\Game\Notes\NoteHitBox.cs" />
-    <Compile Include="Assets\Scripts\Game\Notes\NoteColor.cs" />
     <Compile Include="Assets\Scripts\Database\Maps\Mapset.cs" />
     <Compile Include="Assets\Scripts\Database\Maps\MapsetUpdatedEventArgs.cs" />
+    <Compile Include="Assets\Scripts\TaikoGame\Notes\Note.cs" />
+    <Compile Include="Assets\Scripts\TaikoGame\TaikoDrum.cs" />
     <Compile Include="Assets\Scripts\Configs\Bindable\Bindable.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserMac.cs" />
     <Compile Include="Assets\Scripts\Enums\Grade.cs" />
-    <Compile Include="Assets\Scripts\Game\StatisticHandler.cs" />
-    <Compile Include="Assets\Scripts\GameInput\XInput.cs" />
+    <Compile Include="Assets\Scripts\TaikoGame\Notes\NoteColor.cs" />
     <Compile Include="Assets\Scripts\Extensions\Extensions.cs" />
     <Compile Include="Assets\Scripts\Controls\HotkeyAlreadyRegisteredException.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserWindows.cs" />
@@ -113,11 +101,9 @@
     <Compile Include="Assets\StandaloneFileBrowser\IStandaloneFileBrowser.cs" />
     <Compile Include="Assets\Scripts\Configs\ConfigManager.cs" />
     <Compile Include="Assets\Scripts\Database\DatabaseManager.cs" />
-    <Compile Include="Assets\Scripts\Game\Notes\NoteType.cs" />
-    <Compile Include="Assets\Scripts\Game\Modifiers\Mods\ModAutoplay.cs" />
+    <Compile Include="Assets\Scripts\TaikoGame\Modifiers\Mods\ModAutoplay.cs" />
     <Compile Include="Assets\Scripts\Controls\TimedHotkey.cs" />
-    <Compile Include="Assets\Scripts\Game\Modifiers\ModsChangedEventArgs.cs" />
-    <Compile Include="Assets\Scripts\Game\Notes\Note.cs" />
+    <Compile Include="Assets\Scripts\TaikoGame\Modifiers\ModsChangedEventArgs.cs" />
     <Compile Include="Assets\Scripts\Configs\Bindable\BindableInt.cs" />
     <Compile Include="Assets\Scripts\Extensions\AutoInitAttribute.cs" />
     <Compile Include="Assets\Scripts\IO\JsonFile.cs" />
@@ -125,11 +111,12 @@
     <Compile Include="Assets\Scripts\Configs\IConfig.cs" />
     <Compile Include="Assets\Scripts\Database\Maps\MapDeletedEventArgs.cs" />
     <Compile Include="Assets\Scripts\Database\Maps\MapManager.cs" />
-    <Compile Include="Assets\Scripts\GameInput\HotKey.cs" />
+    <Compile Include="Assets\Scripts\TaikoGame\NoteScroller.cs" />
     <Compile Include="Assets\Scripts\Configs\GameConfigs\TaikoConfig.cs" />
     <Compile Include="Assets\Scripts\IO\Charts\SongScanning.cs" />
     <Compile Include="Assets\Scripts\Sound\NAudioPlayer.cs" />
     <Compile Include="Assets\Scripts\Configs\BaseConfig.cs" />
+    <Compile Include="Assets\Scripts\TaikoGame\Notes\NoteState.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowser.cs" />
     <Compile Include="Assets\Scripts\Configs\Bindable\BindableFloat.cs" />
     <Compile Include="Assets\Scripts\CameraScreenResolution.cs" />
@@ -137,19 +124,19 @@
     <Compile Include="Assets\Scripts\Controls\HotkeyType.cs" />
     <Compile Include="Assets\Scripts\Enums\OrderMapsetsBy.cs" />
     <Compile Include="Assets\Scripts\DevConsole\Commands\HelpCommand.cs" />
+    <Compile Include="Assets\Scripts\TaikoGame\ActiveTaikoSettings.cs" />
+    <Compile Include="Assets\Scripts\TaikoGame\Notes\NotePool.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleSaveFileText.cs" />
-    <Compile Include="Assets\Scripts\Game\Modifiers\ModManager.cs" />
-    <Compile Include="Assets\Scripts\Game\Notes\NoteHitType.cs" />
+    <Compile Include="Assets\Scripts\TaikoGame\Modifiers\ModManager.cs" />
     <Compile Include="Assets\Scripts\Configs\Bindable\BindableDouble.cs" />
     <Compile Include="Assets\Scripts\DevConsole\Commands\ICommand.cs" />
     <Compile Include="Assets\Scripts\DevConsole\DevConsole.cs" />
     <Compile Include="Assets\Scripts\Enums\MapGame.cs" />
     <Compile Include="Assets\Scripts\IO\Charts\ChartNote.cs" />
     <Compile Include="Assets\Packages\sqlite-net.1.6.292\content\SQLite.cs" />
-    <Compile Include="Assets\Scripts\GameInput\KeyController.cs" />
     <Compile Include="Assets\Scripts\Controls\Hotkeys.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserLinux.cs" />
-    <Compile Include="Assets\Scripts\Game\Modifiers\IGameplayModifier.cs" />
+    <Compile Include="Assets\Scripts\TaikoGame\Modifiers\IGameplayModifier.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Packages\System.Buffers.4.4.0\version.txt" />
@@ -159,8 +146,6 @@
     <None Include="Assets\Packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll" />
     <None Include="Assets\Packages\System.Buffers.4.4.0\THIRD-PARTY-NOTICES.TXT" />
     <None Include="Assets\Packages\YamlDotNet.11.2.1\lib\net45\YamlDotNet.dll" />
-    <None Include="Assets\Scripts\GameInput\Plugins\XInputDotNetPure.dll" />
-    <None Include="Assets\Scripts\GameInput\XInput MITLicense.txt" />
     <None Include="Assets\Packages\NAudio.2.0.1\lib\netstandard2.0\NAudio.dll" />
     <None Include="Assets\Packages\System.Runtime.CompilerServices.Unsafe.4.5.2\version.txt" />
     <None Include="Assets\Packages\NAudio.2.0.1\lib\netstandard2.0\NAudio.xml" />
@@ -168,7 +153,6 @@
     <None Include="Assets\StandaloneFileBrowser\Plugins\Ookii.Dialogs.dll" />
     <None Include="Assets\Packages\System.Memory.4.5.3\LICENSE.TXT" />
     <None Include="Assets\Packages\System.Memory.4.5.3\useSharedDesignerContext.txt" />
-    <None Include="Assets\Scripts\GameInput\Plugins\XInputInterface.dll" />
     <None Include="Assets\Packages\NAudio.Midi.2.0.1\lib\netstandard2.0\NAudio.Midi.dll" />
     <None Include="Assets\Packages\NAudio.Core.2.0.0\lib\netstandard2.0\NAudio.Core.dll" />
     <None Include="Assets\link.xml" />
@@ -460,9 +444,6 @@
     </Reference>
     <Reference Include="System.Windows.Forms">
       <HintPath>Assets\StandaloneFileBrowser\Plugins\System.Windows.Forms.dll</HintPath>
-    </Reference>
-    <Reference Include="XInputDotNetPure">
-      <HintPath>Assets\Scripts\GameInput\Plugins\XInputDotNetPure.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>D:\reposSSD\Unity\2021.1.22f1\Editor\Data\PlaybackEngines\AppleTVSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

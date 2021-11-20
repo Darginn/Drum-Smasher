@@ -144,6 +144,21 @@ namespace Assets.Scripts.Controls
             SpecialKey2 = specialKey2;
         }
 
+        public void InvokeKey()
+        {
+            OnChecked?.Invoke(this);
+        }
+
+        public void InvokeKeyDown()
+        {
+            OnCheckedDown?.Invoke(this);
+        }
+
+        public void InvokeKeyUp()
+        {
+            OnCheckedUp?.Invoke(this);
+        }
+
         /// <summary>
         /// Checks if the key is pressed
         /// </summary>

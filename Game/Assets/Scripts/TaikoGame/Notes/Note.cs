@@ -33,7 +33,6 @@ namespace Assets.Scripts.TaikoGame.Notes
         /// Is the note big?
         /// </summary>
         public bool IsBigNote { get; private set; }
-        public float NoteSpeed { get; private set; } = 6f;
 
         Vector3 _startPos;
         Vector3 _hitPos;
@@ -41,6 +40,8 @@ namespace Assets.Scripts.TaikoGame.Notes
 
         Vector3 _minHitPos;
         Vector3 _maxHitPos;
+        static bool _autoplaySwitchRed;
+        static bool _autoplaySwitchBlue;
 
         /// <summary>
         /// Invoke a note hit
@@ -95,7 +96,7 @@ namespace Assets.Scripts.TaikoGame.Notes
         /// <param name="hit">Position when note should be hit</param>
         /// <param name="destroy">Position when note should be destroyed</param>
         /// <param name="hitSize">The amount a note can be away from the <see cref="_hitPos"/> to be still valid to be hit</param>
-        public static Note CreateNew(int orderIndex, float startTime, float hitTime, Vector3 start, Vector3 hit, Vector3 destroy, Vector3 hitSize, bool bigNote, NoteColor color)
+        public static Note CreateNew(int orderIndex, float startTime, float hitTime, Vector3 start, Vector3 hit, Vector3 destroy, Vector3 hitSize, bool bigNote, Sprite defaultNoteSprite, NoteColor color)
         {
             Note n = NotePool.RentOne();
             n.OrderIndex = orderIndex;
@@ -118,22 +119,31 @@ namespace Assets.Scripts.TaikoGame.Notes
             else
                 n.transform.localScale = ActiveTaikoSettings.NoteScaleNormal;
 
+            SpriteRenderer sr = n.GetComponent<SpriteRenderer>();
+
             switch (color)
             {
                 default:
                 case NoteColor.Red:
-                    n.GetComponent<SpriteRenderer>().color = ActiveTaikoSettings.NoteColorRed;
+                    sr.color = ActiveTaikoSettings.NoteColorRed;
                     break;
 
                 case NoteColor.Blue:
-                    n.GetComponent<SpriteRenderer>().color = ActiveTaikoSettings.NoteColorBlue;
+                    sr.color = ActiveTaikoSettings.NoteColorBlue;
                     break;
 
                 case NoteColor.Yellow:
-                    n.GetComponent<SpriteRenderer>().color = ActiveTaikoSettings.NoteColorYellow;
+                    sr.color = ActiveTaikoSettings.NoteColorYellow;
                     break;
             }
 
+            sr.sprite = defaultNoteSprite;
+
+            Vector3 pos = start;
+            pos.z = -1000f + orderIndex * .01f;
+            
+            n.transform.position = pos;
+            n.gameObject.SetActive(true);
             return n;
         }
 
@@ -159,10 +169,10 @@ namespace Assets.Scripts.TaikoGame.Notes
                 return;
 
             Vector3 pos = transform.position;
-            float distToMove = GetDistanceByTime((float)(ActiveTaikoSettings.Sound.CurrentTime - StartTime), NoteSpeed);
+            float distToMove = GetDistanceByTime((float)(ActiveTaikoSettings.Sound.CurrentTime - StartTime), ActiveTaikoSettings.NoteSpeed);
             pos.x -= distToMove;
 
-            transform.position = pos = new Vector3(_startPos.x - distToMove, _startPos.y, _startPos.z);
+            transform.position = pos = new Vector3(_startPos.x - distToMove, transform.position.y, transform.position.z);
 
             if (pos.x <= _destroyPos.x)
             {
@@ -179,7 +189,61 @@ namespace Assets.Scripts.TaikoGame.Notes
                 {
                     // Only hit when we are on hit or already passed it
                     if (pos.x <= _hitPos.x)
+                    {
                         OnHit(true);
+
+                        switch(Color)
+                        {
+                            case NoteColor.Blue:
+                                if (IsBigNote)
+                                {
+                                    Hotkeys.GetKey(HotkeyType.TaikoOuterLeft)
+                                           .InvokeKeyDown();
+                                    Hotkeys.GetKey(HotkeyType.TaikoOuterRight)
+                                           .InvokeKeyDown();
+                                }
+                                else
+                                {
+                                    if (_autoplaySwitchBlue)
+                                        Hotkeys.GetKey(HotkeyType.TaikoOuterLeft)
+                                               .InvokeKeyDown();
+                                    else
+                                        Hotkeys.GetKey(HotkeyType.TaikoOuterRight)
+                                               .InvokeKeyDown();
+
+                                    _autoplaySwitchBlue = !_autoplaySwitchBlue;
+                                }
+                                break;
+
+                            case NoteColor.Red:
+                                if (IsBigNote)
+                                {
+                                    Hotkeys.GetKey(HotkeyType.TaikoInnerLeft)
+                                           .InvokeKeyDown();
+                                    Hotkeys.GetKey(HotkeyType.TaikoInnerRight)
+                                           .InvokeKeyDown();
+                                }
+                                else
+                                {
+                                    if (_autoplaySwitchRed)
+                                        Hotkeys.GetKey(HotkeyType.TaikoInnerLeft)
+                                               .InvokeKeyDown();
+                                    else
+                                        Hotkeys.GetKey(HotkeyType.TaikoInnerRight)
+                                               .InvokeKeyDown();
+
+                                    _autoplaySwitchRed = !_autoplaySwitchRed;
+                                }
+                                break;
+
+                            case NoteColor.Yellow:
+                                if (Random.Range(1, 3) == 1)
+                                    goto case NoteColor.Blue;
+                                else
+                                    goto case NoteColor.Red;
+
+                        }
+                    }
                 }
                 else
                 {

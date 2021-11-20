@@ -2,8 +2,8 @@
 using Assets.Scripts.Configs.GameConfigs;
 using Assets.Scripts.Controls;
 using Assets.Scripts.Game;
-using Assets.Scripts.GameInput;
 using Assets.Scripts.IO.Charts;
+using Assets.Scripts.TaikoGame;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -58,7 +58,7 @@ namespace Assets.Scripts
             QualitySettings.vSyncCount = 0;
 
             Logger.Log($"Set FPS limit to {Application.targetFrameRate} and VSYNC {(QualitySettings.vSyncCount <= 0 ? "false" : "true")}");
-            Instance._scroller.LoadChart(chart, chartDirectory, true, mods);
+            Instance._scroller.OnSceneLoaded(chartDirectory, chart, mods);
         }
 
         // Start is called before the first frame update
