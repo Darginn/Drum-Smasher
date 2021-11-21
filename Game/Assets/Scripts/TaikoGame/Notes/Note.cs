@@ -52,6 +52,8 @@ namespace Assets.Scripts.TaikoGame.Notes
                 return false;
 
             State = NoteState.Hit;
+            StatisticHandler.Instance.OnNoteHit(goodHit, IsBigNote);
+            NoteScroller.Instance.RemoveNoteFromSpawnedList(this);
             Delete();
             return true;
         }
@@ -65,6 +67,8 @@ namespace Assets.Scripts.TaikoGame.Notes
                 return;
 
             State = NoteState.Missed;
+            StatisticHandler.Instance.OnNoteMiss();
+            NoteScroller.Instance.RemoveNoteFromSpawnedList(this);
         }
 
         /// <summary>
@@ -72,7 +76,9 @@ namespace Assets.Scripts.TaikoGame.Notes
         /// </summary>
         public virtual void OnReachedEnd()
         {
-            switch(State)
+            NoteScroller.Instance.RemoveNoteFromSpawnedList(this);
+
+            switch (State)
             {
                 case NoteState.Spawned:
                 case NoteState.Missed:
@@ -96,9 +102,20 @@ namespace Assets.Scripts.TaikoGame.Notes
         /// <param name="hit">Position when note should be hit</param>
         /// <param name="destroy">Position when note should be destroyed</param>
         /// <param name="hitSize">The amount a note can be away from the <see cref="_hitPos"/> to be still valid to be hit</param>
-        public static Note CreateNew(int orderIndex, float startTime, float hitTime, Vector3 start, Vector3 hit, Vector3 destroy, Vector3 hitSize, bool bigNote, Sprite defaultNoteSprite, NoteColor color)
+        public static Note CreateNew(int orderIndex, float startTime, float hitTime, Vector3 start, Vector3 hit, Vector3 destroy, Vector3 hitSize, 
+                                     bool bigNote, Sprite defaultNoteSprite, Sprite defaultNoteOverlaySprite, NoteColor color)
         {
             Note n = NotePool.RentOne();
+
+            if (n.transform.childCount == 0)
+            {
+                GameObject overlayChild = new GameObject();
+                overlayChild.AddComponent<SpriteRenderer>().sprite = defaultNoteOverlaySprite;
+
+                overlayChild.transform.SetParent(n.transform);
+                overlayChild.transform.localPosition = Vector3.zero;
+            }
+
             n.OrderIndex = orderIndex;
             n.Color = color;
 
@@ -164,12 +181,12 @@ namespace Assets.Scripts.TaikoGame.Notes
         void Update()
         {
             //Don't start if our sound has not started
-            if (ActiveTaikoSettings.Sound.PlayState != PlayState.Playing ||
+            if (SoundConductor.Instance.PlayState != PlayState.Playing ||
                 State == NoteState.Destroyed)
                 return;
 
             Vector3 pos = transform.position;
-            float distToMove = GetDistanceByTime((float)(ActiveTaikoSettings.Sound.CurrentTime - StartTime), ActiveTaikoSettings.NoteSpeed);
+            float distToMove = GetDistanceByTime((float)(SoundConductor.Instance.CurrentTime - StartTime), ActiveTaikoSettings.NoteSpeed);
             pos.x -= distToMove;
 
             transform.position = pos = new Vector3(_startPos.x - distToMove, transform.position.y, transform.position.z);
@@ -183,7 +200,8 @@ namespace Assets.Scripts.TaikoGame.Notes
                 OnMissed();
             }
             else if (pos.x >= _minHitPos.x &&
-                     pos.x <= _maxHitPos.x)
+                     pos.x <= _maxHitPos.x &&
+                     NoteScroller.Instance.CanNoteBeHit(this))
             {
                 if (ActiveTaikoSettings.IsAutoplayActive)
                 {

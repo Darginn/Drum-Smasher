@@ -46,6 +46,11 @@ namespace Assets.Scripts
 
         [SerializeField] NoteScroller _scroller;
 
+        public TaikoManager()
+        {
+            Instance = this;
+        }
+
         public static void OnSceneLoaded(ChartFile chart, DirectoryInfo chartDirectory, List<(string, float)> mods = null)
         {
             Scene scene = SceneManager.GetActiveScene();
@@ -64,8 +69,6 @@ namespace Assets.Scripts
         // Start is called before the first frame update
         void Start()
         {
-            Instance = this;
-
             Hotkeys.RegisterKey(new TimedHotkey(HotkeyType.ReturnToTitleScreen, KeyCode.Escape, TimeSpan.FromMilliseconds(EscapeCheckDelayMS)))
                    .OnChecked += hk => OnTitleScreenKey();
             Hotkeys.RegisterKey(new Hotkey(HotkeyType.ToggleDevConsole, KeyCode.KeypadMinus))

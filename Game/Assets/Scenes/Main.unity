@@ -668,9 +668,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: Exit
+      - m_Target: {fileID: 1846047538}
+        m_TargetAssemblyTypeName: Assets.Scripts.TaikoGame.ScoreScreen, Assembly-CSharp
+        m_MethodName: ReturnToMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -828,7 +828,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 258617718}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afa2325fb0b91134eb17b0b372d3f698, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b0846fa01f3ae74fae369e7a8ed7789, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _scoreText: {fileID: 849566418}
@@ -839,9 +839,7 @@ MonoBehaviour:
   _key2Text: {fileID: 1178818298}
   _key3Text: {fileID: 2127605019}
   _key4Text: {fileID: 1030729448}
-  Multiplier: 1
-  _currentAccuracy: 0
-  _currentSoundOffset: 0
+  Multiplier: 3
 --- !u!4 &258617720
 Transform:
   m_ObjectHideFlags: 0
@@ -911,6 +909,8 @@ MonoBehaviour:
   _drumInnerRight: {fileID: 841194376}
   _drumOuterRight: {fileID: 2082615725}
   _defaultNoteSprite: {fileID: 21300000, guid: 1f89560efab34ad42a406bb090bebdbe, type: 3}
+  _defaultNoteOverlaySprite: {fileID: 21300000, guid: c72f319998a00554fa374b04c0cea79b,
+    type: 3}
 --- !u!1 &276751497
 GameObject:
   m_ObjectHideFlags: 0
@@ -3443,9 +3443,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: Retry
+      - m_Target: {fileID: 1846047538}
+        m_TargetAssemblyTypeName: Assets.Scripts.TaikoGame.ScoreScreen, Assembly-CSharp
+        m_MethodName: RestartMap
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4925,7 +4925,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1846047536}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d15753b397fbad478b47c44f5972601, type: 3}
+  m_Script: {fileID: 11500000, guid: 165c490d70f706d4d95076c0aac14052, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _scoreText: {fileID: 1486492164}
@@ -4936,7 +4936,6 @@ MonoBehaviour:
   _goodText: {fileID: 276751499}
   _missText: {fileID: 994600}
   _rankText: {fileID: 146001935}
-  _scoreScreen: {fileID: 1846047536}
 --- !u!1 &1935798335
 GameObject:
   m_ObjectHideFlags: 0

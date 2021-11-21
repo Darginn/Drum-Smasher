@@ -15,6 +15,8 @@ namespace Assets.Scripts.TaikoGame
 {
     public class NoteScroller : MonoBehaviour
     {
+        public static NoteScroller Instance { get; private set; }
+
         [SerializeField] Transform _startPosObj;
         [SerializeField] Transform _hitPosObj;
         [SerializeField] Transform _destroyPosObj;
@@ -28,8 +30,10 @@ namespace Assets.Scripts.TaikoGame
         [SerializeField] TaikoDrum _drumOuterRight;
 
         [SerializeField] Sprite _defaultNoteSprite;
+        [SerializeField] Sprite _defaultNoteOverlaySprite;
 
         ChartFile _chart;
+        DirectoryInfo _chartDirectory;
 
         Note _lastSpawnedNote;
         List<Note> _spawnedNotes;
@@ -39,6 +43,7 @@ namespace Assets.Scripts.TaikoGame
 
         public NoteScroller()
         {
+            Instance = this;
             _spawnedNotes = new List<Note>();
         }
 
@@ -47,14 +52,16 @@ namespace Assets.Scripts.TaikoGame
             _reachedChartEnd = false;
             ActiveTaikoSettings.Reset();
             ClearAllNotes();
+            StatisticHandler.Instance.Reset();
+            ScoreScreen.Instance.Hide();
 
             NotePool.ClearPool();
             
             Logger.Log("Loading taiko scene");
 
-            ActiveTaikoSettings.Sound = _sound;
-            ActiveTaikoSettings.Sound.Stop();
+            SoundConductor.Instance.Stop();
             _chart = cf;
+            _chartDirectory = chartFolder;
 
             Logger.Log("Loading Taiko Settings");
 
@@ -90,12 +97,34 @@ namespace Assets.Scripts.TaikoGame
                 Hotkeys.RegisterKey(new Hotkey(HotkeyType.TaikoOuterRight, k4))
                        .OnCheckedDown += OnKeyHit;
 
-            ActiveTaikoSettings.Sound.LoadMp3File(Path.Combine(chartFolder.FullName, cf.SoundFile));
+            SoundConductor.Instance.LoadMp3File(Path.Combine(chartFolder.FullName, cf.SoundFile));
 
             Logger.Log("Loaded Taiko Settings");
             Logger.Log("Taiko scene loaded, starting song...");
 
-            ActiveTaikoSettings.Sound.Play();
+            SoundConductor.Instance.Play();
+        }
+
+        public void ReloadScene()
+        {
+            OnSceneLoaded(_chartDirectory, _chart, null);
+        }
+
+        public bool CanNoteBeHit(Note n)
+        {
+            return _spawnedNotes.Count > 0 && _spawnedNotes[0].OrderIndex == n.OrderIndex;
+        }
+
+        public void RemoveNoteFromSpawnedList(Note n)
+        {
+            for (int i = 0; i < _spawnedNotes.Count; i++)
+            {
+                if (_spawnedNotes[i].OrderIndex == n.OrderIndex)
+                {
+                    _spawnedNotes.RemoveAt(i);
+                    return;
+                }
+            }
         }
 
         void OnKeyHit(Hotkey key)
@@ -105,18 +134,22 @@ namespace Assets.Scripts.TaikoGame
                 default:
                 case HotkeyType.TaikoOuterLeft:
                     _drumOuterLeft.Trigger();
+                    StatisticHandler.Instance.IncrementKey(HotkeyType.TaikoOuterLeft);
                     break;
 
                 case HotkeyType.TaikoInnerLeft:
                     _drumInnerLeft.Trigger();
+                    StatisticHandler.Instance.IncrementKey(HotkeyType.TaikoInnerLeft);
                     break;
 
                 case HotkeyType.TaikoInnerRight:
                     _drumInnerRight.Trigger();
+                    StatisticHandler.Instance.IncrementKey(HotkeyType.TaikoInnerRight);
                     break;
 
                 case HotkeyType.TaikoOuterRight:
                     _drumOuterRight.Trigger();
+                    StatisticHandler.Instance.IncrementKey(HotkeyType.TaikoOuterRight);
                     break;
             }
         }
@@ -125,7 +158,7 @@ namespace Assets.Scripts.TaikoGame
         {
             _lastSpawnedNote = Note.CreateNew(_nextNoteIndex++, (float)spawnTime, (float)cn.HitTime.TotalSeconds,
                                     _startPosObj.position, _hitPosObj.position, _destroyPosObj.position,
-                                    _hitsizeAreaObj.sizeDelta / 2, cn.IsBigNote, _defaultNoteSprite, (NoteColor)cn.Color);
+                                    _hitsizeAreaObj.sizeDelta / 2, cn.IsBigNote, _defaultNoteSprite, _defaultNoteOverlaySprite, (NoteColor)cn.Color);
 
             _spawnedNotes.Add(_lastSpawnedNote);
         }
@@ -143,7 +176,7 @@ namespace Assets.Scripts.TaikoGame
             double spawnTime = cn.HitTime.TotalSeconds - ActiveTaikoSettings.NoteOffset;
 
             // We are too early, don't spawn our next note
-            if (spawnTime > ActiveTaikoSettings.Sound.CurrentTime)
+            if (spawnTime > SoundConductor.Instance.CurrentTime)
                 return;
 
             SpawnNote(cn, spawnTime);
@@ -162,10 +195,27 @@ namespace Assets.Scripts.TaikoGame
 
         void Update()
         {
-            if (ActiveTaikoSettings.Sound.PlayState != PlayState.Playing ||
-                _reachedChartEnd)
-                return;
+            Hotkeys.InvokeCheckKeyDown(HotkeyType.TaikoOuterLeft);
+            Hotkeys.InvokeCheckKeyDown(HotkeyType.TaikoInnerLeft);
+            Hotkeys.InvokeCheckKeyDown(HotkeyType.TaikoInnerRight);
+            Hotkeys.InvokeCheckKeyDown(HotkeyType.TaikoOuterRight);
 
+            if (SoundConductor.Instance.PlayState != PlayState.Playing || _reachedChartEnd)
+            {
+                // Check if we reached the end of the chart
+                if (_nextNoteIndex == _chart.Notes.Count && _spawnedNotes.Count == 0)
+                {
+                    // Prevent this from being run every update
+                    _nextNoteIndex = 0;
+
+                    ScoreScreen.Instance.SetScoreStatistic(StatisticHandler.Instance.GetScoreStatistics());
+                    ScoreScreen.Instance.Show();
+                }
+
+                return;
+            }
+
+            StatisticHandler.Instance.UpdateSoundOffset((float)SoundConductor.Instance.CurrentTime);
             TrySpawnNote();
         }
     }

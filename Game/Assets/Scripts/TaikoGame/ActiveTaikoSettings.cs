@@ -7,8 +7,6 @@ namespace Assets.Scripts.TaikoGame
         public static bool IgnoreNoteColors { get; set; }
         public static bool IsAutoplayActive { get; set; }
 
-        public static SoundConductor Sound { get; set; }
-
         public static float NoteOffset { get; set; }
 
         public static Color NoteColorRed { get; set; }
@@ -30,8 +28,6 @@ namespace Assets.Scripts.TaikoGame
         {
             IgnoreNoteColors = false;
             IsAutoplayActive = false;
-
-            Sound = null;
 
             NoteOffset = 0;
 

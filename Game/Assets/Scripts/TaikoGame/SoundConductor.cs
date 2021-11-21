@@ -7,6 +7,8 @@ namespace Assets.Scripts.TaikoGame
 {
     public class SoundConductor : MonoBehaviour
     {
+        public static SoundConductor Instance { get; private set; }
+
         /// <summary>
         /// Current Song Time
         /// </summary>
@@ -28,20 +30,9 @@ namespace Assets.Scripts.TaikoGame
         [SerializeField] PlayState _playState = PlayState.Stopped;
         [SerializeField] AudioSource _hitSoundNote;
 
-        float _lastUpdated;
-        const float _SOUND_OFFSET_UPDATE_DELAY = 0.1f;
-
-        void Start()
+        public SoundConductor()
         {
-
-        }
-
-        void Update()
-        {
-            if (_playState != PlayState.Playing)
-                return;
-
-            _currentTime = AudioSettings.dspTime - _dspSongTime;
+            Instance = this;
         }
 
         /// <summary>
@@ -198,5 +189,14 @@ namespace Assets.Scripts.TaikoGame
 
             return result;
         }
+
+        void Update()
+        {
+            if (_playState != PlayState.Playing)
+                return;
+
+            _currentTime = AudioSettings.dspTime - _dspSongTime;
+        }
+
     }
 }
