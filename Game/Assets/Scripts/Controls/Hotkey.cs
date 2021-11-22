@@ -232,8 +232,8 @@ namespace Assets.Scripts.Controls
         bool CheckKey(Func<KeyCode, bool> keyCheck)
         {
             if (!keyCheck(Key) ||
-                (SpecialKey1 != KeyCode.None && !keyCheck(SpecialKey1)) ||
-                (SpecialKey2 != KeyCode.None && !keyCheck(SpecialKey2)))
+                (SpecialKey1 != KeyCode.None && !Input.GetKey(SpecialKey1)) ||
+                (SpecialKey2 != KeyCode.None && !Input.GetKey(SpecialKey2)))
                 return false;
 
             return true;

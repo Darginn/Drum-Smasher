@@ -9,6 +9,8 @@ namespace Assets.Scripts.Controls
     public enum HotkeyType
     {
         ToggleDevConsole,
+        ToggleDevMode,
+
         ReturnToTitleScreen,
         ToggleFullscreen,
 
@@ -18,7 +20,5 @@ namespace Assets.Scripts.Controls
         TaikoOuterRight,
 
         ExitGame,
-
-        Test
     }
 }

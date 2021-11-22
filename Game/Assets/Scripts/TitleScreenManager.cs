@@ -40,6 +40,7 @@ namespace Assets.Scripts
         [SerializeField] Text key2Text;
         [SerializeField] Text key3Text;
         [SerializeField] Text key4Text;
+        [SerializeField] Text _devModeText;
 
         public void SetHotKey1()
         {
@@ -118,8 +119,11 @@ namespace Assets.Scripts
             GlobalConfig tss = (GlobalConfig)ConfigManager.GetOrLoadOrAdd<GlobalConfig>();
             TaikoConfig ts = (TaikoConfig)ConfigManager.GetOrLoadOrAdd<TaikoConfig>();
 
-            Hotkey key = Hotkeys.RegisterKey(new Hotkey(HotkeyType.ToggleDevConsole, KeyCode.KeypadMinus));
-            key.OnCheckedDown += hk => OnDevConsoleHotkey();
+            Hotkeys.RegisterKey(new Hotkey(HotkeyType.ToggleDevConsole, KeyCode.KeypadMinus))
+                   .OnCheckedDown += hk => OnDevConsoleHotkey();
+
+            Hotkeys.RegisterKey(new Hotkey(HotkeyType.ToggleDevMode, KeyCode.LeftControl, KeyCode.LeftShift, KeyCode.D))
+                   .OnCheckedDown += hk => OnDevModeToggle();
 
             key1Text.text = ts.Key1;
             key2Text.text = ts.Key2;
@@ -156,11 +160,32 @@ namespace Assets.Scripts
 
             SetFullscreen(tss.Fullscreen);
             SetResolution(tss.ScreenWidth, tss.ScreenHeight, tss.RefreshRate);
+
+            if (tss.IsDeveloperMode)
+                _devModeText.gameObject.SetActive(true);
+        }
+
+        private void OnDevModeToggle()
+        {
+            GlobalConfig cfg = (GlobalConfig)ConfigManager.GetOrLoadOrAdd<GlobalConfig>();
+            cfg.IsDeveloperMode = !cfg.IsDeveloperMode;
+
+            if (cfg.IsDeveloperMode)
+            {
+                _devModeText.gameObject.SetActive(true);
+                Logger.Log("Devmode enabled");
+            }
+            else
+            {
+                _devModeText.gameObject.SetActive(false);
+                Logger.Log("Devmode disabled");
+            }
         }
 
         void Update()
         {
             Hotkeys.InvokeCheckKeyDown(HotkeyType.ToggleDevConsole);
+            Hotkeys.InvokeCheckKeyDown(HotkeyType.ToggleDevMode);
         }
 
         void FixedUpdate()
