@@ -104,5 +104,10 @@ namespace Assets.Scripts.Hotkeys2
                     key.CheckAndInvoke();
             }
         }
+
+        private void OnLevelWasLoaded(int level)
+        {
+            ClearKeys();
+        }
     }
 }

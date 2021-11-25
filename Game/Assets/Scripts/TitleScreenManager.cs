@@ -122,8 +122,8 @@ namespace Assets.Scripts
 
             HotkeyManager.Initialize();
 
-            new Hotkey("ToggleDevMode", KeyCode.D, KeyCode.LeftControl, KeyCode.LeftShift, HotkeyType.OnKeyDown)
-                .OnInvoked += hk => OnDevModeToggle();
+new Hotkey("ToggleDevMode", KeyCode.D, KeyCode.LeftControl, KeyCode.LeftShift, HotkeyType.OnKeyDown)
+    .OnInvoked += hk => OnDevModeToggle();
 
             new Hotkey("ToggleDevConsole", KeyCode.KeypadMinus, HotkeyType.OnKeyDown)
                 .OnInvoked += hk => OnDevConsoleHotkey();

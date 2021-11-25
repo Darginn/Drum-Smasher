@@ -187,7 +187,7 @@ namespace Assets.Scripts.Hotkeys2
         /// <summary>
         /// Clears all subscribed actions for this hotkey
         /// </summary>
-        public void ClearEvent()
+        public void ClearSubscribedEvent()
         {
             OnInvoked = null;
         }
