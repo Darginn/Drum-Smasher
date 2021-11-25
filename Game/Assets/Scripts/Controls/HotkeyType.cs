@@ -6,19 +6,13 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Controls
 {
+    /// <summary>
+    /// Decides how a hotkey will be checked for, e.g.: Only when the main key was pressed this frame
+    /// </summary>
     public enum HotkeyType
     {
-        ToggleDevConsole,
-        ToggleDevMode,
-
-        ReturnToTitleScreen,
-        ToggleFullscreen,
-
-        TaikoOuterLeft,
-        TaikoInnerLeft,
-        TaikoInnerRight,
-        TaikoOuterRight,
-
-        ExitGame,
+        OnKey,
+        OnKeyDown,
+        OnKeyUp
     }
 }

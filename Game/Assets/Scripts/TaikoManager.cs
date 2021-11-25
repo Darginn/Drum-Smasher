@@ -69,10 +69,10 @@ namespace Assets.Scripts
         // Start is called before the first frame update
         void Start()
         {
-            Hotkeys.RegisterKey(new TimedHotkey(HotkeyType.ReturnToTitleScreen, KeyCode.Escape, TimeSpan.FromMilliseconds(EscapeCheckDelayMS)))
-                   .OnChecked += hk => OnTitleScreenKey();
-            Hotkeys.RegisterKey(new Hotkey(HotkeyType.ToggleDevConsole, KeyCode.KeypadMinus))
-                   .OnCheckedDown += hk => OnDevConsoleKey();
+            new Hotkey("ReturnToTitleScreen", KeyCode.Escape, HotkeyType.OnKeyDown)
+                .OnInvoked += hk => OnTitleScreenKey();
+            new Hotkey("ToggleDevConsole", KeyCode.KeypadMinus, HotkeyType.OnKeyDown)
+                .OnInvoked += hk => OnDevConsoleKey();
 
             QualitySettings.vSyncCount = 0;
         }
@@ -88,7 +88,10 @@ namespace Assets.Scripts
             GlobalConfig cfg = (GlobalConfig)ConfigManager.GetOrLoadOrAdd<GlobalConfig>();
 
             if (!cfg.IsDeveloperMode)
+            {
+                Logger.Log("Failed to open dev console due to dev mode being disabled", LogLevel.Warning);
                 return;
+            }
 
             Logger.Log("Opening dev console");
             if (_devConsole != null)
@@ -108,13 +111,6 @@ namespace Assets.Scripts
 
                 StartCoroutine(rt.MoveOverSeconds(rt.anchoredPosition3D, new Vector3(950, -383, 1.5f), 0.5f, true));
             }
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-            Hotkeys.InvokeKeyCheckTimed(HotkeyType.ReturnToTitleScreen);
-            Hotkeys.InvokeCheckKeyDown(HotkeyType.ToggleDevConsole);
         }
 
         void OnApplicationQuit()

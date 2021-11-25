@@ -145,27 +145,27 @@ namespace Assets.Scripts.TaikoGame
             return Math.Truncate(l * Math.Pow(t, 10) * Math.Pow(x / 100, 10) / 15);
         }
 
-        public void IncrementKey(HotkeyType hotkey)
+        public void IncrementKey(string keyId)
         {
-            switch (hotkey)
+            switch (keyId)
             {
                 default:
-                    throw new InvalidOperationException($"Invalid hotkey: {hotkey}");
+                    throw new InvalidOperationException($"Invalid hotkey: {keyId}");
 
-                case HotkeyType.TaikoOuterLeft:
+                case "TaikoOuterLeft":
                     _currentKey1++;
                     _key1Text.text = _currentKey1.ToString();
                     break;
 
-                case HotkeyType.TaikoInnerLeft:
+                case "TaikoInnerLeft":
                     _currentKey2++;
                     _key2Text.text = _currentKey2.ToString();
                     break;
-                case HotkeyType.TaikoInnerRight:
+                case "TaikoInnerRight":
                     _currentKey3++;
                     _key3Text.text = _currentKey3.ToString();
                     break;
-                case HotkeyType.TaikoOuterRight:
+                case "TaikoOuterRight":
                     _currentKey4++;
                     _key4Text.text = _currentKey4.ToString();
                     break;

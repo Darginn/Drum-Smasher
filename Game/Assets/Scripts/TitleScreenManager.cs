@@ -15,7 +15,7 @@ using Assets.Scripts.IO.Charts;
 using Assets.Scripts.Configs.GameConfigs;
 using Assets.Scripts.Configs;
 //using Assets.Scripts.Controls;
-using Assets.Scripts.Hotkeys2;
+using Assets.Scripts.Controls;
 
 namespace Assets.Scripts
 {
@@ -190,7 +190,10 @@ new Hotkey("ToggleDevMode", KeyCode.D, KeyCode.LeftControl, KeyCode.LeftShift, H
             GlobalConfig cfg = (GlobalConfig)ConfigManager.GetOrLoadOrAdd<GlobalConfig>();
 
             if (!cfg.IsDeveloperMode)
+            {
+                Logger.Log("Failed to open dev console due to dev mode being disabled", LogLevel.Warning);
                 return;
+            }
 
             Logger.Log("Toggling Console");
 

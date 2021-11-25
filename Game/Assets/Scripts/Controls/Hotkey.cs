@@ -10,233 +10,186 @@ namespace Assets.Scripts.Controls
     public class Hotkey
     {
         /// <summary>
-        /// Invoked through <see cref="InvokeCheckKey"/>:
-        /// <para></para>
-        /// <inheritdoc cref="InvokeCheckKey"/>
+        /// Called through <see cref="Invoke"/>
         /// </summary>
-        public event Action<Hotkey> OnChecked;
-        /// <summary>
-        /// Invoked through <see cref="InvokeCheckKeyDown"/>:
-        /// <para></para>
-        /// <inheritdoc cref="InvokeCheckKeyDown"/>
-        /// </summary>
-        public event Action<Hotkey> OnCheckedDown;
-        /// <summary>
-        /// Invoked through <see cref="InvokeCheckKeyUp"/>:
-        /// <para></para>
-        /// <inheritdoc cref="InvokeCheckKeyUp"/>
-        /// </summary>
-        public event Action<Hotkey> OnCheckedUp;
+        public event Action<Hotkey> OnInvoked;
 
         /// <summary>
-        /// The hotkey type
+        /// Key id, used to identify keys in the HotkeyManagher
         /// </summary>
-        public HotkeyType Type { get; }
+        public string Id { get; }
+
+        /// <summary>
+        /// If true the hotkey will automatically be checked upon each update in the unity mainthread
+        /// </summary>
+        public bool IsEnabled { get; set; }
+        /// <summary>
+        /// Simply tells us if our key is registered in the HotkeyManager
+        /// </summary>
+        public bool IsRegistered { get; private set; }
 
         /// <summary>
         /// The main key
-        /// <para>Cannot be any special key like shift, alt, etc.</para>
         /// </summary>
         public KeyCode Key
         {
-            get => _k;
+            get => _key;
             set
             {
-                switch (value)
-                {
-                    default:
-                        _k = value;
-                        break;
+                if (HotkeyManager.IsSpecialKey(value))
+                    throw new InvalidOperationException("Special keys cannot be used (e.g.: Left Shift)");
+                else if (value == KeyCode.None)
+                    throw new OperationCanceledException("The main key cannot be set to None, use Hotkey.IsEnabled instead");
 
-                    case KeyCode.None:
-                        throw new InvalidOperationException("Key cannot be None");
-                        
-                    case KeyCode.LeftShift:
-                    case KeyCode.RightShift:
-                    case KeyCode.LeftControl:
-                    case KeyCode.RightControl:
-                    case KeyCode.LeftAlt:
-                    case KeyCode.RightAlt:
-                    case KeyCode.AltGr:
-                        throw new InvalidOperationException("Key cannot be any special key");
-                }
+                _key = value;
             }
         }
         /// <summary>
-        /// The 1. special key
-        /// <para>Can only be any special key like shift, alt, etc.</para>
+        /// The first special key (e.g.: <see cref="KeyCode.LeftShift"/>), set to None to disable
         /// </summary>
         public KeyCode SpecialKey1
         {
-            get => _sk1;
+            get => _skey1;
             set
-            { 
-                switch(value)
-                {
-                    default:
-                        throw new InvalidOperationException("SpecialKey1 can only be a key like shift, alt etc.");
+            {
+                if (!HotkeyManager.IsSpecialKey(value))
+                    throw new InvalidOperationException("Only special keys can be used (e.g.: Left Shift)");
 
-                    case KeyCode.LeftShift:
-                    case KeyCode.RightShift:
-                    case KeyCode.LeftControl:
-                    case KeyCode.RightControl:
-                    case KeyCode.LeftAlt:
-                    case KeyCode.RightAlt:
-                    case KeyCode.AltGr:
-                        _sk1 = value;
-                        break;
-                }
+                _skey1 = value;
             }
         }
         /// <summary>
-        /// The 2. special key
-        /// <para>Can only be any special key like shift, alt, etc.</para>
+        /// The first special key (e.g.: <see cref="KeyCode.LeftShift"/>), set to None to disable
         /// </summary>
         public KeyCode SpecialKey2
         {
-            get => _sk2;
+            get => _skey2;
             set
             {
-                switch (value)
-                {
-                    default:
-                        throw new InvalidOperationException("SpecialKey1 can only be a key like shift, alt etc.");
+                if (!HotkeyManager.IsSpecialKey(value))
+                    throw new InvalidOperationException("Only special keys can be used (e.g.: Left Shift)");
 
-                    case KeyCode.LeftShift:
-                    case KeyCode.RightShift:
-                    case KeyCode.LeftControl:
-                    case KeyCode.RightControl:
-                    case KeyCode.LeftAlt:
-                    case KeyCode.RightAlt:
-                    case KeyCode.AltGr:
-                        _sk2 = value;
-                        break;
-                }
+                _skey2 = value;
             }
         }
+        /// <summary>
+        /// <inheritdoc cref="HotkeyType"/>
+        /// </summary>
+        public HotkeyType Type { get; set; }
 
-        KeyCode _k;
-        KeyCode _sk1;
-        KeyCode _sk2;
+        KeyCode _key;
+        KeyCode _skey1;
+        KeyCode _skey2;
 
-        /// <param name="type"><see cref="Hotkey.Type"/></param>
-        /// <param name="key"><see cref="Hotkey.Key"/></param>
-        public Hotkey(HotkeyType type, KeyCode key)
+        /// <param name="id">Id string used to identify the hotkey</param>
+        /// <param name="isEnabled">Check on each unity update</param>
+        /// <param name="register">Register the key after it has been created</param>
+        public Hotkey(string id, KeyCode key, HotkeyType type, bool isEnabled = true, bool register = true)
         {
-            Type = type;
+            Id = id;
             Key = key;
+            Type = type;
+            IsEnabled = isEnabled;
+
+            if (register)
+                Register();
         }
 
-        /// <param name="type"><see cref="Hotkey.Type"/></param>
-        /// <param name="specialKey1"><see cref="Hotkey.SpecialKey1"/></param>
-        /// <param name="key"><see cref="Hotkey.Key"/></param>
-        public Hotkey(HotkeyType type, KeyCode specialKey1, KeyCode key) : this(type, key)
+        /// <param name="id">Id string used to identify the hotkey</param>
+        /// <param name="isEnabled">Check on each unity update</param>
+        /// <param name="register">Register the key after it has been created</param>
+        public Hotkey(string id, KeyCode key, KeyCode specialKey, HotkeyType type, bool isEnabled = true, bool register = true) 
+            : this(id, key, type, isEnabled, register)
         {
-            SpecialKey1 = specialKey1;
+            SpecialKey1 = specialKey;
         }
 
-        /// <param name="type"><see cref="Hotkey.Type"/></param>
-        /// <param name="specialKey1"><see cref="Hotkey.SpecialKey1"/></param>
-        /// <param name="specialKey2"><see cref="Hotkey.SpecialKey2"/></param>
-        /// <param name="key"><see cref="Hotkey.Key"/></param>
-        public Hotkey(HotkeyType type, KeyCode specialKey1, KeyCode specialKey2, KeyCode key) : this(type, specialKey1, key)
+        /// <param name="id">Id string used to identify the hotkey</param>
+        /// <param name="isEnabled">Check on each unity update</param>
+        /// <param name="register">Register the key after it has been created</param>
+        public Hotkey(string id, KeyCode key, KeyCode specialKey, KeyCode specialKey2, HotkeyType type, bool isEnabled = true, bool register = true) 
+            : this(id, key, specialKey, type, isEnabled, register)
         {
             SpecialKey2 = specialKey2;
         }
 
-        public void InvokeKey()
+        /// <param name="id">Id string used to identify the hotkey</param>
+        /// <param name="isEnabled">Check on each unity update</param>
+        /// <param name="register">Register the key after it has been created</param>
+        public Hotkey(string id, KeyCode key, KeyCode specialKey, KeyCode specialKey2, HotkeyType type, Action<Hotkey> onInvoked, bool isEnabled = true, bool register = true) 
+            : this(id, key, specialKey, specialKey2, type, isEnabled, register)
         {
-            OnChecked?.Invoke(this);
-        }
-
-        public void InvokeKeyDown()
-        {
-            OnCheckedDown?.Invoke(this);
-        }
-
-        public void InvokeKeyUp()
-        {
-            OnCheckedUp?.Invoke(this);
+            OnInvoked += onInvoked;
         }
 
         /// <summary>
-        /// Checks if the key is pressed
+        /// Registers the hotkey, equivalent to calling <see cref="HotkeyManager.RegisterKey(Hotkey)"/>
         /// </summary>
-        public bool CheckKey()
+        public void Register()
         {
-            return CheckKey(new Func<KeyCode, bool>(Input.GetKey));
+            HotkeyManager.RegisterKey(this);
         }
 
         /// <summary>
-        /// Checks if the key was pressed this frame
+        /// Deregisters the hotkey, equivalent to calling <see cref="HotkeyManager.DeRegisterKey(Hotkey)"/>/<see cref="HotkeyManager.RegisterKey(Hotkey)"/>
         /// </summary>
-        public bool CheckKeyDown()
+        public void DeRegister()
         {
-            return CheckKey(new Func<KeyCode, bool>(Input.GetKeyDown));
+            HotkeyManager.DeRegisterKey(this);
         }
 
         /// <summary>
-        /// Checks if the key was released this frame
+        /// Checks if the hotkey was pressed
         /// </summary>
-        public bool CheckKeyUp()
+        public bool Check()
         {
-            return CheckKey(new Func<KeyCode, bool>(Input.GetKeyUp));
-        }
-
-        /// <summary>
-        /// Calls <see cref="CheckKey"/> if the result is true <see cref="OnChecked"/> will be invoked
-        /// </summary>
-        /// <returns>Key is pressed</returns>
-        public bool InvokeCheckKey()
-        {
-            if (CheckKey())
-            {
-                OnChecked?.Invoke(this);
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Calls <see cref="CheckKeyDown"/> if the result is true <see cref="OnCheckedDown"/> will be invoked
-        /// </summary>
-        /// <returns>Key was pressed this frame</returns>
-        public bool InvokeCheckKeyDown()
-        {
-            if (CheckKeyDown())
-            {
-                OnCheckedDown?.Invoke(this);
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Calls <see cref="CheckKeyUp"/> if the result is true <see cref="OnCheckedUp"/> will be invoked
-        /// </summary>
-        /// <returns>Key was released this frame</returns>
-        public bool InvokeCheckKeyUp()
-        {
-            if (CheckKeyUp())
-            {
-                OnCheckedUp?.Invoke(this);
-                return true;
-            }
-
-            return false;
-        }
-
-
-        bool CheckKey(Func<KeyCode, bool> keyCheck)
-        {
-            if (!keyCheck(Key) ||
-                (SpecialKey1 != KeyCode.None && !Input.GetKey(SpecialKey1)) ||
-                (SpecialKey2 != KeyCode.None && !Input.GetKey(SpecialKey2)))
+            if ((_skey1 != KeyCode.None && !Input.GetKey(_skey1)) ||
+                (_skey2 != KeyCode.None && !Input.GetKey(_skey2)))
                 return false;
 
-            return true;
+            switch(Type)
+            {
+                default:
+                case HotkeyType.OnKey:
+                    return Input.GetKey(_key);
+
+                case HotkeyType.OnKeyDown:
+                    return Input.GetKeyDown(_key);
+
+                case HotkeyType.OnKeyUp:
+                    return Input.GetKeyUp(_key);
+            }
+        }
+
+        /// <summary>
+        /// Invokes the event <see cref="OnInvoked"/>
+        /// </summary>
+        public void Invoke()
+        {
+            OnInvoked?.Invoke(this);
+        }
+
+        /// <summary>
+        /// Checks and invokes the hotkey (<see cref="Check"/>, <see cref="Invoke"/>)
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckAndInvoke()
+        {
+            if (Check())
+            {
+                Invoke();
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Clears all subscribed actions for this hotkey
+        /// </summary>
+        public void ClearSubscribedEvent()
+        {
+            OnInvoked = null;
         }
     }
 

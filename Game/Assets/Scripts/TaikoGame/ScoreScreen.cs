@@ -60,8 +60,8 @@ namespace Assets.Scripts.TaikoGame
 
         public void ReturnToMenu()
         {
-            Hotkeys.GetKey(HotkeyType.ReturnToTitleScreen)
-                   .InvokeKey();
+            HotkeyManager.GetKey("ReturnToTitleScreen")
+                         .Invoke();
         }
 
         public void RestartMap()

@@ -63,6 +63,7 @@ namespace Assets.Scripts.TaikoGame
                 return;
 
             _musicSource.Pause();
+            _playState = PlayState.Paused;
         }
 
         /// <summary>
@@ -74,6 +75,7 @@ namespace Assets.Scripts.TaikoGame
                 return;
 
             _musicSource.UnPause();
+            _playState = PlayState.Playing;
         }
 
         /// <summary>
@@ -85,6 +87,7 @@ namespace Assets.Scripts.TaikoGame
                 return;
 
             _musicSource.Stop();
+            _playState = PlayState.Stopped;
         }
 
         /// <summary>

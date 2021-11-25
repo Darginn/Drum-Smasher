@@ -136,6 +136,8 @@ namespace Assets.Scripts.TaikoGame.Notes
             else
                 n.transform.localScale = ActiveTaikoSettings.NoteScaleNormal;
 
+            n.IsBigNote = bigNote;
+
             SpriteRenderer sr = n.GetComponent<SpriteRenderer>();
 
             switch (color)
@@ -215,19 +217,19 @@ namespace Assets.Scripts.TaikoGame.Notes
                             case NoteColor.Blue:
                                 if (IsBigNote)
                                 {
-                                    Hotkeys.GetKey(HotkeyType.TaikoOuterLeft)
-                                           .InvokeKeyDown();
-                                    Hotkeys.GetKey(HotkeyType.TaikoOuterRight)
-                                           .InvokeKeyDown();
+                                    HotkeyManager.GetKey("TaikoOuterLeft")
+                                                 .Invoke();
+                                    HotkeyManager.GetKey("TaikoOuterRight")
+                                                 .Invoke();
                                 }
                                 else
                                 {
                                     if (_autoplaySwitchBlue)
-                                        Hotkeys.GetKey(HotkeyType.TaikoOuterLeft)
-                                               .InvokeKeyDown();
+                                        HotkeyManager.GetKey("TaikoOuterLeft")
+                                                     .Invoke();
                                     else
-                                        Hotkeys.GetKey(HotkeyType.TaikoOuterRight)
-                                               .InvokeKeyDown();
+                                        HotkeyManager.GetKey("TaikoOuterRight")
+                                                     .Invoke();
 
                                     _autoplaySwitchBlue = !_autoplaySwitchBlue;
                                 }
@@ -236,19 +238,19 @@ namespace Assets.Scripts.TaikoGame.Notes
                             case NoteColor.Red:
                                 if (IsBigNote)
                                 {
-                                    Hotkeys.GetKey(HotkeyType.TaikoInnerLeft)
-                                           .InvokeKeyDown();
-                                    Hotkeys.GetKey(HotkeyType.TaikoInnerRight)
-                                           .InvokeKeyDown();
+                                    HotkeyManager.GetKey("TaikoInnerLeft")
+                                                 .Invoke();
+                                    HotkeyManager.GetKey("TaikoInnerRight")
+                                                 .Invoke();
                                 }
                                 else
                                 {
                                     if (_autoplaySwitchRed)
-                                        Hotkeys.GetKey(HotkeyType.TaikoInnerLeft)
-                                               .InvokeKeyDown();
+                                        HotkeyManager.GetKey("TaikoInnerLeft")
+                                                     .Invoke();
                                     else
-                                        Hotkeys.GetKey(HotkeyType.TaikoInnerRight)
-                                               .InvokeKeyDown();
+                                        HotkeyManager.GetKey("TaikoInnerRight")
+                                                     .Invoke();
 
                                     _autoplaySwitchRed = !_autoplaySwitchRed;
                                 }
@@ -269,27 +271,27 @@ namespace Assets.Scripts.TaikoGame.Notes
                     switch (Color)
                     {
                         case NoteColor.Blue:
-                            if (Hotkeys.CheckKey(HotkeyType.TaikoOuterLeft))
+                            if (HotkeyManager.GetKey("TaikoOuterLeft").Check())
                                 hitCount++;
-                            if (Hotkeys.CheckKey(HotkeyType.TaikoOuterRight))
+                            if (HotkeyManager.GetKey("TaikoOuterRight").Check())
                                 hitCount++;
                             break;
 
                         case NoteColor.Red:
-                            if (Hotkeys.CheckKey(HotkeyType.TaikoInnerLeft))
+                            if (HotkeyManager.GetKey("TaikoInnerLeft").Check())
                                 hitCount++;
-                            if (Hotkeys.CheckKey(HotkeyType.TaikoInnerRight))
+                            if (HotkeyManager.GetKey("TaikoInnerRight").Check())
                                 hitCount++;
                             break;
 
                         case NoteColor.Yellow:
-                            if (Hotkeys.CheckKey(HotkeyType.TaikoOuterLeft))
+                            if (HotkeyManager.GetKey("TaikoOuterLeft").Check())
                                 hitCount++;
-                            if (Hotkeys.CheckKey(HotkeyType.TaikoOuterRight))
+                            if (HotkeyManager.GetKey("TaikoOuterRight").Check())
                                 hitCount++;
-                            if (Hotkeys.CheckKey(HotkeyType.TaikoInnerLeft))
+                            if (HotkeyManager.GetKey("TaikoInnerLeft").Check())
                                 hitCount++;
-                            if (Hotkeys.CheckKey(HotkeyType.TaikoInnerRight))
+                            if (HotkeyManager.GetKey("TaikoInnerRight").Check())
                                 hitCount++;
                             break;
                     }

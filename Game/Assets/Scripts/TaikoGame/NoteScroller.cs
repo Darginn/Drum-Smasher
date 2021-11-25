@@ -76,26 +76,26 @@ namespace Assets.Scripts.TaikoGame
             if (!Enum.TryParse(settings.Key1.ToUpper(), out KeyCode k1))
                 Logger.Log($"Could not parse key {settings.Key1}", LogLevel.Error);
             else
-                Hotkeys.RegisterKey(new Hotkey(HotkeyType.TaikoInnerLeft, k1))
-                       .OnCheckedDown += OnKeyHit;
+                new Hotkey("TaikoInnerLeft", k1, HotkeyType.OnKeyDown)
+                    .OnInvoked += OnKeyHit;
 
             if (!Enum.TryParse(settings.Key2.ToUpper(), out KeyCode k2))
                 Logger.Log($"Could not parse key {settings.Key2}", LogLevel.Error);
             else
-                Hotkeys.RegisterKey(new Hotkey(HotkeyType.TaikoInnerRight, k2))
-                       .OnCheckedDown += OnKeyHit;
+                new Hotkey("TaikoInnerRight", k2, HotkeyType.OnKeyDown)
+                    .OnInvoked += OnKeyHit;
 
             if (!Enum.TryParse(settings.Key3.ToUpper(), out KeyCode k3))
                 Logger.Log($"Could not parse key {settings.Key3}", LogLevel.Error);
             else
-                Hotkeys.RegisterKey(new Hotkey(HotkeyType.TaikoOuterLeft, k3))
-                       .OnCheckedDown += OnKeyHit;
+                new Hotkey("TaikoOuterLeft", k3, HotkeyType.OnKeyDown)
+                    .OnInvoked += OnKeyHit;
 
             if (!Enum.TryParse(settings.Key4.ToUpper(), out KeyCode k4))
                 Logger.Log($"Could not parse key {settings.Key4}", LogLevel.Error);
             else
-                Hotkeys.RegisterKey(new Hotkey(HotkeyType.TaikoOuterRight, k4))
-                       .OnCheckedDown += OnKeyHit;
+                new Hotkey("TaikoOuterRight", k4, HotkeyType.OnKeyDown)
+                    .OnInvoked += OnKeyHit;
 
             SoundConductor.Instance.LoadMp3File(Path.Combine(chartFolder.FullName, cf.SoundFile));
 
@@ -107,6 +107,7 @@ namespace Assets.Scripts.TaikoGame
 
         public void ReloadScene()
         {
+            SoundConductor.Instance.Stop();
             OnSceneLoaded(_chartDirectory, _chart, null);
         }
 
@@ -129,27 +130,27 @@ namespace Assets.Scripts.TaikoGame
 
         void OnKeyHit(Hotkey key)
         {
-            switch(key.Type)
+            switch(key.Id)
             {
                 default:
-                case HotkeyType.TaikoOuterLeft:
+                case "TaikoOuterLeft":
                     _drumOuterLeft.Trigger();
-                    StatisticHandler.Instance.IncrementKey(HotkeyType.TaikoOuterLeft);
+                    StatisticHandler.Instance.IncrementKey("TaikoOuterLeft");
                     break;
 
-                case HotkeyType.TaikoInnerLeft:
+                case "TaikoInnerLeft":
                     _drumInnerLeft.Trigger();
-                    StatisticHandler.Instance.IncrementKey(HotkeyType.TaikoInnerLeft);
+                    StatisticHandler.Instance.IncrementKey("TaikoInnerLeft");
                     break;
 
-                case HotkeyType.TaikoInnerRight:
+                case "TaikoInnerRight":
                     _drumInnerRight.Trigger();
-                    StatisticHandler.Instance.IncrementKey(HotkeyType.TaikoInnerRight);
+                    StatisticHandler.Instance.IncrementKey("TaikoInnerRight");
                     break;
 
-                case HotkeyType.TaikoOuterRight:
+                case "TaikoOuterRight":
                     _drumOuterRight.Trigger();
-                    StatisticHandler.Instance.IncrementKey(HotkeyType.TaikoOuterRight);
+                    StatisticHandler.Instance.IncrementKey("TaikoOuterRight");
                     break;
             }
         }
@@ -195,11 +196,6 @@ namespace Assets.Scripts.TaikoGame
 
         void Update()
         {
-            Hotkeys.InvokeCheckKeyDown(HotkeyType.TaikoOuterLeft);
-            Hotkeys.InvokeCheckKeyDown(HotkeyType.TaikoInnerLeft);
-            Hotkeys.InvokeCheckKeyDown(HotkeyType.TaikoInnerRight);
-            Hotkeys.InvokeCheckKeyDown(HotkeyType.TaikoOuterRight);
-
             if (SoundConductor.Instance.PlayState != PlayState.Playing || _reachedChartEnd)
             {
                 // Check if we reached the end of the chart
