@@ -14,7 +14,8 @@ using System.Threading;
 using Assets.Scripts.IO.Charts;
 using Assets.Scripts.Configs.GameConfigs;
 using Assets.Scripts.Configs;
-using Assets.Scripts.Controls;
+//using Assets.Scripts.Controls;
+using Assets.Scripts.Hotkeys2;
 
 namespace Assets.Scripts
 {
@@ -119,11 +120,13 @@ namespace Assets.Scripts
             GlobalConfig tss = (GlobalConfig)ConfigManager.GetOrLoadOrAdd<GlobalConfig>();
             TaikoConfig ts = (TaikoConfig)ConfigManager.GetOrLoadOrAdd<TaikoConfig>();
 
-            Hotkeys.RegisterKey(new Hotkey(HotkeyType.ToggleDevConsole, KeyCode.KeypadMinus))
-                   .OnCheckedDown += hk => OnDevConsoleHotkey();
+            HotkeyManager.Initialize();
 
-            Hotkeys.RegisterKey(new Hotkey(HotkeyType.ToggleDevMode, KeyCode.LeftControl, KeyCode.LeftShift, KeyCode.D))
-                   .OnCheckedDown += hk => OnDevModeToggle();
+            new Hotkey("ToggleDevMode", KeyCode.D, KeyCode.LeftControl, KeyCode.LeftShift, HotkeyType.OnKeyDown)
+                .OnInvoked += hk => OnDevModeToggle();
+
+            new Hotkey("ToggleDevConsole", KeyCode.KeypadMinus, HotkeyType.OnKeyDown)
+                .OnInvoked += hk => OnDevConsoleHotkey();
 
             key1Text.text = ts.Key1;
             key2Text.text = ts.Key2;
@@ -180,16 +183,6 @@ namespace Assets.Scripts
                 _devModeText.gameObject.SetActive(false);
                 Logger.Log("Devmode disabled");
             }
-        }
-
-        void Update()
-        {
-            Hotkeys.InvokeCheckKeyDown(HotkeyType.ToggleDevConsole);
-            Hotkeys.InvokeCheckKeyDown(HotkeyType.ToggleDevMode);
-        }
-
-        void FixedUpdate()
-        {
         }
 
         void OnDevConsoleHotkey()
