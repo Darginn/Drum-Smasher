@@ -84,6 +84,7 @@
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserEditor.cs" />
     <Compile Include="Assets\Scripts\IO\Charts\ChartFile.cs" />
     <Compile Include="Assets\Scripts\Configs\GameConfigs\GlobalConfig.cs" />
+    <Compile Include="Assets\Scripts\DevConsole\Commands\SongCommand.cs" />
     <Compile Include="Assets\Scripts\Database\Maps\Mapset.cs" />
     <Compile Include="Assets\Scripts\Database\Maps\MapsetUpdatedEventArgs.cs" />
     <Compile Include="Assets\Scripts\TaikoGame\Notes\Note.cs" />
@@ -93,7 +94,6 @@
     <Compile Include="Assets\Scripts\Enums\Grade.cs" />
     <Compile Include="Assets\Scripts\TaikoGame\Notes\NoteColor.cs" />
     <Compile Include="Assets\Scripts\Extensions\Extensions.cs" />
-    <Compile Include="Assets\Scripts\Controls\HotkeyAlreadyRegisteredException.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserWindows.cs" />
     <Compile Include="Assets\Scripts\Configs\Bindable\BindableValueChangedEventArgs.cs" />
     <Compile Include="Assets\Scripts\GameTime.cs" />
@@ -104,7 +104,6 @@
     <Compile Include="Assets\Scripts\Configs\ConfigManager.cs" />
     <Compile Include="Assets\Scripts\Database\DatabaseManager.cs" />
     <Compile Include="Assets\Scripts\TaikoGame\Modifiers\Mods\ModAutoplay.cs" />
-    <Compile Include="Assets\Scripts\Controls\TimedHotkey.cs" />
     <Compile Include="Assets\Scripts\TaikoGame\Modifiers\ModsChangedEventArgs.cs" />
     <Compile Include="Assets\Scripts\Configs\Bindable\BindableInt.cs" />
     <Compile Include="Assets\Scripts\Extensions\AutoInitAttribute.cs" />
@@ -120,6 +119,7 @@
     <Compile Include="Assets\Scripts\Configs\BaseConfig.cs" />
     <Compile Include="Assets\Scripts\TaikoGame\Notes\NoteState.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowser.cs" />
+    <Compile Include="Assets\Scripts\Controls\HotkeyManager.cs" />
     <Compile Include="Assets\Scripts\Configs\Bindable\BindableFloat.cs" />
     <Compile Include="Assets\Scripts\CameraScreenResolution.cs" />
     <Compile Include="Assets\Scripts\IO\BaseFile.cs" />
@@ -136,7 +136,6 @@
     <Compile Include="Assets\Scripts\Enums\MapGame.cs" />
     <Compile Include="Assets\Scripts\IO\Charts\ChartNote.cs" />
     <Compile Include="Assets\Packages\sqlite-net.1.6.292\content\SQLite.cs" />
-    <Compile Include="Assets\Scripts\Controls\Hotkeys.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserLinux.cs" />
     <Compile Include="Assets\Scripts\TaikoGame\Modifiers\IGameplayModifier.cs" />
   </ItemGroup>

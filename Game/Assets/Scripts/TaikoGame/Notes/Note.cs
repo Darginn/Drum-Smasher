@@ -299,12 +299,12 @@ namespace Assets.Scripts.TaikoGame.Notes
                     if (IsBigNote)
                     {
                         // Good hit
-                        if (hitCount >= 2)
+                        if (hitCount > 1)
                         {
                             OnHit(true);
                         }
                         // Bad hit
-                        else
+                        else if (hitCount > 0)
                         {
                             OnHit(false);
                         }

@@ -30,6 +30,8 @@ namespace Assets.Scripts.TaikoGame
         [SerializeField] PlayState _playState = PlayState.Stopped;
         [SerializeField] AudioSource _hitSoundNote;
 
+        float _timePaused;
+
         public SoundConductor()
         {
             Instance = this;
@@ -46,6 +48,7 @@ namespace Assets.Scripts.TaikoGame
             _musicSource.Play();
             _dspSongTime = AudioSettings.dspTime;
             _playState = PlayState.Playing;
+            _timePaused = 0;
         }
 
         public void PlayHitSound()
@@ -195,11 +198,16 @@ namespace Assets.Scripts.TaikoGame
 
         void Update()
         {
-            if (_playState != PlayState.Playing)
-                return;
+            switch (_playState)
+            {
+                case PlayState.Playing:
+                    _currentTime = AudioSettings.dspTime - _dspSongTime + _timePaused;
+                    break;
 
-            _currentTime = AudioSettings.dspTime - _dspSongTime;
+                case PlayState.Paused:
+                    _timePaused += Time.deltaTime;
+                    break;
+            }
         }
-
     }
 }
