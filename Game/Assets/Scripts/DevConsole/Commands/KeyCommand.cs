@@ -10,12 +10,6 @@ namespace Assets.Scripts.DevConsole.Commands
 {
     public class KeyCommand : BaseCommand
     {
-        [AutoInit]
-        public static void Init()
-        {
-            DevConsole.Commands.Add(new KeyCommand());
-        }
-
         public override string Command => "key";
 
         public override void Execute(params string[] args)

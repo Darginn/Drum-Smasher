@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37312, g: 0.38074034, b: 0.35872734, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2106,7 +2106,7 @@ MonoBehaviour:
   PlayAlert: {fileID: 788255351}
   FailAlert: {fileID: 1350674369}
   SettingsMenu: {fileID: 1161567918}
-  DevConsolePrefab: {fileID: 273408681851003195, guid: af6e53592f8d7d94fbee3ddeee1726e3,
+  DevConsolePrefab: {fileID: 8163865583665196208, guid: 8bf764bbdc5aa9b45bc6d9b805f60608,
     type: 3}
   Canvas: {fileID: 2132988402}
   FullscreenToggle: {fileID: 523460744}

@@ -11,12 +11,6 @@ namespace Assets.Scripts.DevConsole.Commands
 {
     public class FPSCommand : BaseCommand
     {
-        [AutoInit]
-        public static void Init()
-        {
-            DevConsole.Commands.Add(new FPSCommand());
-        }
-
         public override string Command => "fps";
 
         public override void Execute(params string[] args)

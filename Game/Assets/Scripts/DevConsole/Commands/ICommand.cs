@@ -9,7 +9,9 @@ namespace Assets.Scripts.DevConsole.Commands
     public interface ICommand
     {
         DevConsole DevConsole { get; set; }
+
         string Command { get; }
-        void Execute(params string[] args);
+
+        void Execute(string[] args);
     }
 }

@@ -4674,7 +4674,7 @@ MonoBehaviour:
   MultiplierValue: 80
   EscapeCheckDelayMS: 250
   TargetFPS: 250
-  DevConsolePrefab: {fileID: 273408681851003195, guid: af6e53592f8d7d94fbee3ddeee1726e3,
+  DevConsolePrefab: {fileID: 8163865583665196208, guid: 8bf764bbdc5aa9b45bc6d9b805f60608,
     type: 3}
   Canvas: {fileID: 662610955}
   _scroller: {fileID: 275989790}
