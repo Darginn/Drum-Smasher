@@ -1,15 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{DDFBC18F-9396-3137-9CFE-DEB2CDB74636}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -54,6 +53,9 @@
     <UnityVersion>2021.1.22f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="D:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Assets\Scripts\Database\Maps\MapsetHelper.cs" />
     <Compile Include="Assets\Packages\sqlite-net.1.6.292\content\SQLiteAsync.cs" />
     <Compile Include="Assets\Scripts\TaikoGame\SoundConductor.cs" />
@@ -75,6 +77,7 @@
     <Compile Include="Assets\Scripts\TaikoManager.cs" />
     <Compile Include="Assets\Scripts\Logger.cs" />
     <Compile Include="Assets\Scripts\DevConsole\Commands\KeyCommand.cs" />
+    <Compile Include="Assets\Scripts\DevConsole\Commands\Commands.cs" />
     <Compile Include="Assets\Scripts\Database\Scores\Score.cs" />
     <Compile Include="Assets\Scripts\Database\Maps\Map.cs" />
     <Compile Include="Assets\Scripts\DevConsole\DevConsole.cs" />
@@ -138,7 +141,6 @@
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserLinux.cs" />
     <Compile Include="Assets\Scripts\TaikoGame\Modifiers\IGameplayModifier.cs" />
     <Compile Include="Assets\Scripts\DevConsole\Commands\SimpleActionCommand.cs" />
-    <Compile Include="Assets\Scripts\DevConsole\Commands\Commands.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Packages\System.Buffers.4.4.0\version.txt" />

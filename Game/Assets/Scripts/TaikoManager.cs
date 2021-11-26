@@ -1,17 +1,13 @@
 ﻿using Assets.Scripts.Configs;
 using Assets.Scripts.Configs.GameConfigs;
 using Assets.Scripts.Controls;
-using Assets.Scripts.Game;
 using Assets.Scripts.IO.Charts;
 using Assets.Scripts.TaikoGame;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 namespace Assets.Scripts
 {

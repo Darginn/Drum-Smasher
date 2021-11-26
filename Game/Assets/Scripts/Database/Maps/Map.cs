@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using Assets.Scripts.Configs.GameConfigs;
+using Assets.Scripts.TaikoGame.Modifiers;
 
 namespace Assets.Scripts.Database.Maps
 {

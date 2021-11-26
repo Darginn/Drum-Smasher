@@ -1,7 +1,7 @@
 ﻿using Assets.Scripts.Configs;
 using Assets.Scripts.Configs.GameConfigs;
 using Assets.Scripts.Enums;
-using Assets.Scripts.Game.Mods;
+using Assets.Scripts.TaikoGame.Modifiers;
 using System;
 using System.Collections.Generic;
 using System.IO;

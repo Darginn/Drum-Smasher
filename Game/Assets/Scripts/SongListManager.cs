@@ -1,8 +1,5 @@
 ﻿using Assets.Scripts.IO.Charts;
-using Assets.Scripts.Game.Mods;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
