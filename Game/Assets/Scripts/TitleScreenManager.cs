@@ -122,8 +122,8 @@ namespace Assets.Scripts
 
             HotkeyManager.Initialize();
 
-new Hotkey("ToggleDevMode", KeyCode.D, KeyCode.LeftControl, KeyCode.LeftShift, HotkeyType.OnKeyDown)
-    .OnInvoked += hk => OnDevModeToggle();
+            new Hotkey("ToggleDevMode", KeyCode.D, KeyCode.LeftControl, KeyCode.LeftShift, HotkeyType.OnKeyDown)
+                .OnInvoked += hk => OnDevModeToggle();
 
             new Hotkey("ToggleDevConsole", KeyCode.KeypadMinus, HotkeyType.OnKeyDown)
                 .OnInvoked += hk => OnDevConsoleHotkey();
@@ -211,10 +211,6 @@ new Hotkey("ToggleDevMode", KeyCode.D, KeyCode.LeftControl, KeyCode.LeftShift, H
                 _devConsole = Instantiate(DevConsolePrefab);
                 _devConsole.transform.SetParent(Canvas.transform);
 
-                RectTransform rt = _devConsole.GetComponent<RectTransform>();
-                rt.anchoredPosition3D = new Vector3(950, 347, 1.5f);
-
-                StartCoroutine(rt.MoveOverSeconds(rt.anchoredPosition3D, new Vector3(950, -383, 1.5f), 0.5f, true));
                 Logger.Log("Toggled Console");
             }
         }

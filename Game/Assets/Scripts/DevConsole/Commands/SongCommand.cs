@@ -11,12 +11,6 @@ namespace Assets.Scripts.DevConsole.Commands
     {
         public override string Command => "Song";
 
-        [AutoInit]
-        public static void Init()
-        {
-            DevConsole.Commands.Add(new SongCommand());
-        }
-
         public override void Execute(params string[] args)
         {
             if (args.Length == 0)

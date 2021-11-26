@@ -13,12 +13,6 @@ namespace Assets.Scripts.DevConsole.Commands
 {
     public class AutoplayCommand : BaseCommand
     {
-        [AutoInit]
-        public static void Init()
-        {
-            DevConsole.Commands.Add(new AutoplayCommand());
-        }
-
         public override string Command => "ap";
 
         public override void Execute(params string[] args)

@@ -1,141 +1,216 @@
-﻿using Assets.Scripts.DevConsole.Commands;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-using Assets.Scripts.Configs;
-using Assets.Scripts.Configs.GameConfigs;
+using Assets.Scripts.DevConsole.Commands;
 
 namespace Assets.Scripts.DevConsole
 {
     public class DevConsole : MonoBehaviour
     {
-        public Text OutputText;
-        public InputField InputField;
+        public static DevConsole Instance { get; private set; }
 
-        List<string> _lines;
+        public static CommandHandler Commands => Instance._commands;
+
+        [SerializeField] GameObject _content;
+        [SerializeField] Text _templateText;
+        [SerializeField] InputField _userInput;
+        [SerializeField] int _maxLines = 50;
+
+        List<Text> _lines;
+        Color _fontColor;
+
+        CommandHandler _commands;
+
+        /// <summary>
+        /// Writes a new line to the console
+        /// </summary>
+        /// <param name="line"></param>
+        public void WriteLine(string line)
+        {
+            Text text = Instantiate(_templateText.gameObject).GetComponent<Text>();
+            text.text = line;
+            text.gameObject.SetActive(true);
+
+            _lines.Add(text);
+            text.transform.SetParent(_content.transform);
+
+            if (_lines.Count > _maxLines)
+                ClearLine(_lines.Count - 1);
+        }
+
+        /// <summary>
+        /// <inheritdoc cref="WriteLine(string)"/>
+        /// </summary>
+        public void WriteLine(string line, params object[] args)
+        {
+            WriteLine(string.Format(line, args));
+        }
+
+        /// <summary>
+        /// Appends a string to the last written line or creates a new line if no lines exist
+        /// </summary>
+        public void Write(string input)
+        {
+            if (_lines.Count == 0)
+            {
+                WriteLine(input);
+                return;
+            }
+
+            Text text = _lines[_lines.Count - 1];
+            text.text += input;
+        }
+
+        /// <summary>
+        /// <inheritdoc cref="Write(string)"/>
+        /// </summary>
+        public void Write(string input, params object[] args)
+        {
+            Write(string.Format(input, args));
+        }
 
 
-        const int _maxLinesOnScreen = 26;
-        const int _maxLineLength = 9999;
-        
-        static List<ICommand> _commands = new List<ICommand>();
-        public static List<ICommand> Commands => _commands;
+        /// <summary>
+        /// Clears a specific amount of lines
+        /// </summary>
+        /// <param name="lineCount">Lines to clear</param>
+        /// <param name="order">The order in which the lines will be cleared</param>
+        public void Clear(int lineCount = 1, ClearOrder order = ClearOrder.OldestToNewest)
+        {
+            if (_lines.Count == 0)
+                return;
 
-        // Start is called before the first frame update
+            lineCount = Math.Min(lineCount, _lines.Count);
+
+            switch (order)
+            {
+                default:
+                case ClearOrder.OldestToNewest:
+                    for (int i = 0; i < lineCount; i++)
+                        ClearLine(0);
+                    break;
+
+                case ClearOrder.NewestToOldest:
+                    for (int i = 0; i < lineCount; i++)
+                        ClearLine(_lines.Count - 1);
+                    break;
+            }
+
+        }
+
+        /// <summary>
+        /// Clears all lines
+        /// </summary>
+        public void ClearAll()
+        {
+            while (_lines.Count > 0)
+                ClearLine(0);
+        }
+
+        /// <summary>
+        /// Clears the line at the specified index
+        /// </summary>
+        /// <param name="line">Line index</param>
+        public void ClearLine(int line)
+        {
+            Text text = _lines.ElementAt(line);
+            Destroy(text.gameObject);
+            _lines.RemoveAt(line);
+        }
+
+
+        /// <summary>
+        /// Sets the current font color and updates all lines with it
+        /// </summary>
+        public void SetExistingFontColor(Color c)
+        {
+            SetFontColor(c);
+
+            for (int i = 0; i < _lines.Count; i++)
+                _lines[i].color = c;
+        }
+
+        /// <summary>
+        /// Sets the current font color
+        /// </summary>
+        public void SetFontColor(Color c)
+        {
+            _fontColor = c;
+        }
+
+        /// <summary>
+        /// Gets the current font color
+        /// </summary>
+        public Color GetFontColor()
+        {
+            return _fontColor;
+        }
+
+        /// <summary>
+        /// Gets the default font color
+        /// </summary>
+        public Color GetDefaultFontColor()
+        {
+            return _templateText.color;
+        }
+
+        /// <summary>
+        /// Resets the font color to the default color
+        /// </summary>
+        public void ResetFontColor()
+        {
+            SetFontColor(_templateText.color);
+        }
+
+        /// <summary>
+        /// Resets the current font color and all existing lines font color to the default color
+        /// </summary>
+        public void ResetExistingFontColor()
+        {
+            SetExistingFontColor(_templateText.color);
+        }
+
+        /// <summary>
+        /// Invoked when the user submits a string in the console
+        /// </summary>
+        public void OnUserInputSubmit()
+        {
+            string line = _userInput.text;
+            _userInput.text = string.Empty;
+
+            if (string.IsNullOrEmpty(line))
+                return;
+
+            WriteLine(line);
+            _commands.TryParseLineToCommand(line);
+        }
+
         void Start()
         {
-            _lines = new List<string>();
-            GlobalConfig tss = (GlobalConfig)ConfigManager.GetOrLoadOrAdd<GlobalConfig>();
-
-            if (tss.DefaultConsoleMessage != null)
-                WriteLine(tss.DefaultConsoleMessage);
+            
         }
 
-        // Update is called once per frame
-        void Update()
+        void Awake()
         {
-            if ((Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return)) && 
-                InputField.text.Length > 0)
-            {
-                WriteLine(InputField.text, false);
-
-                InputField.text = "";
-            }
+            Instance = this;
+            _commands = new CommandHandler();
+            _lines = new List<Text>();
+            ResetFontColor();
         }
 
-        public void WriteLine(string line, bool doNotParse = true)
+        void OnLevelWasLoaded(int level)
         {
-            if (line.Length > _maxLineLength)
-            {
-                int i = 0;
-
-                while (i < line.Length)
-                {
-                    int lineLength = line.Length - 1;
-                    int subLength = (lineLength == _maxLineLength ? _maxLineLength :
-                                    (lineLength < _maxLineLength ? lineLength : _maxLineLength));
-
-                    string sub = line.Substring(i, subLength);
-                    i += subLength;
-
-                    if (doNotParse)
-                        _lines.Insert(0, "> " + sub);
-                    else
-                     _lines.Insert(0, sub);
-                }
-
-                RefreshLines();
-                return;
-            }
-
-            if (doNotParse)
-                _lines.Insert(0, "> " + line);
-            else
-                _lines.Insert(0, line);
-
-            if (!doNotParse && !line.StartsWith(">"))
-                ParseCommand(line);
-
-            RefreshLines();
+            ClearAll();
         }
 
-        void ParseCommand(string line)
+        public enum ClearOrder
         {
-            if (line.StartsWith("exit", StringComparison.CurrentCultureIgnoreCase))
-            {
-                Destroy(transform.parent.gameObject);
-                return;
-            }
-            else if (line.StartsWith("cls", StringComparison.CurrentCultureIgnoreCase) || line.StartsWith("clear", StringComparison.CurrentCultureIgnoreCase))
-            {
-                _lines.Clear();
-                return;
-            }
-
-            List<string> split = line.Split(' ').ToList();
-            string cmd = split[0];
-            split.RemoveAt(0);
-
-            ExecuteCommand(cmd, split.ToArray());
-        }
-
-        public void ExecuteCommand(string command, params string[] args)
-        {
-            ICommand cmd = _commands.Find(c => c.Command.Equals(command, StringComparison.CurrentCultureIgnoreCase));
-
-            if (cmd == null)
-            {
-                WriteLine("Could not find command: " + command);
-                return;
-            }
-
-            try
-            {
-                cmd.DevConsole = this;
-                cmd.Execute(args);
-            }
-            catch (Exception ex)
-            {
-                string[] exSplit = ex.ToString().Split(Environment.NewLine.ToCharArray());
-
-                foreach (string str in exSplit)
-                    if (!string.IsNullOrEmpty(str))
-                        WriteLine(str);
-            }
-        }
-
-        void RefreshLines()
-        {
-            int max = Math.Min(_maxLinesOnScreen - 1, _lines.Count - 1);
-            string toShow = _lines[max];
-
-            for (int i = max - 1; i >= 0; i--)
-                toShow += Environment.NewLine + _lines[i];
-
-            OutputText.text = toShow;
+            OldestToNewest,
+            NewestToOldest
         }
     }
 }
