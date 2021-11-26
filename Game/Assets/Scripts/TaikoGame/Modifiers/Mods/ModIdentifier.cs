@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Assets.Scripts.Enums
+namespace Assets.Scripts.TaikoGame.Modifiers
 {
     [Flags]
     public enum ModIdentifier : long

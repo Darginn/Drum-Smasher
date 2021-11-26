@@ -1,13 +1,12 @@
 ﻿using Assets.Scripts.Enums;
-using Assets.Scripts.Game.Modifiers;
-using Assets.Scripts.Game.Modifiers.Mods;
+using Assets.Scripts.TaikoGame.Modifiers.Mods;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Assets.Scripts.Game.Mods
+namespace Assets.Scripts.TaikoGame.Modifiers
 {
     /// <summary>
     /// Entire class that controls the addition and removal of game mods.

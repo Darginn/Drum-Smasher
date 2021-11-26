@@ -65,7 +65,7 @@
     <Compile Include="Assets\Scripts\TaikoGame\Modifiers\ModType.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleSaveFileImage.cs" />
     <Compile Include="Assets\Scripts\Database\Maps\MapsetDeletedEventArgs.cs" />
-    <Compile Include="Assets\Scripts\Enums\ModIdentifier.cs" />
+    <Compile Include="Assets\Scripts\TaikoGame\Modifiers\Mods\ModIdentifier.cs" />
     <Compile Include="Assets\Scripts\TaikoGame\PlayState.cs" />
     <Compile Include="Assets\Scripts\Tools\DontDestroyOnLoadScript.cs" />
     <Compile Include="Assets\Scripts\TaikoGame\ScoreScreen.cs" />

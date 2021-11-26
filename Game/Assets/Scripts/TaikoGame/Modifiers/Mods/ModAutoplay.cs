@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Assets.Scripts.Game.Modifiers.Mods
+namespace Assets.Scripts.TaikoGame.Modifiers.Mods
 {
     public class ModAutoplay : IGameplayModifier
     {

@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{DDFBC18F-9396-3137-9CFE-DEB2CDB74636}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -65,7 +66,7 @@
     <Compile Include="Assets\Scripts\TaikoGame\Modifiers\ModType.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleSaveFileImage.cs" />
     <Compile Include="Assets\Scripts\Database\Maps\MapsetDeletedEventArgs.cs" />
-    <Compile Include="Assets\Scripts\Enums\ModIdentifier.cs" />
+    <Compile Include="Assets\Scripts\TaikoGame\Modifiers\Mods\ModIdentifier.cs" />
     <Compile Include="Assets\Scripts\TaikoGame\PlayState.cs" />
     <Compile Include="Assets\Scripts\Tools\DontDestroyOnLoadScript.cs" />
     <Compile Include="Assets\Scripts\TaikoGame\ScoreScreen.cs" />
