@@ -34,6 +34,7 @@ namespace Assets.Scripts.DevConsole
             Text text = Instantiate(_templateText.gameObject).GetComponent<Text>();
             text.text = line;
             text.gameObject.SetActive(true);
+            text.color = _fontColor;
 
             _lines.Add(text);
             text.transform.SetParent(_content.transform);
@@ -185,7 +186,7 @@ namespace Assets.Scripts.DevConsole
             if (string.IsNullOrEmpty(line))
                 return;
 
-            WriteLine(line);
+            //WriteLine(line);
             _commands.TryParseLineToCommand(line);
         }
 

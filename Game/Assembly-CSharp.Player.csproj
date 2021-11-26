@@ -79,6 +79,7 @@
     <Compile Include="Assets\Scripts\DevConsole\Commands\KeyCommand.cs" />
     <Compile Include="Assets\Scripts\Database\Scores\Score.cs" />
     <Compile Include="Assets\Scripts\Database\Maps\Map.cs" />
+    <Compile Include="Assets\Scripts\DevConsole\DevConsole.cs" />
     <Compile Include="Assets\Scripts\Controls\Hotkey.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleOpenFileImage.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserEditor.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Assets\Scripts\TaikoGame\TaikoDrum.cs" />
     <Compile Include="Assets\Scripts\Configs\Bindable\Bindable.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserMac.cs" />
+    <Compile Include="Assets\Scripts\DevConsole\Commands\CommandHandler.cs" />
     <Compile Include="Assets\Scripts\Enums\Grade.cs" />
     <Compile Include="Assets\Scripts\TaikoGame\Notes\NoteColor.cs" />
     <Compile Include="Assets\Scripts\Extensions\Extensions.cs" />
@@ -132,12 +134,12 @@
     <Compile Include="Assets\Scripts\TaikoGame\Modifiers\ModManager.cs" />
     <Compile Include="Assets\Scripts\Configs\Bindable\BindableDouble.cs" />
     <Compile Include="Assets\Scripts\DevConsole\Commands\ICommand.cs" />
-    <Compile Include="Assets\Scripts\DevConsole\DevConsole.cs" />
     <Compile Include="Assets\Scripts\Enums\MapGame.cs" />
     <Compile Include="Assets\Scripts\IO\Charts\ChartNote.cs" />
     <Compile Include="Assets\Packages\sqlite-net.1.6.292\content\SQLite.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\StandaloneFileBrowserLinux.cs" />
     <Compile Include="Assets\Scripts\TaikoGame\Modifiers\IGameplayModifier.cs" />
+    <Compile Include="Assets\Scripts\DevConsole\Commands\SimpleActionCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Packages\System.Buffers.4.4.0\version.txt" />

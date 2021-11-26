@@ -70,6 +70,8 @@ namespace Assets.Scripts.DevConsole.Commands
                 Logger.Log(logText);
                 DevConsole.Instance.WriteLine($"Logged text: {logText}");
             }));
+
+            RegisterCommand(new SimpleActionCommand("testex", args => throw new NotImplementedException("Test message")));
         }
 
         public void RegisterCommand(params ICommand[] commands)
@@ -107,7 +109,7 @@ namespace Assets.Scripts.DevConsole.Commands
             TryExecuteCommand(split[0], parameters);
         }
 
-        public bool TryExecuteCommand(string cmd, string[] args)
+        bool TryExecuteCommand(string cmd, string[] args)
         {
             if (!_commands.TryGetValue(cmd.ToLower(), out ICommand command))
             {
@@ -127,7 +129,8 @@ namespace Assets.Scripts.DevConsole.Commands
                 Color oldCol = DevConsole.Instance.GetFontColor();
 
                 DevConsole.Instance.SetFontColor(Color.red);
-                DevConsole.Instance.WriteLine($"Failed to execute command: {ex}");
+                DevConsole.Instance.WriteLine($"Failed to execute command {command.Command}: {ex.GetType().Name} ({ex.Source})");
+                DevConsole.Instance.WriteLine(ex.Message);
                 DevConsole.Instance.SetFontColor(oldCol);
 
                 Logger.Log(ex.ToString(), LogLevel.Error);
