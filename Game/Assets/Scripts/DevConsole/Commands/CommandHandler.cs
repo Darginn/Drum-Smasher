@@ -16,62 +16,7 @@ namespace Assets.Scripts.DevConsole.Commands
         public CommandHandler()
         {
             _commands = new Dictionary<string, ICommand>();
-            RegisterDefaultCommands();
-        }
-
-        public void RegisterDefaultCommands()
-        {
-            RegisterCommand(new AutoplayCommand(),
-                            new FPSCommand(),
-                            new HelpCommand(),
-                            new KeyCommand(),
-                            new SongCommand());
-
-            RegisterCommand(new SimpleActionCommand("exit", args => Application.Quit()),
-                            new SimpleActionCommand("echo", args => DevConsole.Instance.WriteLine(BaseCommand.ArgsToString(args))),
-                            new SimpleActionCommand("echol", args => DevConsole.Instance.Write(BaseCommand.ArgsToString(args))));
-
-            // Clear line/s
-            RegisterCommand(new SimpleActionCommand("cls", args =>
-            {
-                if (args != null && args.Length > 0)
-                {
-                    switch (args[0].ToLower())
-                    {
-                        default:
-                            DevConsole.Instance.ClearAll();
-                            break;
-
-                        case "oldest":
-                        case "first":
-                        case "f":
-                            DevConsole.Instance.Clear(order: DevConsole.ClearOrder.NewestToOldest);
-                            break;
-
-                        case "newest":
-                        case "last":
-                        case "l":
-                            DevConsole.Instance.Clear(order: DevConsole.ClearOrder.OldestToNewest);
-                            break;
-                    }
-                }
-                else
-                    DevConsole.Instance.ClearAll();
-            }));
-            
-            // Log any message under "Trace" and print it to the console
-            RegisterCommand(new SimpleActionCommand("log", args =>
-            {
-                if (args == null || args.Length == 0)
-                    return;
-
-                string logText = BaseCommand.ArgsToString(args);
-
-                Logger.Log(logText);
-                DevConsole.Instance.WriteLine($"Logged text: {logText}");
-            }));
-
-            RegisterCommand(new SimpleActionCommand("testex", args => throw new NotImplementedException("Test message")));
+            Scripts.DevConsole.Commands.Commands.RegisterDefaultCommands(this);
         }
 
         public void RegisterCommand(params ICommand[] commands)
