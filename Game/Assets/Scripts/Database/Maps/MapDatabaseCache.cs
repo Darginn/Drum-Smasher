@@ -59,7 +59,7 @@ namespace Assets.Scripts.Database.Maps
             }
             catch (Exception e)
             {
-                Logger.Log(e, LogLevel.Exception);
+                Logger.Log(e);
                 throw;
             }
         }
@@ -95,7 +95,7 @@ namespace Assets.Scripts.Database.Maps
                         }
                         catch (Exception e)
                         {
-                            Logger.Log(e, LogLevel.Exception);
+                            Logger.Log(e);
                             File.Delete(filePath);
                             new SQLiteConnection(DatabasePath).Delete(map);
                             Logger.Log($"Removed {filePath} from the cache, as the file could not be parsed.", LogLevel.Warning);
@@ -143,7 +143,7 @@ namespace Assets.Scripts.Database.Maps
                 }
                 catch (Exception e)
                 {
-                    Logger.Log(e, LogLevel.Exception);
+                    Logger.Log(e);
                 }
             }
         }
@@ -177,7 +177,7 @@ namespace Assets.Scripts.Database.Maps
             }
             catch (Exception e)
             {
-                Logger.Log(e, LogLevel.Exception);
+                Logger.Log(e);
                 File.Delete(file);
                 return -1;
             }
@@ -196,7 +196,7 @@ namespace Assets.Scripts.Database.Maps
             }
             catch (Exception e)
             {
-                Logger.Log(e, LogLevel.Exception);
+                Logger.Log(e);
             }
         }
 
@@ -213,7 +213,7 @@ namespace Assets.Scripts.Database.Maps
             }
             catch (Exception e)
             {
-                Logger.Log(e, LogLevel.Exception);
+                Logger.Log(e);
             }
         }
 
@@ -230,7 +230,7 @@ namespace Assets.Scripts.Database.Maps
             }
             catch (Exception e)
             {
-                Logger.Log(e, LogLevel.Exception);
+                Logger.Log(e);
                 return null;
             }
         }
@@ -273,7 +273,7 @@ namespace Assets.Scripts.Database.Maps
                 }
                 catch (Exception e)
                 {
-                    Logger.Log(e, LogLevel.Exception);
+                    Logger.Log(e);
                 }
             }
 
