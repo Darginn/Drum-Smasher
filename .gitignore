@@ -75,3 +75,4 @@ crashlytics-build.properties
 /Server/DSPatcher/obj
 /Server/DSServer/obj
 /Server/DSServerDiscordCommands/obj
+/Build
