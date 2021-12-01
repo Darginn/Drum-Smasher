@@ -93,7 +93,7 @@ namespace Assets.Scripts.TaikoGame.Modifiers
             }
             catch (Exception e)
             {
-                Logger.Log(e, LogLevel.Exception);
+                Logger.Log(e);
             }
         }
 
