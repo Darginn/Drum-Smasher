@@ -113,7 +113,6 @@
     <Compile Include="Assets\Scripts\Configs\Bindable\BindableInt.cs" />
     <Compile Include="Assets\Scripts\Extensions\AutoInitAttribute.cs" />
     <Compile Include="Assets\Scripts\IO\JsonFile.cs" />
-    <Compile Include="Assets\Scripts\TaikoGame\Modifiers\Mods\ModDoubleTime.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleOpenFileText.cs" />
     <Compile Include="Assets\Scripts\Configs\IConfig.cs" />
     <Compile Include="Assets\Scripts\Database\Maps\MapDeletedEventArgs.cs" />
@@ -133,7 +132,6 @@
     <Compile Include="Assets\Scripts\Controls\HotkeyType.cs" />
     <Compile Include="Assets\Scripts\Enums\OrderMapsetsBy.cs" />
     <Compile Include="Assets\Scripts\DevConsole\Commands\HelpCommand.cs" />
-    <Compile Include="Assets\Scripts\TaikoGame\Modifiers\Mods\ModHalfTime.cs" />
     <Compile Include="Assets\Scripts\TaikoGame\ActiveTaikoSettings.cs" />
     <Compile Include="Assets\Scripts\TaikoGame\Notes\NotePool.cs" />
     <Compile Include="Assets\StandaloneFileBrowser\Sample\CanvasSampleSaveFileText.cs" />
